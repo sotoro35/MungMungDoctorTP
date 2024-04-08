@@ -13,3 +13,16 @@ data class AiResponses(
     val eye:AiResponse,
     val skin:AiResponse
 )
+
+data class LoginResponse(
+    val email:String="",                // 회원 이메일
+    val provider_id:String="",          // 회원 간편로그인 아이디
+    val nickname:String="",             // 회원닉네임
+    val userImgUrl:String="",           // 회원프로필이미지
+    val pet_id:String="",               // 회원 선택된 펫 식별값
+    val pet_name:String="",             // 회원 선택된 펫 이름
+    val petImgUrl:String="",            // 회원 선택된 펫 프로필이미지
+    val pet_birth_date:String="",       // 회원 선택된 펫 생일
+    val pet_gender:String="",           // 회원 선택된 펫 생년월일
+    val pet_neutered:String=""          // 회원 선택된 펫 중성화여부
+)
