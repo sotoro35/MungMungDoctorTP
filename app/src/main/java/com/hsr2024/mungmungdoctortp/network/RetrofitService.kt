@@ -47,4 +47,9 @@ interface RetrofitService {
     //fun getSignUp(@Field("email") email:String, @Field("password") password:String, @Field("name") name:String, @Field("nickname") nickname: String) : Call<String>// POST 방식으로 전달
     //val call=retrofitService.getSignUp(email,password,name,nickName)
 
+    //네이버 지역 검색 API서비스(아래수정해야됨)
+//        @Headers("Authorization: KakaoAK aa550be1c8060e92809a4b29d418278b") //REST API 키: aa550be1c8060e92809a4b29d418278b
+//    @GET("/v2/local/search/keyword.json?sort=distance")
+//    fun searchPlace(@Query("query")query:String, @Query("x") longitude:String,@Query("y")latitude:String) : Call<KakaoSearchPlaceResponse>
+
 }
