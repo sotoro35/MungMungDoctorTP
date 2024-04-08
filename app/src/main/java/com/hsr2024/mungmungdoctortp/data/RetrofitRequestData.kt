@@ -1,7 +1,7 @@
 package com.hsr2024.mungmungdoctortp.data
 
 //login 시 보낼 데이터
-data class LoginData(val email:String="", val password:String="", val provider_id:String="", val login_type:String)
+data class LoginData(val email:String="", val password:String="", val access_token:String="", val login_type:String)
 //회원가입 시 보낼 데이터
 data class SignUpData(val email:String, val password:String, val nickname:String)
 // type 종류
