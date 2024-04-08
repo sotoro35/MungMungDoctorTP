@@ -29,7 +29,7 @@ interface RetrofitService {
     fun singUp(@Body signUpData: SignUpData) : Call<String> // 1200 회원 추가 성공, 1201 회원 추가 실패, 4330 닉네임 또는 이메일 중복
 
     //회원가입 시 닉네임 중복체크
-    @GET
+    @GET("/sign/email_nickname_dupli_check.php")
     fun dupliCheck(@Query("nickname") nickname:String) : Call<String> // 4320 닉네임 중복, 4300 중복 x
 
 
