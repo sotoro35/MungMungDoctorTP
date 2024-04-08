@@ -24,5 +24,6 @@ data class LoginResponse(
     val petImgUrl:String="",            // 회원 선택된 펫 프로필이미지
     val pet_birth_date:String="",       // 회원 선택된 펫 생일
     val pet_gender:String="",           // 회원 선택된 펫 생년월일
-    val pet_neutered:String=""          // 회원 선택된 펫 중성화여부
+    val pet_neutered:String="",         // 회원 선택된 펫 중성화여부
+    val code:String=""                  // 4200 회원, 4204 회원 아님, 4203 이메일 로그인 정보 틀림, 1200 회원 추가 성공, 1201 회원 추가 실패
 )
