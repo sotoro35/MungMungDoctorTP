@@ -51,7 +51,11 @@ dependencies {
     implementation(libs.circleimageview)
     implementation(libs.converter.scalars)
     implementation(libs.converter.gson)
+    implementation(libs.play.services.location)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // 네이버 지도 SDK
+    implementation(libs.map.sdk)
 }

@@ -26,3 +26,9 @@ data class LoginResponse(
     val pet_gender:String="",           // 회원 선택된 펫 생년월일
     val pet_neutered:String=""          // 회원 선택된 펫 중성화여부
 )
+
+
+data class NaverSearchPlaceResponse(var lastBuildDate:String, var total:Int, var start:Int, var display:Int, var item:List<Place>
+)
+
+data class Place(var title:String, var link:String, var category:String, var description:String)
