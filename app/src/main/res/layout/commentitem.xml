@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:padding="8dp"
     android:background="@drawable/bg_community">
@@ -22,12 +23,21 @@
         android:layout_toRightOf="@id/circle_iv2"
         android:layout_marginTop="20dp"/>
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:titleCentered="true"
+        android:layout_margin="8dp"
+        app:menu="@menu/toolbar_menu"/>
+
     <ImageView
         android:id="@+id/iv"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_below="@id/circle_iv2"
         android:src="@drawable/bb"/>
+
 
 
     <LinearLayout
