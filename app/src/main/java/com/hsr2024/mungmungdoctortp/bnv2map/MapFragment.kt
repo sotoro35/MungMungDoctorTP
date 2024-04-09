@@ -15,7 +15,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
@@ -24,7 +23,8 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.hsr2024.mungmungdoctortp.R
-import com.hsr2024.mungmungdoctortp.data.NaverSearchPlaceResponse
+import com.hsr2024.mungmungdoctortp.data.KakaoSearchPlaceResponse
+
 import com.hsr2024.mungmungdoctortp.databinding.FragmentMapBinding
 import com.hsr2024.mungmungdoctortp.network.RetrofitService
 import com.naver.maps.geometry.LatLng
@@ -34,14 +34,13 @@ import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
-import com.naver.maps.map.NaverMapOptions
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Align
 import com.naver.maps.map.overlay.InfoWindow
 import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.Overlay
 import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
-import com.naver.maps.map.util.MarkerIcons
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -69,8 +68,8 @@ class MapFragment:Fragment() {
     private var locationProviderClient: FusedLocationProviderClient? = null
     private var locationSource: FusedLocationSource? = null
 
-    //naver search API응답결과 객체 참조변수
-    var searchPlaceResponse:NaverSearchPlaceResponse? = null
+    //kakao search API응답결과 객체 참조변수
+    var searchPlaceResponse:KakaoSearchPlaceResponse? = null
 
 
 
@@ -92,10 +91,10 @@ class MapFragment:Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //naver지역검색 API
-        naverPlaceSearch()
+
         //사용자위치 허가받았나체크
         permissionCheck()
+
 
         //프레그먼트매니저한테 트렌젝션시작.
         val fragmentManager : FragmentManager = childFragmentManager
@@ -206,6 +205,9 @@ class MapFragment:Fragment() {
                 naverMap.minZoom = 5.0
                 naverMap.locationSource = locationSource
 
+                //naver 지역검색 api호출- map이 준비가됬을때
+                kakaoPlaceSearch()
+
 
 
                 //현재 내 위치를 지도의 중심위치로 설정 /내위치-위도,경도,등..
@@ -242,14 +244,14 @@ class MapFragment:Fragment() {
                     marker.captionOffset = 30
                     marker.captionColor = Color.RED
 
-                    val infoWindow = InfoWindow()
-                    infoWindow.adapter = object : InfoWindow.DefaultTextAdapter(requireContext()){
-                        override fun getText(p0: InfoWindow): CharSequence {
-                            return "정보 창 내용"
-                        }
-                    }
-
-                    infoWindow.open(marker)
+//                    val infoWindow = InfoWindow()
+//                    infoWindow.adapter = object : InfoWindow.DefaultTextAdapter(requireContext()){
+//                        override fun getText(p0: InfoWindow): CharSequence {
+//                            return "정보 창 내용"
+//                        }
+//                    }
+//
+//                    infoWindow.open(marker)
 
 
 
@@ -266,78 +268,103 @@ class MapFragment:Fragment() {
 
 
 
+    var markerList : MutableList<Marker> = mutableListOf()
+
+
     private fun showPlaceOnMap(){
 
-        searchPlaceResponse?.item?.forEach {
+        searchPlaceResponse?.documents?.forEach {//기차 한칸.
+            val title =it.place_name
+            var longitude = it.x.toDouble()
+            var latitude = it.y.toDouble()
 
-            var tm = Tm128(it.mapx.toDouble(), it.mapy.toDouble()).toLatLng()
 
-
-
-            //marker.position = LatLng(it.mapx, it.mapy)
+            val marker:Marker= Marker()
+            marker.position = LatLng(latitude,longitude)
             marker.map = naverMap
-            marker.icon = OverlayImage.fromResource(R.drawable.my_marker)
+            marker.icon = OverlayImage.fromResource(R.drawable.hospital_marker)
             marker.width =120
             marker.height =120
-            marker.captionText = "장소들"
             marker.setCaptionAligns(Align.Top)
             marker.captionOffset = 30
             marker.captionColor = Color.RED
 
+            markerList.add(marker)
+
             val infoWindow = InfoWindow()
             infoWindow.adapter = object : InfoWindow.DefaultTextAdapter(requireContext()){
                 override fun getText(p0: InfoWindow): CharSequence {
-                    return "장소들 정보"
+                    return "$title"
                 }
             }
 
-            infoWindow.open(marker)
+            //마커 클릭 시
+            val listener = Overlay.OnClickListener { overlay ->
 
-        }
+                markerList.forEach {
+                    it.infoWindow?.close()
+                }
+                val marker = overlay as Marker
 
-    }
+                if (marker.infoWindow == null){
+                    //현재 마커에 정보 창이 열려있지 않을 경우 엶
+                    infoWindow.open(marker)
+                } else {
+                    //이미 현재 마커에 정보 창이 열러있을 경우 닫음
+                    infoWindow.close()
+                }
+                true
+            }//onclickListener
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            marker.onClickListener = listener
 
 
-    private fun naverPlaceSearch(){
+
+        }//foreach
+
+
+
+    }// showPlaceOnMap()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private fun kakaoPlaceSearch() {
         //레트로핏
         val builder = Retrofit.Builder()
-            .baseUrl("https://openapi.naver.com")
+            .baseUrl("https://dapi.kakao.com")
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
 
         val retrofit = builder.build()
         val retrofitService = retrofit.create(RetrofitService::class.java)
-        retrofitService.getNaverLocal("동물병원", 5).enqueue(object : Callback<NaverSearchPlaceResponse>{
+
+        retrofitService.searchPlace("동물병원", myLocation?.longitude.toString(), myLocation?.latitude.toString()).enqueue(object : Callback<KakaoSearchPlaceResponse>{
             override fun onResponse(
-                p0: Call<NaverSearchPlaceResponse>,
-                p1: Response<NaverSearchPlaceResponse>
+                p0: Call<KakaoSearchPlaceResponse>,
+                p1: Response<KakaoSearchPlaceResponse>
             ) {
+                Log.d("aaa", p1.body().toString())
                 searchPlaceResponse = p1.body()
-
-                if (searchPlaceResponse != null) {
-
-                    binding.tv.setText("${searchPlaceResponse!!.item[1].category}")
-                }
+                Log.d("aaa1", searchPlaceResponse!!.documents[0].place_name)
 
                 showPlaceOnMap()
             }
 
-            override fun onFailure(p0: Call<NaverSearchPlaceResponse>, p1: Throwable) {
+            override fun onFailure(p0: Call<KakaoSearchPlaceResponse>, p1: Throwable) {
                 TODO("Not yet implemented")
             }
 
@@ -346,8 +373,7 @@ class MapFragment:Fragment() {
 
 
 
-
-
+//
 
     }//naverPlaceSearch()
 

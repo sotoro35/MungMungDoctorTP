@@ -1,5 +1,10 @@
 package com.hsr2024.mungmungdoctortp.data
 
+import retrofit2.Call
+import retrofit2.http.GET
+import retrofit2.http.Headers
+import retrofit2.http.Query
+
 // code 종류
 //  - 200 : 작업성공
 // diagnosis_result 진단결과
@@ -13,6 +18,10 @@ data class AiResponses(
     val eye:AiResponse,
     val skin:AiResponse
 )
+
+
+
+
 
 data class LoginResponse(
     val email:String="",                // 회원 이메일
@@ -28,11 +37,25 @@ data class LoginResponse(
 )
 
 
-data class NaverSearchPlaceResponse(
-    var lastBuildDate:String, var total:Int, var start:Int, var display:Int,
-    var item:List<Place>
+
+
+
+
+data class KakaoSearchPlaceResponse(var meta: PlaceMeta, var documents: List<Place>)
+
+data class PlaceMeta(var total_count:Int,var pageable_count:Int, var is_end:Boolean)
+
+data class Place(
+    var id:String,
+    var place_name:String,
+    var category_name:String,
+    var phone:String,
+    var address_name:String,
+    var road_address_name:String,
+    var x:String,
+    var y:String,
+    var place_url:String,
+    var distance:String
 )
 
-data class Place(var title:String, var link:String, var category:String, var description:String,
-    var telephone:String, var address:String, var roadAddress:String, var mapx:Int, var mapy:Int)
 

@@ -2,9 +2,9 @@ package com.hsr2024.mungmungdoctortp.network
 
 import com.hsr2024.mungmungdoctortp.data.AiRequest
 import com.hsr2024.mungmungdoctortp.data.AiResponses
+import com.hsr2024.mungmungdoctortp.data.KakaoSearchPlaceResponse
 import com.hsr2024.mungmungdoctortp.data.LoginData
 import com.hsr2024.mungmungdoctortp.data.LoginResponse
-import com.hsr2024.mungmungdoctortp.data.NaverSearchPlaceResponse
 import com.hsr2024.mungmungdoctortp.data.SignUpData
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -53,11 +53,10 @@ interface RetrofitService {
 
 
 
-    //네이버- naver 지역검색api
-    //클라이언트id : XP42scZcoCa__nfLeunL
-    //클라이언트 sectret : xTQrwVAfl8
-    @Headers("X-Naver-Client-Id: XP42scZcoCa__nfLeunL", "X-Naver-Client-Secret: xTQrwVAfl8")
-    @GET("/v1/search/local.json")
-    fun getNaverLocal(@Query("query") aniHospital:String, @Query("display") display:Int) : Call<NaverSearchPlaceResponse>
+
+    //카카오 로컬 검색API를 해줘~ 명세서쓰기 -- 우선 응답type을 스트링으로
+    @Headers("Authorization: KakaoAK 1339b7346295d6208b37fac2e7091de1") //REST API 키: 963ec3326effb762f45c440734baacb6
+    @GET("/v2/local/search/keyword.json?sort=distance")
+    fun searchPlace(@Query("query")query:String, @Query("x") longitude:String, @Query("y")latitude:String) : Call<KakaoSearchPlaceResponse>
 
 }
