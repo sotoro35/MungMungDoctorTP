@@ -45,6 +45,7 @@ class RetrofitProcess(
         })
     }
 
+    //회원가입
     fun signupRequest() {
 
         val retrofitService = setRetrofitService()
@@ -66,9 +67,43 @@ class RetrofitProcess(
 
         })
     }
+
+    //중복 체크
+    fun dupliCheckRequest() {
+        val retrofitService = setRetrofitService()
+        // 파라미터를 Json 형태로 변환
+        val nickname=(params as String)
+        val call = retrofitService.dupliCheck(nickname)
+        call.enqueue(object : Callback<String>{
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+
+        })
+    }
 }
 
-// 사용법
-// RetrofitProcess(this, params="JSON 데이터", callback=object RetrofitCallback{
-
+// signupRequest 사용법
+//val params= SignUpData("이메일정보","패스워드 정보","닉네임")
+//RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val code=(response as String)
+//        Log.d("signup code","$data") //1200 회원추가 성공, 1201 회원 추가 실패
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("signup fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).signupRequest()
 // }
