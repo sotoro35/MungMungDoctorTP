@@ -59,7 +59,7 @@ class RetrofitProcess(
 //        Log.d("login fail",errorMsg!!) // 에러 메시지
 //    }
 //
-//  }).signupRequest()
+//  }).loginRequest()
 
     //회원가입
     fun signupRequest() {
