@@ -24,11 +24,9 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.hsr2024.mungmungdoctortp.R
 import com.hsr2024.mungmungdoctortp.data.KakaoSearchPlaceResponse
-
 import com.hsr2024.mungmungdoctortp.databinding.FragmentMapBinding
 import com.hsr2024.mungmungdoctortp.network.RetrofitService
 import com.naver.maps.geometry.LatLng
-import com.naver.maps.geometry.Tm128
 import com.naver.maps.map.CameraPosition
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.LocationTrackingMode
@@ -56,9 +54,6 @@ class MapFragment:Fragment() {
     //클라이언트id :  glca44kwj8
     //클라이언트 secret : gwZDIk1qECJwwJN1MbIR1guPuGyYz7XRERVBW02O
 
-    //네이버디벨로퍼  - naver 지역검색 api
-    //클라이언트id : XP42scZcoCa__nfLeunL
-    //클라이언트 sectret : xTQrwVAfl8
 
 
     private var LOCATION_PERMISSION = 1004
@@ -70,8 +65,6 @@ class MapFragment:Fragment() {
 
     //kakao search API응답결과 객체 참조변수
     var searchPlaceResponse:KakaoSearchPlaceResponse? = null
-
-
 
 
 
@@ -91,10 +84,8 @@ class MapFragment:Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         //사용자위치 허가받았나체크
         permissionCheck()
-
 
         //프레그먼트매니저한테 트렌젝션시작.
         val fragmentManager : FragmentManager = childFragmentManager
@@ -103,11 +94,7 @@ class MapFragment:Fragment() {
                 fragmentManager.beginTransaction().add(R.id.map_fragment, it).commit()
             }
 
-
-
-
-
-    }
+    }//onViewCreated
 
 
 
@@ -130,7 +117,7 @@ class MapFragment:Fragment() {
             //위치정보수집에 동의.허가받았으니 사용자현위치받아오자
             requestMyLocation()
         }
-    }// fetchLocation()
+    }//permissionCheck()
 
 
 
@@ -240,22 +227,12 @@ class MapFragment:Fragment() {
                     marker.width =120
                     marker.height =120
                     marker.captionText = "나 여깄어용"
+                    marker.captionTextSize = 20f
                     marker.setCaptionAligns(Align.Top)
                     marker.captionOffset = 30
                     marker.captionColor = Color.RED
 
-//                    val infoWindow = InfoWindow()
-//                    infoWindow.adapter = object : InfoWindow.DefaultTextAdapter(requireContext()){
-//                        override fun getText(p0: InfoWindow): CharSequence {
-//                            return "정보 창 내용"
-//                        }
-//                    }
-//
-//                    infoWindow.open(marker)
 
-
-
-                    //???아래는 뭘까
                     naverMap.locationSource = locationSource
                     ActivityCompat.requestPermissions(requireActivity(), permissions,LOCATION_PERMISSION)
 
@@ -263,8 +240,9 @@ class MapFragment:Fragment() {
         })// OnMapReadyCallback
 
 
-
     }//naverMapAPI()
+
+
 
 
 
@@ -318,23 +296,10 @@ class MapFragment:Fragment() {
 
             marker.onClickListener = listener
 
-
-
         }//foreach
 
 
-
     }// showPlaceOnMap()
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -370,75 +335,7 @@ class MapFragment:Fragment() {
 
         })
 
-
-
-
-//
-
     }//naverPlaceSearch()
-
-
-
-//retrofitService.getNaverLocal("동물병원", 5).enqueue(object : Callback<String>{
-//            override fun onResponse(p0: Call<String>, p1: Response<String>) {
-//
-//                val a = p1.body()
-//                AlertDialog.Builder(requireContext()).setMessage("$a").create().show()
-//                binding.tv.setText("$a")
-//            }
-//
-//            override fun onFailure(p0: Call<String>, p1: Throwable) {
-//
-//            }
-//
-//
-//        })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-
-
-        when{
-            requestCode != LOCATION_PERMISSION ->  return
-            else -> {
-                when{
-
-                    locationSource?.onRequestPermissionsResult(requestCode,permissions,grantResults) == true -> {
-
-                        if (!locationSource!!.isActivated){
-                            naverMap.locationTrackingMode = LocationTrackingMode.None
-                        }else{
-                            naverMap.locationTrackingMode = LocationTrackingMode.Follow
-                        }
-
-
-                    }//locationoSource가 리퀘스트퍼미션리절트일때..
-
-                }//when
-            }//else
-
-
-        }//when
-
-
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }//onRequestPermissionResult()
-
-
 
 
 

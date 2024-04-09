@@ -1,23 +1,11 @@
 package com.hsr2024.mungmungdoctortp.main
-
-import android.Manifest
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.hsr2024.mungmungdoctortp.R
 import com.hsr2024.mungmungdoctortp.bnv1care.CareFragment
 import com.hsr2024.mungmungdoctortp.bnv2map.MapFragment
 import com.hsr2024.mungmungdoctortp.bnv3community.CommunityFragment
 import com.hsr2024.mungmungdoctortp.databinding.ActivityMainBinding
-import com.naver.maps.map.util.FusedLocationSource
 
 class MainActivity : AppCompatActivity() {
 
