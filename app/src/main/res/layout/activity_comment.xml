@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".main.CommentActivity"
+    android:background="@color/white"
+    android:padding="8dp">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:navigationIcon="@drawable/baseline_arrow_back_ios_24"
+        app:title="댓글"
+        app:titleCentered="true"
+        android:layout_margin="8dp"/>
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/toolbar">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circle_iv1"
+        android:layout_width="30dp"
+        android:layout_height="40dp"
+        android:layout_margin="8dp"
+        android:src="@drawable/aa"/>
+
+    <TextView
+        android:id="@+id/tv_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="아멍뭉"
+        android:layout_toRightOf="@id/circle_iv2"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/toolbar"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="사료 추천 좀 해주세요~"
+        android:layout_below="@id/linear"
+        android:layout_marginLeft="24dp"/>
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="30분 전"
+        android:textColor="#BBB9B9"
+        android:textSize="12sp"
+        android:layout_below="@id/tv1"
+        android:layout_alignParentRight="true"
+        android:paddingEnd="24dp"
+        android:layout_marginTop="8dp"/>
+
+
+    <LinearLayout
+        android:id="@+id/linear2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp"
+        android:layout_below="@id/linear">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circle_iv2"
+        android:layout_width="30dp"
+        android:layout_height="40dp"
+        android:layout_margin="8dp"
+        android:src="@drawable/bb"
+        android:layout_below="@id/linear2"/>
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="멍멍멍"
+        android:layout_toRightOf="@id/circle_iv2"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/linear2"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="오늘 날씨가 좋네요ㅎㅎ 사진 너무 귀여워요!!\n저도 여기 사료 쓰는데 넘 잘먹어서 몇년째 쓰고 있\n어요!!"
+        android:layout_below="@id/linear2"
+        android:paddingStart="24dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10시간 전"
+        android:textColor="#BBB9B9"
+        android:textSize="12sp"
+        android:layout_below="@id/tv2"
+        android:layout_alignParentRight="true"
+        android:paddingEnd="24dp"
+        android:layout_marginTop="8dp"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_comment"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:hint="댓글은 1000자까지 작성 가능"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:backgroundTint="@color/white"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_layout">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textMultiLine"
+            android:lines="1"
+            android:gravity="center"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_register"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:text="등록"
+        android:gravity="center"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/black"
+        android:layout_marginTop="8dp"
+        android:layout_toRightOf="@id/layout_comment"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_layout"
+        android:layout_margin="4dp"/>
+
+
+</RelativeLayout>

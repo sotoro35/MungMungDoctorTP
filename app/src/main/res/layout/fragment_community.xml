@@ -1,13 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="4dp"
+    android:background="#f8e6c4">
 
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tablayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:tabMode="fixed"
+        android:backgroundTint="#f8e6c4">
 
-    <TextView
+    <com.google.android.material.tabs.TabItem
+        android:id="@+id/community"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="CommunityFragment"
-        android:textSize="50sp"/>
+        android:layout_height="wrap_content"
+        android:text="피드" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.tabs.TabItem
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Q&amp;A"/>
+
+    </com.google.android.material.tabs.TabLayout>
+
+
+</LinearLayout>
