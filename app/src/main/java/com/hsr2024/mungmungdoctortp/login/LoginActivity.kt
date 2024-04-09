@@ -1,5 +1,6 @@
 package com.hsr2024.mungmungdoctortp.login
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -15,9 +16,22 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        binding.btnLogin.setOnClickListener { login() }
+        binding.btnLoginKakao.setOnClickListener { loginKakao() }
+        binding.btnLoginNaver.setOnClickListener { loginNaver() }
+        binding.btnSignup.setOnClickListener { startActivity(Intent(this,SignupActivity::class.java)) }
 
+    }
 
+    private fun login(){
 
+    }
+
+    private fun loginKakao(){
+
+    }
+
+    private fun loginNaver(){
 
     }
 }
