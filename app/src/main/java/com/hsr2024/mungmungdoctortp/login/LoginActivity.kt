@@ -77,6 +77,10 @@ class LoginActivity : AppCompatActivity() {
 
             override fun onResponseSuccess(response: Any?) {
                 val data=(response as LoginResponse)
+                when(data.code){
+
+                    "3204" -> AlertDialog.Builder(this@LoginActivity).setMessage("로그인 실패").create().show()
+                }
                 //G.apply {
                 //                        user_email = data.email
                 //user_providerId = data.provider_id
@@ -108,6 +112,11 @@ class LoginActivity : AppCompatActivity() {
 
             override fun onResponseSuccess(response: Any?) {
                 val data=(response as LoginResponse)
+
+                when(data.code){
+
+                    "3204" -> AlertDialog.Builder(this@LoginActivity).setMessage("로그인 실패").create().show()
+                }
                 Log.d("login data","$data") // LoginResponse 데이터 출력(email, provider_id, nickname, userImgUrl, pet_id, pet_name, petImgUrl, pet_birth_date, pet_gender, pet_neutered, code)
             }                               // code 값 4200 로그인 성공, 4203 로그인 실패 3200 간편 로그인 사용자 조회 완료, 3204 간편 로그인 사용자 조회 불가
 
