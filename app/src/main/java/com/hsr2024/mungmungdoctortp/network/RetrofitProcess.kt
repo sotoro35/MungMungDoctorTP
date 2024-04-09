@@ -60,7 +60,6 @@ class RetrofitProcess(
 //    }
 //
 //  }).signupRequest()
-//  }
 
     //회원가입
     fun signupRequest() {
@@ -100,7 +99,6 @@ class RetrofitProcess(
 //    }
 //
 //}).signupRequest()
-// }
 
     //중복 체크
     fun dupliCheckRequest() {
