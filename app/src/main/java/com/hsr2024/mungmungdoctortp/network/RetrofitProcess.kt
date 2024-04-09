@@ -46,7 +46,7 @@ class RetrofitProcess(
         })
     }
 //    loginRequest 사용법
-//    val params= LoginData("이메일","패스워드","액세스토큰","naver") // 액세스토큰의 경우 naver, kakao 로그인일 경우만 작성. 없을 경우 ""
+//    val params= LoginData("이메일","패스워드","${URLEncoder.encode(액세스토큰, "UTF-8")}","naver") // 액세스토큰의 경우 naver, kakao 로그인일 경우만 작성. 없을 경우 ""
 //    RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
