@@ -28,7 +28,9 @@ data class LoginResponse(
 )
 
 
-data class NaverSearchPlaceResponse(var lastBuildDate:String, var total:Int, var start:Int, var display:Int, var item:List<Place>
+data class NaverSearchPlaceResponse(
+    var lastBuildDate:String, var total:Int, var start:Int, var display:Int,
+    var item:List<Place>
 )
 
 data class Place(var title:String, var link:String, var category:String, var description:String)

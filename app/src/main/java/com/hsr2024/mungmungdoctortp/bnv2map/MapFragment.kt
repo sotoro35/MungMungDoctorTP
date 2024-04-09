@@ -1,19 +1,27 @@
 package com.hsr2024.mungmungdoctortp.bnv2map
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import com.hsr2024.mungmungdoctortp.R
 import com.hsr2024.mungmungdoctortp.data.NaverSearchPlaceResponse
 import com.hsr2024.mungmungdoctortp.databinding.FragmentMapBinding
@@ -42,7 +50,7 @@ class MapFragment:Fragment() {
     //클라이언트id :  glca44kwj8
     //클라이언트 secret : gwZDIk1qECJwwJN1MbIR1guPuGyYz7XRERVBW02O
 
-    //네이버  - naver 지역검색 api
+    //네이버디벨로퍼  - naver 지역검색 api
     //클라이언트id : GOd0jRtXpZfnd0bO9C3k
     //클라이언트 sectret : ItBhARmmRV
 
@@ -51,9 +59,11 @@ class MapFragment:Fragment() {
     private lateinit var naverMap: NaverMap
     private lateinit var locationSource: FusedLocationSource
     private val marker = Marker()
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private val PERMISSION = arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION)
 
+    // [Google Fused Location API 사용] 라이브러리이름:play-services-location 추가하기
+    private var locationProviderClient: FusedLocationProviderClient? = null
+    private var myLocation: Location? = null//gps가안되거나 네트워크가안될수도있으니..
+    private var mapFragment: MapFragment? =null
 
 
 
@@ -70,24 +80,115 @@ class MapFragment:Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        naverMap()
-        retrofitNaverPlaceSearch()
+        //위치 서비스 클라이언트 초기화
+        //fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+
+        //사용자위치 허가받았나체크
+        permissionCheck()
+
+        //retrofitNaverPlaceSearch()
     }
 
 
 
 
 
-    private fun naverMap(){
+    private fun permissionCheck(){
 
-        fusedLocationClient =  LocationServices.getFusedLocationProviderClient(requireActivity())
-        locationSource = FusedLocationSource(requireActivity(), LOCATION_PERMISSION )
-        val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
-        var mapFragment: MapFragment? = fragmentManager.findFragmentById(R.id.map_fragment) as MapFragment?
-        if (mapFragment == null){
-            mapFragment = MapFragment.newInstance()
-            fragmentManager.beginTransaction().add(R.id.map_fragment, mapFragment).commit()
+        //사용자가 코어스,파인 허용안했으면 !!
+        if (ActivityCompat.checkSelfPermission(requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            //허가되어있지 않으니, 다시 퍼미션 요청 다이알로그+대행사
+            //Toast.makeText(requireContext(), "위치정보허용 안하셨죠?", Toast.LENGTH_SHORT).show()
+            permissionResultLauncher
+        }else{
+            //위치정보수집에 동의.허가받았으니 사용자현위치받아오자
+            requestMyLocation()
         }
+
+
+    }// fetchLocation()
+
+
+
+    //퍼미션 요청 및 결과받아오는 작업을 대신하는 대행사 등록
+    val permissionResultLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()){
+        if (it) requestMyLocation()
+        else Toast.makeText(requireContext(), "내 위치정보를 허용하지 않아 검색기능 제한됩니다.", Toast.LENGTH_SHORT).show()
+    }
+
+
+
+
+    private fun requestMyLocation(){
+
+        //요청객체
+        val request = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 3000).build()
+
+        //실시간으로 계속 위치정보 갱신하기위해선 퍼미션체크 꼭해야됨.
+        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+             != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
+             != PackageManager.PERMISSION_GRANTED ){
+            //둘다 허용안했으면
+            return
+        }
+        locationProviderClient?.requestLocationUpdates(request, locationCallback, Looper.getMainLooper())
+    }//requestMyLocation()
+
+
+    //위치정보 새로 갱신할때마다 발동하는 콜백 메소드. 추상클래스.
+    private val locationCallback= object : LocationCallback(){
+        override fun onLocationResult(p0: LocationResult) {
+            super.onLocationResult(p0)
+            myLocation = p0.lastLocation
+
+            //위치탐색 종료됬으니 내 위치정보 업데이트 그만...
+            locationProviderClient?.removeLocationUpdates(this)//this:Location Callback
+
+            //내위치 얻어왔으니 이제!!! 네이버지역검색(동물병원) 시작~~
+            searchPlaces()
+        }
+    }
+
+
+
+
+
+
+    private fun requestMyLocation1(){
+
+        //구글의 퓨즈드한테 사용자현위치 받아오자
+        locationProviderClient?.lastLocation?.addOnSuccessListener { location ->
+            if (location != null){
+                myLocation = location //퓨즈드에서 준 로케이션을 나의로케이션에넣기
+                //네이버 맵 작업메소드
+                searchPlaces()
+            }else Toast.makeText(requireContext(), "위치정보가 null이네요", Toast.LENGTH_SHORT).show()
+        }
+            ?.addOnFailureListener {
+                Toast.makeText(requireContext(), "위치정보 가져오기 실패:$it", Toast.LENGTH_SHORT).show()
+            }
+        locationSource = FusedLocationSource(requireActivity(), LOCATION_PERMISSION )
+
+        val fragmentManager : FragmentManager = childFragmentManager
+        mapFragment = fragmentManager.findFragmentById(R.id.map_fragment) as MapFragment?
+            ?: MapFragment.newInstance().also {
+                fragmentManager.beginTransaction().add(R.id.map_fragment, it).commit()
+            }
+
+    }  //requestMyLocation()
+
+
+
+
+
+    private fun searchPlaces(){
 
         mapFragment!!.getMapAsync(object : OnMapReadyCallback {
             override fun onMapReady(map: NaverMap) {
@@ -98,9 +199,9 @@ class MapFragment:Fragment() {
 
 
                 //현재 내 위치를 지도의 중심위치로 설정 /내위치-위도,경도,등..
-                var myLocation: Location?= null
-                val latitude : Double = myLocation?.latitude ?: 37.5666
-                val longitude : Double =  myLocation?.longitude ?: 126.9782
+                var myLocation: Location?=null
+                var latitude : Double = myLocation?.latitude ?: 37.5666
+                var longitude : Double =  myLocation?.longitude ?: 126.9782
                 val myPos = LatLng(latitude, longitude)
 
                 //카메라 설정
@@ -129,7 +230,9 @@ class MapFragment:Fragment() {
             }//fun onMapReady(map: NaverMap)
         })// OnMapReadyCallback
 
-    }// fun naverMap()
+
+
+    }//naverMapAPI()
 
 
 
@@ -137,34 +240,44 @@ class MapFragment:Fragment() {
 
 
 
-    private fun retrofitNaverPlaceSearch(){
-        //레트로핏
-        val builder = Retrofit.Builder()
-            .baseUrl("https://openapi.naver.com")
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
 
-        val retrofit = builder.build()
-        val retrofitService = retrofit.create(RetrofitService::class.java)
-        retrofitService.getNaverLocal("동물병원", 5).enqueue(object : Callback<NaverSearchPlaceResponse>{
-            override fun onResponse(
-                p0: Call<NaverSearchPlaceResponse>,
-                p1: Response<NaverSearchPlaceResponse>
-            ) {
-                val result = p1.body()
-                if (result != null) {
-                    Toast.makeText(requireContext(), "${result.items[0].title}", Toast.LENGTH_SHORT).show()
-                    binding.tv.setText("${result.items[1].category}")
-                }
-            }
 
-            override fun onFailure(p0: Call<NaverSearchPlaceResponse>, p1: Throwable) {
-                TODO("Not yet implemented")
-            }
 
-        })
 
-    }//retrofitHelp()
+
+
+
+
+
+
+//    private fun retrofitNaverPlaceSearch(){
+//        //레트로핏
+//        val builder = Retrofit.Builder()
+//            .baseUrl("https://openapi.naver.com")
+//            .addConverterFactory(ScalarsConverterFactory.create())
+//            .addConverterFactory(GsonConverterFactory.create())
+//
+//        val retrofit = builder.build()
+//        val retrofitService = retrofit.create(RetrofitService::class.java)
+//        retrofitService.getNaverLocal("동물병원", 5).enqueue(object : Callback<NaverSearchPlaceResponse>{
+//            override fun onResponse(
+//                p0: Call<NaverSearchPlaceResponse>,
+//                p1: Response<NaverSearchPlaceResponse>
+//            ) {
+//                val result = p1.body()
+//                if (result != null) {
+//                    Toast.makeText(requireContext(), "${result.items[0].title}", Toast.LENGTH_SHORT).show()
+//                    binding.tv.setText("${result.items[1].category}")
+//                }
+//            }
+//
+//            override fun onFailure(p0: Call<NaverSearchPlaceResponse>, p1: Throwable) {
+//                TODO("Not yet implemented")
+//            }
+//
+//        })
+//
+//    }//retrofitHelp()
 
 
 
@@ -226,6 +339,9 @@ class MapFragment:Fragment() {
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }//onRequestPermissionResult()
+
+
+
 
 
 
