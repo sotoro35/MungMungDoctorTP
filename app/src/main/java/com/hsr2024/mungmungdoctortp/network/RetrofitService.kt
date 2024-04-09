@@ -54,9 +54,9 @@ interface RetrofitService {
 
 
     //네이버- naver 지역검색api
-// 클라이언트id : GOd0jRtXpZfnd0bO9C3k
-// 클라이언트sectret : ItBhARmmRV
-    @Headers("X-Naver-Client-Id: GOd0jRtXpZfnd0bO9C3k", "X-Naver-Client-Secret: ItBhARmmRV")
+    //클라이언트id : XP42scZcoCa__nfLeunL
+    //클라이언트 sectret : xTQrwVAfl8
+    @Headers("X-Naver-Client-Id: XP42scZcoCa__nfLeunL", "X-Naver-Client-Secret: xTQrwVAfl8")
     @GET("/v1/search/local.json")
     fun getNaverLocal(@Query("query") aniHospital:String, @Query("display") display:Int) : Call<NaverSearchPlaceResponse>
 

@@ -28,11 +28,13 @@ import com.hsr2024.mungmungdoctortp.data.NaverSearchPlaceResponse
 import com.hsr2024.mungmungdoctortp.databinding.FragmentMapBinding
 import com.hsr2024.mungmungdoctortp.network.RetrofitService
 import com.naver.maps.geometry.LatLng
+import com.naver.maps.geometry.Tm128
 import com.naver.maps.map.CameraPosition
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
+import com.naver.maps.map.NaverMapOptions
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Align
 import com.naver.maps.map.overlay.InfoWindow
@@ -56,8 +58,8 @@ class MapFragment:Fragment() {
     //클라이언트 secret : gwZDIk1qECJwwJN1MbIR1guPuGyYz7XRERVBW02O
 
     //네이버디벨로퍼  - naver 지역검색 api
-    //클라이언트id : GOd0jRtXpZfnd0bO9C3k
-    //클라이언트 sectret : ItBhARmmRV
+    //클라이언트id : XP42scZcoCa__nfLeunL
+    //클라이언트 sectret : xTQrwVAfl8
 
 
     private var LOCATION_PERMISSION = 1004
@@ -267,8 +269,8 @@ class MapFragment:Fragment() {
     private fun showPlaceOnMap(){
 
         searchPlaceResponse?.item?.forEach {
-            val tm128 = naver.maps.Point(mapx, mapy)
-            val latLng = naver.maps.TransCoord.fromTM128ToLatLng(tm128)
+
+            var tm = Tm128(it.mapx.toDouble(), it.mapy.toDouble()).toLatLng()
 
 
 
@@ -326,8 +328,9 @@ class MapFragment:Fragment() {
                 p1: Response<NaverSearchPlaceResponse>
             ) {
                 searchPlaceResponse = p1.body()
+
                 if (searchPlaceResponse != null) {
-                    Toast.makeText(requireContext(), "${searchPlaceResponse!!.item[0].title}", Toast.LENGTH_SHORT).show()
+
                     binding.tv.setText("${searchPlaceResponse!!.item[1].category}")
                 }
 
@@ -339,6 +342,12 @@ class MapFragment:Fragment() {
             }
 
         })
+
+
+
+
+
+
 
     }//naverPlaceSearch()
 
