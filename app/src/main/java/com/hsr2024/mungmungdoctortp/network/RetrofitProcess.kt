@@ -45,6 +45,22 @@ class RetrofitProcess(
 
         })
     }
+//    loginRequest 사용법
+//    val params= LoginData("이메일","패스워드","액세스토큰","naver") // 액세스토큰의 경우 naver, kakao 로그인일 경우만 작성. 없을 경우 ""
+//    RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val data=(response as LoginResponse)
+//        Log.d("login code","$data") // LoginResponse 데이터 출력(email, provider_id, nickname, userImgUrl, pet_id, pet_name, petImgUrl, pet_birth_date, pet_gender, pet_neutered, code)
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("login fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//  }).signupRequest()
+//  }
 
     //회원가입
     fun signupRequest() {
@@ -76,7 +92,7 @@ class RetrofitProcess(
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val code=(response as String)
-//        Log.d("signup code","code") //1200 회원추가 성공, 1201 회원 추가 실패
+//        Log.d("signup code","$code") //1200 회원추가 성공, 1201 회원 추가 실패
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
