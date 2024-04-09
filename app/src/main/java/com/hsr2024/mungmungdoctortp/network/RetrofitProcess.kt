@@ -1,6 +1,7 @@
 package com.hsr2024.mungmungdoctortp.network
 
 import android.content.Context
+import android.util.Log
 import com.hsr2024.mungmungdoctortp.data.LoginData
 import com.hsr2024.mungmungdoctortp.data.LoginResponse
 import com.hsr2024.mungmungdoctortp.data.SignUpData
@@ -68,6 +69,23 @@ class RetrofitProcess(
         })
     }
 
+// signupRequest 사용법
+//val params= SignUpData("이메일정보","패스워드 정보","닉네임")
+//RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val code=(response as String)
+//        Log.d("signup code","code") //1200 회원추가 성공, 1201 회원 추가 실패
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("signup fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).signupRequest()
+// }
+
     //중복 체크
     fun dupliCheckRequest() {
         val retrofitService = setRetrofitService()
@@ -91,19 +109,17 @@ class RetrofitProcess(
     }
 }
 
-// signupRequest 사용법
-//val params= SignUpData("이메일정보","패스워드 정보","닉네임")
-//RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
+// dupliCheckRequest 사용법
+//RetrofitProcess(this,params="중복체크할닉네임", callback = object : RetrofitCallback {
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val code=(response as String)
-//        Log.d("signup code","$data") //1200 회원추가 성공, 1201 회원 추가 실패
+//        Log.d("nickname code","$code") // 4320 닉네임 중복, 4300 중복x
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
-//        Log.d("signup fail",errorMsg!!) // 에러 메시지
+//        Log.d("nickname fail",errorMsg!!) // 에러 메시지
 //    }
 //
-//}).signupRequest()
-// }
+//}).dupliCheckRequest()
