@@ -33,4 +33,6 @@ data class NaverSearchPlaceResponse(
     var item:List<Place>
 )
 
-data class Place(var title:String, var link:String, var category:String, var description:String)
+data class Place(var title:String, var link:String, var category:String, var description:String,
+    var telephone:String, var address:String, var roadAddress:String, var mapx:Int, var mapy:Int)
+

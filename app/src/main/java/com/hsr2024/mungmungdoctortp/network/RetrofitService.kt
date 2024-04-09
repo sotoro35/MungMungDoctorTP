@@ -4,14 +4,18 @@ import com.hsr2024.mungmungdoctortp.data.AiRequest
 import com.hsr2024.mungmungdoctortp.data.AiResponses
 import com.hsr2024.mungmungdoctortp.data.LoginData
 import com.hsr2024.mungmungdoctortp.data.LoginResponse
+import com.hsr2024.mungmungdoctortp.data.NaverSearchPlaceResponse
 import com.hsr2024.mungmungdoctortp.data.SignUpData
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Field
+import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
+import retrofit2.http.Query
 
 interface RetrofitService {
 
@@ -46,5 +50,14 @@ interface RetrofitService {
     //@POST("/sign/email_signup.php")
     //fun getSignUp(@Field("email") email:String, @Field("password") password:String, @Field("name") name:String, @Field("nickname") nickname: String) : Call<String>// POST 방식으로 전달
     //val call=retrofitService.getSignUp(email,password,name,nickName)
+
+
+
+    //네이버- naver 지역검색api
+// 클라이언트id : GOd0jRtXpZfnd0bO9C3k
+// 클라이언트sectret : ItBhARmmRV
+    @Headers("X-Naver-Client-Id: GOd0jRtXpZfnd0bO9C3k", "X-Naver-Client-Secret: ItBhARmmRV")
+    @GET("/v1/search/local.json")
+    fun getNaverLocal(@Query("query") aniHospital:String, @Query("display") display:Int) : Call<NaverSearchPlaceResponse>
 
 }

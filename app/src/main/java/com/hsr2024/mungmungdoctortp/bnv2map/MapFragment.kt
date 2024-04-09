@@ -15,6 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
@@ -28,11 +29,15 @@ import com.hsr2024.mungmungdoctortp.databinding.FragmentMapBinding
 import com.hsr2024.mungmungdoctortp.network.RetrofitService
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraPosition
+import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.overlay.Align
+import com.naver.maps.map.overlay.InfoWindow
 import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import com.naver.maps.map.util.MarkerIcons
 import retrofit2.Call
@@ -56,14 +61,17 @@ class MapFragment:Fragment() {
 
 
     private var LOCATION_PERMISSION = 1004
-    private lateinit var naverMap: NaverMap
-    private lateinit var locationSource: FusedLocationSource
-    private val marker = Marker()
+    private var mapFragment: MapFragment? =null
 
     // [Google Fused Location API 사용] 라이브러리이름:play-services-location 추가하기
     private var locationProviderClient: FusedLocationProviderClient? = null
-    private var myLocation: Location? = null//gps가안되거나 네트워크가안될수도있으니..
-    private var mapFragment: MapFragment? =null
+    private var locationSource: FusedLocationSource? = null
+
+    //naver search API응답결과 객체 참조변수
+    var searchPlaceResponse:NaverSearchPlaceResponse? = null
+
+
+
 
 
 
@@ -72,6 +80,8 @@ class MapFragment:Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        locationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        locationSource = FusedLocationSource(requireActivity(), LOCATION_PERMISSION )
         return binding.root
 
     }//oncreateView
@@ -80,13 +90,22 @@ class MapFragment:Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //위치 서비스 클라이언트 초기화
-        //fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-
+        //naver지역검색 API
+        naverPlaceSearch()
         //사용자위치 허가받았나체크
         permissionCheck()
 
-        //retrofitNaverPlaceSearch()
+        //프레그먼트매니저한테 트렌젝션시작.
+        val fragmentManager : FragmentManager = childFragmentManager
+        mapFragment = fragmentManager.findFragmentById(R.id.map_fragment) as MapFragment?
+            ?: MapFragment.newInstance().also {
+                fragmentManager.beginTransaction().add(R.id.map_fragment, it).commit()
+            }
+
+
+
+
+
     }
 
 
@@ -105,13 +124,11 @@ class MapFragment:Fragment() {
         ) {
             //허가되어있지 않으니, 다시 퍼미션 요청 다이알로그+대행사
             //Toast.makeText(requireContext(), "위치정보허용 안하셨죠?", Toast.LENGTH_SHORT).show()
-            permissionResultLauncher
+            permissionResultLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }else{
             //위치정보수집에 동의.허가받았으니 사용자현위치받아오자
             requestMyLocation()
         }
-
-
     }// fetchLocation()
 
 
@@ -121,6 +138,7 @@ class MapFragment:Fragment() {
         if (it) requestMyLocation()
         else Toast.makeText(requireContext(), "내 위치정보를 허용하지 않아 검색기능 제한됩니다.", Toast.LENGTH_SHORT).show()
     }
+
 
 
 
@@ -142,6 +160,13 @@ class MapFragment:Fragment() {
     }//requestMyLocation()
 
 
+
+
+
+
+    private var myLocation: Location? = null//gps가안되거나 네트워크가안될수도있으니..
+
+
     //위치정보 새로 갱신할때마다 발동하는 콜백 메소드. 추상클래스.
     private val locationCallback= object : LocationCallback(){
         override fun onLocationResult(p0: LocationResult) {
@@ -151,8 +176,8 @@ class MapFragment:Fragment() {
             //위치탐색 종료됬으니 내 위치정보 업데이트 그만...
             locationProviderClient?.removeLocationUpdates(this)//this:Location Callback
 
-            //내위치 얻어왔으니 이제!!! 네이버지역검색(동물병원) 시작~~
-            searchPlaces()
+            //내위치 얻어왔으니 이제!!! 네이버map에 내위치 보여줘
+            showMeOnMap()
         }
     }
 
@@ -161,34 +186,15 @@ class MapFragment:Fragment() {
 
 
 
-    private fun requestMyLocation1(){
 
-        //구글의 퓨즈드한테 사용자현위치 받아오자
-        locationProviderClient?.lastLocation?.addOnSuccessListener { location ->
-            if (location != null){
-                myLocation = location //퓨즈드에서 준 로케이션을 나의로케이션에넣기
-                //네이버 맵 작업메소드
-                searchPlaces()
-            }else Toast.makeText(requireContext(), "위치정보가 null이네요", Toast.LENGTH_SHORT).show()
-        }
-            ?.addOnFailureListener {
-                Toast.makeText(requireContext(), "위치정보 가져오기 실패:$it", Toast.LENGTH_SHORT).show()
-            }
-        locationSource = FusedLocationSource(requireActivity(), LOCATION_PERMISSION )
-
-        val fragmentManager : FragmentManager = childFragmentManager
-        mapFragment = fragmentManager.findFragmentById(R.id.map_fragment) as MapFragment?
-            ?: MapFragment.newInstance().also {
-                fragmentManager.beginTransaction().add(R.id.map_fragment, it).commit()
-            }
-
-    }  //requestMyLocation()
+    private lateinit var naverMap: NaverMap
+    private val marker = Marker()
+    private var permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
 
 
 
 
-
-    private fun searchPlaces(){
+    private fun showMeOnMap(){
 
         mapFragment!!.getMapAsync(object : OnMapReadyCallback {
             override fun onMapReady(map: NaverMap) {
@@ -196,13 +202,22 @@ class MapFragment:Fragment() {
                 naverMap = map
                 naverMap.maxZoom = 18.0
                 naverMap.minZoom = 5.0
+                naverMap.locationSource = locationSource
+
 
 
                 //현재 내 위치를 지도의 중심위치로 설정 /내위치-위도,경도,등..
-                var myLocation: Location?=null
                 var latitude : Double = myLocation?.latitude ?: 37.5666
                 var longitude : Double =  myLocation?.longitude ?: 126.9782
                 val myPos = LatLng(latitude, longitude)
+
+                //내 위치로 지도 카메라 이동하기
+                val cameraUpdate:CameraUpdate= CameraUpdate.scrollTo(myPos)
+                naverMap.moveCamera(cameraUpdate)
+                //위치추적 모드 활성화???
+                naverMap.locationTrackingMode = LocationTrackingMode.Follow
+
+
 
                 //카메라 설정
                 val cameraPosition = CameraPosition(
@@ -214,19 +229,32 @@ class MapFragment:Fragment() {
 
                 naverMap.cameraPosition = cameraPosition
 
-                naverMap.addOnCameraChangeListener { reason, animated ->
                     //마커 포지션
-                    marker.position = LatLng(naverMap.cameraPosition.target.latitude, naverMap.cameraPosition.target.longitude)
+                    marker.position = LatLng(myLocation!!.latitude, myLocation!!.longitude)
+                    marker.map = naverMap
+                    marker.icon = OverlayImage.fromResource(R.drawable.my_marker)
+                    marker.width =120
+                    marker.height =120
+                    marker.captionText = "나 여깄어용"
+                    marker.setCaptionAligns(Align.Top)
+                    marker.captionOffset = 30
+                    marker.captionColor = Color.RED
 
-                    naverMap.addOnCameraIdleListener {
-                        //현재 보이는 네이버맵의 정중앙 가운데로 마커
-                        marker.map = naverMap
-                        marker.icon = MarkerIcons.BLUE
-                        marker.iconTintColor = Color.GREEN
+                    val infoWindow = InfoWindow()
+                    infoWindow.adapter = object : InfoWindow.DefaultTextAdapter(requireContext()){
+                        override fun getText(p0: InfoWindow): CharSequence {
+                            return "정보 창 내용"
+                        }
                     }
+
+                    infoWindow.open(marker)
+
+
+
+                    //???아래는 뭘까
                     naverMap.locationSource = locationSource
-                    ActivityCompat.requestPermissions(requireActivity(),PERMISSION,LOCATION_PERMISSION)
-                }//addOnCameraChangeListener
+                    ActivityCompat.requestPermissions(requireActivity(), permissions,LOCATION_PERMISSION)
+
             }//fun onMapReady(map: NaverMap)
         })// OnMapReadyCallback
 
@@ -236,6 +264,36 @@ class MapFragment:Fragment() {
 
 
 
+    private fun showPlaceOnMap(){
+
+        searchPlaceResponse?.item?.forEach {
+            val tm128 = naver.maps.Point(mapx, mapy)
+            val latLng = naver.maps.TransCoord.fromTM128ToLatLng(tm128)
+
+
+
+            //marker.position = LatLng(it.mapx, it.mapy)
+            marker.map = naverMap
+            marker.icon = OverlayImage.fromResource(R.drawable.my_marker)
+            marker.width =120
+            marker.height =120
+            marker.captionText = "장소들"
+            marker.setCaptionAligns(Align.Top)
+            marker.captionOffset = 30
+            marker.captionColor = Color.RED
+
+            val infoWindow = InfoWindow()
+            infoWindow.adapter = object : InfoWindow.DefaultTextAdapter(requireContext()){
+                override fun getText(p0: InfoWindow): CharSequence {
+                    return "장소들 정보"
+                }
+            }
+
+            infoWindow.open(marker)
+
+        }
+
+    }
 
 
 
@@ -250,34 +308,39 @@ class MapFragment:Fragment() {
 
 
 
-//    private fun retrofitNaverPlaceSearch(){
-//        //레트로핏
-//        val builder = Retrofit.Builder()
-//            .baseUrl("https://openapi.naver.com")
-//            .addConverterFactory(ScalarsConverterFactory.create())
-//            .addConverterFactory(GsonConverterFactory.create())
-//
-//        val retrofit = builder.build()
-//        val retrofitService = retrofit.create(RetrofitService::class.java)
-//        retrofitService.getNaverLocal("동물병원", 5).enqueue(object : Callback<NaverSearchPlaceResponse>{
-//            override fun onResponse(
-//                p0: Call<NaverSearchPlaceResponse>,
-//                p1: Response<NaverSearchPlaceResponse>
-//            ) {
-//                val result = p1.body()
-//                if (result != null) {
-//                    Toast.makeText(requireContext(), "${result.items[0].title}", Toast.LENGTH_SHORT).show()
-//                    binding.tv.setText("${result.items[1].category}")
-//                }
-//            }
-//
-//            override fun onFailure(p0: Call<NaverSearchPlaceResponse>, p1: Throwable) {
-//                TODO("Not yet implemented")
-//            }
-//
-//        })
-//
-//    }//retrofitHelp()
+
+
+
+    private fun naverPlaceSearch(){
+        //레트로핏
+        val builder = Retrofit.Builder()
+            .baseUrl("https://openapi.naver.com")
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+
+        val retrofit = builder.build()
+        val retrofitService = retrofit.create(RetrofitService::class.java)
+        retrofitService.getNaverLocal("동물병원", 5).enqueue(object : Callback<NaverSearchPlaceResponse>{
+            override fun onResponse(
+                p0: Call<NaverSearchPlaceResponse>,
+                p1: Response<NaverSearchPlaceResponse>
+            ) {
+                searchPlaceResponse = p1.body()
+                if (searchPlaceResponse != null) {
+                    Toast.makeText(requireContext(), "${searchPlaceResponse!!.item[0].title}", Toast.LENGTH_SHORT).show()
+                    binding.tv.setText("${searchPlaceResponse!!.item[1].category}")
+                }
+
+                showPlaceOnMap()
+            }
+
+            override fun onFailure(p0: Call<NaverSearchPlaceResponse>, p1: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+    }//naverPlaceSearch()
 
 
 
@@ -310,7 +373,6 @@ class MapFragment:Fragment() {
 
 
 
-
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
 
@@ -319,9 +381,10 @@ class MapFragment:Fragment() {
             requestCode != LOCATION_PERMISSION ->  return
             else -> {
                 when{
-                    locationSource.onRequestPermissionsResult(requestCode,permissions,grantResults) -> {
 
-                        if (!locationSource.isActivated){
+                    locationSource?.onRequestPermissionsResult(requestCode,permissions,grantResults) == true -> {
+
+                        if (!locationSource!!.isActivated){
                             naverMap.locationTrackingMode = LocationTrackingMode.None
                         }else{
                             naverMap.locationTrackingMode = LocationTrackingMode.Follow
