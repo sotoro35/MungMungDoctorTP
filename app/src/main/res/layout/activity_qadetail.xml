@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp"
+    tools:context=".main.QADetailActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:navigationIcon="@drawable/baseline_arrow_back_ios_24"
+        app:title="게시물 보기"
+        app:titleCentered="true"
+        android:layout_margin="8dp"
+        app:menu="@menu/toolbar_menu"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:padding="32dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circle_iv"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="8dp"
+        android:src="@drawable/aa"/>
+    <TextView
+        android:id="@+id/tv_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="댕댕이"
+        android:layout_toRightOf="@id/circle_iv"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="이번 생일파티에 어디 여행가려는데... \n혹시 추천 장소 있을까요?"
+        android:textStyle="bold"
+        android:layout_below="@id/circle_iv"/>
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="곧 있으면 우리 강쥐 생일파티거든요?\n애견 팬션 같은거 생각중인데... 좋았던 곳 추천 좀 부탁드\n려요!!"
+        android:layout_below="@id/tv_title"
+        android:layout_marginTop="8dp"/>
+
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="450dp"
+        android:layout_height="300dp"
+        android:layout_below="@id/tv_content"
+        android:src="@drawable/aa"
+        android:layout_marginTop="8dp"/>
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/iv">
+
+        <ImageView
+            android:id="@+id/iv_comment"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/comment"/>
+
+         <TextView
+             android:id="@+id/tv_comment"
+             android:layout_width="30dp"
+             android:layout_height="30dp"
+             android:textSize="20dp"
+             android:gravity="center"
+             android:text="1"/>
+
+        <ImageView
+            android:id="@+id/iv_watch"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/watch"/>
+
+        <TextView
+            android:id="@+id/tv_watch"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:text="15"/>
+
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/linear"
+        android:layout_marginTop="16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="vertical"
+        android:scrollbars="vertical"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

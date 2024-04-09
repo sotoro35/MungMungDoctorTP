@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="8dp">
+
+    <LinearLayout
+        android:id="@+id/linear2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/circle_iv2"
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/bb"
+            android:layout_below="@id/linear2"/>
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="멍멍멍"
+            android:layout_toRightOf="@id/circle_iv2"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/linear2"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="오늘 날씨가 좋네요ㅎㅎ 사진 너무 귀여워요!!\n저도 여기 사료 쓰는데 넘 잘먹어서 몇년째 쓰고 있\n어요!!"
+        android:layout_below="@id/linear2"
+        android:paddingStart="24dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10시간 전"
+        android:textColor="#BBB9B9"
+        android:textSize="12sp"
+        android:layout_below="@id/tv2"
+        android:layout_alignParentRight="true"
+        android:paddingEnd="24dp"
+        android:layout_marginTop="8dp"/>
+
+
+</RelativeLayout>
