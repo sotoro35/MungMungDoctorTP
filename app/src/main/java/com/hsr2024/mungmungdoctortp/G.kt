@@ -13,6 +13,7 @@ class G {
         var pet_birthDate:String = ""
         var pet_gender:String = ""
         var pet_neutering:String = ""
+        var pet_breed:String = ""
 
     }
 }
