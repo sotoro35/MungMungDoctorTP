@@ -20,7 +20,7 @@ class IntroActivity : AppCompatActivity() {
         Glide.with(this).load(R.drawable.intro).into(binding.introIv)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this,SignupActivity::class.java))
+            startActivity(Intent(this,LoginActivity::class.java))
             finish()},2000)
 
     }
