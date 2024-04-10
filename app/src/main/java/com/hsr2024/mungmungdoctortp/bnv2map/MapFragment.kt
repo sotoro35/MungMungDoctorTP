@@ -23,7 +23,9 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.hsr2024.mungmungdoctortp.R
+import com.hsr2024.mungmungdoctortp.adapter.MapRecycelrAdapter
 import com.hsr2024.mungmungdoctortp.data.KakaoSearchPlaceResponse
+import com.hsr2024.mungmungdoctortp.data.Place
 import com.hsr2024.mungmungdoctortp.databinding.FragmentMapBinding
 import com.hsr2024.mungmungdoctortp.network.RetrofitService
 import com.naver.maps.geometry.LatLng
@@ -282,8 +284,8 @@ class MapFragment:Fragment() {
                 markerList.forEach {
                     it.infoWindow?.close()
                 }
-                val marker = overlay as Marker
 
+                val marker = overlay as Marker
                 if (marker.infoWindow == null){
                     //현재 마커에 정보 창이 열려있지 않을 경우 엶
                     infoWindow.open(marker)
@@ -324,9 +326,12 @@ class MapFragment:Fragment() {
             ) {
                 Log.d("aaa", p1.body().toString())
                 searchPlaceResponse = p1.body()
+                val itemList : List<Place> = searchPlaceResponse!!.documents
                 Log.d("aaa1", searchPlaceResponse!!.documents[0].place_name)
 
                 showPlaceOnMap()
+
+                binding.recyclerView.adapter = MapRecycelrAdapter(requireContext(), itemList)
             }
 
             override fun onFailure(p0: Call<KakaoSearchPlaceResponse>, p1: Throwable) {

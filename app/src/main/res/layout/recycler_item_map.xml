@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    >
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="8dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="#D1C093"
+        android:backgroundTint="@color/white"
+        android:elevation="4dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="MissingConstraints">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+        <TextView
+            android:id="@+id/tv_place_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="한양 동물메이컬 센터"
+            android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/tv_address_name"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:text="서울시 성동구 00동."
+            android:textSize="16sp"
+            android:layout_below="@id/tv_place_name"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/tv_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="11dp"
+            android:text="365"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            />
+
+        <ImageView
+            android:id="@+id/iv_phone"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/phone_image"
+            android:layout_below="@id/tv_distance"
+            android:layout_toRightOf="@id/tv_address_name"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="24sp"
+            />
+
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="02-2222-2222"
+            android:layout_marginTop="12dp"
+            android:textSize="16sp"
+            android:layout_below="@id/tv_address_name"
+
+           />
+
+
+
+
+
+    </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

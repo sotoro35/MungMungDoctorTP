@@ -1,29 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="MapFragment"
-        android:textSize="50sp"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="32dp"
+        android:elevation="4dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp">
+        <ImageView
+            android:id="@+id/iv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="16dp"
+            android:src="@drawable/refresh1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이 근처 장소 탐색"
+            android:textSize="16sp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginRight="16dp"/>
+    </androidx.cardview.widget.CardView>
+
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/map_fragment"
+        android:name="com.naver.maps.map.MapFragment"
         android:layout_width="match_parent"
-        android:layout_height="600dp"
-        android:name="com.naver.maps.map.MapFragment"/>
+        android:layout_height="match_parent" />
 
-
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/map_fragment">
-    <TextView
-        android:id="@+id/tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ddd"/>
-    </ScrollView>
+        android:layout_alignParentBottom="true"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="horizontal"
+       />
+
+   <de.hdodenhof.circleimageview.CircleImageView
+       android:id="@+id/civ_24"
+       android:layout_width="45dp"
+       android:layout_height="45dp"
+       android:src="@drawable/icon_24"
+       android:paddingBottom="6dp"
+       android:layout_toRightOf="@id/civ_my_location"
+       android:layout_above="@id/recycler_view"
+       android:layout_marginBottom="22dp"
+       />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/civ_my_location"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:src="@drawable/my_marker"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_above="@id/recycler_view"/>
 </RelativeLayout>
