@@ -29,7 +29,7 @@ class CareFragment:Fragment() {
         binding.note.setOnClickListener {  }
         binding.eyeAi.setOnClickListener {  }
         binding.skinAi.setOnClickListener {  }
-        binding.btn.setOnClickListener {  }
+        binding.btnHealth.setOnClickListener {  }
 
 
         if (G.pet_id != null && G.pet_id != ""){

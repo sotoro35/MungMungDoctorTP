@@ -25,6 +25,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        binding.btnTest.setOnClickListener { startActivity(Intent(this,MainActivity::class.java)) }
+
         binding.btnLogin.setOnClickListener { login() }
         binding.btnLoginKakao.setOnClickListener { loginKakao() }
         binding.btnLoginNaver.setOnClickListener { loginNaver() }
