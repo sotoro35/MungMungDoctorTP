@@ -15,12 +15,13 @@
         android:id="@+id/select_pet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="다른 반려견 보기 +"
-        android:padding="8dp"
-        android:layout_alignRight="@id/cardview"
         android:layout_below="@id/tool"
+        android:layout_alignRight="@id/cardview"
+        android:layout_marginTop="-1dp"
         android:clickable="true"
-        android:foreground="?android:attr/selectableItemBackground"/>
+        android:foreground="?android:attr/selectableItemBackground"
+        android:padding="8dp"
+        android:text="다른 반려견 보기 +" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardview"

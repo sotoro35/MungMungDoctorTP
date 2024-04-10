@@ -22,21 +22,30 @@
         <FrameLayout
             android:id="@+id/container_fragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
 
-        <androidx.drawerlayout.widget.DrawerLayout
-            android:id="@+id/drawer_nav_layou"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/toolbar">
-        <com.google.android.material.navigation.NavigationView
-            android:id="@+id/drawer_nav"
-            android:layout_width="230dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="end"
-            app:menu="@menu/drawer_nav"
-            app:headerLayout="@layout/drawer_header" />
-        </androidx.drawerlayout.widget.DrawerLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.drawerlayout.widget.DrawerLayout
+                    android:id="@+id/drawer_nav_layou"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <com.google.android.material.navigation.NavigationView
+                        android:id="@+id/drawer_nav"
+                        android:layout_width="230dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="end"
+                        app:menu="@menu/drawer_nav"
+                        app:headerLayout="@layout/drawer_header" />
+                </androidx.drawerlayout.widget.DrawerLayout>
+            </RelativeLayout>
+
+
+        </FrameLayout>
+
+
     </RelativeLayout>
 
     

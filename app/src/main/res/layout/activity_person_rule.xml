@@ -17,15 +17,10 @@
         app:titleCentered="true"
         android:layout_margin="8dp"/>
 
-    <ScrollView
+    <WebView
+        android:id="@+id/person_rule_webview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <WebView
-            android:id="@+id/person_rule_webview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </ScrollView>
-
+        android:layout_height="match_parent"/>
 
 
 </LinearLayout>
