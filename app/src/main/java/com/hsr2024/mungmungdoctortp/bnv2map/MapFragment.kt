@@ -2,7 +2,6 @@ package com.hsr2024.mungmungdoctortp.bnv2map
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
 import android.os.Looper
@@ -12,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -51,6 +49,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 
 class MapFragment:Fragment() {
 
+
     private val binding by lazy { FragmentMapBinding.inflate(layoutInflater) }
     //네이버클라우드플랫폼 - naver map api
     //클라이언트id :  glca44kwj8
@@ -68,6 +67,10 @@ class MapFragment:Fragment() {
     //kakao search API응답결과 객체 참조변수
     var searchPlaceResponse:KakaoSearchPlaceResponse? = null
 
+    private var myLocation: Location? = null//gps가안되거나 네트워크가안될수도있으니..
+    private lateinit var nearbyOR24Location: LatLng
+
+
 
 
 
@@ -78,13 +81,6 @@ class MapFragment:Fragment() {
     ): View? {
         locationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         locationSource = FusedLocationSource(requireActivity(), LOCATION_PERMISSION )
-        return binding.root
-
-    }//oncreateView
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
         //사용자위치 허가받았나체크
         permissionCheck()
@@ -96,10 +92,23 @@ class MapFragment:Fragment() {
                 fragmentManager.beginTransaction().add(R.id.map_fragment, it).commit()
             }
 
+        return binding.root
+
+    }//oncreateView
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        //onCreate에서 naver의 map_fragment로 트렌젝션시켰으니 그 이후에 LatLng(naver map꺼) 해야함
+        nearbyOR24Location = LatLng(0.0, 0.0)
+
+        binding.civMyLocation.setOnClickListener { showMeOnMap() }
+        binding.cvSearch.setOnClickListener { searchNearbyPlace() }
+        binding.civ24.setOnClickListener { search24Place() }
+
+
     }//onViewCreated
-
-
-
 
 
     private fun permissionCheck(){
@@ -121,16 +130,11 @@ class MapFragment:Fragment() {
         }
     }//permissionCheck()
 
-
-
     //퍼미션 요청 및 결과받아오는 작업을 대신하는 대행사 등록
     val permissionResultLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()){
         if (it) requestMyLocation()
         else Toast.makeText(requireContext(), "내 위치정보를 허용하지 않아 검색기능 제한됩니다.", Toast.LENGTH_SHORT).show()
     }
-
-
-
 
 
     private fun requestMyLocation(){
@@ -154,14 +158,12 @@ class MapFragment:Fragment() {
 
 
 
-    private var myLocation: Location? = null//gps가안되거나 네트워크가안될수도있으니..
-
-
     //위치정보 새로 갱신할때마다 발동하는 콜백 메소드. 추상클래스.
     private val locationCallback= object : LocationCallback(){
         override fun onLocationResult(p0: LocationResult) {
             super.onLocationResult(p0)
             myLocation = p0.lastLocation
+
 
             //위치탐색 종료됬으니 내 위치정보 업데이트 그만...
             locationProviderClient?.removeLocationUpdates(this)//this:Location Callback
@@ -189,14 +191,14 @@ class MapFragment:Fragment() {
         mapFragment!!.getMapAsync(object : OnMapReadyCallback {
             override fun onMapReady(map: NaverMap) {
 
+                //naver 지역검색 api호출- map이 준비가됬을때
+                kakaoPlaceSearch("동물병원", myLocation!!.longitude, myLocation!!.latitude, R.drawable.icon_hospital_marker)
+
+
                 naverMap = map
                 naverMap.maxZoom = 18.0
                 naverMap.minZoom = 5.0
                 naverMap.locationSource = locationSource
-
-                //naver 지역검색 api호출- map이 준비가됬을때
-                kakaoPlaceSearch()
-
 
 
                 //현재 내 위치를 지도의 중심위치로 설정 /내위치-위도,경도,등..
@@ -215,7 +217,7 @@ class MapFragment:Fragment() {
                 //카메라 설정
                 val cameraPosition = CameraPosition(
                     myPos,
-                    16.0, //줌레벨
+                    14.0, //줌레벨
                     20.0, //기울임 각도
                     180.0 //베어링 각도
                 )
@@ -228,12 +230,11 @@ class MapFragment:Fragment() {
                     marker.icon = OverlayImage.fromResource(R.drawable.my_marker)
                     marker.width =120
                     marker.height =120
-                    marker.captionText = "나 여깄어용"
+                    marker.captionText = "유저id"
                     marker.captionTextSize = 20f
                     marker.setCaptionAligns(Align.Top)
-                    marker.captionOffset = 30
-                    marker.captionColor = Color.RED
-
+                    marker.captionOffset = 20
+                    marker.captionColor = requireContext().resources.getColor(R.color.my_caption_color)
 
                     naverMap.locationSource = locationSource
                     ActivityCompat.requestPermissions(requireActivity(), permissions,LOCATION_PERMISSION)
@@ -242,7 +243,70 @@ class MapFragment:Fragment() {
         })// OnMapReadyCallback
 
 
-    }//naverMapAPI()
+    }//showMeOnMap()
+
+
+
+    private fun searchNearbyPlace(){
+       // naverMap.addOnCameraIdleListener { // 지도 이동이 멈추면 호출
+
+            val cameraPosition = naverMap.cameraPosition
+            val target = cameraPosition.target // 지도의 중심 좌표
+            nearbyOR24Location = target
+            //Toast.makeText(requireContext(), "${nearbyLocation.latitude}", Toast.LENGTH_SHORT).show()
+
+            // 여기에서 얻은 latitude와 longitude 값을 사용하여 kakao 지역 api
+             kakaoPlaceSearch("동물 병원",nearbyOR24Location.longitude, nearbyOR24Location.latitude, R.drawable.icon_hospital_marker)
+       // }
+    }//fun searchNearbyPlace()
+
+
+
+    private fun search24Place(){
+        val cameraPosition = naverMap.cameraPosition
+        val target = cameraPosition.target // 지도의 중심 좌표
+        nearbyOR24Location = target
+
+        kakaoPlaceSearch("24시 동물", nearbyOR24Location.longitude, nearbyOR24Location.latitude, R.drawable.icon_24_marker)
+
+    }
+
+
+
+
+
+    private fun kakaoPlaceSearch(query: String, longitude: Double, latitude: Double, markerIcon:Int ) {
+        //레트로핏
+        val builder = Retrofit.Builder()
+            .baseUrl("https://dapi.kakao.com")
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+
+        val retrofit = builder.build()
+        val retrofitService = retrofit.create(RetrofitService::class.java)
+
+        retrofitService.searchPlace(query, longitude, latitude).enqueue(object : Callback<KakaoSearchPlaceResponse>{
+            override fun onResponse(
+                p0: Call<KakaoSearchPlaceResponse>,
+                p1: Response<KakaoSearchPlaceResponse>
+            ) {
+                Log.d("aaa", p1.body().toString())
+                searchPlaceResponse = p1.body()
+                val itemList : List<Place> = searchPlaceResponse!!.documents
+                Log.d("aaa1", searchPlaceResponse!!.documents[0].place_name)
+
+                showPlaceOnMap(markerIcon)
+
+                binding.recyclerView.adapter = MapRecycelrAdapter(requireContext(), itemList)
+            }
+
+            override fun onFailure(p0: Call<KakaoSearchPlaceResponse>, p1: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+    }//kakaoPlaceSearch()
 
 
 
@@ -251,7 +315,7 @@ class MapFragment:Fragment() {
     var markerList : MutableList<Marker> = mutableListOf()
 
 
-    private fun showPlaceOnMap(){
+    private fun showPlaceOnMap(markerIcon : Int){
 
         searchPlaceResponse?.documents?.forEach {//기차 한칸.
             val title =it.place_name
@@ -262,12 +326,12 @@ class MapFragment:Fragment() {
             val marker:Marker= Marker()
             marker.position = LatLng(latitude,longitude)
             marker.map = naverMap
-            marker.icon = OverlayImage.fromResource(R.drawable.hospital_marker)
-            marker.width =120
-            marker.height =120
+            marker.icon = OverlayImage.fromResource(markerIcon)
+            marker.width =100
+            marker.height =100
             marker.setCaptionAligns(Align.Top)
             marker.captionOffset = 30
-            marker.captionColor = Color.RED
+            //marker.captionColor = Color.RED
 
             markerList.add(marker)
 
@@ -285,10 +349,13 @@ class MapFragment:Fragment() {
                     it.infoWindow?.close()
                 }
 
+
+
                 val marker = overlay as Marker
                 if (marker.infoWindow == null){
                     //현재 마커에 정보 창이 열려있지 않을 경우 엶
                     infoWindow.open(marker)
+                    binding.recyclerView.adapter = MapRecycelrAdapter(requireContext(), listOf(it))
                 } else {
                     //이미 현재 마커에 정보 창이 열러있을 경우 닫음
                     infoWindow.close()
@@ -309,40 +376,5 @@ class MapFragment:Fragment() {
 
 
 
-    private fun kakaoPlaceSearch() {
-        //레트로핏
-        val builder = Retrofit.Builder()
-            .baseUrl("https://dapi.kakao.com")
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
-
-        val retrofit = builder.build()
-        val retrofitService = retrofit.create(RetrofitService::class.java)
-
-        retrofitService.searchPlace("동물병원", myLocation?.longitude.toString(), myLocation?.latitude.toString()).enqueue(object : Callback<KakaoSearchPlaceResponse>{
-            override fun onResponse(
-                p0: Call<KakaoSearchPlaceResponse>,
-                p1: Response<KakaoSearchPlaceResponse>
-            ) {
-                Log.d("aaa", p1.body().toString())
-                searchPlaceResponse = p1.body()
-                val itemList : List<Place> = searchPlaceResponse!!.documents
-                Log.d("aaa1", searchPlaceResponse!!.documents[0].place_name)
-
-                showPlaceOnMap()
-
-                binding.recyclerView.adapter = MapRecycelrAdapter(requireContext(), itemList)
-            }
-
-            override fun onFailure(p0: Call<KakaoSearchPlaceResponse>, p1: Throwable) {
-                TODO("Not yet implemented")
-            }
-
-        })
-
-    }//naverPlaceSearch()
-
-
-
-
 }//fragment
+

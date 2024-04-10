@@ -30,7 +30,7 @@ class MapRecycelrAdapter(val context:Context, val itemList:List<Place>) : Adapte
         val item = itemList[position]
         holder.binding.tvPlaceName.text = item.place_name
         holder.binding.tvAddressName.text = item.address_name
-        holder.binding.tvDistance.text = item.distance
+        holder.binding.tvDistance.text = "${item.distance}m"
         holder.binding.tvPhone.text = item.phone
         holder.binding.ivPhone.setOnClickListener {
             //전화해주는인텐트

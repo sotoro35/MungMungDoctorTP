@@ -2,4 +2,6 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+<!--    유리-맵에서 유저위치 마커 캡션 칼라-->
+    <color name="my_caption_color">#FD6B9E</color>
 </resources>

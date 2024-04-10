@@ -20,7 +20,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginBottom="4dp"
             android:layout_marginLeft="16dp"
-            android:src="@drawable/refresh1"/>
+            android:src="@drawable/refresh"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -40,6 +40,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <de.hdodenhof.circleimageview.CircleImageView
+       android:id="@+id/civ_24"
+       android:layout_width="55dp"
+       android:layout_height="55dp"
+       android:layout_toRightOf="@id/civ_my_location"
+       android:layout_above="@id/recycler_view"
+       android:layout_marginBottom="16dp"
+       android:background="@drawable/map_civ_24_shape"
+
+       />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/civ_my_location"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_above="@id/recycler_view"
+        android:background="@drawable/map_civ_mylocation_shape"
+
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
@@ -47,26 +70,8 @@
         android:layout_alignParentBottom="true"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="horizontal"
-       />
+        app:backgroundTint="@android:color/transparent"
+        />
 
-   <de.hdodenhof.circleimageview.CircleImageView
-       android:id="@+id/civ_24"
-       android:layout_width="45dp"
-       android:layout_height="45dp"
-       android:src="@drawable/icon_24"
-       android:paddingBottom="6dp"
-       android:layout_toRightOf="@id/civ_my_location"
-       android:layout_above="@id/recycler_view"
-       android:layout_marginBottom="22dp"
-       />
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/civ_my_location"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:src="@drawable/my_marker"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_above="@id/recycler_view"/>
 </RelativeLayout>
