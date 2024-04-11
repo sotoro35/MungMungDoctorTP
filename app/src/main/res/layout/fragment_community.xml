@@ -15,7 +15,6 @@
         android:backgroundTint="#f8e6c4">
 
     <com.google.android.material.tabs.TabItem
-        android:id="@+id/community"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="피드" />

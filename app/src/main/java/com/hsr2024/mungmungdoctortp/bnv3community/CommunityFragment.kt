@@ -27,12 +27,6 @@ class CommunityFragment:Fragment() {
         val tab2Items=getItemListforTab2()
 
         // itemList 초기화
-        val feedData=FeedData("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s",
-            "feednickname","https://cdn-icons-png.flaticon.com/512/1361/1361876.png","2","3","Feed 내용","2024-01-02")
-        val qaData=QAData("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s","title",
-            "qanickname","3","6")
-        tab1Items.add(feedData)
-        tab2Items.add(qaData)
 
         binding.tablayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -60,6 +54,11 @@ class CommunityFragment:Fragment() {
     private fun setupTab1() {
         if (feedAdapter == null) {
             val tab1Items = getItemListforTab1()
+            val feedData=FeedData("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s",
+                "feednickname","https://cdn-icons-png.flaticon.com/512/1361/1361876.png","2","3","Feed 내용","2024-01-02")
+            tab1Items.add(feedData)
+            tab1Items.add(feedData)
+            tab1Items.add(feedData)
             feedAdapter = FeedListAdapter(requireContext(), tab1Items)
             binding.recyclerView.adapter = feedAdapter
         } else {
@@ -71,6 +70,11 @@ class CommunityFragment:Fragment() {
     private fun setupTab2() {
         if (qaAdapter == null) {
             val tab2Items = getItemListforTab2()
+            val qaData=QAData("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s","title",
+                "qanickname","3","6")
+            tab2Items.add(qaData)
+            tab2Items.add(qaData)
+            tab2Items.add(qaData)
             qaAdapter = QAListAdapter(requireContext(), tab2Items)
             binding.recyclerView.adapter = qaAdapter
         } else {
