@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".bnv1care.HealthDetailActivity">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:title="강아지 건강백서"
+        app:titleTextColor="@color/black"
+        app:titleMarginStart="80dp"
+        app:navigationIcon="@drawable/icon_back1"
+        android:background="@drawable/toolbar_layerlist"
+        />
+
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/toolbar"
+        android:gravity="center_horizontal">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_eye"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="안구"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="#AC9B9B"
+        android:backgroundTint="@color/white"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_skin"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="피부병"
+        android:layout_toRightOf="@id/btn_eye"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="#AC9B9B"
+        android:backgroundTint="@color/white"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_etc"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="그 외"
+        android:layout_toRightOf="@id/btn_skin"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:layout_below="@id/toolbar"
+        android:layout_marginTop="16dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="#AC9B9B"
+        android:backgroundTint="@color/white"/>
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:id="@+id/framelayout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/linear"
+        android:layout_marginTop="24dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+      <TextView
+          android:id="@+id/tv_backnaejang"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="백내장"
+          android:textSize="24sp"
+          android:layout_marginLeft="30dp"
+          android:layout_marginRight="30dp"
+          />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#8A8888"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/tv_backnaejang"
+            />
+        </RelativeLayout>
+
+    </FrameLayout>
+
+
+</RelativeLayout>

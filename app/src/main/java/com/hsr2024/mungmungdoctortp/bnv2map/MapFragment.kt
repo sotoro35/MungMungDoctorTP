@@ -45,6 +45,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import kotlin.properties.Delegates
 
 
 class MapFragment:Fragment() {
@@ -70,11 +71,12 @@ class MapFragment:Fragment() {
     private var myLocation: Location? = null//gps가안되거나 네트워크가안될수도있으니..
     private lateinit var nearbyOR24Location: LatLng
 
+    private var is24on by Delegates.notNull<Boolean>()
+
+    private lateinit var itemList : List<Place>
 
 
-
-
-    override fun onCreateView(
+        override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -92,6 +94,7 @@ class MapFragment:Fragment() {
                 fragmentManager.beginTransaction().add(R.id.map_fragment, it).commit()
             }
 
+
         return binding.root
 
     }//oncreateView
@@ -102,10 +105,30 @@ class MapFragment:Fragment() {
 
         //onCreate에서 naver의 map_fragment로 트렌젝션시켰으니 그 이후에 LatLng(naver map꺼) 해야함
         nearbyOR24Location = LatLng(0.0, 0.0)
+        is24on = false
 
         binding.civMyLocation.setOnClickListener { showMeOnMap() }
         binding.cvSearch.setOnClickListener { searchNearbyPlace() }
-        binding.civ24.setOnClickListener { search24Place() }
+        binding.civ24.setOnClickListener {
+            Log.d("ccccc", "찍힌냐")
+            if(is24on){ //이미 켜져 있는 상태..
+                //마커들 지우기..
+
+                markerList24.forEach {
+                    Log.d("ffff", "마커리스트가 널이되나")
+                    it.map = null
+                }
+                markerList24.clear()
+                //리사클러 지우기..
+                searchNearbyPlace()
+                is24on=false
+            }else{
+                //24 장소 찾아줘..
+                search24Place()
+            }
+            //search24Place()
+        }
+
 
 
     }//onViewCreated
@@ -188,8 +211,12 @@ class MapFragment:Fragment() {
 
     private fun showMeOnMap(){
 
+
+
         mapFragment!!.getMapAsync(object : OnMapReadyCallback {
             override fun onMapReady(map: NaverMap) {
+
+
 
                 //naver 지역검색 api호출- map이 준비가됬을때
                 kakaoPlaceSearch("동물병원", myLocation!!.longitude, myLocation!!.latitude, R.drawable.icon_hospital_marker)
@@ -263,10 +290,11 @@ class MapFragment:Fragment() {
 
 
     private fun search24Place(){
+        Log.d("ffff", "서치24플레이스 메소드는 실행은됬나")
         val cameraPosition = naverMap.cameraPosition
         val target = cameraPosition.target // 지도의 중심 좌표
         nearbyOR24Location = target
-
+        Log.d("ffff", "서치24.. 지도좌표는 받아오는가")
         kakaoPlaceSearch("24시 동물", nearbyOR24Location.longitude, nearbyOR24Location.latitude, R.drawable.icon_24_marker)
 
     }
@@ -276,6 +304,7 @@ class MapFragment:Fragment() {
 
 
     private fun kakaoPlaceSearch(query: String, longitude: Double, latitude: Double, markerIcon:Int ) {
+        Log.d("ffff", "카카오서치는 하는가")
         //레트로핏
         val builder = Retrofit.Builder()
             .baseUrl("https://dapi.kakao.com")
@@ -292,9 +321,12 @@ class MapFragment:Fragment() {
             ) {
                 Log.d("aaa", p1.body().toString())
                 searchPlaceResponse = p1.body()
-                val itemList : List<Place> = searchPlaceResponse!!.documents
+                //val itemList : List<Place> = searchPlaceResponse!!.documents
+                itemList = searchPlaceResponse!!.documents
                 Log.d("aaa1", searchPlaceResponse!!.documents[0].place_name)
 
+
+                Log.d("ffff", "쇼플레이스온맵하기전")
                 showPlaceOnMap(markerIcon)
 
                 binding.recyclerView.adapter = MapRecycelrAdapter(requireContext(), itemList)
@@ -313,14 +345,17 @@ class MapFragment:Fragment() {
 
 
     var markerList : MutableList<Marker> = mutableListOf()
+    var markerList24 : MutableList<Marker> = mutableListOf()
 
 
     private fun showPlaceOnMap(markerIcon : Int){
 
-        searchPlaceResponse?.documents?.forEach {//기차 한칸.
-            val title =it.place_name
-            var longitude = it.x.toDouble()
-            var latitude = it.y.toDouble()
+        Log.d("ffff", "쇼플레이스온맵되나")
+
+        searchPlaceResponse?.documents?.forEach {place->//기차 한칸.
+            val title =place.place_name
+            var longitude = place.x.toDouble()
+            var latitude = place.y.toDouble()
 
 
             val marker:Marker= Marker()
@@ -333,7 +368,42 @@ class MapFragment:Fragment() {
             marker.captionOffset = 30
             //marker.captionColor = Color.RED
 
-            markerList.add(marker)
+
+            //생성자로 받은 마커아이콘이 24시그림이면.
+            if (markerIcon == R.drawable.icon_24_marker){
+                //마커잘찍힘. 찍힌상태니까 true로바꿔줌
+                markerList24.add(marker)
+                Log.d("ffff", "나오나dd")
+
+                is24on = true
+            }else{
+                markerList.add(marker)
+            }
+
+
+
+
+
+
+//            if (is24on==true){
+//                //is24on이 true인 상황에서 버튼누르면 false로 바뀜. is24on이 false이면 마커리스트에 기차 0 개 만들기
+//                binding.civ24.setOnClickListener {
+//                    markerList24.forEach {
+//                        Log.d("ffff", "마커리스트가 널이되나")
+//                        it.map = null
+//                    }
+//                    markerList24.clear()
+//                    is24on = false
+//                }
+//            }else{//is24on이 false다?
+//                Toast.makeText(requireContext(), "dd", Toast.LENGTH_SHORT).show()
+//                binding.civ24.setOnClickListener {
+//                    is24on = true
+//                    search24Place()
+//                }
+//            }
+
+
 
             val infoWindow = InfoWindow()
             infoWindow.adapter = object : InfoWindow.DefaultTextAdapter(requireContext()){
@@ -349,13 +419,11 @@ class MapFragment:Fragment() {
                     it.infoWindow?.close()
                 }
 
-
-
                 val marker = overlay as Marker
                 if (marker.infoWindow == null){
                     //현재 마커에 정보 창이 열려있지 않을 경우 엶
                     infoWindow.open(marker)
-                    binding.recyclerView.adapter = MapRecycelrAdapter(requireContext(), listOf(it))
+                    binding.recyclerView.adapter = MapRecycelrAdapter(requireContext(), listOf(place))
                 } else {
                     //이미 현재 마커에 정보 창이 열러있을 경우 닫음
                     infoWindow.close()

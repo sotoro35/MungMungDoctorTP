@@ -19,16 +19,27 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".bnv1care.HealthDetailActivity"
+            android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
+
+
+        <activity
             android:name=".bnv2map.MapDetailActivity"
             android:exported="false" />
         <activity
             android:name=".main.MainActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity> <!-- 네이버 map에 클라이언트 아이디 지정하기 -->
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
