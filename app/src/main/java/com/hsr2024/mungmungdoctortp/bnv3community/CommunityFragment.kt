@@ -12,6 +12,8 @@ class CommunityFragment:Fragment() {
     private val binding by lazy { FragmentCommunityBinding.inflate(layoutInflater) }
     private var feedAdapter:FeedListAdapter? = null
     private var qaAdapter: QAListAdapter? = null
+    private val tab1Items = getItemListforTab1()
+    private val tab2Items = getItemListforTab2()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,7 +55,7 @@ class CommunityFragment:Fragment() {
     //아이템 리스트 업데이트
     private fun setupTab1() {
         if (feedAdapter == null) {
-            val tab1Items = getItemListforTab1()
+            //초기 tap 눌렀을 경우
             val feedData=FeedData("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s",
                 "feednickname","https://cdn-icons-png.flaticon.com/512/1361/1361876.png","2","3","Feed 내용","2024-01-02")
             tab1Items.add(feedData)
@@ -62,14 +64,13 @@ class CommunityFragment:Fragment() {
             feedAdapter = FeedListAdapter(requireContext(), tab1Items)
             binding.recyclerView.adapter = feedAdapter
         } else {
-            val tab1Items=getItemListforTab1()
+            binding.recyclerView.adapter = feedAdapter
             feedAdapter?.setData(tab1Items)
-            feedAdapter?.notifyDataSetChanged()
         }
     }
     private fun setupTab2() {
         if (qaAdapter == null) {
-            val tab2Items = getItemListforTab2()
+            //초기 tap 눌렀을 경우
             val qaData=QAData("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s","title",
                 "qanickname","3","6")
             tab2Items.add(qaData)
@@ -78,9 +79,8 @@ class CommunityFragment:Fragment() {
             qaAdapter = QAListAdapter(requireContext(), tab2Items)
             binding.recyclerView.adapter = qaAdapter
         } else {
-            val tab2Items = getItemListforTab2()
+            binding.recyclerView.adapter = qaAdapter
             qaAdapter?.setData(tab2Items)
-            qaAdapter?.notifyDataSetChanged()
         }
     }
 }
