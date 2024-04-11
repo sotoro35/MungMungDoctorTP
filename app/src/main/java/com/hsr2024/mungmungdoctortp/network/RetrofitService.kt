@@ -45,8 +45,8 @@ interface RetrofitService {
 
     //파일 업로드
     @Multipart
-    @POST("/img/upload.php")
-    fun uploadImage(@Part("file") file: MultipartBody.Part) : Call<String> // 응답값 업로드된 이미지 url, 실패 201
+    @POST("/upload/onefileupload.php")
+    fun onefileuploadImage(@Part("file") file: MultipartBody.Part) : Call<String> // 응답값 업로드된 이미지 url, 실패 5404, 성공시 이미지 url
 
     //ai 정보
     @POST("/service/ai.php")

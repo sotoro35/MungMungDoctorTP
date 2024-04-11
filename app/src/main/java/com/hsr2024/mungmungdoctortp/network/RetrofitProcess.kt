@@ -1,7 +1,12 @@
 package com.hsr2024.mungmungdoctortp.network
 
+import android.app.AlertDialog
 import android.content.Context
+import android.database.Cursor
+import android.net.Uri
+import android.provider.MediaStore
 import android.util.Log
+import androidx.loader.content.CursorLoader
 import com.hsr2024.mungmungdoctortp.data.LoginData
 import com.hsr2024.mungmungdoctortp.data.LoginResponse
 import com.hsr2024.mungmungdoctortp.data.SignUpData
@@ -9,7 +14,27 @@ import com.hsr2024.mungmungdoctortp.data.UserDelete
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.net.URLEncoder
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.io.OutputStream
+import android.content.ContextWrapper
+import android.content.Intent
+import android.os.Build
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import com.bumptech.glide.Glide
+import com.hsr2024.mungmungdoctortp.main.MainActivity
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Retrofit
+import retrofit2.converter.scalars.ScalarsConverterFactory
+import retrofit2.create
+import retrofit2.http.Multipart
+import java.net.URI
 
 class RetrofitProcess(
     val context: Context,
@@ -171,5 +196,86 @@ class RetrofitProcess(
 //    }
 //
 //}).userWithDrawRequest()
+
+    fun onefileUploadRequest(){
+        val uri=(params as Uri)
+        val imgPath=onegetRealPathfromUri(uri)
+        val file=File(imgPath)
+        val requestBody:RequestBody=RequestBody.create(MediaType.parse("image/*"),file) //일종의 진공팩
+        val retrofitService = setRetrofitService()
+
+        val part=MultipartBody.Part.createFormData("img1",file.name,requestBody)
+        val call = retrofitService.onefileuploadImage(part)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+
+        })
+    }
+// onefileUploadRequest 사용법
+//    // val intent = if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.TIRAMISU) Intent(MediaStore.ACTION_PICK_IMAGES) else Intent(Intent.ACTION_OPEN_DOCUMENT).setType("image/^*")
+//    // resultLauncher.launch(intent)
+//    // }
+//    // private val resultLauncher=registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ imgUri ->
+//    // val params= Uri("위의 imgUri 정보")
+//    RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val code=(response as String)
+//        Log.d("signup code","$code") // 실패 시 5404, 성공 시 이미지 경로
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("signup fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).onefileUploadRequest()
+
+    private fun onegetRealPathfromUri(uri:Uri) : String? {
+        //android 10 버전 부터는 Uri를 통해 파일의 실제 경로를 얻을 수 있는 방법이 없어졌음
+        //그래서 uri에 해당하는 파일을 복사하여 임시로 파일을 만들고 그 파일의 경로를 이용하여 서버에 전송
+
+        //Uri[미디어저장소의 DB 주소]로부터 파일의 이름을 얻어오기 - DB SELECT 쿼리 작업을 해주는 기능을 가진 객체를 이용
+        // CursorLoader : Content, uri객체, 컬럼 위치, 조건(where), 조건에 해당되는 값, 오름 or 내림차순
+        val cursorLoader=CursorLoader(context, uri, null, null, null, null)
+        //비동기로 로딩해라
+        val cursor:Cursor?=cursorLoader.loadInBackground()
+        val fileName:String?=cursor?.run {
+            moveToFirst()
+            // 컬럼 위치 array MediaStore.Images.Media 중 이미지 이름을 담고 있는 멤버변수 DISPLAY_NAME
+            getString(getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME))
+        }
+        //복사본이 저장될 파일의 경로와 파일명.확장자
+        //externalCacheDir : /stroage/emulated/0/Android/data/패키지이름/cache/
+        //fileName : 1000000076.jpg
+        val file=File((context as MainActivity).externalCacheDir,fileName)
+        //AlertDialog.Builder(this).setMessage(file.absolutePath).create().show()
+
+        //이제 파일 복사 작업 수행(로드된 파일 경로(uri)에서 파일을 가져와(inputStream) 파일을 실제 경로에 저장(outputStream)
+        // contentResolver 컨텐츠 주소 해독
+        val inputStream:InputStream=(context as MainActivity).contentResolver.openInputStream(uri) ?: return null
+        val outputStream:OutputStream=FileOutputStream(file)
+
+        while(true){
+            val buf:ByteArray= ByteArray(1024) // 빈 바이트 배열 [1KB]
+            val len:Int=inputStream.read(buf) //스트림을 통해 읽어들인 바이트들을 buf 배열에 넣기 -- 읽어들인 데이터의 크기를 리턴
+            if(len <= 0) break //읽어들인 데이터 크기가 0일 경우 break
+            outputStream.write(buf, 0, len) //buf 배열에 있는 바이트들을 file경로로 던지기. 첫시작(0) ~ 1023번, 다음 첫시작(1024) ~ 1027번 ..
+        } // 반복문이 끝났으면 복사가 완료
+        inputStream.close()
+        outputStream.close()
+        AlertDialog.Builder(context).setMessage(file.absolutePath).create().show()
+        return file.absolutePath
+    }
+
 
 } // Class
