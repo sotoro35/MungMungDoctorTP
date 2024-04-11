@@ -170,6 +170,6 @@ class RetrofitProcess(
 //        Log.d("signup fail",errorMsg!!) // 에러 메시지
 //    }
 //
-//}).signupRequest()
+//}).userWithDrawRequest()
 
 } // Class
