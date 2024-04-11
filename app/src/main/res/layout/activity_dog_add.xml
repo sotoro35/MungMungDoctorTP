@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".login.DogAddActivity">
+    android:background="@color/white"
+    tools:context=".bnv4mypage.DogAddActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
@@ -19,8 +20,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/add_pet_image"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         app:civ_border_width="1dp"
         app:civ_border_color="#FF9800"
         android:src="@drawable/pet_image"

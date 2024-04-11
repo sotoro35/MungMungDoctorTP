@@ -2,25 +2,21 @@ package com.hsr2024.mungmungdoctortp.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
-import android.widget.EditText
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.hsr2024.mungmungdoctortp.R
 import com.hsr2024.mungmungdoctortp.bnv1care.CareFragment
 import com.hsr2024.mungmungdoctortp.bnv2map.MapFragment
 import com.hsr2024.mungmungdoctortp.bnv3community.CommunityFragment
 import com.hsr2024.mungmungdoctortp.databinding.ActivityMainBinding
-import com.hsr2024.mungmungdoctortp.login.ChangeProfileActivity
-import com.hsr2024.mungmungdoctortp.login.DogAddActivity
-import com.hsr2024.mungmungdoctortp.login.PersonRuleActivity
+import com.hsr2024.mungmungdoctortp.bnv4mypage.ChangeProfileActivity
+import com.hsr2024.mungmungdoctortp.bnv4mypage.DogAddActivity
+import com.hsr2024.mungmungdoctortp.bnv4mypage.MypageFragment
+import com.hsr2024.mungmungdoctortp.bnv4mypage.PersonRuleActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -41,35 +37,11 @@ class MainActivity : AppCompatActivity() {
                 R.id.menu_care -> supportFragmentManager.beginTransaction().replace((R.id.container_fragment),CareFragment()).commit()
                 R.id.menu_map -> supportFragmentManager.beginTransaction().replace((R.id.container_fragment),MapFragment()).commit()
                 R.id.menu_community -> supportFragmentManager.beginTransaction().replace((R.id.container_fragment),CommunityFragment()).commit()
+                R.id.menu_mypage -> supportFragmentManager.beginTransaction().replace((R.id.container_fragment),MypageFragment()).commit()
             }
            true
             }
 
-
-        //drawerNavigation 설정
-
-        binding.drawerNav.setNavigationItemSelectedListener {
-            when(it.itemId){
-                R.id.menu_person_rule -> startActivity(Intent(this@MainActivity,PersonRuleActivity::class.java))
-                R.id.menu_change_profile -> startActivity(Intent(this@MainActivity,ChangeProfileActivity::class.java))
-                R.id.menu_logout -> Toast.makeText(this@MainActivity, "로그아웃", Toast.LENGTH_SHORT).show()
-                R.id.menu_user_delete -> userDelete()
-
-            }
-
-            binding.drawerNavLayou.closeDrawer(binding.drawerNav)
-            return@setNavigationItemSelectedListener false
-        }
-
-
-        val drawableToggle = ActionBarDrawerToggle(this,binding.drawerNavLayou,binding.toolbar,R.string.open,R.string.close)
-        drawableToggle.syncState() // 토글버튼 동기화
-        drawableToggle.isDrawerIndicatorEnabled = true
-        binding.drawerNavLayou.addDrawerListener(drawableToggle)
-
-        binding.drawerNav.getHeaderView(0).findViewById<RelativeLayout>(R.id.btn_add_pet).setOnClickListener {
-            startActivity(Intent(this@MainActivity,DogAddActivity::class.java))
-        }
 
     } // onCreate...
 

@@ -25,13 +25,13 @@
             android:name=".bnv1care.EyeAiActivity"
             android:exported="false" />
         <activity
-            android:name=".login.DogAddActivity"
+            android:name=".bnv4mypage.DogAddActivity"
             android:exported="false" />
         <activity
-            android:name=".login.ChangeProfileActivity"
+            android:name=".bnv4mypage.ChangeProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".login.PersonRuleActivity"
+            android:name=".bnv4mypage.PersonRuleActivity"
             android:exported="false" />
         <activity
             android:name=".login.SignupActivity"

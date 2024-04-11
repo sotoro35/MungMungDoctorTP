@@ -1,4 +1,4 @@
-package com.hsr2024.mungmungdoctortp.login
+package com.hsr2024.mungmungdoctortp.bnv4mypage
 
 import android.os.Bundle
 import android.webkit.WebChromeClient
@@ -17,10 +17,12 @@ class PersonRuleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        binding.toolbar.setNavigationOnClickListener { finish() }
+
         binding.personRuleWebview.webViewClient = WebViewClient()
         binding.personRuleWebview.webChromeClient = WebChromeClient()
         binding.personRuleWebview.settings.javaScriptEnabled = true
 
-        binding.personRuleWebview.loadUrl("https://reliable-sphere-786.notion.site/f1338bf46e36453986e46b970256645f?pvs=4")
+        binding.personRuleWebview.loadUrl("https://reliable-sphere-786.notion.site/c7a3f8656ae14ad3b4cf848c449bfc6c")
     }
 }

@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".login.ChangeProfileActivity">
+    android:background="@color/white"
+    tools:context=".bnv4mypage.ChangeProfileActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
@@ -46,16 +47,6 @@
         android:textColor="#FF6B00"
         android:layout_marginTop="16dp"
         android:layout_gravity="center"/>
-
-    <TextView
-        android:id="@+id/btn_change_user_nickname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="닉네임변경"
-        android:padding="8dp"
-        android:layout_gravity="center"/>
-
-
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/change_password"

@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".login.SignupActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -96,6 +97,13 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"/>
     </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="12dp"
+        android:text="닉네임,이메일은\n가입 이후 수정이 불가능합니다."/>
 
     <TextView
         android:id="@+id/btn_signup_save"
