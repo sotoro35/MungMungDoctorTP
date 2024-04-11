@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="위 사진으로 검사가 진행됩니다"
+        android:layout_marginTop="12dp"
         android:gravity="center"/>
 
     <LinearLayout
@@ -24,7 +25,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_marginTop="32dp">
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp">
         <TextView
             android:id="@+id/test_start"
             android:layout_width="match_parent"

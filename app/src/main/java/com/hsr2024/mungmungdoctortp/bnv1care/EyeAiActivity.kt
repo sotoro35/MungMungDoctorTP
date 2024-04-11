@@ -5,11 +5,16 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.hsr2024.mungmungdoctortp.R
 import com.hsr2024.mungmungdoctortp.databinding.ActivityEyeAiBinding
 
@@ -35,6 +40,7 @@ class EyeAiActivity : AppCompatActivity() {
 
     }
 
+    lateinit var alertDialog: AlertDialog
     private fun clickGallery(){
         if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.TIRAMISU) resultLauncher.launch(Intent(MediaStore.ACTION_PICK_IMAGES))
         else resultLauncher.launch(Intent(Intent.ACTION_OPEN_DOCUMENT).setType("image/*"))
@@ -46,6 +52,13 @@ class EyeAiActivity : AppCompatActivity() {
             val uri = it.data?.data
             if (uri != null){
 
+                val dialogV = layoutInflater.inflate(R.layout.dialog_ai_image,null)
+                val image = dialogV.findViewById<ImageView>(R.id.test_select_image)
+                image.setImageURI(uri)
+                val builder = AlertDialog.Builder(this)
+                builder.setView(dialogV)
+                alertDialog = builder.create()
+                alertDialog.show()
 
             }
         }
