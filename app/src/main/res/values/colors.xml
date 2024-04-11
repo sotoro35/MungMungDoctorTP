@@ -4,4 +4,7 @@
     <color name="white">#FFFFFFFF</color>
 <!--    유리-맵에서 유저위치 마커 캡션 칼라-->
     <color name="my_caption_color">#FD6B9E</color>
+<!--    헬스디테일액티비티에서 버튼백그라운드틴트랑 버튼텍스트칼라-->
+    <color name="health_detail_btn_bgcolor">#F8AD95</color>
+    <color name="health_detail_btn_tvcolor">#CF6262</color>
 </resources>
