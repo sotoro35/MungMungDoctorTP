@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.hsr2024.mungmungdoctortp.databinding.CommentItemBinding
 import com.hsr2024.mungmungdoctortp.databinding.FeeditemBinding
 
-class FeedListAdapter(val context: Context, val items:List<FeedData>) : Adapter<FeedListAdapter.VH>() {
+class FeedListAdapter(val context: Context, var items:List<FeedData>) : Adapter<FeedListAdapter.VH>() {
     inner class VH(val binding: FeeditemBinding) : ViewHolder(binding.root)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)=VH(FeeditemBinding.inflate(LayoutInflater.from(context),parent,false))
     override fun getItemCount()=items.size
@@ -22,5 +22,11 @@ class FeedListAdapter(val context: Context, val items:List<FeedData>) : Adapter<
         holder.binding.tvComment.text=item.comment
         holder.binding.content.text=item.content
         holder.binding.tvDate.text=item.create_date
+    }
+
+    // 데이터 업데이트
+    fun setData(newItems: List<FeedData>) {
+        items = newItems
+        notifyDataSetChanged()
     }
 }
