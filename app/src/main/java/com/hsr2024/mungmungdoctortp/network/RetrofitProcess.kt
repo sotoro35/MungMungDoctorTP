@@ -274,7 +274,7 @@ class RetrofitProcess(
 //        Log.d("signup fail",errorMsg!!) // 에러 메시지
 //    }
 //
-//}).userWithDrawRequest()
+//}).userModifyRequest()
 
     private fun onegetRealPathfromUri(uri:Uri) : String? {
         //android 10 버전 부터는 Uri를 통해 파일의 실제 경로를 얻을 수 있는 방법이 없어졌음
