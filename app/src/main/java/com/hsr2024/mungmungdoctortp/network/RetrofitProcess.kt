@@ -267,7 +267,7 @@ class RetrofitProcess(
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val code=(response as String)
-//        Log.d("signup code","$code") // 1220 회원 정보 수정 성공, 1230 회원 정보 수정 실패, 4204 서비스 회원 아님, 4203 이메일 로그인 시 입력 정보 잘못되어 로그인 실패
+//        Log.d("signup code","$code") // 1220 회원 정보 수정 성공, 1230 회원 정보 수정 실패, 4204 서비스 회원 아님
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
