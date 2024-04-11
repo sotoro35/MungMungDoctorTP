@@ -26,6 +26,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
+import com.hsr2024.mungmungdoctortp.data.UserChange
 import com.hsr2024.mungmungdoctortp.main.MainActivity
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -239,6 +240,41 @@ class RetrofitProcess(
 //    }
 //
 //}).onefileUploadRequest()
+
+    fun userModifyRequest(){
+        val retrofitService = setRetrofitService()
+        // 파라미터를 Json 형태로 변환
+        val userChange=(params as UserChange)
+        val call = retrofitService.userModify(userChange)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+
+        })
+    }
+// userModifyRequest 사용법
+//val params= UserChange("이메일정보", "패스워드", "provider_id", "userModifyRequest으로 나온 url값", val login_type:String)
+//RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val code=(response as String)
+//        Log.d("signup code","$code") // 1220 회원 정보 수정 성공, 1230 회원 정보 수정 실패, 4204 서비스 회원 아님, 4203 이메일 로그인 시 입력 정보 잘못되어 로그인 실패
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("signup fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).userWithDrawRequest()
 
     private fun onegetRealPathfromUri(uri:Uri) : String? {
         //android 10 버전 부터는 Uri를 통해 파일의 실제 경로를 얻을 수 있는 방법이 없어졌음
