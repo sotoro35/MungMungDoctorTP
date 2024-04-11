@@ -21,7 +21,7 @@
             android:layout_below="@id/linear2"/>
 
         <TextView
-            android:id="@+id/tv"
+            android:id="@+id/tv_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="멍멍멍"
@@ -32,7 +32,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tv2"
+        android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="오늘 날씨가 좋네요ㅎㅎ 사진 너무 귀여워요!!\n저도 여기 사료 쓰는데 넘 잘먹어서 몇년째 쓰고 있\n어요!!"
@@ -40,12 +40,13 @@
         android:paddingStart="24dp"/>
 
     <TextView
+        android:id="@+id/tv_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="10시간 전"
         android:textColor="#BBB9B9"
         android:textSize="12sp"
-        android:layout_below="@id/tv2"
+        android:layout_below="@id/tv_title"
         android:layout_alignParentRight="true"
         android:paddingEnd="24dp"
         android:layout_marginTop="8dp"/>
