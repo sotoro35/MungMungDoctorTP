@@ -1,12 +1,12 @@
 package com.hsr2024.mungmungdoctortp.bnv3community
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
-import com.hsr2024.mungmungdoctortp.databinding.CommentItemBinding
 import com.hsr2024.mungmungdoctortp.databinding.FeeditemBinding
 
 class FeedListAdapter(val context: Context, var items:List<FeedData>) : Adapter<FeedListAdapter.VH>() {
@@ -22,6 +22,12 @@ class FeedListAdapter(val context: Context, var items:List<FeedData>) : Adapter<
         holder.binding.tvComment.text=item.comment
         holder.binding.content.text=item.content
         holder.binding.tvDate.text=item.create_date
+
+        holder.binding.root.setOnClickListener {
+            val intent= Intent(context, CommentActivity::class.java)
+            intent.putExtra("item",item.comment)
+            context.startActivity(intent)
+        }
     }
 
     // 데이터 업데이트

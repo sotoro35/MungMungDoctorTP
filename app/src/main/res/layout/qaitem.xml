@@ -9,6 +9,13 @@
     android:layout_margin="8dp"
     android:backgroundTint="@color/white">
 
+    <TextView
+        android:id="@+id/qa_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="qa_id"
+        android:visibility="gone"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

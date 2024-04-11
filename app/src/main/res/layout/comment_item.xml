@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/white"
-    android:padding="8dp">
+    android:layout_margin="16dp">
+
+    <TextView
+        android:id="@+id/comment_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="comment_id"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:id="@+id/linear2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="40dp">
+        android:layout_marginTop="8dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/circle_iv2"
@@ -35,9 +42,10 @@
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="오늘 날씨가 좋네요ㅎㅎ 사진 너무 귀여워요!!\n저도 여기 사료 쓰는데 넘 잘먹어서 몇년째 쓰고 있\n어요!!"
         android:layout_below="@id/linear2"
-        android:paddingStart="24dp"/>
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="오늘 날씨가 좋네요ㅎㅎ 사진 너무 귀여워요!!\n저도 여기 사료 쓰는데 넘 잘먹어서 몇년째 쓰고 있\n어요!!" />
 
     <TextView
         android:id="@+id/tv_date"
@@ -48,7 +56,7 @@
         android:textSize="12sp"
         android:layout_below="@id/tv_title"
         android:layout_alignParentRight="true"
-        android:paddingEnd="24dp"
+        android:paddingEnd="8dp"
         android:layout_marginTop="8dp"/>
 
 

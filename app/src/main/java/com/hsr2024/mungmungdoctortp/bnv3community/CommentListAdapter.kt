@@ -1,6 +1,7 @@
 package com.hsr2024.mungmungdoctortp.main
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter

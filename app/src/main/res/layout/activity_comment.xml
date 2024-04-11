@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main.CommentActivity"
+    tools:context=".bnv3community.CommentActivity"
     android:background="@color/white"
     android:padding="8dp">
 
@@ -23,6 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_marginTop="16dp"
         android:orientation="vertical"
         android:layout_below="@id/toolbar"/>
 
@@ -47,15 +48,15 @@
     <TextView
         android:id="@+id/tv_register"
         android:layout_width="50dp"
-        android:layout_height="30dp"
+        android:layout_height="35dp"
         android:text="등록"
         android:gravity="center"
         android:textColor="@color/black"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp"
         android:layout_toRightOf="@id/layout_comment"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/bg_layout"
-        android:layout_margin="4dp"/>
+        android:background="@drawable/bg_layout"/>
 
 
 </RelativeLayout>

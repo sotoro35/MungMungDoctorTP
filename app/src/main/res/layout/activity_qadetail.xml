@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="8dp"
-    tools:context=".main.QADetailActivity">
+    tools:context=".bnv3community.QADetailActivity"
+    android:background="@color/white">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
@@ -23,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
-        android:padding="32dp">
+        android:padding="16dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/circle_iv"
@@ -114,5 +115,35 @@
 
     </RelativeLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_comment"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:hint="댓글을 입력해주세요"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:backgroundTint="@color/white"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_layout">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textMultiLine"
+            android:lines="1"
+            android:gravity="center"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_register"
+        android:layout_width="50dp"
+        android:layout_height="35dp"
+        android:text="등록"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp"
+        android:layout_toRightOf="@id/layout_comment"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_layout"/>
 
 </RelativeLayout>

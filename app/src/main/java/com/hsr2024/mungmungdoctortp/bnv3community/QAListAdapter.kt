@@ -1,6 +1,7 @@
 package com.hsr2024.mungmungdoctortp.bnv3community
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
@@ -19,6 +20,12 @@ class QAListAdapter(val context:Context, var items:List<QAData>) : Adapter<QALis
         holder.binding.tvNickname.text=item.nickname
         holder.binding.tvViewcount.text=item.view_count
         holder.binding.tvComment.text=item.comment_count
+
+        holder.binding.root.setOnClickListener {
+            val intent= Intent(context, QADetailActivity::class.java)
+            intent.putExtra("item",item.title)
+            context.startActivity(intent)
+        }
     }
 
     // 데이터 업데이트
