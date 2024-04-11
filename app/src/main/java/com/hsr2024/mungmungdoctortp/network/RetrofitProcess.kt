@@ -5,6 +5,7 @@ import android.util.Log
 import com.hsr2024.mungmungdoctortp.data.LoginData
 import com.hsr2024.mungmungdoctortp.data.LoginResponse
 import com.hsr2024.mungmungdoctortp.data.SignUpData
+import com.hsr2024.mungmungdoctortp.data.UserDelete
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -121,8 +122,6 @@ class RetrofitProcess(
 
         })
     }
-}
-
 // dupliCheckRequest 사용법
 //RetrofitProcess(this,params="중복체크할닉네임", callback = object : RetrofitCallback {
 //    override fun onResponseListSuccess(response: List<Any>?) {}
@@ -137,3 +136,40 @@ class RetrofitProcess(
 //    }
 //
 //}).dupliCheckRequest()
+
+    fun userWithDrawRequest(){
+        val retrofitService = setRetrofitService()
+        // 파라미터를 Json 형태로 변환
+        val userDelete=(params as UserDelete)
+        val call = retrofitService.withdraw(userDelete)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+
+        })
+    }
+// userWithDrawRequest 사용법
+//val params= UserDelete("이메일정보","패스워드 정보","provider_id", "로그인 타입")
+//RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val code=(response as String)
+//        Log.d("signup code","$code") //1220 회원탈퇴 성공, 1230 회원탈퇴 실패, 4204 서비스 회원 아님, 4203 이메일 로그인 시 입력 정보 잘못되어 로그인 실패
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("signup fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).signupRequest()
+
+} // Class

@@ -2,14 +2,22 @@ package com.hsr2024.mungmungdoctortp.network
 
 import com.hsr2024.mungmungdoctortp.data.AiRequest
 import com.hsr2024.mungmungdoctortp.data.AiResponses
+import com.hsr2024.mungmungdoctortp.data.FeedDataList
 import com.hsr2024.mungmungdoctortp.data.KakaoSearchPlaceResponse
 import com.hsr2024.mungmungdoctortp.data.LoginData
 import com.hsr2024.mungmungdoctortp.data.LoginResponse
+import com.hsr2024.mungmungdoctortp.data.PetList
+import com.hsr2024.mungmungdoctortp.data.QADataList
 import com.hsr2024.mungmungdoctortp.data.SignUpData
+import com.hsr2024.mungmungdoctortp.data.UserChange
+import com.hsr2024.mungmungdoctortp.data.UserDelete
+import com.hsr2024.mungmungdoctortp.data.addDog
+import com.hsr2024.mungmungdoctortp.data.commentDataList
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Multipart
@@ -62,4 +70,39 @@ interface RetrofitService {
     @GET("/v2/local/search/keyword.json?sort=distance")
     fun searchPlace(@Query("query")query:String, @Query("x") longitude:String, @Query("y")latitude:String) : Call<KakaoSearchPlaceResponse>
 
+    // feed list 불러오기
+    @FormUrlEncoded
+    @POST("/feed/feed_list.php")
+    fun feedList() : Call<FeedDataList>
+
+    // qa list 불러오기
+    @FormUrlEncoded
+    @POST("/qa/qa_list.php")
+    fun qaList() : Call<QADataList>
+
+    // feed comment list 불러오기
+    @FormUrlEncoded
+    @POST("/feed/comment_list.php")
+    fun feedCommentList(@Field("feed_id") feed_id:String) : Call<commentDataList>
+
+    // qa comment list 불러오기
+    @FormUrlEncoded
+    @POST("/qa/comment_list.php")
+    fun qaCommentList(@Field("qa_id") qa_id:String) : Call<commentDataList>
+
+    // 회원탈퇴
+    @POST("/user/withdraw.php")
+    fun withdraw(@Body userDelete: UserDelete) : Call<String>
+
+    // 회원 정보 변경
+    @POST("/user/modify.php")
+    fun userModify(@Body userChange:UserChange) : Call<String>
+
+    //반려견 추가
+    @POST("/pet/add.php")
+    fun addDog(@Body addDog: addDog) : Call<String>
+
+    //반려견 정보 불러오기
+    @POST("/pet/list.php")
+    fun petList(@Body petList:PetList) : Call<String>
 }
