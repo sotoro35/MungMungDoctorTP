@@ -1,5 +1,6 @@
 package com.hsr2024.mungmungdoctortp.bnv1care
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -22,16 +23,20 @@ class AddVaccineActivity : AppCompatActivity() {
 
         binding.toolBar.setNavigationOnClickListener { finish() }
 
+        binding.dateTv.setOnClickListener { showDatePicker() }
+
+    }
+    private fun showDatePicker() {
         val datePicker = MaterialDatePicker.Builder.datePicker()
             .setTitleText("날짜 선택")
             .build()
 
-        binding.dateTv.setOnClickListener { datePicker.show(supportFragmentManager,datePicker.toString()) }
-
-        datePicker.addOnPositiveButtonClickListener {
-            val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            val dateString = dateFormatter.format(Date(it))
-            binding.dateTv.text = dateString
+        datePicker.addOnPositiveButtonClickListener { selection ->
+            val dateFormatter = SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault())
+            binding.dateTv.text = dateFormatter.format(Date(selection))
+            binding.dateTv.setTextColor(Color.BLACK)
         }
+
+        datePicker.show(supportFragmentManager, "DATE_PICKER")
     }
 }

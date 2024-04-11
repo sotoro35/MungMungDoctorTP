@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:layout_margin="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="12dp">
+        <TextView 
+            android:id="@+id/vaccine_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="심장사상충"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/vaccine_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@id/vaccine_name"
+            android:text="2024-04-11"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/vaccine_hospital"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="병원이름"
+            android:textSize="16sp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/vaccine_date"/>
+
+        <TextView
+            android:id="@+id/vaccine_memo"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/vaccine_name"
+            android:text="메모내용" />
+        
+        
+    </RelativeLayout>
+
+
+
+
+
+</com.google.android.material.card.MaterialCardView>
