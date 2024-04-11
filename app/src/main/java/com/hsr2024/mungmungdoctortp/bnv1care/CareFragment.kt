@@ -1,6 +1,7 @@
 package com.hsr2024.mungmungdoctortp.bnv1care
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -36,8 +37,8 @@ class CareFragment:Fragment() {
 
         binding.selectPet.setOnClickListener { selectPet() }
         binding.note.setOnClickListener {  }
-        binding.eyeAi.setOnClickListener {  }
-        binding.skinAi.setOnClickListener {  }
+        binding.eyeAi.setOnClickListener { startActivity(Intent(requireContext(),EyeAiActivity::class.java)) }
+        binding.skinAi.setOnClickListener { startActivity(Intent(requireContext(),SkinAiActivity::class.java)) }
         binding.btnHealth.setOnClickListener {  }
 
         load()
