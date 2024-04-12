@@ -2,14 +2,27 @@ package com.hsr2024.mungmungdoctortp.network
 
 import com.hsr2024.mungmungdoctortp.data.AiRequest
 import com.hsr2024.mungmungdoctortp.data.AiResponses
+import com.hsr2024.mungmungdoctortp.data.FeedDataList
+import com.hsr2024.mungmungdoctortp.data.KakaoSearchPlaceResponse
 import com.hsr2024.mungmungdoctortp.data.LoginData
 import com.hsr2024.mungmungdoctortp.data.LoginResponse
+import com.hsr2024.mungmungdoctortp.data.PetList
+import com.hsr2024.mungmungdoctortp.data.QADataList
 import com.hsr2024.mungmungdoctortp.data.SignUpData
+import com.hsr2024.mungmungdoctortp.data.UserChange
+import com.hsr2024.mungmungdoctortp.data.UserDelete
+import com.hsr2024.mungmungdoctortp.data.AddDog
+import com.hsr2024.mungmungdoctortp.data.DeleteDog
+import com.hsr2024.mungmungdoctortp.data.Individual
+import com.hsr2024.mungmungdoctortp.data.ModifyDog
+import com.hsr2024.mungmungdoctortp.data.commentDataList
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
@@ -35,8 +48,8 @@ interface RetrofitService {
 
     //파일 업로드
     @Multipart
-    @POST("/img/upload.php")
-    fun uploadImage(@Part("file") file: MultipartBody.Part) : Call<String> // 응답값 업로드된 이미지 url, 실패 201
+    @POST("/upload/onefileupload.php")
+    fun onefileuploadImage(@Part("file") file: MultipartBody.Part) : Call<String> // 응답값 업로드된 이미지 url, 실패 5404, 성공시 이미지 url
 
     //ai 정보
     @POST("/service/ai.php")
@@ -55,4 +68,52 @@ interface RetrofitService {
     //fun getSignUp(@Field("email") email:String, @Field("password") password:String, @Field("name") name:String, @Field("nickname") nickname: String) : Call<String>// POST 방식으로 전달
     //val call=retrofitService.getSignUp(email,password,name,nickName)
 
+    //카카오 로컬 검색API를 해줘~ 명세서쓰기 -- 우선 응답type을 스트링으로
+    @Headers("Authorization: KakaoAK 1339b7346295d6208b37fac2e7091de1") //REST API 키: 963ec3326effb762f45c440734baacb6
+    @GET("/v2/local/search/keyword.json?sort=distance")
+    fun searchPlace(@Query("query")query:String, @Query("x") longitude:String, @Query("y")latitude:String) : Call<KakaoSearchPlaceResponse>
+
+    // feed list 불러오기
+    @FormUrlEncoded
+    @POST("/feed/feed_list.php")
+    fun feedList() : Call<FeedDataList>
+
+    // qa list 불러오기
+    @FormUrlEncoded
+    @POST("/qa/qa_list.php")
+    fun qaList() : Call<QADataList>
+
+    // feed comment list 불러오기
+    @FormUrlEncoded
+    @POST("/feed/comment_list.php")
+    fun feedCommentList(@Field("feed_id") feed_id:String) : Call<commentDataList>
+
+    // qa comment list 불러오기
+    @FormUrlEncoded
+    @POST("/qa/comment_list.php")
+    fun qaCommentList(@Field("qa_id") qa_id:String) : Call<commentDataList>
+
+    // 회원탈퇴
+    @POST("/user/withdraw.php")
+    fun withdraw(@Body userDelete: UserDelete) : Call<String>
+
+    // 회원 정보 변경
+    @POST("/user/modify.php")
+    fun userModify(@Body userChange:UserChange) : Call<String>
+
+    //반려견 추가
+    @POST("/pet/add.php")
+    fun addDog(@Body addDog: AddDog) : Call<String>
+
+    //반려견 수정
+    @POST("/pet/modify.php")
+    fun modifyDog(@Body modifyDog: ModifyDog) : Call<String>
+
+    //반려견 삭제
+    @POST("/pet/delete.php")
+    fun deleteDog(@Body deleteDog: DeleteDog) : Call<String>
+
+    //반려견 정보 불러오기
+    @POST("/pet/list.php")
+    fun petList(@Body individual:Individual) : Call<PetList>
 }
