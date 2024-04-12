@@ -47,11 +47,11 @@ data class Place(
 )
 
 //qa 및 feed 데이터
-data class QAData(val qa_id:String, val imgurl:String, val title:String, val nickname :String, val view_count:String, val comment_count:String)
+data class QAData(val qa_id:String, val imgurl:String, val title:String, val nickname :String, val view_count:String, val comment_count:String, val myQA:String)
 data class QADataList(val qaDatas: List<QAData>, val code:String)
-data class FeedData(val feed_id:String, val profile_imgurl: String, val nickname: String, val imgurl:String, val favorite:String, var isFavorite:Boolean, val comment: String, val content:String, val create_date:String )
+data class FeedData(val feed_id:String, val profile_imgurl: String, val nickname: String, val imgurl:String, val favorite:String, var isFavorite:String, val comment: String, val content:String, val create_date:String, val myFeed:String )
 data class FeedDataList(val feedDatas: List<FeedData>, val code:String)
-data class CommentData(val comment_id:String, val profile_imgurl: String, val nickname: String, val content: String, val create_date: String)
+data class CommentData(val comment_id:String, val profile_imgurl: String, val nickname: String, val content: String, val create_date: String, val myComment:String)
 data class CommentDataList(val commentDatas: List<CommentData>, val code:String)
 
 //반려견 정보
