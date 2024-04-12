@@ -12,6 +12,7 @@ import com.hsr2024.mungmungdoctortp.data.SignUpData
 import com.hsr2024.mungmungdoctortp.data.UserChange
 import com.hsr2024.mungmungdoctortp.data.UserDelete
 import com.hsr2024.mungmungdoctortp.data.AddDog
+import com.hsr2024.mungmungdoctortp.data.ModifyDog
 import com.hsr2024.mungmungdoctortp.data.commentDataList
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -101,6 +102,10 @@ interface RetrofitService {
     //반려견 추가
     @POST("/pet/add.php")
     fun addDog(@Body addDog: AddDog) : Call<String>
+
+    //반려견 수정
+    @POST("/pet/modify.php")
+    fun modifyDog(@Body modifyDog: ModifyDog) : Call<String>
 
     //반려견 정보 불러오기
     @POST("/pet/list.php")
