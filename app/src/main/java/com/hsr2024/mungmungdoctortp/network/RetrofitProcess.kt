@@ -83,6 +83,7 @@ class RetrofitProcess(
 
         })
     }
+    // 회원 로그인
 //    loginRequest 사용법
 //    val params= LoginData("이메일","패스워드","${URLEncoder.encode(액세스토큰, "UTF-8")}","naver") // 액세스토큰은 naver, kakao일 경우 작성, email의 경우 액세스토큰 빈 값
 //    RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
@@ -121,7 +122,7 @@ class RetrofitProcess(
 
         })
     }
-
+    // 회원 가입
 // signupRequest 사용법
 //val params= SignUpData("이메일정보","패스워드 정보","닉네임")
 //RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
@@ -159,6 +160,7 @@ class RetrofitProcess(
 
         })
     }
+    // 닉네임 중복 체크
 // dupliCheckRequest 사용법
 //RetrofitProcess(this,params="중복체크할닉네임", callback = object : RetrofitCallback {
 //    override fun onResponseListSuccess(response: List<Any>?) {}
@@ -193,6 +195,7 @@ class RetrofitProcess(
 
         })
     }
+    // 회원 탈퇴
 // userWithDrawRequest 사용법
 //val params= UserDelete("이메일정보","패스워드 정보","provider_id", "로그인 타입")
 //RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
@@ -233,6 +236,7 @@ class RetrofitProcess(
 
         })
     }
+    // 이미지 업로드
 // onefileUploadRequest 사용법
 //    // val intent = if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.TIRAMISU) Intent(MediaStore.ACTION_PICK_IMAGES) else Intent(Intent.ACTION_OPEN_DOCUMENT).setType("image/^*")
 //    // resultLauncher.launch(intent)
@@ -272,6 +276,7 @@ class RetrofitProcess(
 
         })
     }
+    // 회원 정보 수정
 // userModifyRequest 사용법
 //val params= UserChange("이메일정보", "패스워드", "provider_id", "userModifyRequest으로 나온 url값", "로그인 타입")
 //RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
@@ -307,7 +312,7 @@ class RetrofitProcess(
 
         })
     }
-
+    // 반려견 추가
 // petAddRequest 사용법
 //val params= AddDog("이메일정보", "provider_id", "펫 이름", "펫 프로필", "펫 생년월일", "펫 성별", "펫 중성화 여부 TRUE or FALSE", "펫 견종", "로그인 타입")
 //RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
@@ -343,7 +348,7 @@ class RetrofitProcess(
 
         })
     }
-
+    //반려견 정보 수정
 // petModifyRequest 사용법
 //val params= ModifyDog("이메일정보", "provider_id", "펫 식별값", "펫 이름", "펫 프로필", "펫 생년월일", "펫 성별", "펫 중성화 여부 TRUE or FALSE", "펫 견종", "로그인 타입")
 //RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
@@ -379,7 +384,7 @@ class RetrofitProcess(
 
         })
     }
-
+    //반려견 삭제
 // petDeleteRequest 사용법
 //val params= DeleteDog("이메일정보", "provider_id", "펫 식별값", "로그인 타입")
 //RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
@@ -415,7 +420,7 @@ class RetrofitProcess(
 
         })
     }
-
+    // 반려견 목록 불러오기
 // petListRequest 사용법
 //val params= Individual("이메일정보", "provider_id", "로그인 타입")
 //RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
@@ -459,7 +464,7 @@ class RetrofitProcess(
             }
         })
     }
-
+    // feed 목록 불러오기
 // feedListRequest 사용법
 //val params= Individual("이메일정보", "provider_id", "로그인 타입") // 비 로그인 상태일 경우 Individual()으로 생성가능
 //RetrofitProcess(this, params="", callback = object : RetrofitCallback {
@@ -505,7 +510,7 @@ class RetrofitProcess(
             }
         })
     }
-
+    //qa 목록 불러오기
 // qaListRequest 사용법
 //val params= Individual("이메일정보", "provider_id", "로그인 타입") // 비 로그인 상태일 경우 Individual()으로 생성가능
 //RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
@@ -548,7 +553,7 @@ class RetrofitProcess(
             }
         })
     }
-
+    // feed 댓글 목록 불러오기
 // feedCommentListRequest 사용법
 //val params= FeedCommentList(,"feed 식별 값", "이메일정보", "provider_id", "로그인 타입") // 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능
 //RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
@@ -590,7 +595,7 @@ class RetrofitProcess(
             }
         })
     }
-
+    // qa 댓글 목록 불러오기
 // qaCommentListRequest 사용법
 //val params= QACommentList(,"qa 식별 값", "이메일정보", "provider_id", "로그인 타입") // 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능
 //RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
