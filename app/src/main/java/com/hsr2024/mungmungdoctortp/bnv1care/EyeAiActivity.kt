@@ -58,24 +58,19 @@ class EyeAiActivity : AppCompatActivity() {
                 val builder = AlertDialog.Builder(this)
                 builder.setView(dialogV)
                 alertDialog = builder.create()
+
+                dialogV.findViewById<TextView>(R.id.test_close).setOnClickListener { alertDialog.dismiss() }
+                dialogV.findViewById<TextView>(R.id.test_start).setOnClickListener {
+                    val intent = Intent(this,AiResultActivity::class.java)
+                    intent.putExtra("aiEyeImg",uri.toString())
+                    startActivity(intent)
+                    alertDialog.dismiss()
+                }
+
                 alertDialog.show()
 
             }
         }
     }
 
-    //if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.TIRAMISU) resultLauncher.launch(Intent(MediaStore.ACTION_PICK_IMAGES))
-    //        else resultLauncher.launch(Intent(Intent.ACTION_OPEN_DOCUMENT).setType("image/*"))
-    //    }
-    //
-    //    private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-    //        if (it.resultCode == RESULT_OK){
-    //            val uri = it.data?.data
-    //            if (uri != null){
-    //                binding.iv.setImageURI(uri)
-    //                // 선택한 이미지에 대한 Object Detection 수행
-    //                detectObjectFromUri(uri)
-    //            }
-    //        }
-    //    }
 }//main

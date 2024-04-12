@@ -26,51 +26,40 @@
         android:padding="4dp"
         android:layout_margin="12dp">
 
-
-
         <ImageView
             android:id="@+id/iv"
-            android:layout_width="150dp"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:src="@drawable/ai_eye"
+            android:src="@drawable/ai_result"
             android:layout_gravity="center"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="16dp"
-        android:gravity="center_vertical">
         <ImageView
             android:id="@+id/test_image"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
             android:adjustViewBounds="true"
-            android:layout_below="@id/iv"
+            android:layout_gravity="center"
             android:src="@drawable/icon_gallery"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="의심되는 질병"
-                android:padding="8dp" />
+                android:textSize="12sp"
+                android:layout_marginTop="12dp"/>
 
             <TextView
                 android:id="@+id/result1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="질병1 80%"
+                android:text="질병1 : 80%"
+                android:textSize="16sp"
+                android:textColor="#FFA800"
                 android:textStyle="bold"
-                android:padding="8dp" />
+                android:layout_marginTop="8dp"/>
 
             <TextView
                 android:id="@+id/result2"
@@ -78,26 +67,27 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:text="질병2 60%"
-                android:padding="8dp" />
-        </LinearLayout>
-
-    </LinearLayout>
+                android:textColor="#FFA800"
+                android:textSize="16sp"
+                android:text="질병2 : 60%"
+                android:layout_marginTop="8dp"/>
 
     <TextView
+        android:id="@+id/tv_test_result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="화면상의 데이터로 예측된 결과임으로\n정확도가 떨어질 수 있습니다.\n\n병원을 방문하셔서 정확한 진단을 받아주세요."
         android:gravity="center"
-        android:layout_marginTop="32dp"/>
+        android:textSize="12sp"
+        android:layout_marginTop="20dp"/>
 
     <TextView
         android:id="@+id/result1_go"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="질병1 보러가기"
-        android:layout_marginTop="40dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginRight="20dp"
         android:paddingTop="12dp"
         android:gravity="right"/>
 
@@ -114,7 +104,7 @@
         android:layout_height="wrap_content"
         android:text="질병2 보러가기"
         android:paddingTop="12dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginRight="20dp"
         android:gravity="right"/>
 
     <ImageView

@@ -30,7 +30,7 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:src="@drawable/ai_eye"
+            android:src="@drawable/eye_test"
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"/>
 

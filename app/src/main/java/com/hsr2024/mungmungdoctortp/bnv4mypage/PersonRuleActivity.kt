@@ -23,6 +23,6 @@ class PersonRuleActivity : AppCompatActivity() {
         binding.personRuleWebview.webChromeClient = WebChromeClient()
         binding.personRuleWebview.settings.javaScriptEnabled = true
 
-        binding.personRuleWebview.loadUrl("https://reliable-sphere-786.notion.site/c7a3f8656ae14ad3b4cf848c449bfc6c")
+        binding.personRuleWebview.loadUrl("http://43.200.163.153/privacy/privacy.html")
     }
 }
