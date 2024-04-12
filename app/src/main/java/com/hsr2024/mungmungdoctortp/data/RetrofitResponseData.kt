@@ -57,4 +57,4 @@ data class commentDataList(val commentDatas: List<CommentData>)
 //반려견 정보
 data class Pet(val pet_id:String, val pet_name:String,val pet_imageUrl:String,val pet_birthDate:String, val pet_gender:String, val pet_neutering:String, val pet_breed:String)
 //반려견 정보 리스트
-data class PetList(val petList:List<Pet>)
+data class PetList(val petList:List<Pet>, val code:String)
