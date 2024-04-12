@@ -342,7 +342,7 @@ class RetrofitProcess(
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val code=(response as String)
-//        Log.d("signup code","$code") //  - 5300 펫 수정 성공, 5201 펫 수정 실패, 4204 서비스 회원 아님
+//        Log.d("signup code","$code") //  - 5300 펫 수정 성공, 5301 펫 수정 실패, 4204 서비스 회원 아님
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
@@ -378,7 +378,7 @@ class RetrofitProcess(
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val code=(response as String)
-//        Log.d("signup code","$code") //  - 5300 펫 수정 성공, 5201 펫 수정 실패, 4204 서비스 회원 아님
+//        Log.d("signup code","$code") //  - 5400 펫 삭제 성공, 5401 펫 삭제 실패, 4204 서비스 회원 아님
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
