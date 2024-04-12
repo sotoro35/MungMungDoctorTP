@@ -27,10 +27,15 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
 import com.hsr2024.mungmungdoctortp.data.AddDog
+import com.hsr2024.mungmungdoctortp.data.CommentDataList
 import com.hsr2024.mungmungdoctortp.data.DeleteDog
+import com.hsr2024.mungmungdoctortp.data.FeedCommentList
+import com.hsr2024.mungmungdoctortp.data.FeedDataList
 import com.hsr2024.mungmungdoctortp.data.Individual
 import com.hsr2024.mungmungdoctortp.data.ModifyDog
 import com.hsr2024.mungmungdoctortp.data.PetList
+import com.hsr2024.mungmungdoctortp.data.QACommentList
+import com.hsr2024.mungmungdoctortp.data.QADataList
 import com.hsr2024.mungmungdoctortp.data.UserChange
 import com.hsr2024.mungmungdoctortp.main.MainActivity
 import okhttp3.MediaType
@@ -416,7 +421,7 @@ class RetrofitProcess(
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val data=(response as PetList)
-//        Log.d("signup code","$data")
+//        Log.d("pet list code","$data")
 //        data.code                              // - 5500 펫 목록 성공, 5501 펫 목록 실패, 4204 서비스 회원 아님
 //        data.petList.forEach{pet ->           // forEach문을 돌면서 펫 정보 가져올 수 있음
 //            pet.pet_id
@@ -430,10 +435,183 @@ class RetrofitProcess(
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
-//        Log.d("signup fail",errorMsg!!) // 에러 메시지
+//        Log.d("pet list fail",errorMsg!!) // 에러 메시지
 //    }
 //
 //}).petListRequest()
+
+    fun feedListRequest(){
+        val retrofitService = setRetrofitService()
+        val individual=(params as Individual)
+        val call = retrofitService.feedList(individual)
+        call.enqueue(object : Callback<FeedDataList> {
+            override fun onResponse(p0: Call<FeedDataList>, response: Response<FeedDataList>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<FeedDataList>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+
+// feedListRequest 사용법
+//val params= Individual("이메일정보", "provider_id", "로그인 타입") // 비 로그인 상태일 경우 Individual()으로 생성가능
+//RetrofitProcess(this, params="", callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val data=(response as FeedDataList)
+//        Log.d("feed list code","$data")
+//        data.code                              // - 6200 feed 목록 성공, 6201 feed 목록 실패, 4204 서비스 회원 아님
+//        data.feedDatas.forEach{feed ->           // forEach문을 돌면서 feed 정보 가져올 수 있음
+//            feed.feed_id
+//            feed.profile_imgurl
+//            feed.nickname
+//            feed.imgurl
+//            feed.favorite
+//            feed.isFavorite
+//            feed.comment
+//            feed.content
+//            feed.create_date
+//        }
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("feed list fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).feedListRequest()
+
+    fun qaListRequest(){
+        val retrofitService = setRetrofitService()
+        val individual=(params as Individual)
+        val call = retrofitService.qaList(individual)
+        call.enqueue(object : Callback<QADataList> {
+            override fun onResponse(p0: Call<QADataList>, response: Response<QADataList>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<QADataList>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+
+// qaListRequest 사용법
+//val params= Individual("이메일정보", "provider_id", "로그인 타입") // 비 로그인 상태일 경우 Individual()으로 생성가능
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val data=(response as QADataList)
+//        Log.d("qa list code","$data")
+//        data.code                              // - 7200 qa 목록 성공, 7201 qa 목록 실패, 4204 서비스 회원 아님
+//        data.feedDatas.forEach{qa ->           // forEach문을 돌면서 qa 정보 가져올 수 있음
+//            qa.qa_id
+//            qa.imgurl
+//            qa.title
+//            qa.nickname
+//            qa.view_count
+//            qa.comment_count
+//        }
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("qa list fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).qaListRequest()
+
+    fun feedCommentListRequest(){
+        val retrofitService = setRetrofitService()
+        val feedCommentList=(params as FeedCommentList)
+        val call = retrofitService.feedCommentList(feedCommentList)
+        call.enqueue(object : Callback<CommentDataList> {
+            override fun onResponse(p0: Call<CommentDataList>, response: Response<CommentDataList>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<CommentDataList>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+
+// feedCommentListRequest 사용법
+//val params= FeedCommentList(,"feed 식별 값", "이메일정보", "provider_id", "로그인 타입") // 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val data=(response as CommentDataList)
+//        Log.d("feed comment list  code","$data")
+//        data.code                              // - 6300 feed comment 목록 성공, 6301 feed comment 목록 실패, 4204 서비스 회원 아님
+//        data.feedDatas.forEach{comment ->           // forEach문을 돌면서 feed 정보 가져올 수 있음
+//            comment.comment_id
+//            comment.profile_imgurl
+//            comment.nickname
+//            comment.content
+//            comment.create_date
+//        }
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("feed comment list fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).feedCommentListRequest()
+
+    fun qaCommentListRequest(){
+        val retrofitService = setRetrofitService()
+        val qaCommentList=(params as QACommentList)
+        val call = retrofitService.qaCommentList(qaCommentList)
+        call.enqueue(object : Callback<CommentDataList> {
+            override fun onResponse(p0: Call<CommentDataList>, response: Response<CommentDataList>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<CommentDataList>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+
+// qaCommentListRequest 사용법
+//val params= QACommentList(,"qa 식별 값", "이메일정보", "provider_id", "로그인 타입") // 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val data=(response as CommentDataList)
+//        Log.d("qa comment list  code","$data")
+//        data.code                              // - 7300 qa comment 목록 성공, 7301 qa comment 목록 실패, 4204 서비스 회원 아님
+//        data.feedDatas.forEach{comment ->           // forEach문을 돌면서 qa 정보 가져올 수 있음
+//            comment.comment_id
+//            comment.profile_imgurl
+//            comment.nickname
+//            comment.content
+//            comment.create_date
+//        }
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("qa comment list fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).qaCommentListRequest()
 
     private fun onegetRealPathfromUri(uri:Uri) : String? {
         //android 10 버전 부터는 Uri를 통해 파일의 실제 경로를 얻을 수 있는 방법이 없어졌음

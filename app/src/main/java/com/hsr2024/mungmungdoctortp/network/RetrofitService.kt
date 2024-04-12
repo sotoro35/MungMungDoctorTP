@@ -12,10 +12,12 @@ import com.hsr2024.mungmungdoctortp.data.SignUpData
 import com.hsr2024.mungmungdoctortp.data.UserChange
 import com.hsr2024.mungmungdoctortp.data.UserDelete
 import com.hsr2024.mungmungdoctortp.data.AddDog
+import com.hsr2024.mungmungdoctortp.data.CommentDataList
 import com.hsr2024.mungmungdoctortp.data.DeleteDog
+import com.hsr2024.mungmungdoctortp.data.FeedCommentList
 import com.hsr2024.mungmungdoctortp.data.Individual
 import com.hsr2024.mungmungdoctortp.data.ModifyDog
-import com.hsr2024.mungmungdoctortp.data.commentDataList
+import com.hsr2024.mungmungdoctortp.data.QACommentList
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.Body
@@ -76,22 +78,22 @@ interface RetrofitService {
     // feed list 불러오기
     @FormUrlEncoded
     @POST("/feed/feed_list.php")
-    fun feedList() : Call<FeedDataList>
+    fun feedList(@Body individual:Individual) : Call<FeedDataList>
 
     // qa list 불러오기
     @FormUrlEncoded
     @POST("/qa/qa_list.php")
-    fun qaList() : Call<QADataList>
+    fun qaList(@Body individual:Individual) : Call<QADataList>
 
     // feed comment list 불러오기
     @FormUrlEncoded
     @POST("/feed/comment_list.php")
-    fun feedCommentList(@Field("feed_id") feed_id:String) : Call<commentDataList>
+    fun feedCommentList(@Body feedCommentList:FeedCommentList) : Call<CommentDataList>
 
     // qa comment list 불러오기
     @FormUrlEncoded
     @POST("/qa/comment_list.php")
-    fun qaCommentList(@Field("qa_id") qa_id:String) : Call<commentDataList>
+    fun qaCommentList(@Body qaCommentList:QACommentList) : Call<CommentDataList>
 
     // 회원탈퇴
     @POST("/user/withdraw.php")

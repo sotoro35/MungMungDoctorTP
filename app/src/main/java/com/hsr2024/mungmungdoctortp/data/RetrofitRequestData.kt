@@ -23,4 +23,11 @@ data class ModifyDog(val email:String="", val provider_id:String="", val pet_id:
 //반려견 삭제
 data class DeleteDog(val email:String="", val provider_id:String="", val pet_id:String, val login_type:String)
 // 개인 서비스 요청
-data class Individual(val email:String="", val provider_id:String="", val login_type:String)
+data class Individual(val email:String="", val provider_id:String="", val login_type:String="")
+
+//feed 댓글 목록
+data class FeedCommentList(val feed_id:String, val email:String="", val provider_id:String="", val login_type:String="")
+
+//qa 댓글 목록
+data class QACommentList(val qa_id:String, val email:String="", val provider_id:String="", val login_type:String="")
+
