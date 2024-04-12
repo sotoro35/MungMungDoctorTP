@@ -1,12 +1,15 @@
 package com.hsr2024.mungmungdoctortp.bnv4mypage
 
+import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -17,10 +20,14 @@ import com.google.android.material.textfield.TextInputLayout
 import com.hsr2024.mungmungdoctortp.G
 import com.hsr2024.mungmungdoctortp.R
 import com.hsr2024.mungmungdoctortp.adapter.MypageDogAdapter
+import com.hsr2024.mungmungdoctortp.data.Pet
 import com.hsr2024.mungmungdoctortp.data.Pet2
+import com.hsr2024.mungmungdoctortp.data.UserDelete
 import com.hsr2024.mungmungdoctortp.databinding.FragmentMypageBinding
 import com.hsr2024.mungmungdoctortp.login.LoginActivity
 import com.hsr2024.mungmungdoctortp.main.MainActivity
+import com.hsr2024.mungmungdoctortp.network.RetrofitCallback
+import com.hsr2024.mungmungdoctortp.network.RetrofitProcess
 
 class MypageFragment : Fragment() {
 
@@ -49,24 +56,16 @@ class MypageFragment : Fragment() {
 
         binding.mypageUserNickname.text = G.user_nickname
         if (G.user_imageUrl.isNotEmpty()) {
-            binding.mypageUserImage.setImageResource(R.drawable.bnv_care)
             Glide.with(requireContext()).load("https://43.200.163.153/img/${G.user_imageUrl}").into(binding.mypageUserImage)
-        }
+        }else binding.mypageUserImage.setImageResource(R.drawable.bnv_care)
 
         load()
-
-
 
     }// onView...
 
     private fun load(){
 
-        var pets:List<Pet2> = listOf(
-            Pet2("aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa"),
-            Pet2("bb", "bb", "bb", "bb", "bb", "bb", "bb", "bb")
-
-            )
-
+        var pets:List<Pet> = mutableListOf()
         val mypageAdapter = MypageDogAdapter(requireContext(),pets)
         binding.recyclerMypagePet.adapter = mypageAdapter
         mypageAdapter.notifyDataSetChanged()
@@ -102,6 +101,7 @@ class MypageFragment : Fragment() {
 
 
     lateinit var alertDialog: AlertDialog
+    @SuppressLint("MissingInflatedId")
     private fun userDelete() {
         val dialogV = layoutInflater.inflate(R.layout.dialog_user_delete, null)
         val builder = AlertDialog.Builder(requireContext())
@@ -109,14 +109,40 @@ class MypageFragment : Fragment() {
         alertDialog = builder.create()
 
         if (G.user_providerId != null || G.user_providerId != "" ){
-            dialogV.findViewById<TextInputLayout>(R.id.input_password_delete).visibility = View.INVISIBLE
+            dialogV.findViewById<TextInputLayout>(R.id.input_password_delete1).visibility = View.VISIBLE
 
-        }
+        }else dialogV.findViewById<TextInputLayout>(R.id.input_password_delete1).visibility = View.INVISIBLE
+
         dialogV.findViewById<TextView>(R.id.btn_close).setOnClickListener { alertDialog.dismiss() }
         dialogV.findViewById<TextView>(R.id.btn_user_delete).setOnClickListener {
+            var password = dialogV.findViewById<TextInputLayout>(R.id.input_password_delete1).editText!!.text.toString()
+            val params= UserDelete("${G.user_email}","$password","${G.user_providerId}", "${G.loginType}")
+            RetrofitProcess(requireContext(),params=params, callback = object : RetrofitCallback {
+            override fun onResponseListSuccess(response: List<Any>?) {}
+                @SuppressLint("SuspiciousIndentation")
+                override fun onResponseSuccess(response: Any?) {
+                val code=(response as String)
+                    when(code){
+                        "1220" -> {
+                            AlertDialog.Builder(requireContext()).setMessage("이용해주셔서 감사합니다").create().show()
+                            startActivity(Intent(requireContext(),LoginActivity::class.java))
+                            (activity as MainActivity).finish()
+                        }
+                        "1230" -> AlertDialog.Builder(requireContext()).setMessage("탈퇴 실패").create().show()
+                        "4202" -> AlertDialog.Builder(requireContext()).setMessage("관리자에게 문의해주세요1").create().show()
+                        "4203" -> AlertDialog.Builder(requireContext()).setMessage("관리자에게 문의해주세요2").create().show()
+                    }
+                Log.d("User withdraw code","$code") //1220 회원탈퇴 성공, 1230 회원탈퇴 실패, 4204 서비스 회원 아님, 4203 이메일 로그인 시 입력 정보 잘못되어 로그인 실패
+            }
+
+            override fun onResponseFailure(errorMsg: String?) {
+                Log.d("User withdraw fail",errorMsg!!) // 에러 메시지
+            }
+
+            }).userWithDrawRequest()
+
             alertDialog.dismiss()
-            //var password = dialogV.findViewById<EditText>(R.id.input_password_delete).text.toString()
-            //서버에서 비교
+
         }
         alertDialog.show()
     }

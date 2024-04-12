@@ -1,5 +1,6 @@
 package com.hsr2024.mungmungdoctortp
 
+import com.hsr2024.mungmungdoctortp.data.Pet
 import com.hsr2024.mungmungdoctortp.data.Pet2
 
 class G {
@@ -7,7 +8,7 @@ class G {
 
         var user_email: String = ""
         var user_providerId: String = ""
-        var user_nickname: String = "1"
+        var user_nickname: String = ""
         var user_imageUrl: String = ""
         var pet_id: String = ""
         var pet_name: String = ""
@@ -16,12 +17,13 @@ class G {
         var pet_gender: String = ""
         var pet_neutering: String = ""
         var pet_breed: String = ""
+        var loginType: String = ""
 
     }
 
 }
     class petG{
         companion object{
-            var petsList:Pet2? = null
+            var petsList: Pet? = null
         }
     }

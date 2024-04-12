@@ -7,6 +7,8 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -15,8 +17,12 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.loader.content.CursorLoader
 import com.bumptech.glide.Glide
+import com.hsr2024.mungmungdoctortp.G
 import com.hsr2024.mungmungdoctortp.R
+import com.hsr2024.mungmungdoctortp.data.AddDog
 import com.hsr2024.mungmungdoctortp.databinding.ActivityDogAddBinding
+import com.hsr2024.mungmungdoctortp.network.RetrofitCallback
+import com.hsr2024.mungmungdoctortp.network.RetrofitProcess
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -24,11 +30,15 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.OutputStream
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class DogAddActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityDogAddBinding.inflate(layoutInflater) }
 
+    var uri:Uri? = null
     var gender = "girl"
     var neutering = false
 
@@ -67,14 +77,11 @@ class DogAddActivity : AppCompatActivity() {
         }
 
 
+
     }// onCreate
 
+
     private fun addPet() {
-        var petName = binding.addPetName.text.toString()
-        var petbreed = binding.addPetBreed.text.toString()
-        var birthdate = binding.addPetBirthDate.text.toString()
-        gender
-        neutering.toString()
 
         //이미지파일을 MutipartBody.Part 로 포장하여 전송: @Part
         val filePart: MultipartBody.Part? = imgPath?.let { //널이 아니면...
@@ -84,14 +91,54 @@ class DogAddActivity : AppCompatActivity() {
             MultipartBody.Part.createFormData("img1", file.name, requestBody) // 택배상자 포장.. == 리턴되는 값
         }
 
-        if (saveCheck(petName, petbreed, birthdate)) {
-            //서버작업
+        if (filePart != null){
+            RetrofitProcess(this,params=filePart, callback = object : RetrofitCallback {
+                override fun onResponseListSuccess(response: List<Any>?) {}
 
-            //filePart - 이미지 url
+                override fun onResponseSuccess(response: Any?) {
+                    val code=(response as String)
+                    Log.d("one file upload code","$code") // 실패 시 5404, 성공 시 이미지 경로
+                    if (code != "5404") {
+                        savePet(code)
+                        Toast . makeText (this@DogAddActivity, "이미지+추가성공", Toast.LENGTH_SHORT).show()
+                    }else Toast . makeText (this@DogAddActivity, "이미지 업로드 실패", Toast.LENGTH_SHORT).show()
+                }
+                override fun onResponseFailure(errorMsg: String?) {
+                    Log.d("one file upload fail",errorMsg!!) // 에러 메시지
+                    Toast.makeText(this@DogAddActivity, "이미지 업로드 에러", Toast.LENGTH_SHORT).show()
+                }
+            }).onefileUploadRequest()
+        }else savePet("")
 
-            finish()
+    }// addPet..
+
+    private fun savePet(image:String){
+        var petName = binding.addPetName.text.toString()
+        var petbreed = binding.addPetBreed.text.toString()
+        var birthdate = SimpleDateFormat("yyyyMMdd", Locale.KOREA).format(Date()).toString()
+
+        if (saveCheck(petName, petbreed, birthdate) == true ) {
+
+            val params= AddDog("${G.user_email}", "${G.user_providerId}",
+                "$petName", "$image",
+                "$birthdate", "$gender", "${neutering.toString()}",
+                "$petbreed", "${G.loginType}")
+            RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
+                override fun onResponseListSuccess(response: List<Any>?) {}
+
+                override fun onResponseSuccess(response: Any?) {
+                    val code=(response as String)
+                    Log.d("Add Pet code","$code") //  - 5200 펫 추가 성공, 5201 펫 추가 실패, 4204 서비스 회원 아님
+                    Toast.makeText(this@DogAddActivity, "추가성공", Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onResponseFailure(errorMsg: String?) {
+                    Log.d("Add Pet fail",errorMsg!!) // 에러 메시지
+                }
+
+            }).petAddRequest()
+
         } else AlertDialog.Builder(this).setMessage("관리자에게 문의하세요").create().show()
-
     }
 
 
@@ -100,7 +147,6 @@ class DogAddActivity : AppCompatActivity() {
         var boolean = false
 
         when {
-
             !petName.isNotEmpty() && !petbreed.isNotEmpty() && !birthdate.isNotEmpty() -> {
                 AlertDialog.Builder(this).setMessage("모두 입력해주세요").create().show()
                 boolean = false
@@ -127,12 +173,11 @@ class DogAddActivity : AppCompatActivity() {
     // 사진 가져올 대행사..
     private val resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            val uri: Uri? = it.data?.data
+            uri = it.data?.data
             uri?.let {
                 Glide.with(this).load(it).into(binding.addPetImage)
-
-                // uri --> 절대경로
-                imgPath = getRealPathFromUri(uri)
+                 //uri --> 절대경로
+                imgPath = getRealPathFromUri(uri!!)
             }
         }//resultLauncher
 

@@ -61,15 +61,16 @@ class LoginActivity : AppCompatActivity() {
             when(data.code){
                 "4200" -> {
                     G.apply {
-                        user_email = data.email ?: "오류:null"
-                        user_nickname = data.nickname ?: "오류:null"
-                        user_imageUrl = data.userImgUrl ?: "오류:null"
-                        pet_id = data.pet_id ?: "오류:null"
-                        pet_name = data.pet_name ?: "오류:null"
-                        pet_imageUrl = data.petImgUrl ?: "오류:null"
-                        pet_birthDate = data.pet_birth_date ?: "오류:null"
-                        pet_gender = data.pet_gender ?: "오류:null"
-                        pet_neutering = data.pet_neutered ?: "오류:null"
+                        user_email = data.email
+                        user_nickname = data.nickname
+                        user_imageUrl = data.userImgUrl
+                        pet_id = data.pet_id
+                        pet_name = data.pet_name
+                        pet_imageUrl = data.petImgUrl
+                        pet_birthDate = data.pet_birth_date
+                        pet_gender = data.pet_gender
+                        pet_neutering = data.pet_neutered
+                        loginType = "email"
                     } // G..
 
                     if(checkbox) saveSharedPreferences()

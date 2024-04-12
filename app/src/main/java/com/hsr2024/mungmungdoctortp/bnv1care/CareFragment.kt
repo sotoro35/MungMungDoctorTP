@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.hsr2024.mungmungdoctortp.G
 import com.hsr2024.mungmungdoctortp.R
 import com.hsr2024.mungmungdoctortp.adapter.CareSelectDogAdapter
+import com.hsr2024.mungmungdoctortp.data.Pet
 import com.hsr2024.mungmungdoctortp.data.Pet2
 import com.hsr2024.mungmungdoctortp.databinding.FragmentCareBinding
 
@@ -48,29 +49,22 @@ class CareFragment:Fragment() {
 
     private fun load(){
 
-        binding.petName.text = G.pet_name
-        binding.petBreed.text = G.pet_breed
-        binding.petBirthDate.text = G.pet_birthDate
-        binding.petGender.text = G.pet_gender
-        binding.petNeutering.text = "중성화 ${G.pet_neutering}"
+        if (G.pet_id != null && G.pet_id != ""){
+            binding.petName.text = G.pet_name
+            binding.petBreed.text = G.pet_breed
+            binding.petBirthDate.text = G.pet_birthDate
+            binding.petGender.text = G.pet_gender
+            binding.petNeutering.text = "중성화 ${G.pet_neutering}"
+        }else{
+            binding.petName.text = "마이페이지에서\n반려견을 등록해주세요"
+            binding.petBreed.visibility = View.INVISIBLE
+            binding.petBirthDate.visibility = View.INVISIBLE
+            binding.petGender.visibility = View.INVISIBLE
+            binding.petNeutering.visibility = View.INVISIBLE
+            binding.line1.visibility = View.INVISIBLE
+            binding.line2.visibility = View.INVISIBLE
 
-
-//        if (G.pet_id != null && G.pet_id != ""){
-//            binding.petName.text = G.pet_name
-//            binding.petBreed.text = G.pet_breed
-//            binding.petBirthDate.text = G.pet_birthDate
-//            binding.petGender.text = G.pet_gender
-//            binding.petNeutering.text = "중성화 ${G.pet_neutering}"
-//        }else{
-//            binding.petName.text = "마이페이지에서\n반려견을 등록해주세요"
-//            binding.petBreed.visibility = View.INVISIBLE
-//            binding.petBirthDate.visibility = View.INVISIBLE
-//            binding.petGender.visibility = View.INVISIBLE
-//            binding.petNeutering.visibility = View.INVISIBLE
-//            binding.line1.visibility = View.INVISIBLE
-//            binding.line2.visibility = View.INVISIBLE
-//
-//        }
+        }
 
         if (G.pet_imageUrl != null && G.pet_imageUrl != ""){
             Glide.with(this).load("https://43.200.163.153/img/${G.pet_imageUrl}").into(binding.petImageUrl)
@@ -87,11 +81,7 @@ class CareFragment:Fragment() {
         builder.setView(dialogV)
         alertDialog = builder.create()
 
-        var pets:List<Pet2> = listOf(
-            Pet2("aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa"),
-            Pet2("bb", "bb", "bb", "bb", "bb", "bb", "bb", "bb")
-
-        )
+        var pets:List<Pet> = mutableListOf()
             // 서버에 저장된 등록된 펫 정보 어댑터 연결해서 보여주기
             // 해당 펫 클릭시 보여지는 화면 변경
         if (pets != null){
