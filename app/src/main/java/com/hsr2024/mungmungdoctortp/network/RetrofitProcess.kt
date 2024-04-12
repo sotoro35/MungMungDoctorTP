@@ -40,6 +40,7 @@ import com.hsr2024.mungmungdoctortp.data.UserChange
 import com.hsr2024.mungmungdoctortp.main.MainActivity
 import okhttp3.MediaType
 import okhttp3.MultipartBody
+import okhttp3.MultipartBody.Part
 import okhttp3.RequestBody
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
@@ -209,13 +210,14 @@ class RetrofitProcess(
 //}).userWithDrawRequest()
 
     fun onefileUploadRequest(){
-        val uri=(params as Uri)
-        val imgPath=onegetRealPathfromUri(uri)
-        val file=File(imgPath)
-        val requestBody:RequestBody=RequestBody.create(MediaType.parse("image/*"),file) //일종의 진공팩
+//        val uri=(params as Uri)
+//        val imgPath=onegetRealPathfromUri(uri)
+//        val file=File(imgPath)
+//        val requestBody:RequestBody=RequestBody.create(MediaType.parse("image/*"),file) //일종의 진공팩
         val retrofitService = setRetrofitService()
 
-        val part=MultipartBody.Part.createFormData("img1",file.name,requestBody)
+//        val part=MultipartBody.Part.createFormData("img1",file.name,requestBody)
+        val part:MultipartBody.Part = (params as Part)
         val call = retrofitService.onefileuploadImage(part)
         call.enqueue(object : Callback<String> {
             override fun onResponse(p0: Call<String>, response: Response<String>) {
