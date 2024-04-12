@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:padding="16dp"
+    tools:context=".bnv1care.NoteActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginBottom="8dp"
+        app:navigationIcon="@drawable/icon_back1"
+        app:title="관리수첩"
+        app:titleTextColor="@color/black"
+        app:titleMarginStart="90dp"/>
+
+
+    <CalendarView
+        android:id="@+id/calendar_view"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_below="@id/toolbar"
+        android:focusedMonthDateColor="#E6C2C2"
+        android:selectedWeekBackgroundColor="#D50303"
+        android:unfocusedMonthDateColor="@color/black"/>
+
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="병원기록"
+        android:layout_marginLeft="16dp"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:layout_marginTop="16dp"
+        android:layout_below="@id/calendar_view"/>
+
+    <TextView
+        android:id="@+id/tv_record_plus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="   기록하기+ "
+        android:textColor="#FFA800"
+        android:layout_alignBottom="@id/tv"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+        android:focusable="true"
+        android:clickable="true"
+        android:background="?attr/selectableItemBackground"/>
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#FFA800"
+        android:layout_below="@id/tv"
+        android:layout_marginTop="8dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_hospital"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="horizontal"
+        android:layout_below="@id/view"
+        android:layout_marginTop="16dp"/>
+
+
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AI기록"
+            android:layout_marginLeft="16dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:layout_marginTop="24dp"
+            android:layout_below="@id/recycler_view_hospital"/>
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#FFA800"
+            android:layout_below="@id/tv1"
+            android:layout_marginTop="8dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_AI"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
+            android:layout_below="@id/view1"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="36dp"/>
+
+
+
+
+
+
+    </RelativeLayout>
+
+
+
+</ScrollView>

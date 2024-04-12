@@ -17,6 +17,7 @@
         app:titleTextColor="@color/black"
         app:navigationIcon="@drawable/icon_back1"
         android:layout_marginBottom="24dp"
+        app:titleMarginStart="40dp"
         />
 
     <ImageView
