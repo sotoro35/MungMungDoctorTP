@@ -26,6 +26,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
+import com.hsr2024.mungmungdoctortp.data.AddDog
 import com.hsr2024.mungmungdoctortp.data.UserChange
 import com.hsr2024.mungmungdoctortp.main.MainActivity
 import okhttp3.MediaType
@@ -261,7 +262,7 @@ class RetrofitProcess(
         })
     }
 // userModifyRequest 사용법
-//val params= UserChange("이메일정보", "패스워드", "provider_id", "userModifyRequest으로 나온 url값", val login_type:String)
+//val params= UserChange("이메일정보", "패스워드", "provider_id", "userModifyRequest으로 나온 url값", "로그인 타입")
 //RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
@@ -275,6 +276,42 @@ class RetrofitProcess(
 //    }
 //
 //}).userModifyRequest()
+
+    fun petAddRequest(){
+        val retrofitService = setRetrofitService()
+        // 파라미터를 Json 형태로 변환
+        val addDog=(params as AddDog)
+        val call = retrofitService.addDog(addDog)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+
+        })
+    }
+
+// petAddRequest 사용법
+//val params= AddDog("이메일정보", "provider_id", "펫 이름", "펫 프로필", "펫 생년월일", "펫 성별", "펫 중성화 여부", "펫 견종", "로그인 타입")
+//RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val code=(response as String)
+//        Log.d("signup code","$code") //  - 5200 펫 추가 성공, 5201 펫 추가 실패, 4204 서비스 회원 아님
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("signup fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).petAddRequest()
 
     private fun onegetRealPathfromUri(uri:Uri) : String? {
         //android 10 버전 부터는 Uri를 통해 파일의 실제 경로를 얻을 수 있는 방법이 없어졌음

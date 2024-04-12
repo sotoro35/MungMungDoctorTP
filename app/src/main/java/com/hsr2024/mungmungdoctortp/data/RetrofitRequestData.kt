@@ -17,8 +17,10 @@ data class UserDelete(val email:String="", val password:String="", val provider_
 //회원 정보 수정
 data class UserChange(val email:String="", val password:String="", val provider_id:String="", val userImgUrl:String="", val login_type:String)
 //반려견 추가
-data class addDog(val email:String="", val provider_id:String="", val pet_name:String,val pet_imageUrl:String,val pet_birthDate:String, val pet_gender:String, val pet_neutering:String, val pet_breed:String, val login_type:String)
+data class AddDog(val email:String="", val provider_id:String="", val pet_name:String,val pet_imageUrl:String,val pet_birthDate:String, val pet_gender:String, val pet_neutering:String, val pet_breed:String, val login_type:String)
+//반려견 수정
+data class ModifyDog(val email:String="", val provider_id:String="", val pet_id:String, val pet_name:String,val pet_imageUrl:String,val pet_birthDate:String, val pet_gender:String, val pet_neutering:String, val pet_breed:String, val login_type:String)
 //반려견 정보
-data class Pet(val email:String, val pet_id:String, val pet_name:String,val pet_imageUrl:String,val pet_birthDate:String, val pet_gender:String, val pet_neutering:String, val pet_breed:String)
+data class Pet(val email:String, val pet_id:String, val pet_name:String,val pet_imageUrl:String,val pet_birthDate:String, val pet_gender:String, val pet_neutering:String, val pet_breed:String, val login_type:String)
 //반려견 정보 리스트
 data class PetList(val petList:List<Pet>)
