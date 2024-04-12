@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:navigationIcon="@drawable/baseline_arrow_back_24"
-        android:title="추가예방접종"
+        android:title="필수예방접종"
+        android:titleTextColor="@color/black"
         android:titleMarginStart="20dp"
         android:background="#F8E6C4"/>
 
@@ -44,7 +45,7 @@
         android:layout_alignBottom="@id/checkBox1Text"
         android:text="코로나 장염"
         android:textSize="16sp"
-        android:layout_marginLeft="30dp"/>
+        android:layout_marginLeft="20dp"/>
 
     <CheckBox
         android:id="@+id/checkBox3Text"
@@ -54,7 +55,7 @@
         android:layout_alignBottom="@id/checkBox2Text"
         android:text="항체가검사"
         android:textSize="16sp"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="20dp"
         android:visibility="gone"/>
 
     <View

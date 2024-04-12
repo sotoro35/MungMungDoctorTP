@@ -16,6 +16,7 @@ class VaccineActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        binding.iv.setOnClickListener { finish() }
         binding.btnAdd.setOnClickListener { startActivity(Intent(this,AddVaccineActivity::class.java)) }
         binding.vac1.setOnClickListener { toMandatoryActivity("종합백신","코로나 장염",false) }
         binding.vac2.setOnClickListener { toMandatoryActivity("종합백신","코로나 장염",false) }
