@@ -4,6 +4,13 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- 카메라 기능 사용에 대한 등록 : 카메라가 없는 디바이스에서는 이 앱을 다운로드 할 수 없음 -->
+    <uses-feature android:name="android.hardware.camera.any"/>
+
+    <!-- 카메라 사용에 대한 퍼미션 : 동적 퍼미션 -->
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"

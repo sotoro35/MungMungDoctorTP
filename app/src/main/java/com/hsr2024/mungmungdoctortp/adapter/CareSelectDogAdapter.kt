@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.hsr2024.mungmungdoctortp.G
 import com.hsr2024.mungmungdoctortp.R
-import com.hsr2024.mungmungdoctortp.data.Pet
+import com.hsr2024.mungmungdoctortp.data.Pet2
 import com.hsr2024.mungmungdoctortp.databinding.RecyclerMypagePetBinding
 
-class CareSelectDogAdapter(val context: Context, val pets:List<Pet>):
+class CareSelectDogAdapter(val context: Context, val pets:List<Pet2>):
     RecyclerView.Adapter<CareSelectDogAdapter.caredogVH>() {
 
     // 초기화할 때 selectedItemPosition을 -1로 설정합니다.

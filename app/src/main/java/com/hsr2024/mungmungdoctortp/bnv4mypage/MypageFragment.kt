@@ -17,11 +17,10 @@ import com.google.android.material.textfield.TextInputLayout
 import com.hsr2024.mungmungdoctortp.G
 import com.hsr2024.mungmungdoctortp.R
 import com.hsr2024.mungmungdoctortp.adapter.MypageDogAdapter
-import com.hsr2024.mungmungdoctortp.data.Pet
+import com.hsr2024.mungmungdoctortp.data.Pet2
 import com.hsr2024.mungmungdoctortp.databinding.FragmentMypageBinding
 import com.hsr2024.mungmungdoctortp.login.LoginActivity
 import com.hsr2024.mungmungdoctortp.main.MainActivity
-import com.hsr2024.mungmungdoctortp.petG
 
 class MypageFragment : Fragment() {
 
@@ -62,9 +61,9 @@ class MypageFragment : Fragment() {
 
     private fun load(){
 
-        var pets:List<Pet> = listOf(
-            Pet("aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa"),
-            Pet("bb", "bb", "bb", "bb", "bb", "bb", "bb", "bb")
+        var pets:List<Pet2> = listOf(
+            Pet2("aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa"),
+            Pet2("bb", "bb", "bb", "bb", "bb", "bb", "bb", "bb")
 
             )
 

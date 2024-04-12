@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.hsr2024.mungmungdoctortp.G
-import com.hsr2024.mungmungdoctortp.data.Pet
+import com.hsr2024.mungmungdoctortp.data.Pet2
 import com.hsr2024.mungmungdoctortp.databinding.RecyclerMypagePetBinding
 
-class MypageDogAdapter(val context: Context, val pets:List<Pet>):Adapter<MypageDogAdapter.dogVH>() {
+class MypageDogAdapter(val context: Context, val pets:List<Pet2>):Adapter<MypageDogAdapter.dogVH>() {
 
     inner class dogVH(val binding:RecyclerMypagePetBinding):ViewHolder(binding.root)
 

@@ -1,6 +1,6 @@
 package com.hsr2024.mungmungdoctortp
 
-import com.hsr2024.mungmungdoctortp.data.Pet
+import com.hsr2024.mungmungdoctortp.data.Pet2
 
 class G {
     companion object {
@@ -22,6 +22,6 @@ class G {
 }
     class petG{
         companion object{
-            var petsList:Pet? = null
+            var petsList:Pet2? = null
         }
     }

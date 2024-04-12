@@ -23,14 +23,17 @@ class AiResultActivity : AppCompatActivity() {
         val urieye = uriE?.toUri()
 
         if (urieye != null){
+            binding.testImage.setImageURI(urieye)
             testEyeStart()
         }
 
         if (uriskin != null){
+            binding.testImage.setImageURI(uriskin)
             testSkinStart()
         }
 
-        binding.testImage.setImageURI(urieye)
+
+
     }
 
     private fun testEyeStart(){
@@ -86,9 +89,6 @@ class AiResultActivity : AppCompatActivity() {
             binding.result2Go.text = "$secondLabel 보러가기"
         }
 
-        binding.tvTestResult.append("${labelList.toList()}")
-
-
         model.close()
 
 
@@ -143,9 +143,6 @@ class AiResultActivity : AppCompatActivity() {
             binding.result1Go.text = "$firstLabel 보러가기"
             binding.result2Go.text = "$secondLabel 보러가기"
         }
-
-        binding.tvTestResult.append("${labelList.toList()}")
-
 
         model.close()
 

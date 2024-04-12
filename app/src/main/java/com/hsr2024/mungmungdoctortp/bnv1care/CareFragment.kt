@@ -15,8 +15,7 @@ import com.bumptech.glide.Glide
 import com.hsr2024.mungmungdoctortp.G
 import com.hsr2024.mungmungdoctortp.R
 import com.hsr2024.mungmungdoctortp.adapter.CareSelectDogAdapter
-import com.hsr2024.mungmungdoctortp.adapter.MypageDogAdapter
-import com.hsr2024.mungmungdoctortp.data.Pet
+import com.hsr2024.mungmungdoctortp.data.Pet2
 import com.hsr2024.mungmungdoctortp.databinding.FragmentCareBinding
 
 class CareFragment:Fragment() {
@@ -88,9 +87,9 @@ class CareFragment:Fragment() {
         builder.setView(dialogV)
         alertDialog = builder.create()
 
-        var pets:List<Pet> = listOf(
-            Pet("aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa"),
-            Pet("bb", "bb", "bb", "bb", "bb", "bb", "bb", "bb")
+        var pets:List<Pet2> = listOf(
+            Pet2("aa", "aa", "aa", "aa", "aa", "aa", "aa", "aa"),
+            Pet2("bb", "bb", "bb", "bb", "bb", "bb", "bb", "bb")
 
         )
             // 서버에 저장된 등록된 펫 정보 어댑터 연결해서 보여주기

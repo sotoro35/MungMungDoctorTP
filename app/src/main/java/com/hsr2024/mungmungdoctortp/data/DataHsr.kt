@@ -1,6 +1,6 @@
 package com.hsr2024.mungmungdoctortp.data
 
-data class Pet(
+data class Pet2(
     val email:String,
     val pet_id:String,
     val pet_name:String,
