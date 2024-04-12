@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
+import com.hsr2024.mungmungdoctortp.data.QAData
 import com.hsr2024.mungmungdoctortp.databinding.QaitemBinding
 
 class QAListAdapter(val context:Context, var items:List<QAData>) : Adapter<QAListAdapter.VH>() {

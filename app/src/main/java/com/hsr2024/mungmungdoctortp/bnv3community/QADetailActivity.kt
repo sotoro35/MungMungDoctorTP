@@ -2,6 +2,7 @@ package com.hsr2024.mungmungdoctortp.bnv3community
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.hsr2024.mungmungdoctortp.data.CommentData
 import com.hsr2024.mungmungdoctortp.databinding.ActivityQadetailBinding
 import com.hsr2024.mungmungdoctortp.main.CommentListAdapter
 
@@ -27,8 +28,10 @@ class QADetailActivity : AppCompatActivity() {
         // 임시 데이터 추가
 
         items.clear()
-        items.add(CommentData("1", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s", "commentnickname",
-                "Content 내용", "2024-01-01"))
+        items.add(
+            CommentData("1", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s", "commentnickname",
+                "Content 내용", "2024-01-01")
+        )
         items.add(
             CommentData(
                 "2",

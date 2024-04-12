@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
+import com.hsr2024.mungmungdoctortp.data.FeedData
+import com.hsr2024.mungmungdoctortp.data.QAData
 import com.hsr2024.mungmungdoctortp.databinding.FragmentCommunityBinding
 
 class CommunityFragment:Fragment() {
@@ -71,14 +73,14 @@ class CommunityFragment:Fragment() {
     private fun setupTab1() {
         if (feedAdapter == null) {
             //초기 tap 눌렀을 경우
-            var feedData=FeedData("1","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s",
-                "feednickname","https://cdn-icons-png.flaticon.com/512/1361/1361876.png","2","3","Feed 내용","2024-01-02")
+            var feedData= FeedData("1","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s",
+                "feednickname","https://cdn-icons-png.flaticon.com/512/1361/1361876.png","0",true,"3","Feed 내용","2024-01-02")
             tab1Items.add(feedData)
-            feedData=FeedData("2","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s",
-                "feednickname","https://cdn-icons-png.flaticon.com/512/1361/1361876.png","2","3","Feed 내용","2024-01-02")
+            feedData= FeedData("2","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s",
+                "feednickname","https://cdn-icons-png.flaticon.com/512/1361/1361876.png","2",true,"3","Feed 내용","2024-01-02")
             tab1Items.add(feedData)
-            feedData=FeedData("3","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s",
-                "feednickname","https://cdn-icons-png.flaticon.com/512/1361/1361876.png","2","3","Feed 내용","2024-01-02")
+            feedData= FeedData("3","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s",
+                "feednickname","https://cdn-icons-png.flaticon.com/512/1361/1361876.png","2",true,"3","Feed 내용","2024-01-02")
             tab1Items.add(feedData)
             feedAdapter = FeedListAdapter(requireContext(), tab1Items)
             binding.recyclerView.adapter = feedAdapter
@@ -90,16 +92,16 @@ class CommunityFragment:Fragment() {
     private fun setupTab2() {
         if (qaAdapter == null) {
             //초기 tap 눌렀을 경우
-            var qaData=QAData("1","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s","title",
+            var qaData= QAData("1","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s","title",
                 "qanickname","3","6")
             tab2Items.add(qaData)
-            qaData=QAData("2","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s","title",
+            qaData= QAData("2","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s","title",
                 "qanickname","3","6")
             tab2Items.add(qaData)
-            qaData=QAData("3","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s","title",
+            qaData= QAData("3","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s","title",
                 "qanickname","3","6")
             tab2Items.add(qaData)
-            qaData=QAData("4","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s","title",
+            qaData= QAData("4","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s","title",
                 "qanickname","3","6")
             qaAdapter = QAListAdapter(requireContext(), tab2Items)
             binding.recyclerView.adapter = qaAdapter
