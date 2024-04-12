@@ -163,6 +163,7 @@ class LoginActivity : AppCompatActivity() {
         editor.putString("pet_gender",G.pet_gender)
         editor.putString("pet_neutering",G.pet_neutering)
         editor.putString("pet_breed",G.pet_breed)
+        editor.putString("loginType",G.loginType)
         editor.apply()
     }
 

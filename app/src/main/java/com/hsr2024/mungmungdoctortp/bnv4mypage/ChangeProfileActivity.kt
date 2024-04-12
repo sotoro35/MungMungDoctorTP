@@ -7,6 +7,8 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -17,7 +19,10 @@ import androidx.loader.content.CursorLoader
 import com.bumptech.glide.Glide
 import com.hsr2024.mungmungdoctortp.G
 import com.hsr2024.mungmungdoctortp.R
+import com.hsr2024.mungmungdoctortp.data.UserChange
 import com.hsr2024.mungmungdoctortp.databinding.ActivityChangeProfileBinding
+import com.hsr2024.mungmungdoctortp.network.RetrofitCallback
+import com.hsr2024.mungmungdoctortp.network.RetrofitProcess
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -36,6 +41,8 @@ class ChangeProfileActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnChangeUserImage.paintFlags = Paint.UNDERLINE_TEXT_FLAG // 밑줄
+        binding.changeUserNickname.text = G.user_nickname
+        binding.userEmailProfile.text = G.user_email
 
         binding.toolbar.setNavigationOnClickListener { finish() }
         binding.changeUserImage.setOnClickListener { clickImage() }
@@ -63,13 +70,38 @@ class ChangeProfileActivity : AppCompatActivity() {
         }
 
         if (saveCheck(password,passwordcon)){
-            //서버작업
 
-            //filePart - 이미지 url
+            if (filePart != null){
+                saveChage("$filePart")
+            }else saveChage("")
 
-            finish()
         }else AlertDialog.Builder(this).setMessage("관리자에게 문의하세요").create().show()
 
+    }
+
+    private fun saveChage(image:String){
+        val params= UserChange("${G.user_email}", "$password", "${G.user_providerId}", "$image", "${G.loginType}")
+        RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
+            override fun onResponseListSuccess(response: List<Any>?) {}
+
+            override fun onResponseSuccess(response: Any?) {
+                val code=(response as String)
+                Log.d("User modify code","$code") // 1220 회원 정보 수정 성공, 1230 회원 정보 수정 실패, 4204 서비스 회원 아님
+                when(code){
+                    "4004" -> Toast.makeText(this@ChangeProfileActivity, "회원이 아닙니다", Toast.LENGTH_SHORT).show()
+                    "1230" -> Toast.makeText(this@ChangeProfileActivity, "관리자에게 문의하세요", Toast.LENGTH_SHORT).show()
+                    "1220" -> {
+                        Toast.makeText(this@ChangeProfileActivity, "정보가 변경되었습니다", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+                }
+            }
+
+            override fun onResponseFailure(errorMsg: String?) {
+                Log.d("User modify fail",errorMsg!!) // 에러 메시지
+            }
+
+        }).userModifyRequest()
     }
 
 
@@ -84,7 +116,7 @@ class ChangeProfileActivity : AppCompatActivity() {
                 boolean = false
             }
 
-            password.length < 4 -> {
+            password.length in 1..3 -> {
                 AlertDialog.Builder(this).setMessage("비밀번호가 너무 짧습니다").create().show()
                 boolean = false
             }

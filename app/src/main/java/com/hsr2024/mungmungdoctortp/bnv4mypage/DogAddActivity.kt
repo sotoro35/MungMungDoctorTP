@@ -76,8 +76,6 @@ class DogAddActivity : AppCompatActivity() {
             binding.addPetNeuteringO.setBackgroundResource(R.drawable.bg_button)
         }
 
-
-
     }// onCreate
 
 
