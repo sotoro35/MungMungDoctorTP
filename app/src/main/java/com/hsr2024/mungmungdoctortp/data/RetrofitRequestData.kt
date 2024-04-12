@@ -20,6 +20,8 @@ data class UserChange(val email:String="", val password:String="", val provider_
 data class AddDog(val email:String="", val provider_id:String="", val pet_name:String,val pet_imageUrl:String,val pet_birthDate:String, val pet_gender:String, val pet_neutering:String, val pet_breed:String, val login_type:String)
 //반려견 수정
 data class ModifyDog(val email:String="", val provider_id:String="", val pet_id:String, val pet_name:String,val pet_imageUrl:String,val pet_birthDate:String, val pet_gender:String, val pet_neutering:String, val pet_breed:String, val login_type:String)
+//반려견 삭제
+data class DeleteDog(val email:String="", val provider_id:String="", val pet_id:String, val login_type:String)
 //반려견 정보
 data class Pet(val email:String, val pet_id:String, val pet_name:String,val pet_imageUrl:String,val pet_birthDate:String, val pet_gender:String, val pet_neutering:String, val pet_breed:String, val login_type:String)
 //반려견 정보 리스트

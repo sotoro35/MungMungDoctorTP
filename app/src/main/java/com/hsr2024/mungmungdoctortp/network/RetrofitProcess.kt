@@ -27,6 +27,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
 import com.hsr2024.mungmungdoctortp.data.AddDog
+import com.hsr2024.mungmungdoctortp.data.DeleteDog
 import com.hsr2024.mungmungdoctortp.data.ModifyDog
 import com.hsr2024.mungmungdoctortp.data.UserChange
 import com.hsr2024.mungmungdoctortp.main.MainActivity
@@ -349,6 +350,42 @@ class RetrofitProcess(
 //    }
 //
 //}).petModifyRequest()
+
+    fun petDeleteRequest(){
+        val retrofitService = setRetrofitService()
+        // 파라미터를 Json 형태로 변환
+        val deleteDog=(params as DeleteDog)
+        val call = retrofitService.deleteDog(deleteDog)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+
+        })
+    }
+
+// petDeleteRequest 사용법
+//val params= DeleteDog("이메일정보", "provider_id", "펫 식별값", "로그인 타입")
+//RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val code=(response as String)
+//        Log.d("signup code","$code") //  - 5300 펫 수정 성공, 5201 펫 수정 실패, 4204 서비스 회원 아님
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("signup fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).petDeleteRequest()
 
     private fun onegetRealPathfromUri(uri:Uri) : String? {
         //android 10 버전 부터는 Uri를 통해 파일의 실제 경로를 얻을 수 있는 방법이 없어졌음
