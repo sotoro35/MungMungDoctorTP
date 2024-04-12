@@ -416,7 +416,8 @@ class RetrofitProcess(
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val data=(response as PetList)
-//        Log.d("signup code","$data") //  - 5500 펫 목록 성공, 5501 펫 목록 실패, 4204 서비스 회원 아님
+//        Log.d("signup code","$data")
+//        data.code                              // - 5500 펫 목록 성공, 5501 펫 목록 실패, 4204 서비스 회원 아님
 //        data.petList.forEach{pet ->           // forEach문을 돌면서 펫 정보 가져올 수 있음
 //            pet.pet_id
 //            pet.pet_name
