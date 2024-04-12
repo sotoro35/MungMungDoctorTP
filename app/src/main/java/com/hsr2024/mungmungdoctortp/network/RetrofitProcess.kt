@@ -335,7 +335,7 @@ class RetrofitProcess(
     }
 
 // petModifyRequest 사용법
-//val params= ModifyDog("이메일정보", "provider_id", "펫 식별값", 펫 이름", "펫 프로필", "펫 생년월일", "펫 성별", "펫 중성화 여부 TRUE or FALSE", "펫 견종", "로그인 타입")
+//val params= ModifyDog("이메일정보", "provider_id", "펫 식별값", "펫 이름", "펫 프로필", "펫 생년월일", "펫 성별", "펫 중성화 여부 TRUE or FALSE", "펫 견종", "로그인 타입")
 //RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
