@@ -13,6 +13,7 @@ import com.hsr2024.mungmungdoctortp.data.UserChange
 import com.hsr2024.mungmungdoctortp.data.UserDelete
 import com.hsr2024.mungmungdoctortp.data.AddDog
 import com.hsr2024.mungmungdoctortp.data.DeleteDog
+import com.hsr2024.mungmungdoctortp.data.Individual
 import com.hsr2024.mungmungdoctortp.data.ModifyDog
 import com.hsr2024.mungmungdoctortp.data.commentDataList
 import okhttp3.MultipartBody
@@ -114,5 +115,5 @@ interface RetrofitService {
 
     //반려견 정보 불러오기
     @POST("/pet/list.php")
-    fun petList(@Body petList:PetList) : Call<String>
+    fun petList(@Body individual:Individual) : Call<PetList>
 }

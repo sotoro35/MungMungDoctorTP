@@ -53,3 +53,8 @@ data class FeedData(val feed_id:String, val profile_imgurl: String, val nickname
 data class FeedDataList(val feedDatas: List<FeedData>)
 data class CommentData(val comment_id:String, val profile_imgurl: String, val nickname: String, val content: String, val create_date: String)
 data class commentDataList(val commentDatas: List<CommentData>)
+
+//반려견 정보
+data class Pet(val pet_id:String, val pet_name:String,val pet_imageUrl:String,val pet_birthDate:String, val pet_gender:String, val pet_neutering:String, val pet_breed:String)
+//반려견 정보 리스트
+data class PetList(val petList:List<Pet>)

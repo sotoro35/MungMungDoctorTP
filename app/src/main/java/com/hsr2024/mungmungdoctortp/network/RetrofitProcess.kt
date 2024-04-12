@@ -28,7 +28,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
 import com.hsr2024.mungmungdoctortp.data.AddDog
 import com.hsr2024.mungmungdoctortp.data.DeleteDog
+import com.hsr2024.mungmungdoctortp.data.Individual
 import com.hsr2024.mungmungdoctortp.data.ModifyDog
+import com.hsr2024.mungmungdoctortp.data.PetList
 import com.hsr2024.mungmungdoctortp.data.UserChange
 import com.hsr2024.mungmungdoctortp.main.MainActivity
 import okhttp3.MediaType
@@ -157,11 +159,11 @@ class RetrofitProcess(
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val code=(response as String)
-//        Log.d("nickname code","$code") // 4320 닉네임 중복, 4300 중복x
+//        Log.d("nickname DupliCheck code","$code") // 4320 닉네임 중복, 4300 중복x
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
-//        Log.d("nickname fail",errorMsg!!) // 에러 메시지
+//        Log.d("nickname DupliCheck fail",errorMsg!!) // 에러 메시지
 //    }
 //
 //}).dupliCheckRequest()
@@ -192,11 +194,11 @@ class RetrofitProcess(
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val code=(response as String)
-//        Log.d("signup code","$code") //1220 회원탈퇴 성공, 1230 회원탈퇴 실패, 4204 서비스 회원 아님, 4203 이메일 로그인 시 입력 정보 잘못되어 로그인 실패
+//        Log.d("User withdraw code","$code") //1220 회원탈퇴 성공, 1230 회원탈퇴 실패, 4204 서비스 회원 아님, 4203 이메일 로그인 시 입력 정보 잘못되어 로그인 실패
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
-//        Log.d("signup fail",errorMsg!!) // 에러 메시지
+//        Log.d("User withdraw fail",errorMsg!!) // 에러 메시지
 //    }
 //
 //}).userWithDrawRequest()
@@ -235,11 +237,11 @@ class RetrofitProcess(
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val code=(response as String)
-//        Log.d("signup code","$code") // 실패 시 5404, 성공 시 이미지 경로
+//        Log.d("one file upload code","$code") // 실패 시 5404, 성공 시 이미지 경로
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
-//        Log.d("signup fail",errorMsg!!) // 에러 메시지
+//        Log.d("one file upload fail",errorMsg!!) // 에러 메시지
 //    }
 //
 //}).onefileUploadRequest()
@@ -270,11 +272,11 @@ class RetrofitProcess(
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val code=(response as String)
-//        Log.d("signup code","$code") // 1220 회원 정보 수정 성공, 1230 회원 정보 수정 실패, 4204 서비스 회원 아님
+//        Log.d("User modify code","$code") // 1220 회원 정보 수정 성공, 1230 회원 정보 수정 실패, 4204 서비스 회원 아님
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
-//        Log.d("signup fail",errorMsg!!) // 에러 메시지
+//        Log.d("User modify fail",errorMsg!!) // 에러 메시지
 //    }
 //
 //}).userModifyRequest()
@@ -306,11 +308,11 @@ class RetrofitProcess(
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val code=(response as String)
-//        Log.d("signup code","$code") //  - 5200 펫 추가 성공, 5201 펫 추가 실패, 4204 서비스 회원 아님
+//        Log.d("Add Pet code","$code") //  - 5200 펫 추가 성공, 5201 펫 추가 실패, 4204 서비스 회원 아님
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
-//        Log.d("signup fail",errorMsg!!) // 에러 메시지
+//        Log.d("Add Pet fail",errorMsg!!) // 에러 메시지
 //    }
 //
 //}).petAddRequest()
@@ -342,11 +344,11 @@ class RetrofitProcess(
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val code=(response as String)
-//        Log.d("signup code","$code") //  - 5300 펫 수정 성공, 5301 펫 수정 실패, 4204 서비스 회원 아님
+//        Log.d("Modify Pet code","$code") //  - 5300 펫 수정 성공, 5301 펫 수정 실패, 4204 서비스 회원 아님
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
-//        Log.d("signup fail",errorMsg!!) // 에러 메시지
+//        Log.d("Modify Pet fail",errorMsg!!) // 에러 메시지
 //    }
 //
 //}).petModifyRequest()
@@ -378,14 +380,59 @@ class RetrofitProcess(
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val code=(response as String)
-//        Log.d("signup code","$code") //  - 5400 펫 삭제 성공, 5401 펫 삭제 실패, 4204 서비스 회원 아님
+//        Log.d("Delete Pet code","$code") //  - 5400 펫 삭제 성공, 5401 펫 삭제 실패, 4204 서비스 회원 아님
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("Delete Pet fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).petDeleteRequest()
+
+    fun petListRequest(){
+        val retrofitService = setRetrofitService()
+        // 파라미터를 Json 형태로 변환
+        val individual=(params as Individual)
+        val call = retrofitService.petList(individual)
+        call.enqueue(object : Callback<PetList> {
+            override fun onResponse(p0: Call<PetList>, response: Response<PetList>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<PetList>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+
+        })
+    }
+
+// petListRequest 사용법
+//val params= Individual("이메일정보", "provider_id", "로그인 타입")
+//RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val data=(response as PetList)
+//        Log.d("signup code","$data") //  - 5500 펫 목록 성공, 5501 펫 목록 실패, 4204 서비스 회원 아님
+//        data.petList.forEach{pet ->           // forEach문을 돌면서 펫 정보 가져올 수 있음
+//            pet.pet_id
+//            pet.pet_name
+//            pet.pet_imageUrl
+//            pet.pet_birthDate
+//            pet.pet_gender
+//            pet.pet_neutering
+//            pet.pet_breed
+//        }
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
 //        Log.d("signup fail",errorMsg!!) // 에러 메시지
 //    }
 //
-//}).petDeleteRequest()
+//}).petListRequest()
 
     private fun onegetRealPathfromUri(uri:Uri) : String? {
         //android 10 버전 부터는 Uri를 통해 파일의 실제 경로를 얻을 수 있는 방법이 없어졌음
