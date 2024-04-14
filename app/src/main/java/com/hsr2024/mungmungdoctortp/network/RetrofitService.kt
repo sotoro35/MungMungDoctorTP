@@ -12,6 +12,7 @@ import com.hsr2024.mungmungdoctortp.data.SignUpData
 import com.hsr2024.mungmungdoctortp.data.UserChange
 import com.hsr2024.mungmungdoctortp.data.UserDelete
 import com.hsr2024.mungmungdoctortp.data.AddDog
+import com.hsr2024.mungmungdoctortp.data.AddFeed
 import com.hsr2024.mungmungdoctortp.data.CommentDataList
 import com.hsr2024.mungmungdoctortp.data.DeleteDog
 import com.hsr2024.mungmungdoctortp.data.FeedCommentList
@@ -94,6 +95,11 @@ interface RetrofitService {
     @FormUrlEncoded
     @POST("/qa/comment_list.php")
     fun qaCommentList(@Body qaCommentList:QACommentList) : Call<CommentDataList>
+
+    // feed 추가
+    @FormUrlEncoded
+    @POST("/feed/add.php")
+    fun feedAdd(@Body addFeed:AddFeed) : Call<String>
 
     // 회원탈퇴
     @POST("/user/withdraw.php")

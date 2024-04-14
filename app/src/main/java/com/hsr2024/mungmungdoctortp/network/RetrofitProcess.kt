@@ -27,6 +27,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
 import com.hsr2024.mungmungdoctortp.data.AddDog
+import com.hsr2024.mungmungdoctortp.data.AddFeed
 import com.hsr2024.mungmungdoctortp.data.CommentDataList
 import com.hsr2024.mungmungdoctortp.data.DeleteDog
 import com.hsr2024.mungmungdoctortp.data.FeedCommentList
@@ -83,7 +84,7 @@ class RetrofitProcess(
 
         })
     }
-    // 회원 로그인
+    // 1. 회원 로그인
 //    loginRequest 사용법
 //    val params= LoginData("이메일","패스워드","${URLEncoder.encode(액세스토큰, "UTF-8")}","naver") // 액세스토큰은 naver, kakao일 경우 작성, email의 경우 액세스토큰 빈 값
 //    RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
@@ -122,7 +123,7 @@ class RetrofitProcess(
 
         })
     }
-    // 회원 가입
+    // 2. 회원 가입
 // signupRequest 사용법
 //val params= SignUpData("이메일정보","패스워드 정보","닉네임")
 //RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
@@ -160,7 +161,7 @@ class RetrofitProcess(
 
         })
     }
-    // 닉네임 중복 체크
+    // 3. 닉네임 중복 체크
 // dupliCheckRequest 사용법
 //RetrofitProcess(this,params="중복체크할닉네임", callback = object : RetrofitCallback {
 //    override fun onResponseListSuccess(response: List<Any>?) {}
@@ -195,7 +196,7 @@ class RetrofitProcess(
 
         })
     }
-    // 회원 탈퇴
+    // 4. 회원 탈퇴
 // userWithDrawRequest 사용법
 //val params= UserDelete("이메일정보","패스워드 정보","provider_id", "로그인 타입")
 //RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
@@ -236,7 +237,7 @@ class RetrofitProcess(
 
         })
     }
-    // 이미지 업로드
+    // 5. 이미지 업로드
 // onefileUploadRequest 사용법
 //    // val intent = if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.TIRAMISU) Intent(MediaStore.ACTION_PICK_IMAGES) else Intent(Intent.ACTION_OPEN_DOCUMENT).setType("image/^*")
 //    // resultLauncher.launch(intent)
@@ -276,7 +277,7 @@ class RetrofitProcess(
 
         })
     }
-    // 회원 정보 수정
+    // 6. 회원 정보 수정
 // userModifyRequest 사용법
 //val params= UserChange("이메일정보", "패스워드", "provider_id", "userModifyRequest으로 나온 url값", "로그인 타입")
 //RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
@@ -312,7 +313,7 @@ class RetrofitProcess(
 
         })
     }
-    // 반려견 추가
+    // 7. 반려견 추가
 // petAddRequest 사용법
 //val params= AddDog("이메일정보", "provider_id", "펫 이름", "펫 프로필", "펫 생년월일", "펫 성별", "펫 중성화 여부 TRUE or FALSE", "펫 견종", "로그인 타입")
 //RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
@@ -348,7 +349,7 @@ class RetrofitProcess(
 
         })
     }
-    //반려견 정보 수정
+    // 8. 반려견 정보 수정
 // petModifyRequest 사용법
 //val params= ModifyDog("이메일정보", "provider_id", "펫 식별값", "펫 이름", "펫 프로필", "펫 생년월일", "펫 성별", "펫 중성화 여부 TRUE or FALSE", "펫 견종", "로그인 타입")
 //RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
@@ -384,7 +385,7 @@ class RetrofitProcess(
 
         })
     }
-    //반려견 삭제
+    // 9. 반려견 삭제
 // petDeleteRequest 사용법
 //val params= DeleteDog("이메일정보", "provider_id", "펫 식별값", "로그인 타입")
 //RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
@@ -420,7 +421,7 @@ class RetrofitProcess(
 
         })
     }
-    // 반려견 목록 불러오기
+    // 10. 반려견 목록 불러오기
 // petListRequest 사용법
 //val params= Individual("이메일정보", "provider_id", "로그인 타입")
 //RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
@@ -464,7 +465,7 @@ class RetrofitProcess(
             }
         })
     }
-    // feed 목록 불러오기
+    // 11. feed 목록 불러오기
 // feedListRequest 사용법
 //val params= Individual("이메일정보", "provider_id", "로그인 타입") // 비 로그인 상태일 경우 Individual()으로 생성가능
 //RetrofitProcess(this, params="", callback = object : RetrofitCallback {
@@ -510,7 +511,7 @@ class RetrofitProcess(
             }
         })
     }
-    //qa 목록 불러오기
+    // 12. qa 목록 불러오기
 // qaListRequest 사용법
 //val params= Individual("이메일정보", "provider_id", "로그인 타입") // 비 로그인 상태일 경우 Individual()으로 생성가능
 //RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
@@ -553,7 +554,7 @@ class RetrofitProcess(
             }
         })
     }
-    // feed 댓글 목록 불러오기
+    // 13. feed 댓글 목록 불러오기
 // feedCommentListRequest 사용법
 //val params= FeedCommentList(,"feed 식별 값", "이메일정보", "provider_id", "로그인 타입") // 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능
 //RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
@@ -595,9 +596,9 @@ class RetrofitProcess(
             }
         })
     }
-    // qa 댓글 목록 불러오기
+    // 14. qa 댓글 목록 불러오기
 // qaCommentListRequest 사용법
-//val params= QACommentList(,"qa 식별 값", "이메일정보", "provider_id", "로그인 타입") // 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능
+//val params= QACommentList("qa 식별 값", "이메일정보", "provider_id", "로그인 타입") // 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능
 //RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
@@ -618,44 +619,77 @@ class RetrofitProcess(
 //        Log.d("qa comment list fail",errorMsg!!) // 에러 메시지
 //    }
 //
-//}).qaCommentListRequest()
-
-    private fun onegetRealPathfromUri(uri:Uri) : String? {
-        //android 10 버전 부터는 Uri를 통해 파일의 실제 경로를 얻을 수 있는 방법이 없어졌음
-        //그래서 uri에 해당하는 파일을 복사하여 임시로 파일을 만들고 그 파일의 경로를 이용하여 서버에 전송
-
-        //Uri[미디어저장소의 DB 주소]로부터 파일의 이름을 얻어오기 - DB SELECT 쿼리 작업을 해주는 기능을 가진 객체를 이용
-        // CursorLoader : Content, uri객체, 컬럼 위치, 조건(where), 조건에 해당되는 값, 오름 or 내림차순
-        val cursorLoader=CursorLoader(context, uri, null, null, null, null)
-        //비동기로 로딩해라
-        val cursor:Cursor?=cursorLoader.loadInBackground()
-        val fileName:String?=cursor?.run {
-            moveToFirst()
-            // 컬럼 위치 array MediaStore.Images.Media 중 이미지 이름을 담고 있는 멤버변수 DISPLAY_NAME
-            getString(getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME))
-        }
-        //복사본이 저장될 파일의 경로와 파일명.확장자
-        //externalCacheDir : /stroage/emulated/0/Android/data/패키지이름/cache/
-        //fileName : 1000000076.jpg
-        val file=File((context as MainActivity).externalCacheDir,fileName)
-        //AlertDialog.Builder(this).setMessage(file.absolutePath).create().show()
-
-        //이제 파일 복사 작업 수행(로드된 파일 경로(uri)에서 파일을 가져와(inputStream) 파일을 실제 경로에 저장(outputStream)
-        // contentResolver 컨텐츠 주소 해독
-        val inputStream:InputStream=(context as MainActivity).contentResolver.openInputStream(uri) ?: return null
-        val outputStream:OutputStream=FileOutputStream(file)
-
-        while(true){
-            val buf:ByteArray= ByteArray(1024) // 빈 바이트 배열 [1KB]
-            val len:Int=inputStream.read(buf) //스트림을 통해 읽어들인 바이트들을 buf 배열에 넣기 -- 읽어들인 데이터의 크기를 리턴
-            if(len <= 0) break //읽어들인 데이터 크기가 0일 경우 break
-            outputStream.write(buf, 0, len) //buf 배열에 있는 바이트들을 file경로로 던지기. 첫시작(0) ~ 1023번, 다음 첫시작(1024) ~ 1027번 ..
-        } // 반복문이 끝났으면 복사가 완료
-        inputStream.close()
-        outputStream.close()
-        AlertDialog.Builder(context).setMessage(file.absolutePath).create().show()
-        return file.absolutePath
+    fun feedAddRequest(){
+        val retrofitService = setRetrofitService()
+        val addFeed=(params as AddFeed)
+        val call = retrofitService.feedAdd(addFeed)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
     }
+    // 15. feed 추가하기
+// AddFeed 사용법
+//val params= AddFeed("이메일정보", "provider_id", "로그인 타입", "Feed에 들어갈 이미지 url", "Feed 내용") // 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val code=(response as String) //  - 6400 feed 추가 성공, 6401 feed 추가 실패
+//        Log.d("feed add code","$code")
+//
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("feed add fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).feedAddRequest()
+
+//    private fun onegetRealPathfromUri(uri:Uri) : String? {
+//        //android 10 버전 부터는 Uri를 통해 파일의 실제 경로를 얻을 수 있는 방법이 없어졌음
+//        //그래서 uri에 해당하는 파일을 복사하여 임시로 파일을 만들고 그 파일의 경로를 이용하여 서버에 전송
+//
+//        //Uri[미디어저장소의 DB 주소]로부터 파일의 이름을 얻어오기 - DB SELECT 쿼리 작업을 해주는 기능을 가진 객체를 이용
+//        // CursorLoader : Content, uri객체, 컬럼 위치, 조건(where), 조건에 해당되는 값, 오름 or 내림차순
+//        val cursorLoader=CursorLoader(context, uri, null, null, null, null)
+//        //비동기로 로딩해라
+//        val cursor:Cursor?=cursorLoader.loadInBackground()
+//        val fileName:String?=cursor?.run {
+//            moveToFirst()
+//            // 컬럼 위치 array MediaStore.Images.Media 중 이미지 이름을 담고 있는 멤버변수 DISPLAY_NAME
+//            getString(getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME))
+//        }
+//        //복사본이 저장될 파일의 경로와 파일명.확장자
+//        //externalCacheDir : /stroage/emulated/0/Android/data/패키지이름/cache/
+//        //fileName : 1000000076.jpg
+//        val file=File((context as MainActivity).externalCacheDir,fileName)
+//        //AlertDialog.Builder(this).setMessage(file.absolutePath).create().show()
+//
+//        //이제 파일 복사 작업 수행(로드된 파일 경로(uri)에서 파일을 가져와(inputStream) 파일을 실제 경로에 저장(outputStream)
+//        // contentResolver 컨텐츠 주소 해독
+//        val inputStream:InputStream=(context as MainActivity).contentResolver.openInputStream(uri) ?: return null
+//        val outputStream:OutputStream=FileOutputStream(file)
+//
+//        while(true){
+//            val buf:ByteArray= ByteArray(1024) // 빈 바이트 배열 [1KB]
+//            val len:Int=inputStream.read(buf) //스트림을 통해 읽어들인 바이트들을 buf 배열에 넣기 -- 읽어들인 데이터의 크기를 리턴
+//            if(len <= 0) break //읽어들인 데이터 크기가 0일 경우 break
+//            outputStream.write(buf, 0, len) //buf 배열에 있는 바이트들을 file경로로 던지기. 첫시작(0) ~ 1023번, 다음 첫시작(1024) ~ 1027번 ..
+//        } // 반복문이 끝났으면 복사가 완료
+//        inputStream.close()
+//        outputStream.close()
+//        AlertDialog.Builder(context).setMessage(file.absolutePath).create().show()
+//        return file.absolutePath
+//    }
 
 
 } // Class
