@@ -637,7 +637,7 @@ class RetrofitProcess(
         })
     }
     // 15. feed 추가하기
-// AddFeed 사용법
+// feedAddRequest 사용법
 //val params= AddFeed("이메일정보", "provider_id", "로그인 타입", "Feed에 들어갈 이미지 url", "Feed 내용") // 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능
 //RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
 //    override fun onResponseListSuccess(response: List<Any>?) {}
