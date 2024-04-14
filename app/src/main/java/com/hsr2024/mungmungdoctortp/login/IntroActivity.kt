@@ -38,6 +38,8 @@ class IntroActivity : AppCompatActivity() {
                 pet_gender = preferences.getString("pet_gender","")!!
                 pet_neutering = preferences.getString("pet_neutering","")!!
                 pet_breed = preferences.getString("pet_breed","")!!
+                loginType = preferences.getString("loginType","")!!
+
             }
 
             Handler(Looper.getMainLooper()).postDelayed({

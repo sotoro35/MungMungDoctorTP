@@ -115,7 +115,7 @@ class DogAddActivity : AppCompatActivity() {
         var petbreed = binding.addPetBreed.text.toString()
         var birthdate = SimpleDateFormat("yyyyMMdd", Locale.KOREA).format(Date()).toString()
 
-        if (saveCheck(petName, petbreed, birthdate) == true ) {
+        if (saveCheck(petName, petbreed, birthdate) ) {
 
             val params= AddDog("${G.user_email}", "${G.user_providerId}",
                 "$petName", "$image",
@@ -128,6 +128,7 @@ class DogAddActivity : AppCompatActivity() {
                     val code=(response as String)
                     Log.d("Add Pet code","$code") //  - 5200 펫 추가 성공, 5201 펫 추가 실패, 4204 서비스 회원 아님
                     Toast.makeText(this@DogAddActivity, "추가성공", Toast.LENGTH_SHORT).show()
+                    finish()
                 }
 
                 override fun onResponseFailure(errorMsg: String?) {

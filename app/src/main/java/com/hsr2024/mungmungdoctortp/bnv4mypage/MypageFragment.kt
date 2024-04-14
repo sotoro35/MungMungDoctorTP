@@ -20,8 +20,10 @@ import com.google.android.material.textfield.TextInputLayout
 import com.hsr2024.mungmungdoctortp.G
 import com.hsr2024.mungmungdoctortp.R
 import com.hsr2024.mungmungdoctortp.adapter.MypageDogAdapter
+import com.hsr2024.mungmungdoctortp.data.Individual
 import com.hsr2024.mungmungdoctortp.data.Pet
 import com.hsr2024.mungmungdoctortp.data.Pet2
+import com.hsr2024.mungmungdoctortp.data.PetList
 import com.hsr2024.mungmungdoctortp.data.UserDelete
 import com.hsr2024.mungmungdoctortp.databinding.FragmentMypageBinding
 import com.hsr2024.mungmungdoctortp.login.LoginActivity
@@ -53,22 +55,55 @@ class MypageFragment : Fragment() {
         binding.btnAddPet.setOnClickListener { startActivity(Intent(requireContext(),DogAddActivity::class.java)) }
         binding.personRule.setOnClickListener { startActivity(Intent(requireContext(),PersonRuleActivity::class.java)) }
 
+        load()
 
         binding.mypageUserNickname.text = G.user_nickname
         if (G.user_imageUrl.isNotEmpty()) {
-            Glide.with(requireContext()).load("https://43.200.163.153/img/${G.user_imageUrl}").into(binding.mypageUserImage)
+            Glide.with(requireContext()).load("http://43.200.163.153/img/${G.user_imageUrl.trim()}").into(binding.mypageUserImage)
         }else binding.mypageUserImage.setImageResource(R.drawable.bnv_care)
 
-        load()
+
 
     }// onView...
 
     private fun load(){
 
-        var pets:List<Pet> = mutableListOf()
-        val mypageAdapter = MypageDogAdapter(requireContext(),pets)
-        binding.recyclerMypagePet.adapter = mypageAdapter
-        mypageAdapter.notifyDataSetChanged()
+        val params= Individual("${G.user_email}", "${G.user_providerId}", "${G.loginType}")
+            RetrofitProcess(requireContext(),params=params, callback = object : RetrofitCallback {
+                override fun onResponseListSuccess(response: List<Any>?) {}
+
+                override fun onResponseSuccess(response: Any?) {
+                    val data = (response as PetList)
+                    Log.d("signup code", "$data")
+
+                    when (data.code) {  // - 5500 펫 목록 성공, 5501 펫 목록 실패, 4204 서비스 회원 아님
+                        "5501" -> Toast.makeText(requireContext(), "펫 목록 실패", Toast.LENGTH_SHORT)
+                            .show()
+
+                        "4204" -> Toast.makeText(requireContext(), "회원 정보 확인필요", Toast.LENGTH_SHORT)
+                            .show()
+
+                        "5500" -> {
+                            Toast.makeText(requireContext(), "리스트 가져오기 성공", Toast.LENGTH_SHORT)
+                                .show()
+
+                            val pets:List<Pet> = data.petList
+                            val mypageAdapter = MypageDogAdapter(requireContext(),pets)
+                            binding.recyclerMypagePet.adapter = mypageAdapter
+                            mypageAdapter.notifyDataSetChanged()
+
+                        }
+                        else -> Toast.makeText(requireContext(), "관리자문의", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onResponseFailure(errorMsg: String?) {
+                    Log.d("signup fail",errorMsg!!) // 에러 메시지
+                }
+
+            }).petListRequest()
+
+
 
     }
 

@@ -26,7 +26,7 @@ class MypageDogAdapter(val context: Context, val pets:List<Pet>):Adapter<MypageD
         holder.binding.mypagePetName.text = pet.pet_name
 
         if (pet.pet_imageUrl !=null || pet.pet_imageUrl != ""){
-            Glide.with(context).load("https://43.200.163.153/img/${G.user_imageUrl}").into(holder.binding.mypagePetImage)
+            Glide.with(context).load("http://43.200.163.153/img/${G.pet_imageUrl}".trim()).into(holder.binding.mypagePetImage)
         }
 
     }
