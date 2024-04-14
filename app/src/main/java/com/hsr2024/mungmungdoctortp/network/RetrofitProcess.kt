@@ -28,6 +28,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
 import com.hsr2024.mungmungdoctortp.data.AddDog
 import com.hsr2024.mungmungdoctortp.data.AddFeed
+import com.hsr2024.mungmungdoctortp.data.AddQA
 import com.hsr2024.mungmungdoctortp.data.CommentDataList
 import com.hsr2024.mungmungdoctortp.data.DeleteDog
 import com.hsr2024.mungmungdoctortp.data.FeedCommentList
@@ -653,6 +654,41 @@ class RetrofitProcess(
 //    }
 //
 //}).feedAddRequest()
+
+    fun qaAddRequest(){
+        val retrofitService = setRetrofitService()
+        val addQA=(params as AddQA)
+        val call = retrofitService.qaAdd(addQA)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+    // 16. qa 추가하기
+// qaAddRequest 사용법
+//val params= AddQA("이메일정보", "provider_id", "로그인 타입", "qa에 들어갈 이미지 url", "qa 제목", "qa 내용") // 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val code=(response as String) //  - 7400 qa 추가 성공, 7401 qa 추가 실패
+//        Log.d("feed add code","$code")
+//
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("feed add fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).qaAddRequest()
 
 //    private fun onegetRealPathfromUri(uri:Uri) : String? {
 //        //android 10 버전 부터는 Uri를 통해 파일의 실제 경로를 얻을 수 있는 방법이 없어졌음

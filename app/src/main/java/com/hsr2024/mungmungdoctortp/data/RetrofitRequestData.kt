@@ -31,6 +31,9 @@ data class FeedCommentList(val feed_id:String, val email:String="", val provider
 //feed 추가
 data class AddFeed(val email:String="", val provider_id:String="", val login_type:String="", val imgurl:String="", val content:String)
 
+//qa 추가
+data class AddQA(val email:String="", val provider_id:String="", val login_type:String="", val imgurl:String="", val title:String, val content:String)
+
 //qa 댓글 목록
 data class QACommentList(val qa_id:String, val email:String="", val provider_id:String="", val login_type:String="")
 
