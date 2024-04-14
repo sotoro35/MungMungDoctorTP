@@ -77,22 +77,18 @@ interface RetrofitService {
     fun searchPlace(@Query("query")query:String, @Query("x") longitude:String, @Query("y")latitude:String) : Call<KakaoSearchPlaceResponse>
 
     // feed list 불러오기
-    @FormUrlEncoded
     @POST("/feed/feed_list.php")
     fun feedList(@Body individual:Individual) : Call<FeedDataList>
 
     // qa list 불러오기
-    @FormUrlEncoded
     @POST("/qa/qa_list.php")
     fun qaList(@Body individual:Individual) : Call<QADataList>
 
     // feed comment list 불러오기
-    @FormUrlEncoded
     @POST("/feed/comment_list.php")
     fun feedCommentList(@Body feedCommentList:FeedCommentList) : Call<CommentDataList>
 
     // qa comment list 불러오기
-    @FormUrlEncoded
     @POST("/qa/comment_list.php")
     fun qaCommentList(@Body qaCommentList:QACommentList) : Call<CommentDataList>
 
