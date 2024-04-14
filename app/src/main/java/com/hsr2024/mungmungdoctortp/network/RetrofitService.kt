@@ -97,7 +97,6 @@ interface RetrofitService {
     fun qaCommentList(@Body qaCommentList:QACommentList) : Call<CommentDataList>
 
     // feed 추가
-    @FormUrlEncoded
     @POST("/feed/add.php")
     fun feedAdd(@Body addFeed:AddFeed) : Call<String>
 
