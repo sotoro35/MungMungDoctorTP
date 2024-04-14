@@ -93,7 +93,7 @@ interface RetrofitService {
     fun qaCommentList(@Body qaCommentList:QACommentList) : Call<CommentDataList>
 
     // feed 추가
-    @POST("/feed/add.php")
+    @POST("/feed/feed_add.php")
     fun feedAdd(@Body addFeed:AddFeed) : Call<String>
 
     // 회원탈퇴
