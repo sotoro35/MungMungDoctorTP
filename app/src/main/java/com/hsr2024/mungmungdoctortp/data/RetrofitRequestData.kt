@@ -46,6 +46,6 @@ data class QAView(val email:String="", val provider_id:String="", val login_type
 //qa 댓글 목록
 data class QACommentList(val qa_id:String, val email:String="", val provider_id:String="", val login_type:String)
 
-//병원, ai 기록 목록, 추가하기
-data class HospitalorAiRecord(val email:String="", val provider_id:String="", val login_type:String, val pet_id:String, val date:String="")
+//병원, ai 기록 목록
+data class HospitalorAiRecordList(val email:String="", val provider_id:String="", val login_type:String, val pet_id:String, val date:String="")
 

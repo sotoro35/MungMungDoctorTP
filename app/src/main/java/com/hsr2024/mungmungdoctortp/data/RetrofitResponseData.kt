@@ -71,3 +71,12 @@ data class HospitalRecordData(
 )
 
 data class HospitalRecordList(val hospitalRecordList:List<HospitalRecordData>, val code:String)
+
+data class AIRecordData(
+    val id: String,                         // ai 기록 식별 값
+    val diagnosis_type: String,             // 진단한 ai type (eype or skin)
+    val diagnostic_img_url: String,         // ai 진단한 반려견 이미지 url
+    val diagnosis_result: String,           // ai 진단결과 리스트(결막염 80%, 유루증 70%..)
+)
+
+data class AIRecordList(val aiRecordList:List<AIRecordData>, val code:String)

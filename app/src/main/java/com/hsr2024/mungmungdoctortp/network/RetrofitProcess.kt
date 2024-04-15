@@ -1,6 +1,7 @@
 package com.hsr2024.mungmungdoctortp.network
 
 import android.content.Context
+import com.hsr2024.mungmungdoctortp.data.AIRecordList
 import com.hsr2024.mungmungdoctortp.data.LoginData
 import com.hsr2024.mungmungdoctortp.data.LoginResponse
 import com.hsr2024.mungmungdoctortp.data.SignUpData
@@ -18,7 +19,7 @@ import com.hsr2024.mungmungdoctortp.data.FeedCommentList
 import com.hsr2024.mungmungdoctortp.data.FeedDataList
 import com.hsr2024.mungmungdoctortp.data.FeedFavor
 import com.hsr2024.mungmungdoctortp.data.HospitalRecordList
-import com.hsr2024.mungmungdoctortp.data.HospitalorAiRecord
+import com.hsr2024.mungmungdoctortp.data.HospitalorAiRecordList
 import com.hsr2024.mungmungdoctortp.data.Individual
 import com.hsr2024.mungmungdoctortp.data.ModifyDog
 import com.hsr2024.mungmungdoctortp.data.PetList
@@ -1095,7 +1096,7 @@ class RetrofitProcess(
 
     fun hospitalListRequest(){
         val retrofitService = setRetrofitService()
-        val hospitalorAiRecord=(params as HospitalorAiRecord)
+        val hospitalorAiRecord=(params as HospitalorAiRecordList)
         val call = retrofitService.hospitalList(hospitalorAiRecord)
         call.enqueue(object : Callback<HospitalRecordList> {
             override fun onResponse(p0: Call<HospitalRecordList>, response: Response<HospitalRecordList>) {
@@ -1118,9 +1119,9 @@ class RetrofitProcess(
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
 //    override fun onResponseSuccess(response: Any?) {
-//        val date=(response as HospitalRecordList) //  4204 서비스 회원 아님, 8000 병원 기록 목록 성공, 8001 병원 기록 목록 실패
+//        val date=(response as HospitalRecordList)
 //        data.code                              //  4204 서비스 회원 아님, 8000 병원 기록 목록 성공, 8001 병원 기록 목록 실패
-//        data.hospitalRecordList.forEach{hospital ->           // forEach문을 돌면서 hospital 정보 가져올 수 있음
+//        data.hospitalRecordList.forEach{hospital ->           // forEach문을 돌면서 hospital 기록을 가져올 수 있음
 //          hospital.id                                         // 병원 기록 식별 값
 //          hospital.name                                       // 병원명
 //          hospital.price                                      // 진단가격
@@ -1138,6 +1139,47 @@ class RetrofitProcess(
 //    }
 //
 //}).hospitalListRequest()
+
+    fun aiListRequest(){
+        val retrofitService = setRetrofitService()
+        val hospitalorAiRecord=(params as HospitalorAiRecordList)
+        val call = retrofitService.aiList(hospitalorAiRecord)
+        call.enqueue(object : Callback<AIRecordList> {
+            override fun onResponse(p0: Call<AIRecordList>, response: Response<AIRecordList>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<AIRecordList>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+    // 30. ai 기록 목록 불러오기
+// aiListRequest 사용법
+//val params= HospitalorAiRecord("이메일정보", "provider_id", "로그인 타입", "pet_id", "date") // pet_id는 pet 식별값
+    // date : 날짜를 선택해서 검색, 전체 날짜 검색할 경우 빈 값
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val date=(response as AIRecordList)
+//        data.code                              //  4204 서비스 회원 아님, 9000 ai 기록 목록 성공, 9001 ai 기록 목록 실패
+//        data.hospitalRecordList.forEach{ai ->           // forEach문을 돌면서 ai 기록을 가져올 수 있음
+//          ai.id                                         // ai 기록 식별 값
+//          ai.diagnosis_type                             // 진단한 ai type (eype or skin)
+//          ai.diagnostic_img_url                         // ai 진단한 반려견 이미지 url
+//          ai.diagnosis_result                           // ai 진단결과 리스트(결막염 80%, 유루증 70%..)
+//        }
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("feed add fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).aiListRequest()
 
 //    private fun onegetRealPathfromUri(uri:Uri) : String? {
 //        //android 10 버전 부터는 Uri를 통해 파일의 실제 경로를 얻을 수 있는 방법이 없어졌음
