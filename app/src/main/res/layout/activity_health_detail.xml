@@ -15,7 +15,7 @@
         app:title="병명이름"
         android:layout_marginLeft="16dp"
         app:titleTextColor="@color/black"
-        app:navigationIcon="@drawable/icon_back1"
+        app:navigationIcon="@drawable/baseline_arrow_back_ios_24"
         android:layout_marginBottom="24dp"
         app:titleMarginStart="40dp"
         />

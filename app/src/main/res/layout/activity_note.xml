@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_marginBottom="8dp"
-        app:navigationIcon="@drawable/icon_back1"
+        app:navigationIcon="@drawable/baseline_arrow_back_ios_24"
         app:title="관리수첩"
         app:titleTextColor="@color/black"
         app:titleMarginStart="90dp"/>
