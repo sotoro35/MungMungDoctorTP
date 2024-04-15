@@ -1,33 +1,21 @@
 package com.hsr2024.mungmungdoctortp.bnv1care
 
+import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.text.style.LineBackgroundSpan
+import android.util.Log
+import android.widget.Toast
+import kotlin.coroutines.coroutineContext
 
 class CustomMultipleDotSpan : LineBackgroundSpan {
 
     private val radius: Float
-    private var color: IntArray
+    private var color: Int
 
-    constructor() {
-        radius = DEFAULT_RADIUS
-        color = IntArray(1)
-        color[0] = 0
-    }
 
-    constructor(color: Int) {
-        radius = DEFAULT_RADIUS
-        this.color = IntArray(1)
-        this.color[0] = color
-    }
-
-    constructor(radius: Float) {
-        this.radius = radius
-        color = IntArray(1)
-        color[0] = 0
-    }
-
-    constructor(radius: Float, color: IntArray) {
+    constructor(radius: Float, color: Int) {
         this.radius = radius
         this.color = color
     }
@@ -45,26 +33,37 @@ class CustomMultipleDotSpan : LineBackgroundSpan {
         end: Int,
         lineNum: Int
     ) {
-        val total = if (color.size > 5) 5 else color.size
-        var leftMost = (total - 1) * -10
 
-        for (i in 0 until total) {
-            val oldColor = paint.color
-            if (color[i] != 0) {
-                paint.color = color[i]
-            }
+        Log.d("aaaf", color.toString())
+
+        if (color == -2142642) {
+            //빨간점이면 - 병원갔다온날은 왼쪽에
+            paint.color = color
             canvas.drawCircle(
-                (left + right) / 2.toFloat() - leftMost,
+                ((left + right) / 2 + 20).toFloat(),
                 bottom + radius,
                 radius,
                 paint
             )
-            paint.color = oldColor
-            leftMost += 20
         }
-    }
 
-    companion object {
-        private const val DEFAULT_RADIUS = 0f
-    }
-}
+
+
+        if (color == -11053855) {
+            //파란점이면 - 병원갔다온날은 왼쪽에
+            paint.color = color
+            canvas.drawCircle(
+                ((left + right) / 2 - 10).toFloat(),
+                bottom + radius,
+                radius,
+                paint
+            )
+        }
+
+
+    }//drawBackground()
+
+
+}//CustomMultipleDotSpan class
+
+
