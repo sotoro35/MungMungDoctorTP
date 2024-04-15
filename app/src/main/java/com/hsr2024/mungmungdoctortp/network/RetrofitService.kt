@@ -12,6 +12,7 @@ import com.hsr2024.mungmungdoctortp.data.SignUpData
 import com.hsr2024.mungmungdoctortp.data.UserChange
 import com.hsr2024.mungmungdoctortp.data.UserDelete
 import com.hsr2024.mungmungdoctortp.data.AddDog
+import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteComment
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteFeed
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteQA
 import com.hsr2024.mungmungdoctortp.data.CommentDataList
@@ -115,6 +116,22 @@ interface RetrofitService {
     // qa 삭제
     @POST("/qa/qa_delete.php")
     fun qaDelete(@Body deleteQA:AddorModifyorDeleteQA) : Call<String>
+
+    // feed 댓글 수정하기
+    @POST("/feed/comment_modify.php")
+    fun feedCommentModify(@Body modifyComment:AddorModifyorDeleteComment) : Call<String>
+
+    // qa 댓글 수정하기
+    @POST("/qa/comment_modify.php")
+    fun qaCommentModify(@Body modifyComment:AddorModifyorDeleteComment) : Call<String>
+
+    // feed 댓글 삭제하기
+    @POST("/feed/comment_delete.php")
+    fun feedCommentDelete(@Body deleteComment:AddorModifyorDeleteComment) : Call<String>
+
+    // qa 댓글 삭제하기
+    @POST("/qa/comment_delete.php")
+    fun qaCommentDelete(@Body deleteComment:AddorModifyorDeleteComment) : Call<String>
 
     // 회원탈퇴
     @POST("/user/withdraw.php")
