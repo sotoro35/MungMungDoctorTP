@@ -9,6 +9,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.hsr2024.mungmungdoctortp.data.AddDog
+import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteComment
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteFeed
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteQA
 import com.hsr2024.mungmungdoctortp.data.CommentDataList
@@ -614,12 +615,12 @@ class RetrofitProcess(
     }
     // 15. feed 추가하기
 // feedAddRequest 사용법
-//val params= AddorModifyorDeleteFeed("이메일정보", "provider_id", "로그인 타입", "", "Feed에 들어갈 이미지 url", "Feed 내용") // 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능
+//val params= AddorModifyorDeleteFeed("이메일정보", "provider_id", "로그인 타입", "", "Feed에 들어갈 이미지 url", "Feed 내용")
 //RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
 //    override fun onResponseSuccess(response: Any?) {
-//        val code=(response as String) //  - 6400 feed 추가 성공, 6401 feed 추가 실패
+//        val code=(response as String) //  - 4204 서비스 회원 아님, 6400 feed 추가 성공, 6401 feed 추가 실패
 //        Log.d("feed add code","$code")
 //
 //    }
@@ -649,12 +650,12 @@ class RetrofitProcess(
     }
     // 16. qa 추가하기
 // qaAddRequest 사용법
-//val params= AddorModifyorDeleteQA("이메일정보", "provider_id", "로그인 타입", "", "qa에 들어갈 이미지 url", "qa 제목", "qa 내용") // 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능
+//val params= AddorModifyorDeleteQA("이메일정보", "provider_id", "로그인 타입", "", "qa에 들어갈 이미지 url", "qa 제목", "qa 내용")
 //RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
 //    override fun onResponseSuccess(response: Any?) {
-//        val code=(response as String) //  - 7400 qa 추가 성공, 7401 qa 추가 실패
+//        val code=(response as String) //  - 4204 서비스 회원 아님, 7400 qa 추가 성공, 7401 qa 추가 실패
 //        Log.d("feed add code","$code")
 //
 //    }
@@ -684,12 +685,12 @@ class RetrofitProcess(
     }
     // 17. feed 수정하기
 // feedModifyRequest 사용법
-//val params= AddorModifyorDeleteFeed("이메일정보", "provider_id", "로그인 타입", "feed_id", "Feed에 들어갈 이미지 url", "Feed 내용") // feed_id는 feed 식별값 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능
+//val params= AddorModifyorDeleteFeed("이메일정보", "provider_id", "로그인 타입", "feed_id", "Feed에 들어갈 이미지 url", "Feed 내용") // feed_id는 feed 식별값
 //RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
 //    override fun onResponseSuccess(response: Any?) {
-//        val code=(response as String) //  - 6500 feed 수정 성공, 6501 feed 수정 실패
+//        val code=(response as String) //  - 4204 서비스 회원 아님, 6500 feed 수정 성공, 6501 feed 수정 실패
 //        Log.d("feed add code","$code")
 //
 //    }
@@ -719,12 +720,12 @@ class RetrofitProcess(
     }
     // 18. qa 수정하기
 // qaModifyRequest 사용법
-//val params= AddorModifyorDeleteQA("이메일정보", "provider_id", "로그인 타입", "qa_id", "qa에 들어갈 이미지 url", "qa 제목", "qa 내용") // qa_id는 qa 식별값 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능
+//val params= AddorModifyorDeleteQA("이메일정보", "provider_id", "로그인 타입", "qa_id", "qa에 들어갈 이미지 url", "qa 제목", "qa 내용") // qa_id는 qa 식별값
 //RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
 //    override fun onResponseSuccess(response: Any?) {
-//        val code=(response as String) //  - 7500 qa 수정 성공, 7501 qa 수정 실패
+//        val code=(response as String) //  - 4204 서비스 회원 아님, 7500 qa 수정 성공, 7501 qa 수정 실패
 //        Log.d("feed add code","$code")
 //
 //    }
@@ -754,12 +755,12 @@ class RetrofitProcess(
     }
     // 19. feed 삭제하기
 // feedDeleteRequest 사용법
-//val params= AddorModifyorDeleteFeed("이메일정보", "provider_id", "로그인 타입", "feed_id") // 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능, feed_id는 feed 식별값
+//val params= AddorModifyorDeleteFeed("이메일정보", "provider_id", "로그인 타입", "feed_id") // feed_id는 feed 식별값
 //RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
 //    override fun onResponseSuccess(response: Any?) {
-//        val code=(response as String) //  - 6600 feed 삭제 성공, 6601 feed 삭제 실패
+//        val code=(response as String) //  - 4204 서비스 회원 아님, 6600 feed 삭제 성공, 6601 feed 삭제 실패
 //        Log.d("feed add code","$code")
 //
 //    }
@@ -789,12 +790,12 @@ class RetrofitProcess(
     }
     // 20. qa 삭제하기
 // qaDeleteRequest 사용법
-//val params= AddorModifyorDeleteQA("이메일정보", "provider_id", "로그인 타입", "qa_id") // 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능, qa_id는 qa 식별값
+//val params= AddorModifyorDeleteQA("이메일정보", "provider_id", "로그인 타입", "qa_id") // qa_id는 qa 식별값
 //RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
 //    override fun onResponseSuccess(response: Any?) {
-//        val code=(response as String) //  - 7600 qa 삭제 성공, 7601 qa 삭제 실패
+//        val code=(response as String) //  - 4204 서비스 회원 아님, 7600 qa 삭제 성공, 7601 qa 삭제 실패
 //        Log.d("feed add code","$code")
 //
 //    }
@@ -873,6 +874,150 @@ class RetrofitProcess(
 //    }
 //
 //  }).petSelectRequest()
+    fun feedCommentModifyRequest(){
+        val retrofitService = setRetrofitService()
+        val modifyCommentFeed=(params as AddorModifyorDeleteComment)
+        val call = retrofitService.feedCommentModify(modifyCommentFeed)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+    // 23. feed 댓글 수정하기
+// feedCommentModifyRequest 사용법
+//val params= AddorModifyorDeleteComment("이메일정보", "provider_id", "로그인 타입", "board_id", "comment_id", "댓글 내용" ) // board_id는 feed, qa 식별값
+                                                                                                                        // comment_id는 댓글  식별 값
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val code=(response as String) //  - 4204 서비스 회원 아님, 6700 feed 댓글 수정 성공, 6701 feed 댓글 수정 실패
+//        Log.d("feed add code","$code")
+//
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("feed add fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).feedCommentModifyRequest()
+
+    fun qaCommentModifyRequest(){
+        val retrofitService = setRetrofitService()
+        val modifyCommentQA=(params as AddorModifyorDeleteComment)
+        val call = retrofitService.qaCommentModify(modifyCommentQA)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+    // 24. qa 댓글 수정하기
+// qaCommentModifyRequest 사용법
+//val params= AddorModifyorDeleteComment("이메일정보", "provider_id", "로그인 타입", "board_id", "comment_id", "댓글 내용" ) // board_id는 feed, qa 식별값
+                                                                                                                        // comment_id는 댓글  식별 값
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val code=(response as String) //  - 4204 서비스 회원 아님, 7700 qa 댓글 수정 성공, 7701 qa 댓글 수정 실패
+//        Log.d("feed add code","$code")
+//
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("feed add fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).qaCommentModifyRequest()
+
+    fun feedCommentDeleteRequest(){
+        val retrofitService = setRetrofitService()
+        val deleteCommentFeed=(params as AddorModifyorDeleteComment)
+        val call = retrofitService.feedCommentDelete(deleteCommentFeed)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+
+    // 25. feed 댓글 삭제하기
+// feedCommentDeleteRequest 사용법
+//val params= AddorModifyorDeleteComment("이메일정보", "provider_id", "로그인 타입", "board_id", "comment_id", "댓글 내용" ) // board_id는 feed, qa 식별값
+                                                                                                                        // comment_id는 댓글  식별 값
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val code=(response as String) //  - 4204 서비스 회원 아님, 6800 feed 댓글 삭제 성공, 6801 feed 댓글 삭제 실패
+//        Log.d("feed add code","$code")
+//
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("feed add fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).feedCommentDeleteRequest()
+
+    fun qaCommentDeleteRequest(){
+        val retrofitService = setRetrofitService()
+        val deleteCommentQA=(params as AddorModifyorDeleteComment)
+        val call = retrofitService.qaCommentDelete(deleteCommentQA)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+    // 26. qa 댓글 삭제하기
+// qaCommentDeleteRequest 사용법
+//val params= AddorModifyorDeleteComment("이메일정보", "provider_id", "로그인 타입", "board_id", "comment_id", "댓글 내용" ) // board_id는 feed, qa 식별값
+                                                                                                                        // comment_id는 댓글  식별 값
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val code=(response as String) //  - 4204 서비스 회원 아님, 7800 qa 댓글 삭제 성공, 7801 qa 댓글 삭제 실패
+//        Log.d("feed add code","$code")
+//
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("feed add fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).qaCommentDeleteRequest()
 
 //    private fun onegetRealPathfromUri(uri:Uri) : String? {
 //        //android 10 버전 부터는 Uri를 통해 파일의 실제 경로를 얻을 수 있는 방법이 없어졌음
