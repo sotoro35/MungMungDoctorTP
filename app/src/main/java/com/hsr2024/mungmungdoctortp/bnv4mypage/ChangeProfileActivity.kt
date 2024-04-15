@@ -49,7 +49,8 @@ class ChangeProfileActivity : AppCompatActivity() {
         binding.btnChangeProfile.setOnClickListener { changeProfile() }
 
         if (G.user_imageUrl.isNotEmpty()) {
-            Glide.with(this).load("https://43.200.163.153/img/${G.user_imageUrl}").into(binding.changeUserImage)
+            Glide.with(this).load("$imgUrl").into(binding.changeUserImage)
+
         }
 
 
@@ -69,10 +70,26 @@ class ChangeProfileActivity : AppCompatActivity() {
             MultipartBody.Part.createFormData("img1", file.name,requestBody) // 택배상자 포장.. == 리턴되는 값
         }
 
+
         if (saveCheck(password,passwordcon)){
 
             if (filePart != null){
-                saveChage("$filePart")
+                RetrofitProcess(this,params=filePart, callback = object : RetrofitCallback {
+                override fun onResponseListSuccess(response: List<Any>?) {}
+
+                override fun onResponseSuccess(response: Any?) {
+                    val code=(response as String)
+                    Log.d("one file upload code","$code") // 실패 시 5404, 성공 시 이미지 경로
+                    saveChage("$code")
+                }
+
+                override fun onResponseFailure(errorMsg: String?) {
+                    Log.d("one file upload fail",errorMsg!!) // 에러 메시지
+                }
+
+            }).onefileUploadRequest()
+
+
             }else saveChage("")
 
         }else AlertDialog.Builder(this).setMessage("관리자에게 문의하세요").create().show()
@@ -126,10 +143,6 @@ class ChangeProfileActivity : AppCompatActivity() {
                 boolean = false
             }
 
-            !password.isNotEmpty() && !passwordConfirm.isNotEmpty() -> {
-                AlertDialog.Builder(this).setMessage("모두 입력해주세요").create().show()
-                boolean = false
-            }
 
             else -> boolean = true
         } // when...

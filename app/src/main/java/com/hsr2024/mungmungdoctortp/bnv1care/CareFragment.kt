@@ -3,6 +3,7 @@ package com.hsr2024.mungmungdoctortp.bnv1care
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,9 +16,14 @@ import com.bumptech.glide.Glide
 import com.hsr2024.mungmungdoctortp.G
 import com.hsr2024.mungmungdoctortp.R
 import com.hsr2024.mungmungdoctortp.adapter.CareSelectDogAdapter
+import com.hsr2024.mungmungdoctortp.adapter.MypageDogAdapter
+import com.hsr2024.mungmungdoctortp.data.Individual
 import com.hsr2024.mungmungdoctortp.data.Pet
 import com.hsr2024.mungmungdoctortp.data.Pet2
+import com.hsr2024.mungmungdoctortp.data.PetList
 import com.hsr2024.mungmungdoctortp.databinding.FragmentCareBinding
+import com.hsr2024.mungmungdoctortp.network.RetrofitCallback
+import com.hsr2024.mungmungdoctortp.network.RetrofitProcess
 
 class CareFragment:Fragment() {
 
@@ -49,7 +55,7 @@ class CareFragment:Fragment() {
 
     private fun load(){
 
-        if (G.pet_id != null && G.pet_id != ""){
+        if (G.pet_id != null || G.pet_id != ""){
             binding.petName.text = G.pet_name
             binding.petBreed.text = G.pet_breed
             binding.petBirthDate.text = G.pet_birthDate
@@ -81,21 +87,50 @@ class CareFragment:Fragment() {
         builder.setView(dialogV)
         alertDialog = builder.create()
 
-        var pets:List<Pet> = mutableListOf()
-            // 서버에 저장된 등록된 펫 정보 어댑터 연결해서 보여주기
-            // 해당 펫 클릭시 보여지는 화면 변경
-        if (pets != null){
-            dialogV.findViewById<TextView>(R.id.dog_empty).visibility = View.INVISIBLE
-            val mypageAdapter = CareSelectDogAdapter(requireContext(),pets)
-            recyclerView.adapter = mypageAdapter
-            mypageAdapter.notifyDataSetChanged()
-        }
+
+
+        val params= Individual("${G.user_email}", "${G.user_providerId}", "${G.loginType}")
+        RetrofitProcess(requireContext(),params=params, callback = object : RetrofitCallback {
+            override fun onResponseListSuccess(response: List<Any>?) {}
+
+            override fun onResponseSuccess(response: Any?) {
+                val data=(response as PetList)
+                Log.d("signup code","$data")
+
+                when (data.code) {  // - 5500 펫 목록 성공, 5501 펫 목록 실패, 4204 서비스 회원 아님
+                    "5501" -> Toast.makeText(requireContext(), "펫 목록 실패", Toast.LENGTH_SHORT)
+                        .show()
+
+                    "4204" -> Toast.makeText(requireContext(), "회원 정보 확인필요", Toast.LENGTH_SHORT)
+                        .show()
+
+                    "5500" -> {
+                        Toast.makeText(requireContext(), "리스트 가져오기 성공", Toast.LENGTH_SHORT)
+                            .show()
+
+                        val pets: List<Pet> = data.petList.sortedByDescending {it.pet_id}
+
+                        if (pets != null){
+                            dialogV.findViewById<TextView>(R.id.dog_empty).visibility = View.INVISIBLE
+                            val mypageAdapter = CareSelectDogAdapter(requireContext(),pets)
+                            recyclerView.adapter = mypageAdapter
+                            mypageAdapter.notifyDataSetChanged()
+                        }
+                    }
+                    else -> Toast.makeText(requireContext(), "관리자문의", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onResponseFailure(errorMsg: String?) {
+                Log.d("signup fail",errorMsg!!) // 에러 메시지
+            }
+
+        }).petListRequest()
 
         dialogV.findViewById<TextView>(R.id.btn_select_pet).setOnClickListener {
             load()
             alertDialog.dismiss() }
         dialogV.findViewById<TextView>(R.id.btn_close).setOnClickListener { alertDialog.dismiss() }
-
         alertDialog.show()
 
     }

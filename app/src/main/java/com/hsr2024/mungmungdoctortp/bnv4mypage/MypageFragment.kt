@@ -66,6 +66,12 @@ class MypageFragment : Fragment() {
 
     }// onView...
 
+    override fun onResume() {
+        super.onResume()
+        load()
+    }
+
+    @SuppressLint("SuspiciousIndentation")
     private fun load(){
 
         val params= Individual("${G.user_email}", "${G.user_providerId}", "${G.loginType}")
@@ -87,11 +93,10 @@ class MypageFragment : Fragment() {
                             Toast.makeText(requireContext(), "리스트 가져오기 성공", Toast.LENGTH_SHORT)
                                 .show()
 
-                            val pets:List<Pet> = data.petList
+                            val pets: List<Pet> = data.petList.sortedByDescending {it.pet_id}
                             val mypageAdapter = MypageDogAdapter(requireContext(),pets)
                             binding.recyclerMypagePet.adapter = mypageAdapter
                             mypageAdapter.notifyDataSetChanged()
-
                         }
                         else -> Toast.makeText(requireContext(), "관리자문의", Toast.LENGTH_SHORT).show()
                     }

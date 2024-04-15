@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
@@ -37,6 +38,11 @@ import java.util.Locale
 class DogAddActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityDogAddBinding.inflate(layoutInflater) }
+
+    lateinit var petName:String
+    lateinit var petbreed:String
+    lateinit var birthdate:String
+
 
     var uri:Uri? = null
     var gender = "girl"
@@ -79,8 +85,14 @@ class DogAddActivity : AppCompatActivity() {
     }// onCreate
 
 
+
     private fun addPet() {
 
+        petName = binding.addPetName.text.toString()
+        petbreed = binding.addPetBreed.text.toString()
+        birthdate = SimpleDateFormat("yyyyMMdd", Locale.KOREA).format(Date()).toString()
+
+        if (saveCheck(petName, petbreed, birthdate) ) {
         //이미지파일을 MutipartBody.Part 로 포장하여 전송: @Part
         val filePart: MultipartBody.Part? = imgPath?.let { //널이 아니면...
             val file = File(it) // 생선손질..
@@ -108,12 +120,14 @@ class DogAddActivity : AppCompatActivity() {
             }).onefileUploadRequest()
         }else savePet("")
 
+        }
+
     }// addPet..
 
     private fun savePet(image:String){
-        var petName = binding.addPetName.text.toString()
-        var petbreed = binding.addPetBreed.text.toString()
-        var birthdate = SimpleDateFormat("yyyyMMdd", Locale.KOREA).format(Date()).toString()
+        petName = binding.addPetName.text.toString()
+        petbreed = binding.addPetBreed.text.toString()
+        birthdate = SimpleDateFormat("yyyyMMdd", Locale.KOREA).format(Date()).toString()
 
         if (saveCheck(petName, petbreed, birthdate) ) {
 
@@ -146,7 +160,13 @@ class DogAddActivity : AppCompatActivity() {
         var boolean = false
 
         when {
-            !petName.isNotEmpty() && !petbreed.isNotEmpty() && !birthdate.isNotEmpty() -> {
+
+            petName == null || petbreed == null || birthdate == null -> {
+                AlertDialog.Builder(this).setMessage("모두 입력해주세요").create().show()
+                boolean = false
+            }
+
+            !petName.isNotEmpty() || !petbreed.isNotEmpty() || !birthdate.isNotEmpty() -> {
                 AlertDialog.Builder(this).setMessage("모두 입력해주세요").create().show()
                 boolean = false
             }
