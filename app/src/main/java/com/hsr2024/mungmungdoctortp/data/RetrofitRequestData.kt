@@ -34,9 +34,14 @@ data class AddorModifyorDeleteFeed(val email:String="", val provider_id:String="
 //qa 추가(qa_id 값 안넣어도 됨), 수정, 삭제(imgurl, content 값 안 넣어도 됨)
 data class AddorModifyorDeleteQA(val email:String="", val provider_id:String="", val login_type:String, val qa_id: String="", val imgurl:String="", val title:String="", val content:String="")
 
-
 //댓글 추가(comment_id 값 안넣어도 됨), 수정, 삭제(content 값 안 넣어도 됨). board_id(feed_id or qa_id)
 data class AddorModifyorDeleteComment(val email:String="", val provider_id:String="", val login_type:String, val board_id: String, val comment_id:String="", val content:String="")
+
+// feed favor 요청
+data class FeedFavor(val email:String="", val provider_id:String="", val login_type:String, val feed_id: String, val favor_add:String) // favor True or False
+
+// qa view 요청
+data class QAView(val email:String="", val provider_id:String="", val login_type:String, val qa_id: String)
 
 //qa 댓글 목록
 data class QACommentList(val qa_id:String, val email:String="", val provider_id:String="", val login_type:String)

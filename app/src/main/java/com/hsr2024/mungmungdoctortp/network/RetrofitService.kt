@@ -18,10 +18,12 @@ import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteQA
 import com.hsr2024.mungmungdoctortp.data.CommentDataList
 import com.hsr2024.mungmungdoctortp.data.DeleteDog
 import com.hsr2024.mungmungdoctortp.data.FeedCommentList
+import com.hsr2024.mungmungdoctortp.data.FeedFavor
 import com.hsr2024.mungmungdoctortp.data.Individual
 import com.hsr2024.mungmungdoctortp.data.ModifyDog
 import com.hsr2024.mungmungdoctortp.data.Pet
 import com.hsr2024.mungmungdoctortp.data.QACommentList
+import com.hsr2024.mungmungdoctortp.data.QAView
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.Body
@@ -128,6 +130,14 @@ interface RetrofitService {
     // feed 댓글 삭제하기
     @POST("/feed/comment_delete.php")
     fun feedCommentDelete(@Body deleteComment:AddorModifyorDeleteComment) : Call<String>
+
+    // feed 찜 기능
+    @POST("/feed/favor.php")
+    fun feedFavor(@Body feedFavor:FeedFavor) : Call<String>
+
+    // qa 조회 수 기능
+    @POST("/qa/view.php")
+    fun qaView(@Body qaView:QAView) : Call<String>
 
     // qa 댓글 삭제하기
     @POST("/qa/comment_delete.php")

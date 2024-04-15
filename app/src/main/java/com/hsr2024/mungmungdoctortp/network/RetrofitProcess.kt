@@ -16,12 +16,14 @@ import com.hsr2024.mungmungdoctortp.data.CommentDataList
 import com.hsr2024.mungmungdoctortp.data.DeleteDog
 import com.hsr2024.mungmungdoctortp.data.FeedCommentList
 import com.hsr2024.mungmungdoctortp.data.FeedDataList
+import com.hsr2024.mungmungdoctortp.data.FeedFavor
 import com.hsr2024.mungmungdoctortp.data.Individual
 import com.hsr2024.mungmungdoctortp.data.ModifyDog
 import com.hsr2024.mungmungdoctortp.data.Pet
 import com.hsr2024.mungmungdoctortp.data.PetList
 import com.hsr2024.mungmungdoctortp.data.QACommentList
 import com.hsr2024.mungmungdoctortp.data.QADataList
+import com.hsr2024.mungmungdoctortp.data.QAView
 import com.hsr2024.mungmungdoctortp.data.UserChange
 import okhttp3.MultipartBody
 import okhttp3.MultipartBody.Part
@@ -1018,6 +1020,77 @@ class RetrofitProcess(
 //    }
 //
 //}).qaCommentDeleteRequest()
+
+    fun feedFavorRequest(){
+        val retrofitService = setRetrofitService()
+        val feedFavor=(params as FeedFavor)
+        val call = retrofitService.feedFavor(feedFavor)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+    // 27. feed 찜 기능
+// feedFavorRequest 사용법
+//val params= FeedFavor("이메일정보", "provider_id", "로그인 타입", "feed_id", "favor_add") // feed_id feed 식별값
+                                                                                        // favor_add TRUE 일 경우 찜 추가, FALSE 일 경우 찜 삭제
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val code=(response as String) //  - 4204 서비스 회원 아님, 6900 feed 찜 추가 성공, 6901 feed 찜 삭제, 6902 feed 찜 실패
+//        Log.d("feed add code","$code")
+//
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("feed add fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).feedFavorRequest()
+
+    fun qaViewRequest(){
+        val retrofitService = setRetrofitService()
+        val qaView=(params as QAView)
+        val call = retrofitService.qaView(qaView)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+    // 28. qa view 기능
+// qaViewRequest 사용법
+//val params= QAView("이메일정보", "provider_id", "로그인 타입", "qa_id", ) // qa_id는 qa 식별값
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val code=(response as String) //  - 4204 서비스 회원 아님, 7900 qa 조회 수 증가 성공, 7901 qa 조회 수 그대로, 7902 조회 수 증가 실패
+//        Log.d("feed add code","$code")
+//
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("feed add fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).qaViewRequest()
 
 //    private fun onegetRealPathfromUri(uri:Uri) : String? {
 //        //android 10 버전 부터는 Uri를 통해 파일의 실제 경로를 얻을 수 있는 방법이 없어졌음
