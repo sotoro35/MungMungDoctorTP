@@ -469,7 +469,7 @@ class RetrofitProcess(
     // 11. feed 목록 불러오기
 // feedListRequest 사용법
 //val params= Individual("이메일정보", "provider_id", "로그인 타입") // 비 로그인 상태일 경우 Individual()으로 생성가능
-//RetrofitProcess(this, params="", callback = object : RetrofitCallback {
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
 //    override fun onResponseSuccess(response: Any?) {
