@@ -17,9 +17,10 @@ import com.hsr2024.mungmungdoctortp.data.DeleteDog
 import com.hsr2024.mungmungdoctortp.data.FeedCommentList
 import com.hsr2024.mungmungdoctortp.data.FeedDataList
 import com.hsr2024.mungmungdoctortp.data.FeedFavor
+import com.hsr2024.mungmungdoctortp.data.HospitalRecordList
+import com.hsr2024.mungmungdoctortp.data.HospitalorAiRecord
 import com.hsr2024.mungmungdoctortp.data.Individual
 import com.hsr2024.mungmungdoctortp.data.ModifyDog
-import com.hsr2024.mungmungdoctortp.data.Pet
 import com.hsr2024.mungmungdoctortp.data.PetList
 import com.hsr2024.mungmungdoctortp.data.QACommentList
 import com.hsr2024.mungmungdoctortp.data.QADataList
@@ -1091,6 +1092,52 @@ class RetrofitProcess(
 //    }
 //
 //}).qaViewRequest()
+
+    fun hospitalListRequest(){
+        val retrofitService = setRetrofitService()
+        val hospitalorAiRecord=(params as HospitalorAiRecord)
+        val call = retrofitService.hospitalList(hospitalorAiRecord)
+        call.enqueue(object : Callback<HospitalRecordList> {
+            override fun onResponse(p0: Call<HospitalRecordList>, response: Response<HospitalRecordList>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<HospitalRecordList>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+    // 29. 병원 기록 목록 불러오기
+// hospitalListRequest 사용법
+//val params= HospitalorAiRecord("이메일정보", "provider_id", "로그인 타입", "pet_id", "date") // pet_id는 pet 식별값
+                                                                                            // date : 날짜를 선택해서 검색, 전체 날짜 검색할 경우 빈 값
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val date=(response as HospitalRecordList) //  4204 서비스 회원 아님, 8000 병원 기록 목록 성공, 8001 병원 기록 목록 실패
+//        data.code                              //  4204 서비스 회원 아님, 8000 병원 기록 목록 성공, 8001 병원 기록 목록 실패
+//        data.hospitalRecordList.forEach{hospital ->           // forEach문을 돌면서 hospital 정보 가져올 수 있음
+//          hospital.id                                         // 병원 기록 식별 값
+//          hospital.name                                       // 병원명
+//          hospital.price                                      // 진단가격
+//          hospital.diagnosis                                  // 진단명
+//          hospital.visit_date                                 // 진료일
+//          hospital.description                                // 진료내용
+//          hospital.receipt_img_url                            // 영수증 이미지 url
+//          hospital.clinical_img_url                           // 진료사진 이미지 url
+//        }
+//
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("feed add fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).hospitalListRequest()
 
 //    private fun onegetRealPathfromUri(uri:Uri) : String? {
 //        //android 10 버전 부터는 Uri를 통해 파일의 실제 경로를 얻을 수 있는 방법이 없어졌음

@@ -19,9 +19,10 @@ import com.hsr2024.mungmungdoctortp.data.CommentDataList
 import com.hsr2024.mungmungdoctortp.data.DeleteDog
 import com.hsr2024.mungmungdoctortp.data.FeedCommentList
 import com.hsr2024.mungmungdoctortp.data.FeedFavor
+import com.hsr2024.mungmungdoctortp.data.HospitalRecordList
+import com.hsr2024.mungmungdoctortp.data.HospitalorAiRecord
 import com.hsr2024.mungmungdoctortp.data.Individual
 import com.hsr2024.mungmungdoctortp.data.ModifyDog
-import com.hsr2024.mungmungdoctortp.data.Pet
 import com.hsr2024.mungmungdoctortp.data.QACommentList
 import com.hsr2024.mungmungdoctortp.data.QAView
 import okhttp3.MultipartBody
@@ -174,4 +175,8 @@ interface RetrofitService {
     //반려견 정보 불러오기
     @POST("/pet/list.php")
     fun petList(@Body individual:Individual) : Call<PetList>
+
+    //해당 반려견의 병원 기록 불러오기
+    @POST("/pet/hospital_list.php")
+    fun hospitalList(@Body record:HospitalorAiRecord) : Call<HospitalRecordList>
 }
