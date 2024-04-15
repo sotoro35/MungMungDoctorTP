@@ -123,6 +123,10 @@ interface RetrofitService {
     @POST("/user/modify.php")
     fun userModify(@Body userChange:UserChange) : Call<String>
 
+    // 회원 정보 변경
+    @POST("/user/load.php")
+    fun userLoad(@Body userload:Individual) : Call<LoginResponse>
+
     //반려견 추가
     @POST("/pet/add.php")
     fun addDog(@Body addDog: AddDog) : Call<String>
