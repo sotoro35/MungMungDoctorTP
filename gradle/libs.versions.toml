@@ -17,6 +17,12 @@ circleimageview = "3.1.0"
 converterScalars = "2.11.0"
 converterGson = "2.11.0"
 playServicesLocation = "21.2.0"
+#머티리얼 칼렌다뷰 추가
+prolificinteractiveMaterialCalendarview = "1.4.3"
+
+
+
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -37,6 +43,13 @@ circleimageview = { group = "de.hdodenhof", name = "circleimageview", version.re
 converter-scalars = { group = "com.squareup.retrofit2", name = "converter-scalars", version.ref = "converterScalars" }
 converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "converterGson" }
 play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
+
+#머티리얼 칼렌다뷰 라이브러리 1.4.3버전 추가
+material-calendarview = { module = "com.prolificinteractive:material-calendarview", version.ref = "prolificinteractiveMaterialCalendarview" }
+
+
+
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

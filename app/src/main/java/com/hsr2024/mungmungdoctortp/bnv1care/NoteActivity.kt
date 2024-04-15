@@ -1,7 +1,13 @@
 package com.hsr2024.mungmungdoctortp.bnv1care
 
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.style.ForegroundColorSpan
+import android.text.style.RelativeSizeSpan
+import android.text.style.StyleSpan
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -13,21 +19,29 @@ import com.hsr2024.mungmungdoctortp.adapter.HospitalRecordAdapter
 import com.hsr2024.mungmungdoctortp.data.AIRecordData
 import com.hsr2024.mungmungdoctortp.data.HospitalRecordData
 import com.hsr2024.mungmungdoctortp.databinding.ActivityNoteBinding
+import com.prolificinteractive.materialcalendarview.CalendarDay
+import com.prolificinteractive.materialcalendarview.DayViewDecorator
+import com.prolificinteractive.materialcalendarview.DayViewFacade
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class NoteActivity : AppCompatActivity() {
 
+    lateinit var calendar: MaterialCalendarView
     private val binding by lazy { ActivityNoteBinding.inflate(layoutInflater) }
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(binding.root)
 
         binding.toolbar.setNavigationOnClickListener { finish() }
 
-        binding.calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
-            Toast.makeText(this, "$year, ${month + 1}, $dayOfMonth", Toast.LENGTH_SHORT).show()
-        }
+
+
 
         val itemlist:MutableList<HospitalRecordData> = mutableListOf()
         val item1 = HospitalRecordData("제1병원", "목아파", "10만원", "오늘당장")
@@ -59,9 +73,170 @@ class NoteActivity : AppCompatActivity() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        calendar = binding.calendarview
+        //오늘날짜 데코레이터
+        calendar.addDecorators(TodayDecorator(this))
+
+
+        //처음 보여질 날짜 셀렉
+        calendar.setSelectedDate(CalendarDay.today())
+
+        //1.병원방문 컬러(빨간색)
+        val hospitaColors = intArrayOf(
+            Color.parseColor("#DF4E4E"),
+        )
+
+        //1.병원방문 날들
+        val day1 = CalendarDay.from(2024, 3, 19)
+        val day2 = CalendarDay.from(2024,3,23)
+        val day3 = CalendarDay.from(2024,3,25)
+        val hospitalDays = hashSetOf(day1, day2, day3)
+
+
+
+
+        //2.검사한날 컬러(파란색)
+        val inspectionColors = intArrayOf(
+            Color.parseColor("#5754E1")
+        )
+
+        //2.검사한 날들
+        val day4 = CalendarDay.from(2024, 3, 27)
+        val day5 = CalendarDay.from(2024,3,28)
+        val day6 = CalendarDay.from(2024,3,29)
+        val inspectionDays = hashSetOf(day4, day5, day6)
+
+
+        calendar.addDecorators(EventDecorator1(hospitalDays, hospitaColors), EventDecorator2(inspectionDays, inspectionColors))
+
+
+
+
+
+
+
+
+        //다른날짜 클릭시 이벤트처리
+        calendar.setOnDateChangedListener { widget, date, selected ->
+            //date.date 가  CalendarDay{2024-3-25} 로 나옴. 4월인데 3월로나옴.
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())//심플데이트포맷이 알아서 1달 올려주나봄
+            val formattedDate = dateFormat.format(date.date)
+            binding.tvDate.text = formattedDate //이제 2024.04.27로 나옴
+
+            //서버에서 병원간날, 검사한날 date 모두 가져오기
+            //예로, 4월25 클릭하면  서버에 날짜 보내고, 그거에 해당하는 데이터를 리스트로 가져와서 리사이클러로 보여주기.
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
     }//oncreate
 
 
+
+
+
+
+
+
+
+
+
+    //병원 방문 데코레이터
+    inner class EventDecorator1(val dates: HashSet<CalendarDay>, val colors: IntArray) :
+        DayViewDecorator {//EventDecorator
+        //val dates : HashSet<CalendarDay> = dates
+        //val colors : IntArray = colors
+
+
+
+        override fun shouldDecorate(day: CalendarDay?): Boolean {
+            return dates.contains(day)
+        }
+
+        override fun decorate(view: DayViewFacade?) {
+            // view?.addSpan(DotSpan(10f, Color.parseColor("#FFA800")))
+            view?.addSpan(CustomMultipleDotSpan(5f, colors))
+            view?.addSpan(StyleSpan(Typeface.BOLD))
+            view?.addSpan(RelativeSizeSpan(1.5f))
+            view?.addSpan(ForegroundColorSpan(Color.parseColor("#737373")))
+        }
+    }
+
+
+
+
+
+    //검사한날 데코레이터
+    inner class EventDecorator2(val dates: HashSet<CalendarDay>, val colors: IntArray) :
+        DayViewDecorator {//EventDecorator
+
+        //val dates : HashSet<CalendarDay> = dates
+        //val colors : IntArray = colors
+        override fun shouldDecorate(day: CalendarDay?): Boolean {
+            return dates.contains(day)
+        }
+
+        override fun decorate(view: DayViewFacade?) {
+            // view?.addSpan(DotSpan(10f, Color.parseColor("#FFA800")))
+            view?.addSpan(CustomMultipleDotSpan(5f, colors))
+            view?.addSpan(StyleSpan(Typeface.BOLD))
+            view?.addSpan(RelativeSizeSpan(1.5f))
+            view?.addSpan(ForegroundColorSpan(Color.parseColor("#737373")))
+        }
+    }
+
+
+
+
+
+
+
+    //오늘날짜 데코
+    inner class TodayDecorator(context: Context) : DayViewDecorator {//ToeayDecorator
+
+        val drawble = resources.getDrawable(R.drawable.sun, null)
+
+        private var date = CalendarDay.today()
+        override fun shouldDecorate(day: CalendarDay?): Boolean {
+            return day?.equals(date)!!
+        }
+
+        override fun decorate(view: DayViewFacade?) {
+            view?.setBackgroundDrawable(drawble)
+            view?.addSpan(StyleSpan(Typeface.BOLD))
+            view?.addSpan(RelativeSizeSpan(1.3f))
+            view?.addSpan(ForegroundColorSpan(Color.parseColor("#706E6E")))
+        }
+    }
 
 
 

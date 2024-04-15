@@ -25,14 +25,24 @@
         app:titleMarginStart="90dp"/>
 
 
-    <CalendarView
-        android:id="@+id/calendar_view"
+        <!--     app:mcv_weekDayTextAppearance= 요일에 설정하는거-->
+        <!--        app:mcv_weekDayTextAppearance="@style/CalendarViewWeekCustomText" 요일 색바꿈 등 스타일지정-->
+
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+        android:id="@+id/calendarview"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_below="@id/toolbar"
-        android:focusedMonthDateColor="#E6C2C2"
-        android:selectedWeekBackgroundColor="#D50303"
-        android:unfocusedMonthDateColor="@color/black"/>
+        android:layout_height="400dp"
+        app:mcv_selectionColor="#FFA800"
+        android:layout_below="@id/toolbar"/>
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="날짜"
+        android:layout_below="@id/calendarview"/>
+
+
 
 
     <TextView
@@ -44,7 +54,7 @@
         android:textColor="@color/black"
         android:textSize="18sp"
         android:layout_marginTop="16dp"
-        android:layout_below="@id/calendar_view"/>
+        android:layout_below="@id/tvDate"/>
 
     <TextView
         android:id="@+id/tv_record_plus"

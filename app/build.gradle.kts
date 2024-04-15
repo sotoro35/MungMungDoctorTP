@@ -62,4 +62,7 @@ dependencies {
     // 네이버 지도 SDK
     implementation(libs.map.sdk)
 
+    //머티리얼 칼렌다뷰 의존성
+    implementation (libs.material.calendarview)
+
 }
