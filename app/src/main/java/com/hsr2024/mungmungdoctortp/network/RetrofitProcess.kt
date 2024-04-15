@@ -662,12 +662,12 @@ class RetrofitProcess(
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val code=(response as String) //  - 4204 서비스 회원 아님, 7400 qa 추가 성공, 7401 qa 추가 실패
-//        Log.d("feed add code","$code")
+//        Log.d("qa add code","$code")
 //
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
-//        Log.d("feed add fail",errorMsg!!) // 에러 메시지
+//        Log.d("qa add fail",errorMsg!!) // 에러 메시지
 //    }
 //
 //}).qaAddRequest()
@@ -697,12 +697,12 @@ class RetrofitProcess(
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val code=(response as String) //  - 4204 서비스 회원 아님, 6500 feed 수정 성공, 6501 feed 수정 실패
-//        Log.d("feed add code","$code")
+//        Log.d("feed modify code","$code")
 //
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
-//        Log.d("feed add fail",errorMsg!!) // 에러 메시지
+//        Log.d("feed modify fail",errorMsg!!) // 에러 메시지
 //    }
 //
 //}).feedModifyRequest()
@@ -732,12 +732,12 @@ class RetrofitProcess(
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val code=(response as String) //  - 4204 서비스 회원 아님, 7500 qa 수정 성공, 7501 qa 수정 실패
-//        Log.d("feed add code","$code")
+//        Log.d("qa modify code","$code")
 //
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
-//        Log.d("feed add fail",errorMsg!!) // 에러 메시지
+//        Log.d("qa modify fail",errorMsg!!) // 에러 메시지
 //    }
 //
 //}).qaModifyRequest()
@@ -767,12 +767,12 @@ class RetrofitProcess(
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val code=(response as String) //  - 4204 서비스 회원 아님, 6600 feed 삭제 성공, 6601 feed 삭제 실패
-//        Log.d("feed add code","$code")
+//        Log.d("feed delete code","$code")
 //
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
-//        Log.d("feed add fail",errorMsg!!) // 에러 메시지
+//        Log.d("feed delete fail",errorMsg!!) // 에러 메시지
 //    }
 //
 //}).feedDeleteRequest()
@@ -802,12 +802,12 @@ class RetrofitProcess(
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val code=(response as String) //  - 4204 서비스 회원 아님, 7600 qa 삭제 성공, 7601 qa 삭제 실패
-//        Log.d("feed add code","$code")
+//        Log.d("qa delete code","$code")
 //
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
-//        Log.d("feed add fail",errorMsg!!) // 에러 메시지
+//        Log.d("qa delete fail",errorMsg!!) // 에러 메시지
 //    }
 //
 //}).qaDeleteRequest()
@@ -837,11 +837,11 @@ class RetrofitProcess(
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val data=(response as LoginResponse)
-//        Log.d("login data","$data") // LoginResponse 데이터 출력(email, provider_id, nickname, userImgUrl, pet_id, pet_name, petImgUrl, pet_birth_date, pet_gender, pet_neutered, code)
+//        Log.d("user load data","$data") // LoginResponse 데이터 출력(email, provider_id, nickname, userImgUrl, pet_id, pet_name, petImgUrl, pet_birth_date, pet_gender, pet_neutered, code)
 //    }                               //  - 4204 서비스 회원 아님, 1240 회원 정보 조회 성공, 1250 회원 정보 조회 실패
 //
 //    override fun onResponseFailure(errorMsg: String?) {
-//        Log.d("login fail",errorMsg!!) // 에러 메시지
+//        Log.d("user load fail",errorMsg!!) // 에러 메시지
 //    }
 //
 //  }).userLoadRequest()
@@ -871,12 +871,12 @@ class RetrofitProcess(
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val data=(response as LoginResponse)
-//        Log.d("login data","$data") // LoginResponse 데이터 출력(email, provider_id, nickname, userImgUrl, pet_id, pet_name, petImgUrl, pet_birth_date, pet_gender, pet_neutered, code)
+//        Log.d("pet select data","$data") // LoginResponse 데이터 출력(email, provider_id, nickname, userImgUrl, pet_id, pet_name, petImgUrl, pet_birth_date, pet_gender, pet_neutered, code)
 //    }                               //  - 4204 서비스 회원 아님, 5600 펫 선택 성공, 5601 펫 선택 실패
 //
 //
 //    override fun onResponseFailure(errorMsg: String?) {
-//        Log.d("login fail",errorMsg!!) // 에러 메시지
+//        Log.d("pet select fail",errorMsg!!) // 에러 메시지
 //    }
 //
 //  }).petSelectRequest()
@@ -906,12 +906,12 @@ class RetrofitProcess(
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val code=(response as String) //  - 4204 서비스 회원 아님, 6700 feed 댓글 수정 성공, 6701 feed 댓글 수정 실패
-//        Log.d("feed add code","$code")
+//        Log.d("feed comment modify code","$code")
 //
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
-//        Log.d("feed add fail",errorMsg!!) // 에러 메시지
+//        Log.d("feed comment modify fail",errorMsg!!) // 에러 메시지
 //    }
 //
 //}).feedCommentModifyRequest()
@@ -942,12 +942,12 @@ class RetrofitProcess(
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val code=(response as String) //  - 4204 서비스 회원 아님, 7700 qa 댓글 수정 성공, 7701 qa 댓글 수정 실패
-//        Log.d("feed add code","$code")
+//        Log.d("qa comment modify code","$code")
 //
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
-//        Log.d("feed add fail",errorMsg!!) // 에러 메시지
+//        Log.d("qa comment modify fail",errorMsg!!) // 에러 메시지
 //    }
 //
 //}).qaCommentModifyRequest()
@@ -979,12 +979,12 @@ class RetrofitProcess(
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val code=(response as String) //  - 4204 서비스 회원 아님, 6800 feed 댓글 삭제 성공, 6801 feed 댓글 삭제 실패
-//        Log.d("feed add code","$code")
+//        Log.d("feed comment delete code","$code")
 //
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
-//        Log.d("feed add fail",errorMsg!!) // 에러 메시지
+//        Log.d("feed comment delete fail",errorMsg!!) // 에러 메시지
 //    }
 //
 //}).feedCommentDeleteRequest()
@@ -1015,12 +1015,12 @@ class RetrofitProcess(
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val code=(response as String) //  - 4204 서비스 회원 아님, 7800 qa 댓글 삭제 성공, 7801 qa 댓글 삭제 실패
-//        Log.d("feed add code","$code")
+//        Log.d("qa comment delete code","$code")
 //
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
-//        Log.d("feed add fail",errorMsg!!) // 에러 메시지
+//        Log.d("qa comment delete fail",errorMsg!!) // 에러 메시지
 //    }
 //
 //}).qaCommentDeleteRequest()
@@ -1051,12 +1051,12 @@ class RetrofitProcess(
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val code=(response as String) //  - 4204 서비스 회원 아님, 6900 feed 찜 추가 성공, 6901 feed 찜 삭제, 6902 feed 찜 실패
-//        Log.d("feed add code","$code")
+//        Log.d("feed favor code","$code")
 //
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
-//        Log.d("feed add fail",errorMsg!!) // 에러 메시지
+//        Log.d("feed favor fail",errorMsg!!) // 에러 메시지
 //    }
 //
 //}).feedFavorRequest()
@@ -1086,12 +1086,12 @@ class RetrofitProcess(
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val code=(response as String) //  - 4204 서비스 회원 아님, 7900 qa 조회 수 증가 성공, 7901 qa 조회 수 그대로, 7902 조회 수 증가 실패
-//        Log.d("feed add code","$code")
+//        Log.d("qa view code","$code")
 //
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
-//        Log.d("feed add fail",errorMsg!!) // 에러 메시지
+//        Log.d("qa view fail",errorMsg!!) // 에러 메시지
 //    }
 //
 //}).qaViewRequest()
@@ -1255,12 +1255,12 @@ class RetrofitProcess(
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val code=(response as String)             //  - 4204 서비스 회원 아님, 9100 ai 기록 추가 성공, 9101 ai 기록 추가 실패
-//        Log.d("hospital add code","$code")
+//        Log.d("ai add code","$code")
 //
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
-//        Log.d("feed add fail",errorMsg!!) // 에러 메시지
+//        Log.d("ai add fail",errorMsg!!) // 에러 메시지
 //    }
 //
 //}).aiAddRequest()
