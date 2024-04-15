@@ -1269,8 +1269,8 @@ class RetrofitProcess(
 
     fun hospitalModifyRequest(){
         val retrofitService = setRetrofitService()
-        val hospitalAdd=(params as AddorModifyorDeleteHospital)
-        val call = retrofitService.hospitalModify(hospitalAdd)
+        val hospitalModify=(params as AddorModifyorDeleteHospital)
+        val call = retrofitService.hospitalModify(hospitalModify)
         call.enqueue(object : Callback<String> {
             override fun onResponse(p0: Call<String>, response: Response<String>) {
                 if (response.isSuccessful) {
@@ -1310,5 +1310,42 @@ class RetrofitProcess(
 //    }
 //
 //}).hospitalModifyRequest()
+
+    fun hospitalDeleteRequest(){
+        val retrofitService = setRetrofitService()
+        val hospitalDelete=(params as AddorModifyorDeleteHospital)
+        val call = retrofitService.hospitalDelete(hospitalDelete)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+    // 34. 병원 기록 삭제하기
+// hospitalDeleteRequest 사용법
+//val params= AddorModifyorDeleteHospital("이메일정보", "provider_id", "로그인 타입", "pet_id", // pet_id는 pet 식별값
+//                          id                                             // 병원 기록 식별 값
+// )
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val code=(response as String)             //  - 4204 서비스 회원 아님, 8300 병원 기록 삭제 성공, 8301 병원 기록 삭제 실패
+//        Log.d("hospital modify code","$code")
+//
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("hospital modify fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).hospitalDeleteRequest()
 
 } // Class
