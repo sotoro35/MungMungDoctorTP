@@ -1246,7 +1246,7 @@ class RetrofitProcess(
     }
     // 32. ai 기록 추가하기
 // aiAddRequest 사용법
-//val params= AddorModifyorDeleteAI("이메일정보", "provider_id", "로그인 타입", "pet_id", // pet_id는 pet 식별값
+//val params= AddorDeleteAI("이메일정보", "provider_id", "로그인 타입", "pet_id", // pet_id는 pet 식별값
 //                          "",                                       // ai 기록 식별 값( 안넣어도 됨)
 //                          diagnosis_type,                           // 진단한 ai type (eype or skin)
 //                          diagnostic_img_url,                       // ai 진단한 반려견 이미지 url
@@ -1338,14 +1338,51 @@ class RetrofitProcess(
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val code=(response as String)             //  - 4204 서비스 회원 아님, 8300 병원 기록 삭제 성공, 8301 병원 기록 삭제 실패
-//        Log.d("hospital modify code","$code")
+//        Log.d("hospital delete code","$code")
 //
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
-//        Log.d("hospital modify fail",errorMsg!!) // 에러 메시지
+//        Log.d("hospital delete fail",errorMsg!!) // 에러 메시지
 //    }
 //
 //}).hospitalDeleteRequest()
+
+    fun aiDeleteRequest(){
+        val retrofitService = setRetrofitService()
+        val aiDelete=(params as AddorDeleteAI)
+        val call = retrofitService.aiDelete(aiDelete)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+    // 35. ai 기록 삭제하기
+// aiDeleteRequest 사용법
+//val params= AddorDeleteAI("이메일정보", "provider_id", "로그인 타입", "pet_id", // pet_id는 pet 식별값
+//                          id                                       // ai 기록 식별 값
+// )
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val code=(response as String)             //  - 4204 서비스 회원 아님, 9300 ai 기록 삭제 성공, 9101 ai 기록 삭제 실패
+//        Log.d("ai delete code","$code")
+//
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("ai delete fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).aiDeleteRequest()
 
 } // Class

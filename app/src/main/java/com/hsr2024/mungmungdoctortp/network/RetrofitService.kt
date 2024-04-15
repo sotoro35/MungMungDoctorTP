@@ -202,4 +202,8 @@ interface RetrofitService {
     //해당 반려견의 병원 기록 삭제하기
     @POST("/pet/hospital_delete.php")
     fun hospitalDelete(@Body hospitalDelete:AddorModifyorDeleteHospital) : Call<String>
+
+    //해당 반려견의 ai 기록 삭제하기
+    @POST("/pet/ai_delete.php")
+    fun aiDelete(@Body aiDelete:AddorDeleteAI) : Call<String>
 }
