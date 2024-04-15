@@ -830,7 +830,7 @@ class RetrofitProcess(
 //    override fun onResponseSuccess(response: Any?) {
 //        val data=(response as LoginResponse)
 //        Log.d("login data","$data") // LoginResponse 데이터 출력(email, provider_id, nickname, userImgUrl, pet_id, pet_name, petImgUrl, pet_birth_date, pet_gender, pet_neutered, code)
-//    }                               // code 값 4200 로그인 성공, 4203 로그인 실패 3200 간편 로그인 사용자 조회 완료, 3204 간편 로그인 사용자 조회 불가
+//    }                               //  - 4204 서비스 회원 아님, 1240 회원 정보 조회 성공, 1250 회원 정보 조회 실패
 //
 //    override fun onResponseFailure(errorMsg: String?) {
 //        Log.d("login fail",errorMsg!!) // 에러 메시지
