@@ -123,6 +123,14 @@ interface RetrofitService {
     @POST("/qa/qa_delete.php")
     fun qaDelete(@Body deleteQA:AddorModifyorDeleteQA) : Call<String>
 
+    // feed 댓글 추가하기
+    @POST("/feed/comment_add.php")
+    fun feedCommentAdd(@Body addComment:AddorModifyorDeleteComment) : Call<String>
+
+    // qa 댓글 추가하기
+    @POST("/qa/comment_add.php")
+    fun qaCommentAdd(@Body addComment:AddorModifyorDeleteComment) : Call<String>
+
     // feed 댓글 수정하기
     @POST("/feed/comment_modify.php")
     fun feedCommentModify(@Body modifyComment:AddorModifyorDeleteComment) : Call<String>

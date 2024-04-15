@@ -880,6 +880,79 @@ class RetrofitProcess(
 //    }
 //
 //  }).petSelectRequest()
+
+    fun feedCommentAddRequest(){
+        val retrofitService = setRetrofitService()
+        val addCommentFeed=(params as AddorModifyorDeleteComment)
+        val call = retrofitService.feedCommentAdd(addCommentFeed)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+    // 23. feed 댓글 추가하기
+// feedCommentAddRequest 사용법
+//val params= AddorModifyorDeleteComment("이메일정보", "provider_id", "로그인 타입", "board_id", "", "댓글 내용" ) // board_id는 feed, qa 식별값
+
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val code=(response as String) //  - 4204 서비스 회원 아님, 6650 feed 댓글 추가 성공, 6651 feed 댓글 추가 실패
+//        Log.d("feed comment add code","$code")
+//
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("feed comment add fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).feedCommentAddRequest()
+
+    fun qaCommentAddRequest(){
+        val retrofitService = setRetrofitService()
+        val addCommentQA=(params as AddorModifyorDeleteComment)
+        val call = retrofitService.qaCommentAdd(addCommentQA)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+    // 24. qa 댓글 추가하기
+// qaCommentAddRequest 사용법
+//val params= AddorModifyorDeleteComment("이메일정보", "provider_id", "로그인 타입", "board_id", "", "댓글 내용" ) // board_id는 feed, qa 식별값
+                                                                                                              // comment_id는 댓글  식별 값
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val code=(response as String) //  - 4204 서비스 회원 아님, 7650 qa 댓글 추가 성공, 7651 qa 댓글 추가 실패
+//        Log.d("qa comment modify code","$code")
+//
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("qa comment modify fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).qaCommentAddRequest()
+
     fun feedCommentModifyRequest(){
         val retrofitService = setRetrofitService()
         val modifyCommentFeed=(params as AddorModifyorDeleteComment)
@@ -897,7 +970,7 @@ class RetrofitProcess(
             }
         })
     }
-    // 23. feed 댓글 수정하기
+    // 25. feed 댓글 수정하기
 // feedCommentModifyRequest 사용법
 //val params= AddorModifyorDeleteComment("이메일정보", "provider_id", "로그인 타입", "board_id", "comment_id", "댓글 내용" ) // board_id는 feed, qa 식별값
                                                                                                                         // comment_id는 댓글  식별 값
@@ -933,7 +1006,7 @@ class RetrofitProcess(
             }
         })
     }
-    // 24. qa 댓글 수정하기
+    // 26. qa 댓글 수정하기
 // qaCommentModifyRequest 사용법
 //val params= AddorModifyorDeleteComment("이메일정보", "provider_id", "로그인 타입", "board_id", "comment_id", "댓글 내용" ) // board_id는 feed, qa 식별값
                                                                                                                         // comment_id는 댓글  식별 값
@@ -970,7 +1043,7 @@ class RetrofitProcess(
         })
     }
 
-    // 25. feed 댓글 삭제하기
+    // 27. feed 댓글 삭제하기
 // feedCommentDeleteRequest 사용법
 //val params= AddorModifyorDeleteComment("이메일정보", "provider_id", "로그인 타입", "board_id", "comment_id", "댓글 내용" ) // board_id는 feed, qa 식별값
                                                                                                                         // comment_id는 댓글  식별 값
@@ -1006,7 +1079,7 @@ class RetrofitProcess(
             }
         })
     }
-    // 26. qa 댓글 삭제하기
+    // 28. qa 댓글 삭제하기
 // qaCommentDeleteRequest 사용법
 //val params= AddorModifyorDeleteComment("이메일정보", "provider_id", "로그인 타입", "board_id", "comment_id", "댓글 내용" ) // board_id는 feed, qa 식별값
                                                                                                                         // comment_id는 댓글  식별 값
@@ -1042,7 +1115,7 @@ class RetrofitProcess(
             }
         })
     }
-    // 27. feed 찜 기능
+    // 29. feed 찜 기능
 // feedFavorRequest 사용법
 //val params= FeedFavor("이메일정보", "provider_id", "로그인 타입", "feed_id", "favor_add") // feed_id feed 식별값
                                                                                         // favor_add TRUE 일 경우 찜 추가, FALSE 일 경우 찜 삭제
@@ -1078,7 +1151,7 @@ class RetrofitProcess(
             }
         })
     }
-    // 28. qa view 기능
+    // 30. qa view 기능
 // qaViewRequest 사용법
 //val params= QAView("이메일정보", "provider_id", "로그인 타입", "qa_id", ) // qa_id는 qa 식별값
 //RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
@@ -1113,7 +1186,7 @@ class RetrofitProcess(
             }
         })
     }
-    // 29. 병원 기록 목록 불러오기
+    // 31. 병원 기록 목록 불러오기
 // hospitalListRequest 사용법
 //val params= HospitalorAiRecord("이메일정보", "provider_id", "로그인 타입", "pet_id", "date") // pet_id는 pet 식별값
                                                                                             // date : 날짜를 선택해서 검색, 전체 날짜 검색할 경우 빈 값
@@ -1159,7 +1232,7 @@ class RetrofitProcess(
             }
         })
     }
-    // 30. ai 기록 목록 불러오기
+    // 32. ai 기록 목록 불러오기
 // aiListRequest 사용법
 //val params= HospitalorAiRecord("이메일정보", "provider_id", "로그인 타입", "pet_id", "date") // pet_id는 pet 식별값
     // date : 날짜를 선택해서 검색, 전체 날짜 검색할 경우 빈 값
@@ -1200,7 +1273,7 @@ class RetrofitProcess(
             }
         })
     }
-    // 31. 병원 기록 추가하기
+    // 33. 병원 기록 추가하기
 // hospitalAddRequest 사용법
 //val params= AddorModifyorDeleteHospital("이메일정보", "provider_id", "로그인 타입", "pet_id", // pet_id는 pet 식별값
 //                          "",                                             // 병원 기록 식별 값( 안넣어도 됨)
@@ -1244,7 +1317,7 @@ class RetrofitProcess(
             }
         })
     }
-    // 32. ai 기록 추가하기
+    // 34. ai 기록 추가하기
 // aiAddRequest 사용법
 //val params= AddorDeleteAI("이메일정보", "provider_id", "로그인 타입", "pet_id", // pet_id는 pet 식별값
 //                          "",                                       // ai 기록 식별 값( 안넣어도 됨)
@@ -1284,7 +1357,7 @@ class RetrofitProcess(
             }
         })
     }
-    // 33. 병원 기록 수정하기
+    // 35. 병원 기록 수정하기
 // hospitalModifyRequest 사용법
 //val params= AddorModifyorDeleteHospital("이메일정보", "provider_id", "로그인 타입", "pet_id", // pet_id는 pet 식별값
 //                          id,                                             // 병원 기록 식별 값
@@ -1328,7 +1401,7 @@ class RetrofitProcess(
             }
         })
     }
-    // 34. 병원 기록 삭제하기
+    // 36. 병원 기록 삭제하기
 // hospitalDeleteRequest 사용법
 //val params= AddorModifyorDeleteHospital("이메일정보", "provider_id", "로그인 타입", "pet_id", // pet_id는 pet 식별값
 //                          id                                             // 병원 기록 식별 값
@@ -1365,7 +1438,7 @@ class RetrofitProcess(
             }
         })
     }
-    // 35. ai 기록 삭제하기
+    // 37. ai 기록 삭제하기
 // aiDeleteRequest 사용법
 //val params= AddorDeleteAI("이메일정보", "provider_id", "로그인 타입", "pet_id", // pet_id는 pet 식별값
 //                          id                                       // ai 기록 식별 값
