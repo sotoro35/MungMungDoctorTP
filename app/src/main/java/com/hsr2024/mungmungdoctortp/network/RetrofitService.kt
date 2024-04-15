@@ -1,6 +1,5 @@
 package com.hsr2024.mungmungdoctortp.network
 
-import com.hsr2024.mungmungdoctortp.data.AIAdd
 import com.hsr2024.mungmungdoctortp.data.AIRecordList
 import com.hsr2024.mungmungdoctortp.data.AiRequest
 import com.hsr2024.mungmungdoctortp.data.AiResponses
@@ -14,14 +13,15 @@ import com.hsr2024.mungmungdoctortp.data.SignUpData
 import com.hsr2024.mungmungdoctortp.data.UserChange
 import com.hsr2024.mungmungdoctortp.data.UserDelete
 import com.hsr2024.mungmungdoctortp.data.AddDog
+import com.hsr2024.mungmungdoctortp.data.AddorDeleteAI
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteComment
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteFeed
+import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteHospital
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteQA
 import com.hsr2024.mungmungdoctortp.data.CommentDataList
 import com.hsr2024.mungmungdoctortp.data.DeleteDog
 import com.hsr2024.mungmungdoctortp.data.FeedCommentList
 import com.hsr2024.mungmungdoctortp.data.FeedFavor
-import com.hsr2024.mungmungdoctortp.data.HospitalAdd
 import com.hsr2024.mungmungdoctortp.data.HospitalRecordList
 import com.hsr2024.mungmungdoctortp.data.HospitalorAiRecordList
 import com.hsr2024.mungmungdoctortp.data.Individual
@@ -189,9 +189,9 @@ interface RetrofitService {
 
     //해당 반려견의 병원 기록 추가하기
     @POST("/pet/hospital_add.php")
-    fun hospitalAdd(@Body hospitalAdd:HospitalAdd) : Call<String>
+    fun hospitalAdd(@Body hospitalAdd:AddorModifyorDeleteHospital) : Call<String>
 
     //해당 반려견의 ai 기록 추가하기
     @POST("/pet/ai_add.php")
-    fun aiAdd(@Body aiAdd:AIAdd) : Call<String>
+    fun aiAdd(@Body aiAdd:AddorDeleteAI) : Call<String>
 }

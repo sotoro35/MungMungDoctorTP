@@ -1,7 +1,6 @@
 package com.hsr2024.mungmungdoctortp.network
 
 import android.content.Context
-import com.hsr2024.mungmungdoctortp.data.AIAdd
 import com.hsr2024.mungmungdoctortp.data.AIRecordList
 import com.hsr2024.mungmungdoctortp.data.LoginData
 import com.hsr2024.mungmungdoctortp.data.LoginResponse
@@ -11,15 +10,16 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.hsr2024.mungmungdoctortp.data.AddDog
+import com.hsr2024.mungmungdoctortp.data.AddorDeleteAI
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteComment
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteFeed
+import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteHospital
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteQA
 import com.hsr2024.mungmungdoctortp.data.CommentDataList
 import com.hsr2024.mungmungdoctortp.data.DeleteDog
 import com.hsr2024.mungmungdoctortp.data.FeedCommentList
 import com.hsr2024.mungmungdoctortp.data.FeedDataList
 import com.hsr2024.mungmungdoctortp.data.FeedFavor
-import com.hsr2024.mungmungdoctortp.data.HospitalAdd
 import com.hsr2024.mungmungdoctortp.data.HospitalRecordList
 import com.hsr2024.mungmungdoctortp.data.HospitalorAiRecordList
 import com.hsr2024.mungmungdoctortp.data.Individual
@@ -1185,7 +1185,7 @@ class RetrofitProcess(
 
     fun hospitalAddRequest(){
         val retrofitService = setRetrofitService()
-        val hospitalAdd=(params as HospitalAdd)
+        val hospitalAdd=(params as AddorModifyorDeleteHospital)
         val call = retrofitService.hospitalAdd(hospitalAdd)
         call.enqueue(object : Callback<String> {
             override fun onResponse(p0: Call<String>, response: Response<String>) {
@@ -1202,7 +1202,8 @@ class RetrofitProcess(
     }
     // 31. 병원 기록 추가하기
 // hospitalAddRequest 사용법
-//val params= HospitalAdd("이메일정보", "provider_id", "로그인 타입", "pet_id", // pet_id는 pet 식별값
+//val params= AddorModifyorDeleteHospital("이메일정보", "provider_id", "로그인 타입", "pet_id", // pet_id는 pet 식별값
+//                          "",                                             // 병원 기록 식별 값( 안넣어도 됨)
 //                          name,                                           // 병원명
 //                          price,                                          // 진단가격
 //                          diagnosis,                                      // 진단명
@@ -1221,14 +1222,14 @@ class RetrofitProcess(
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
-//        Log.d("feed add fail",errorMsg!!) // 에러 메시지
+//        Log.d("hospital add fail",errorMsg!!) // 에러 메시지
 //    }
 //
 //}).hospitalAddRequest()
 
     fun aiAddRequest(){
         val retrofitService = setRetrofitService()
-        val aiAdd=(params as AIAdd)
+        val aiAdd=(params as AddorDeleteAI)
         val call = retrofitService.aiAdd(aiAdd)
         call.enqueue(object : Callback<String> {
             override fun onResponse(p0: Call<String>, response: Response<String>) {
@@ -1245,7 +1246,8 @@ class RetrofitProcess(
     }
     // 32. ai 기록 추가하기
 // aiAddRequest 사용법
-//val params= AIAdd("이메일정보", "provider_id", "로그인 타입", "pet_id", // pet_id는 pet 식별값
+//val params= AddorModifyorDeleteAI("이메일정보", "provider_id", "로그인 타입", "pet_id", // pet_id는 pet 식별값
+//                          "",                                       // ai 기록 식별 값( 안넣어도 됨)
 //                          diagnosis_type,                           // 진단한 ai type (eype or skin)
 //                          diagnostic_img_url,                       // ai 진단한 반려견 이미지 url
 //                          diagnosis_result,                         // ai 진단결과 리스트(결막염 80%, 유루증 70%..)
@@ -1265,42 +1267,48 @@ class RetrofitProcess(
 //
 //}).aiAddRequest()
 
-//    private fun onegetRealPathfromUri(uri:Uri) : String? {
-//        //android 10 버전 부터는 Uri를 통해 파일의 실제 경로를 얻을 수 있는 방법이 없어졌음
-//        //그래서 uri에 해당하는 파일을 복사하여 임시로 파일을 만들고 그 파일의 경로를 이용하여 서버에 전송
+    fun hospitalModifyRequest(){
+        val retrofitService = setRetrofitService()
+        val hospitalAdd=(params as AddorModifyorDeleteHospital)
+        val call = retrofitService.hospitalAdd(hospitalAdd)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+    // 33. 병원 기록 수정하기
+// hospitalModifyRequest 사용법
+//val params= AddorModifyorDeleteHospital("이메일정보", "provider_id", "로그인 타입", "pet_id", // pet_id는 pet 식별값
+//                          id,                                             // 병원 기록 식별 값
+//                          name,                                           // 병원명
+//                          price,                                          // 진단가격
+//                          diagnosis,                                      // 진단명
+//                          visit_date,                                     // 진료일
+//                          description,                                    // 진료내용
+//                          receipt_img_url,                                // 영수증 이미지 url
+//                          clinical_img_url,                               // 진료사진 이미지 url
+// )
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
 //
-//        //Uri[미디어저장소의 DB 주소]로부터 파일의 이름을 얻어오기 - DB SELECT 쿼리 작업을 해주는 기능을 가진 객체를 이용
-//        // CursorLoader : Content, uri객체, 컬럼 위치, 조건(where), 조건에 해당되는 값, 오름 or 내림차순
-//        val cursorLoader=CursorLoader(context, uri, null, null, null, null)
-//        //비동기로 로딩해라
-//        val cursor:Cursor?=cursorLoader.loadInBackground()
-//        val fileName:String?=cursor?.run {
-//            moveToFirst()
-//            // 컬럼 위치 array MediaStore.Images.Media 중 이미지 이름을 담고 있는 멤버변수 DISPLAY_NAME
-//            getString(getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME))
-//        }
-//        //복사본이 저장될 파일의 경로와 파일명.확장자
-//        //externalCacheDir : /stroage/emulated/0/Android/data/패키지이름/cache/
-//        //fileName : 1000000076.jpg
-//        val file=File((context as MainActivity).externalCacheDir,fileName)
-//        //AlertDialog.Builder(this).setMessage(file.absolutePath).create().show()
+//    override fun onResponseSuccess(response: Any?) {
+//        val code=(response as String)             //  - 4204 서비스 회원 아님, 8200 병원 기록 수정 성공, 8201 병원 기록 수정 실패
+//        Log.d("hospital modify code","$code")
 //
-//        //이제 파일 복사 작업 수행(로드된 파일 경로(uri)에서 파일을 가져와(inputStream) 파일을 실제 경로에 저장(outputStream)
-//        // contentResolver 컨텐츠 주소 해독
-//        val inputStream:InputStream=(context as MainActivity).contentResolver.openInputStream(uri) ?: return null
-//        val outputStream:OutputStream=FileOutputStream(file)
-//
-//        while(true){
-//            val buf:ByteArray= ByteArray(1024) // 빈 바이트 배열 [1KB]
-//            val len:Int=inputStream.read(buf) //스트림을 통해 읽어들인 바이트들을 buf 배열에 넣기 -- 읽어들인 데이터의 크기를 리턴
-//            if(len <= 0) break //읽어들인 데이터 크기가 0일 경우 break
-//            outputStream.write(buf, 0, len) //buf 배열에 있는 바이트들을 file경로로 던지기. 첫시작(0) ~ 1023번, 다음 첫시작(1024) ~ 1027번 ..
-//        } // 반복문이 끝났으면 복사가 완료
-//        inputStream.close()
-//        outputStream.close()
-//        AlertDialog.Builder(context).setMessage(file.absolutePath).create().show()
-//        return file.absolutePath
 //    }
-
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("hospital modify fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).hospitalModifyRequest()
 
 } // Class

@@ -49,23 +49,24 @@ data class QACommentList(val qa_id:String, val email:String="", val provider_id:
 //병원, ai 기록 목록
 data class HospitalorAiRecordList(val email:String="", val provider_id:String="", val login_type:String, val pet_id:String, val date:String="")
 
-//병원 기록 추가하기
-data class HospitalAdd(
+//병원 기록 추가하기(id 값 안 넣어도 됨), 수정, 삭제(name, price, .. 등 안 넣어도 됨)
+data class AddorModifyorDeleteHospital(
     val email:String="", val provider_id:String="", val login_type:String, val pet_id:String,
-    val name: String,                       // 병원명
-    val price: String,                      // 진단가격
-    val diagnosis: String,                  // 진단명
-    val visit_date: String,                 // 진료일
-    val description: String,                // 진료내용
-    val receipt_img_url: String,            // 영수증 이미지 url
-    val clinical_img_url: String            // 진료사진 이미지 url
+    val id: String="",                         // 병원 기록 식별 값
+    val name: String="",                       // 병원명
+    val price: String="",                      // 진단가격
+    val diagnosis: String="",                  // 진단명
+    val visit_date: String="",                 // 진료일
+    val description: String="",                // 진료내용
+    val receipt_img_url: String="",            // 영수증 이미지 url
+    val clinical_img_url: String=""            // 진료사진 이미지 url
     )
 
-//ai 기록 추가하기
-//병원 기록 추가하기
-data class AIAdd(
+//ai 기록 추가하기(id 값 안 넣어도 됨), 삭제(diagnosis_type, diagnostic_img_url, diagnosis_result 안 넣어도 됨)
+data class AddorDeleteAI(
     val email:String="", val provider_id:String="", val login_type:String, val pet_id:String,
-    val diagnosis_type: String,             // 진단한 ai type (eype or skin)
-    val diagnostic_img_url: String,         // ai 진단한 반려견 이미지 url
-    val diagnosis_result: String             // ai 진단결과 리스트(결막염 80%, 유루증 70%..)
+    val id: String="",                         // ai 기록 식별 값
+    val diagnosis_type: String="",             // 진단한 ai type (eype or skin)
+    val diagnostic_img_url: String="",         // ai 진단한 반려견 이미지 url
+    val diagnosis_result: String=""            // ai 진단결과 리스트(결막염 80%, 유루증 70%..)
 )
