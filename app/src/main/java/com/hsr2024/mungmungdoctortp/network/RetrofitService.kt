@@ -19,6 +19,7 @@ import com.hsr2024.mungmungdoctortp.data.DeleteDog
 import com.hsr2024.mungmungdoctortp.data.FeedCommentList
 import com.hsr2024.mungmungdoctortp.data.Individual
 import com.hsr2024.mungmungdoctortp.data.ModifyDog
+import com.hsr2024.mungmungdoctortp.data.Pet
 import com.hsr2024.mungmungdoctortp.data.QACommentList
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -126,6 +127,10 @@ interface RetrofitService {
     // 회원 1개 불러오기
     @POST("/user/load.php")
     fun userLoad(@Body userload:Individual) : Call<LoginResponse>
+
+    //반려견 선택
+    @POST("/user/pet_select.php")
+    fun selectDog(@Body selectDog: DeleteDog) : Call<LoginResponse>
 
     //반려견 추가
     @POST("/pet/add.php")
