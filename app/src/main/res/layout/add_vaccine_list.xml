@@ -14,7 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="심장사상충"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold"/>
         <TextView
             android:id="@+id/vaccine_date"
@@ -23,14 +23,14 @@
             android:layout_alignParentRight="true"
             android:layout_alignBottom="@id/vaccine_name"
             android:text="2024-04-11"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold"/>
         <TextView
             android:id="@+id/vaccine_hospital"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="병원이름"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:layout_alignParentRight="true"
             android:layout_below="@id/vaccine_date"/>
 
@@ -39,6 +39,7 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/vaccine_name"
+            android:textSize="14sp"
             android:text="메모내용" />
         
         
