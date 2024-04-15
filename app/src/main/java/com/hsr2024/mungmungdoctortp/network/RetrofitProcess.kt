@@ -937,7 +937,7 @@ class RetrofitProcess(
     // 24. qa 댓글 추가하기
 // qaCommentAddRequest 사용법
 //val params= AddorModifyorDeleteComment("이메일정보", "provider_id", "로그인 타입", "board_id", "", "댓글 내용" ) // board_id는 feed, qa 식별값
-                                                                                                              // comment_id는 댓글  식별 값
+                                                                                                              //// comment_id는 댓글  식별 값
 //RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
@@ -973,7 +973,7 @@ class RetrofitProcess(
     // 25. feed 댓글 수정하기
 // feedCommentModifyRequest 사용법
 //val params= AddorModifyorDeleteComment("이메일정보", "provider_id", "로그인 타입", "board_id", "comment_id", "댓글 내용" ) // board_id는 feed, qa 식별값
-                                                                                                                        // comment_id는 댓글  식별 값
+                                                                                                                        //// comment_id는 댓글  식별 값
 //RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
@@ -1009,7 +1009,7 @@ class RetrofitProcess(
     // 26. qa 댓글 수정하기
 // qaCommentModifyRequest 사용법
 //val params= AddorModifyorDeleteComment("이메일정보", "provider_id", "로그인 타입", "board_id", "comment_id", "댓글 내용" ) // board_id는 feed, qa 식별값
-                                                                                                                        // comment_id는 댓글  식별 값
+                                                                                                                        //// comment_id는 댓글  식별 값
 //RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
@@ -1045,8 +1045,8 @@ class RetrofitProcess(
 
     // 27. feed 댓글 삭제하기
 // feedCommentDeleteRequest 사용법
-//val params= AddorModifyorDeleteComment("이메일정보", "provider_id", "로그인 타입", "board_id", "comment_id", "댓글 내용" ) // board_id는 feed, qa 식별값
-                                                                                                                        // comment_id는 댓글  식별 값
+//val params= AddorModifyorDeleteComment("이메일정보", "provider_id", "로그인 타입", "board_id", "comment_id", "" ) // board_id는 feed, qa 식별값
+                                                                                                                        //// comment_id는 댓글  식별 값
 //RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
@@ -1081,8 +1081,8 @@ class RetrofitProcess(
     }
     // 28. qa 댓글 삭제하기
 // qaCommentDeleteRequest 사용법
-//val params= AddorModifyorDeleteComment("이메일정보", "provider_id", "로그인 타입", "board_id", "comment_id", "댓글 내용" ) // board_id는 feed, qa 식별값
-                                                                                                                        // comment_id는 댓글  식별 값
+//val params= AddorModifyorDeleteComment("이메일정보", "provider_id", "로그인 타입", "board_id", "comment_id", "" ) // board_id는 feed, qa 식별값
+                                                                                                                //// comment_id는 댓글  식별 값
 //RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
