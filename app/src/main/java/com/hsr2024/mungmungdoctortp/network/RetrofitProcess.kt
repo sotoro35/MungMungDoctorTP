@@ -565,7 +565,7 @@ class RetrofitProcess(
 //        val data=(response as CommentDataList)
 //        Log.d("feed comment list  code","$data")
 //        data.code                              // - 6300 feed comment 목록 성공, 6301 feed comment 목록 실패, 4204 서비스 회원 아님
-//        data.feedDatas.forEach{comment ->           // forEach문을 돌면서 feed 정보 가져올 수 있음
+//        data.commentDatas.forEach{comment ->           // forEach문을 돌면서 feed 정보 가져올 수 있음
 //            comment.comment_id
 //            comment.profile_imgurl
 //            comment.nickname
@@ -607,7 +607,7 @@ class RetrofitProcess(
 //        val data=(response as CommentDataList)
 //        Log.d("qa comment list  code","$data")
 //        data.code                              // - 7300 qa comment 목록 성공, 7301 qa comment 목록 실패, 4204 서비스 회원 아님
-//        data.feedDatas.forEach{comment ->           // forEach문을 돌면서 qa 정보 가져올 수 있음
+//        data.commentDatas.forEach{comment ->           // forEach문을 돌면서 qa 정보 가져올 수 있음
 //            comment.comment_id
 //            comment.profile_imgurl
 //            comment.nickname
