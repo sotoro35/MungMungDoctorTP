@@ -180,6 +180,7 @@ class NoteActivity : AppCompatActivity() {
     //서버 - 병원기록 특정날짜꺼 받아오기
     private fun getHospitalRecord(clickedDate: String?){
         val date = clickedDate
+        3단콤보. 개정보. 데이트(전체-빈값)
         //레트로핏으로 유저가 저장한 병원기록  전부~ 받아와서 clickedDate랑 같은 날짜를 리스트에 넣기.
 
 
