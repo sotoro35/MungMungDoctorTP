@@ -1374,7 +1374,7 @@ class RetrofitProcess(
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
 //    override fun onResponseSuccess(response: Any?) {
-//        val code=(response as String)             //  - 4204 서비스 회원 아님, 9300 ai 기록 삭제 성공, 9101 ai 기록 삭제 실패
+//        val code=(response as String)             //  - 4204 서비스 회원 아님, 9300 ai 기록 삭제 성공, 9301 ai 기록 삭제 실패
 //        Log.d("ai delete code","$code")
 //
 //    }
