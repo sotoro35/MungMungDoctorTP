@@ -27,6 +27,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Locale
 
 class NoteActivity : AppCompatActivity() {
@@ -41,24 +42,181 @@ class NoteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        //뒤로가기버튼클릭시
         binding.toolbar.setNavigationOnClickListener { finish() }
 
         //화면 켜졌을때 서버에서 기록들 다 가져와서 리사이클러에 보여주기
-        getAllHospitalRecord()
-        getAllAIRecord()
+        getHospitalRecord("")
+        getAIRecord("")
+
+
+        //기록하기 버튼 눌렀을때 액티비티 이동
+        binding.tvRecordPlus.setOnClickListener {
+            val intent = Intent(this, HealthDetailActivity::class.java)
+            startActivity(intent)
+        }
+
+
+        //화면 처음에 칼렌다 세팅하기(유저가 저장한 병원기록,AI기록 날짜 다 받아와서 칼렌다에 쩜찍기)
+        setCalendar()
 
 
 
+        //선택한 날짜 클릭시 이벤트처리
+        calendar.setOnDateChangedListener { widget, date, selected ->
+            //date.date 가  CalendarDay{2024-3-25} 로 나옴. 4월인데 3월로나옴.
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())//심플데이트포맷이 알아서 1달 올려주나봄
+            val formattedDate = dateFormat.format(date.date)
+            binding.tvDate.text = formattedDate //2024-04-27로 나옴
+
+            //선택한 날짜에 해당하는 데이터. 서버에서 가져오기
+            getHospitalRecord(formattedDate) //클릭한 날짜
+            getAIRecord(formattedDate) //클릭한 날짜
+        }//온데이트체인지 리스너
+
+
+
+        //"전체보기"버튼 클릭시 서버에서 모든 날짜꺼 전체 가져오기
+        binding.btnAll.setOnClickListener {
+            getHospitalRecord("")
+            getAIRecord("")
+        }//온클릭리스너
+
+
+    }//oncreate
+
+
+
+
+
+    private fun setCalendar(){
+        calendar = binding.calendarview
+        //오늘날짜 데코레이터
+        calendar.addDecorators(TodayDecorator(this))
+        //처음 보여질 날짜 - 오늘날짜로 셀렉
+        calendar.setSelectedDate(CalendarDay.today())
+
+        val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
+
+
+        //-------------병원방문-------------------------
+
+
+        //1.병원방문 컬러(빨간색)
+        val hospitalColor = Color.parseColor("#DF4E4E")
+
+
+        //서버에서 가지고 온 날짜
+        //레트로핏 작업
+
+        val dateStrings1 = listOf("2024-04-01", "2024-04-02")
+        val hospitalDays = hashSetOf<CalendarDay>()
+
+        //각 날짜 문자열에 대해 처리하기
+        dateStrings1.forEach{ dateString->
+            //날짜 문자열을 Date객체로 파싱
+            val date = format.parse(dateString)
+            //Date객체를 CalendarDay로 변환
+            val calendar = Calendar.getInstance()
+            calendar.time = date
+            val calendarDay = CalendarDay.from(calendar)
+            //HashSet에 추가하기
+            hospitalDays.add(calendarDay)
+        }//forEach
+
+
+
+
+
+
+
+
+
+
+
+        //-------------검사한날-----------------------------
+        //2.검사한날 컬러(파란색)
+        val inspectionColor = Color.parseColor("#5754E1")
+
+        //서버에서 가지고 온 날짜
+        //레트로핏 작업
+
+        val dateStrings2 = listOf("2024-04-01", "2024-04-03")
+        val inspectionDays = hashSetOf<CalendarDay>()
+
+        //각 날짜 문자열에 대해 처리하기
+        dateStrings2.forEach{ dateString->
+            //날짜 문자열을 Date객체로 파싱
+            val date = format.parse(dateString)
+            //Date객체를 CalendarDay로 변환
+            val calendar = Calendar.getInstance()
+            calendar.time = date
+            val calendarDay = CalendarDay.from(calendar)
+            //HashSet에 추가하기
+            inspectionDays.add(calendarDay)
+        }//forEach
+
+
+
+
+        calendar.addDecorators(EventDecorator1(hospitalDays, hospitalColor))
+        calendar.addDecorators(EventDecorator2(inspectionDays, inspectionColor))
+
+
+    }//setCalendar()
+
+
+
+
+
+
+
+
+
+
+
+
+    //특정날짜 클릭시 - 서버 - 병원기록 특정날짜꺼 받아오기
+    private fun getHospitalRecord(clickedDate: String?){
+        val date = clickedDate
+        Log.d("ff", date.toString())
+        // 3단콤보. 개정보. 데이트(전체-빈값)
+        //병원기록 받아오기  clickedDate==""이면 모든데이터가 오고, 특정날짜가 있으면 그거에 맞는것만 데이터가 오고..
 
         val itemlist:MutableList<HospitalRecordData> = mutableListOf()
-        val item1 = HospitalRecordData("제1병원", "목아파", "10만원", "오늘당장")
-        val item2 = HospitalRecordData("제2병원", "어깨아파", "10만원", "오늘당장")
-        val item3 = HospitalRecordData("제3병원", "댄나아팤ㅋ", "10만원", "오늘당장")
-        itemlist.add(0, item1)
-        itemlist.add(1, item2)
-        itemlist.add(2,item3)
-        //binding.recyclerViewHospital.adapter = HospitalRecordAdapter(this, itemlist)
 
+
+
+        // 아이템 리스트
+        val items = listOf(
+            HospitalRecordData("제1병원", "목아파", "10만원", "오늘당장"),
+            HospitalRecordData("제2병원", "어깨아파", "10만원", "오늘당장"),
+            HospitalRecordData("제3병원", "댄나아팤ㅋ", "10만원", "오늘당장")
+        )
+
+        // 각 아이템을 리스트에 추가합니다.
+        items.forEach { item ->
+            itemlist.add(item)
+        }
+
+
+
+        //아답터에 대량의 리스트 넣어주기
+        binding.recyclerViewHospital.adapter = HospitalRecordAdapter(this, itemlist)
+    }
+
+
+
+
+
+
+
+    //서버 - AI검사기록 특정날짜꺼 받아오기
+    private fun getAIRecord(clickedDate: String?){
+        val date = clickedDate
+
+        //AI검사기록 받아오기  clickedDate==""이면 모든데이터가 오고, 특정날짜가 있으면 그거에 맞는것만 데이터가 오고..
 
         val aiList:MutableList<AIRecordData> = mutableListOf()
         val ai1 = AIRecordData("안구", "눈충혈80푸로", "눈튀나옴80프로", "2024/03/24")
@@ -68,138 +226,8 @@ class NoteActivity : AppCompatActivity() {
         aiList.add(ai2)
         aiList.add(ai3)
 
-
-
-        binding.tvRecordPlus.setOnClickListener {
-            //기록하기 액티비티로 이동
-            val intent = Intent(this, HealthDetailActivity::class.java)
-            startActivity(intent)
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        calendar = binding.calendarview
-        //오늘날짜 데코레이터
-        calendar.addDecorators(TodayDecorator(this))
-
-
-        //처음 보여질 날짜 - 오늘날짜로 셀렉
-        calendar.setSelectedDate(CalendarDay.today())
-
-        //1.병원방문 컬러(빨간색)
-        val hospitalColor = Color.parseColor("#DF4E4E")
-
-        //1.병원방문 날들 서버에서 받아오기
-        val day1 = CalendarDay.from(2024, 3, 19)
-        val day2 = CalendarDay.from(2024,3,20)
-        val day3 = CalendarDay.from(2024,3,21)
-        val hospitalDays = hashSetOf(day1, day2, day3)
-
-
-
-
-        //2.검사한날 컬러(파란색)
-        val inspectionColor = Color.parseColor("#5754E1")
-
-
-        //2.검사한 날들
-        val day4 = CalendarDay.from(2024, 3, 19)
-        val day5 = CalendarDay.from(2024,3,20)
-        val day6 = CalendarDay.from(2024,3,29)
-        val inspectionDays = hashSetOf(day4, day5, day6)
-
-
-        calendar.addDecorators(EventDecorator1(hospitalDays, hospitalColor))
-        calendar.addDecorators(EventDecorator2(inspectionDays, inspectionColor))
-
-
-
-
-
-
-
-
-        //어떤 날짜 클릭시 이벤트처리
-        calendar.setOnDateChangedListener { widget, date, selected ->
-            //date.date 가  CalendarDay{2024-3-25} 로 나옴. 4월인데 3월로나옴.
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())//심플데이트포맷이 알아서 1달 올려주나봄
-            val formattedDate = dateFormat.format(date.date)
-            binding.tvDate.text = formattedDate //이제 2024.04.27로 나옴
-            //서버에서 병원간날, 검사한날 date 모두 가져오기
-            //예로, 4월25 클릭하면  서버에 날짜 보내고, 그거에 해당하는 데이터를 리스트로 가져와서 리사이클러로 보여주기.
-            getHospitalRecord(formattedDate) //클릭한 날짜
-            getAIRecord(formattedDate) //클릭한 날짜
-        }//온클릭 리스너
-
-
-        binding.btnAll.setOnClickListener {
-            getHospitalRecord("")
-            getAIRecord("")
-            //서버에서 유저의 병원기록, AI검사기록 전부 받아온 리스트..를 아답터에..
-            binding.recyclerViewHospital.adapter = HospitalRecordAdapter(this, itemlist)
-            binding.recyclerViewAI.adapter = AIRecordAdapter(this, aiList)
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-    }//oncreate
-
-
-
-
-
-
-    //서버 - 병원기록 특정날짜꺼 받아오기
-    private fun getHospitalRecord(clickedDate: String?){
-        val date = clickedDate
-        3단콤보. 개정보. 데이트(전체-빈값)
-        //레트로핏으로 유저가 저장한 병원기록  전부~ 받아와서 clickedDate랑 같은 날짜를 리스트에 넣기.
-
-
-        //이후 아답터에 대량의 리스트 넣어주기
-        //binding.recyclerViewHospital.adapter = HospitalRecordAdapter(this, itemlist)
-    }
-
-
-    //서버 - AI검사기록 특정날짜꺼 받아오기
-    private fun getAIRecord(clickedDate: String?){
-        val date = clickedDate
-
-        //레트로핏으로 유저가 저장한 AI기록 전부~~ 받아와서 clickedDate랑 같은 날짜를 리스트에 넣기
-        @GET("---")
-        fun getAIRecord(@Query("query") id:String, @Query("query") dog:String, @Query("query") date:String) : Call<>
-
-
         // 이후 아답터에 대량의 리스트 넣어주기
-        //binding.recyclerViewAI.adapter = AIRecordAdapter(this, aiList)
+        binding.recyclerViewAI.adapter = AIRecordAdapter(this, aiList)
     }
 
 
@@ -207,25 +235,6 @@ class NoteActivity : AppCompatActivity() {
 
 
 
-
-
-    //서버 - 병원기록 전부 받아오기
-    private fun getAllHospitalRecord(){
-        //레트로핏으로 유저가 저장한 병원기록  전부~ 받아와서 clickedDate랑 같은 날짜를 리스트에 넣기.
-
-
-        //이후 아답터에 대량의 리스트 넣어주기
-        //binding.recyclerViewHospital.adapter = HospitalRecordAdapter(this, itemlist)
-    }
-
-
-    //서버 - AI검사기록 전부 받아오기
-    private fun getAllAIRecord(){
-        //레트로핏으로 유저가 저장한 AI기록 전부~~ 받아와서 clickedDate랑 같은 날짜를 리스트에 넣기
-
-        // 이후 아답터에 대량의 리스트 넣어주기
-        //binding.recyclerViewAI.adapter = AIRecordAdapter(this, aiList)
-    }
 
 
 
