@@ -38,7 +38,7 @@ data class AddorModifyorDeleteQA(val email:String="", val provider_id:String="",
 data class AddorModifyorDeleteComment(val email:String="", val provider_id:String="", val login_type:String, val board_id: String, val comment_id:String="", val content:String="")
 
 // feed favor 요청
-data class FeedFavor(val email:String="", val provider_id:String="", val login_type:String, val feed_id: String, val favor_add:String) // favor True or False
+data class FeedFavor(val email:String="", val provider_id:String="", val login_type:String, val feed_id: String)
 
 // qa view 요청
 data class QAView(val email:String="", val provider_id:String="", val login_type:String, val qa_id: String)

@@ -1117,8 +1117,7 @@ class RetrofitProcess(
     }
     // 29. feed 찜 기능
 // feedFavorRequest 사용법
-//val params= FeedFavor("이메일정보", "provider_id", "로그인 타입", "feed_id", "favor_add") // feed_id feed 식별값
-                                                                                        // favor_add TRUE 일 경우 찜 추가, FALSE 일 경우 찜 삭제
+//val params= FeedFavor("이메일정보", "provider_id", "로그인 타입", "feed_id") // feed_id feed 식별값
 //RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
