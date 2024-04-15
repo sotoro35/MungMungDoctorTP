@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".bnv1care.ShowHosActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginBottom="8dp"
+            app:navigationIcon="@drawable/baseline_arrow_back_ios_24"
+            app:title="병원 기록보기"
+            app:titleMarginStart="90dp"
+            app:titleTextColor="@color/black" />
+
+        <TextView
+            android:id="@+id/tv_1"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar"
+            android:layout_marginLeft="36dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginRight="16dp"
+            android:text="병원명 : "
+            android:textColor="#8B8686"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/tv_1"
+            android:layout_toRightOf="@id/tv_1"
+            android:text="유리병원"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <View
+            android:id="@+id/v1"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_below="@id/tv_name"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/dotted_line" />
+
+        <TextView
+            android:id="@+id/tv_2"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/v1"
+            android:layout_marginLeft="36dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:text="가   격 : "
+            android:textColor="#8B8686"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/tv_2"
+            android:layout_toRightOf="@id/tv_2"
+            android:text="18000000원"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <View
+            android:id="@+id/v2"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_below="@id/tv_price"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/dotted_line" />
+
+        <TextView
+            android:id="@+id/tv_3"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/v2"
+            android:layout_marginLeft="36dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:text="진료일 : "
+            android:textColor="#8B8686"
+            android:textSize="18sp" />
+
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/tv_3"
+            android:layout_toRightOf="@id/tv_3"
+            android:text="2024.01.01 "
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <View
+            android:id="@+id/v3"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_below="@id/tv_date"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/dotted_line" />
+
+        <TextView
+            android:id="@+id/tv_4"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/v3"
+            android:layout_marginLeft="36dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:text="진단명 :"
+            android:textColor="#8B8686"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_disease_name"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/tv_4"
+            android:layout_toRightOf="@id/tv_4"
+            android:text="어깨아파 목아파 어뜨케 도수도수악악악"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <View
+            android:id="@+id/v4"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_below="@id/tv_disease_name"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/dotted_line" />
+
+        <TextView
+            android:id="@+id/tv_5"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/tv_content"
+            android:layout_marginLeft="36dp"
+            android:text="진    료  \n내    용 :"
+            android:textColor="#8B8686"
+            android:textSize="18sp" />
+
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_disease_name"
+            android:layout_alignLeft="@id/tv_disease_name"
+            android:layout_marginTop="16dp"
+            android:text="어깨아파 목아파 어뜨케 도수도수악악악어깨아파 목아파 어뜨케 도수도수악악악어깨아파 목아파 어뜨케 도수도수악악악어깨아파 목아파 어뜨케 도수도수악악악어깨아파 목아파 어뜨케 도수도수악악악"
+
+            android:textSize="16sp"
+            app:boxStrokeColor="@color/black" />
+
+
+        <TextView
+            android:id="@+id/tv_bill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_content"
+            android:layout_alignLeft="@id/tv_5"
+            android:layout_marginTop="24dp"
+            android:text="영수증"
+            android:textColor="#8B8686"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/iv_bill"
+            android:layout_width="230dp"
+            android:layout_height="180dp"
+            android:layout_below="@id/tv_bill"
+            android:layout_alignTop="@id/tv_bill"
+            android:layout_toRightOf="@id/tv_bill"
+            android:layout_marginLeft="36dp"
+            android:background="@drawable/bg_record_hos"
+            android:padding="4dp"
+            android:scaleType="centerCrop" />
+
+
+        <TextView
+            android:id="@+id/tv_care"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_bill"
+            android:layout_marginTop="24dp"
+            android:text="진료사진"
+            android:layout_alignLeft="@id/tv_5"
+            android:textColor="#8B8686"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/iv_care"
+            android:layout_width="230dp"
+            android:layout_height="180dp"
+            android:layout_below="@id/tv_bill"
+            android:layout_alignTop="@id/tv_care"
+            android:layout_toRightOf="@id/tv_care"
+            android:layout_alignLeft="@id/iv_bill"
+            android:background="@drawable/bg_record_hos"
+            android:padding="4dp"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="50dp"/>
+
+
+
+
+    </RelativeLayout>
+
+
+</ScrollView>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -8,162 +8,270 @@
     android:background="@color/white"
     tools:context=".bnv1care.RecordHosActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_marginBottom="8dp"
-        app:navigationIcon="@drawable/baseline_arrow_back_ios_24"
-        app:title="병원 기록하기"
-        app:titleTextColor="@color/black"
-        app:titleMarginStart="90dp"/>
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tv_hospital_name"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:text="병원명 : "
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:layout_below="@id/toolbar"
-        android:layout_marginTop="36dp"
-        android:layout_marginLeft="36dp"
-        android:layout_marginRight="16dp"
-        />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginBottom="8dp"
+            app:navigationIcon="@drawable/baseline_arrow_back_ios_24"
+            app:title="병원 기록하기"
+            app:titleMarginStart="90dp"
+            app:titleTextColor="@color/black" />
 
-    <EditText
-        android:id="@+id/et_name"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/tv_hospital_name"
-        android:layout_alignBaseline="@id/tv_hospital_name"
-        />
+        <TextView
+            android:id="@+id/tv_hospital_name"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar"
+            android:layout_marginLeft="36dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginRight="16dp"
+            android:text="병원명 : "
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
-    <View
-        android:id="@+id/v1"
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="@drawable/dotted_line"
-        android:layout_below="@id/et_name"
-        android:layout_marginTop="8dp"/>
-
-    <TextView
-        android:id="@+id/tv_price"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:text="가   격 : "
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:layout_below="@id/v1"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="36dp"
-        android:layout_marginRight="16dp"
-        />
-
-    <EditText
-        android:id="@+id/et_price"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/tv_price"
-        android:layout_alignBaseline="@id/tv_price"
-        />
+        <EditText
+            android:id="@+id/et_name"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/tv_hospital_name"
+            android:layout_toRightOf="@id/tv_hospital_name"
+            android:inputType="textMultiLine" />
 
 
-    <View
-        android:id="@+id/v2"
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="@drawable/dotted_line"
-        android:layout_below="@id/et_price"
-        android:layout_marginTop="8dp"/>
+        <View
+            android:id="@+id/v1"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_below="@id/et_name"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/dotted_line" />
 
-    <TextView
-        android:id="@+id/tv_date"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:text="진료일 : "
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:layout_below="@id/v2"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="36dp"
-        android:layout_marginRight="16dp"
-        />
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/v1"
+            android:layout_marginLeft="36dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:text="가   격 : "
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
-    <EditText
-        android:id="@+id/et_date"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/tv_date"
-        android:layout_alignBaseline="@id/tv_date"
-        />
-
+        <EditText
+            android:id="@+id/et_price"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/tv_price"
+            android:layout_toRightOf="@id/tv_price"
+            android:inputType="number" />
 
 
-    <View
-        android:id="@+id/v3"
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="@drawable/dotted_line"
-        android:layout_below="@id/et_date"
-        android:layout_marginTop="8dp"/>
+        <View
+            android:id="@+id/v2"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_below="@id/et_price"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/dotted_line" />
 
-    <TextView
-        android:id="@+id/tv_disease_name"
-        android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:text="진단명 :"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:layout_below="@id/v3"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="36dp"
-        android:layout_marginRight="16dp"
-        />
-
-    <EditText
-        android:id="@+id/et_disease_name"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/tv_disease_name"
-        android:layout_alignBaseline="@id/tv_disease_name"
-        />
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/v2"
+            android:layout_marginLeft="36dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:text="진료일 : "
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
 
-
-    <View
-        android:id="@+id/v4"
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="@drawable/dotted_line"
-        android:layout_below="@id/et_disease_name"
-        android:layout_marginTop="8dp"/>
-
-    <TextView
-        android:id="@+id/tv_content"
-        android:layout_width="90dp"
-        android:layout_height="wrap_content"
-        android:text="진료내용 :"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:layout_below="@id/v4"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="36dp"
-        />
-
-    <EditText
-        android:id="@+id/et_content"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/tv_content"
-        android:layout_alignBaseline="@id/tv_content"
-        android:lines="6"/>
+        <!--    달력이미지 클릭시 진료일 선택하는거..칼렌다-->
+        <EditText
+            android:id="@+id/et_date"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/tv_date"
+            android:layout_toRightOf="@id/tv_date"
+            android:drawableRight="@drawable/baseline_calendar_month_24"
+            android:inputType="none"
+            android:clickable="true"
+            android:focusable="false"/>
 
 
+        <View
+            android:id="@+id/v3"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_below="@id/et_date"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/dotted_line" />
+
+        <TextView
+            android:id="@+id/tv_disease_name"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/v3"
+            android:layout_marginLeft="36dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:text="진단명 :"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/et_disease_name"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/tv_disease_name"
+            android:layout_toRightOf="@id/tv_disease_name"
+            android:inputType="textMultiLine" />
 
 
+        <View
+            android:id="@+id/v4"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_below="@id/et_disease_name"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/dotted_line" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/et_content"
+            android:layout_marginLeft="36dp"
+            android:layout_marginTop="16dp"
+            android:text="진    료  \n내    용 :"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_content"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_disease_name"
+            android:layout_alignLeft="@id/et_disease_name"
+            android:layout_marginTop="16dp"
+            app:boxStrokeColor="@color/black">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:lines="5"
+                android:maxLines="10" />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tv_bill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="24dp"
+            android:text="영수증"
+            android:textColor="#8B8686"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_bill_insert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_bill"
+            android:layout_marginLeft="50dp"
+            android:layout_toRightOf="@id/tv_bill"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="추가 + "
+            android:textColor="#8B8686" />
+
+        <TextView
+            android:id="@+id/tv_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="30dp"
+            android:layout_toLeftOf="@id/tv_picture_insert"
+            android:text="진료사진"
+            android:textColor="#8B8686"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_picture_insert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_bill_insert"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="30dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="추가 + "
+            android:textColor="#8B8686" />
+
+        <ImageView
+            android:id="@+id/iv_bill"
+            android:layout_width="140dp"
+            android:layout_height="180dp"
+            android:layout_below="@id/tv_bill"
+            android:layout_alignLeft="@id/tv_bill"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_record_hos"
+            android:scaleType="centerCrop"
+            android:padding="4dp"/>
+
+        <ImageView
+            android:id="@+id/iv_picture"
+            android:layout_width="140dp"
+            android:layout_height="180dp"
+            android:layout_below="@id/tv_bill"
+            android:layout_alignLeft="@id/tv_picture"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_record_hos"
+            android:scaleType="centerCrop"
+            android:padding="4dp"/>
+
+
+        <RelativeLayout
+            android:id="@+id/btn_save"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_bill"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="36dp"
+            android:layout_marginBottom="50dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true">
+
+
+            <TextView
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/bg_shape_recordhos_savebtn"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="저장하기"
+                android:textColor="#3F3E3E"
+                android:textSize="24sp" />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+</ScrollView>
