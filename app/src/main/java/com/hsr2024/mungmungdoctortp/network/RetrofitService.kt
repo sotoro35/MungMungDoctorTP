@@ -12,8 +12,8 @@ import com.hsr2024.mungmungdoctortp.data.SignUpData
 import com.hsr2024.mungmungdoctortp.data.UserChange
 import com.hsr2024.mungmungdoctortp.data.UserDelete
 import com.hsr2024.mungmungdoctortp.data.AddDog
-import com.hsr2024.mungmungdoctortp.data.AddFeed
-import com.hsr2024.mungmungdoctortp.data.AddQA
+import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteFeed
+import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteQA
 import com.hsr2024.mungmungdoctortp.data.CommentDataList
 import com.hsr2024.mungmungdoctortp.data.DeleteDog
 import com.hsr2024.mungmungdoctortp.data.FeedCommentList
@@ -23,8 +23,6 @@ import com.hsr2024.mungmungdoctortp.data.QACommentList
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.Body
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Multipart
@@ -95,11 +93,27 @@ interface RetrofitService {
 
     // feed 추가
     @POST("/feed/feed_add.php")
-    fun feedAdd(@Body addFeed:AddFeed) : Call<String>
+    fun feedAdd(@Body addFeed:AddorModifyorDeleteFeed) : Call<String>
 
     // qa 추가
     @POST("/qa/qa_add.php")
-    fun qaAdd(@Body addqa:AddQA) : Call<String>
+    fun qaAdd(@Body addQA:AddorModifyorDeleteQA) : Call<String>
+
+    // feed 수정
+    @POST("/feed/feed_modify.php")
+    fun feedModify(@Body modifyFeed:AddorModifyorDeleteFeed) : Call<String>
+
+    // qa 수정
+    @POST("/qa/qa_modify.php")
+    fun qaModify(@Body modifyQA:AddorModifyorDeleteQA) : Call<String>
+
+    // feed 삭제
+    @POST("/feed/feed_delete.php")
+    fun feedDelete(@Body deleteFeed:AddorModifyorDeleteFeed) : Call<String>
+
+    // qa 삭제
+    @POST("/qa/qa_delete.php")
+    fun qaDelete(@Body deleteQA:AddorModifyorDeleteQA) : Call<String>
 
     // 회원탈퇴
     @POST("/user/withdraw.php")

@@ -1,12 +1,6 @@
 package com.hsr2024.mungmungdoctortp.network
 
-import android.app.AlertDialog
 import android.content.Context
-import android.database.Cursor
-import android.net.Uri
-import android.provider.MediaStore
-import android.util.Log
-import androidx.loader.content.CursorLoader
 import com.hsr2024.mungmungdoctortp.data.LoginData
 import com.hsr2024.mungmungdoctortp.data.LoginResponse
 import com.hsr2024.mungmungdoctortp.data.SignUpData
@@ -14,21 +8,9 @@ import com.hsr2024.mungmungdoctortp.data.UserDelete
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStream
-import java.io.OutputStream
-import android.content.ContextWrapper
-import android.content.Intent
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import com.bumptech.glide.Glide
 import com.hsr2024.mungmungdoctortp.data.AddDog
-import com.hsr2024.mungmungdoctortp.data.AddFeed
-import com.hsr2024.mungmungdoctortp.data.AddQA
+import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteFeed
+import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteQA
 import com.hsr2024.mungmungdoctortp.data.CommentDataList
 import com.hsr2024.mungmungdoctortp.data.DeleteDog
 import com.hsr2024.mungmungdoctortp.data.FeedCommentList
@@ -39,16 +21,8 @@ import com.hsr2024.mungmungdoctortp.data.PetList
 import com.hsr2024.mungmungdoctortp.data.QACommentList
 import com.hsr2024.mungmungdoctortp.data.QADataList
 import com.hsr2024.mungmungdoctortp.data.UserChange
-import com.hsr2024.mungmungdoctortp.main.MainActivity
-import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.MultipartBody.Part
-import okhttp3.RequestBody
-import retrofit2.Retrofit
-import retrofit2.converter.scalars.ScalarsConverterFactory
-import retrofit2.create
-import retrofit2.http.Multipart
-import java.net.URI
 
 class RetrofitProcess(
     val context: Context,
@@ -622,7 +596,7 @@ class RetrofitProcess(
 //
     fun feedAddRequest(){
         val retrofitService = setRetrofitService()
-        val addFeed=(params as AddFeed)
+        val addFeed=(params as AddorModifyorDeleteFeed)
         val call = retrofitService.feedAdd(addFeed)
         call.enqueue(object : Callback<String> {
             override fun onResponse(p0: Call<String>, response: Response<String>) {
@@ -639,7 +613,7 @@ class RetrofitProcess(
     }
     // 15. feed 추가하기
 // feedAddRequest 사용법
-//val params= AddFeed("이메일정보", "provider_id", "로그인 타입", "Feed에 들어갈 이미지 url", "Feed 내용") // 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능
+//val params= AddorModifyorDeleteFeed("이메일정보", "provider_id", "로그인 타입", "", "Feed에 들어갈 이미지 url", "Feed 내용") // 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능
 //RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
@@ -657,7 +631,7 @@ class RetrofitProcess(
 
     fun qaAddRequest(){
         val retrofitService = setRetrofitService()
-        val addQA=(params as AddQA)
+        val addQA=(params as AddorModifyorDeleteQA)
         val call = retrofitService.qaAdd(addQA)
         call.enqueue(object : Callback<String> {
             override fun onResponse(p0: Call<String>, response: Response<String>) {
@@ -674,7 +648,7 @@ class RetrofitProcess(
     }
     // 16. qa 추가하기
 // qaAddRequest 사용법
-//val params= AddQA("이메일정보", "provider_id", "로그인 타입", "qa에 들어갈 이미지 url", "qa 제목", "qa 내용") // 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능
+//val params= AddorModifyorDeleteQA("이메일정보", "provider_id", "로그인 타입", "", "qa에 들어갈 이미지 url", "qa 제목", "qa 내용") // 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능
 //RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
@@ -689,6 +663,146 @@ class RetrofitProcess(
 //    }
 //
 //}).qaAddRequest()
+
+    fun feedModifyRequest(){
+        val retrofitService = setRetrofitService()
+        val modifyFeed=(params as AddorModifyorDeleteFeed)
+        val call = retrofitService.feedModify(modifyFeed)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+    // 17. feed 수정하기
+// feedModifyRequest 사용법
+//val params= AddorModifyorDeleteFeed("이메일정보", "provider_id", "로그인 타입", "feed_id", "Feed에 들어갈 이미지 url", "Feed 내용") // feed_id는 feed 식별값 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val code=(response as String) //  - 6500 feed 수정 성공, 6501 feed 수정 실패
+//        Log.d("feed add code","$code")
+//
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("feed add fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).feedModifyRequest()
+
+    fun qaModifyRequest(){
+        val retrofitService = setRetrofitService()
+        val modifyQA=(params as AddorModifyorDeleteQA)
+        val call = retrofitService.qaModify(modifyQA)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+    // 18. qa 수정하기
+// qaModifyRequest 사용법
+//val params= AddorModifyorDeleteQA("이메일정보", "provider_id", "로그인 타입", "qa_id", "qa에 들어갈 이미지 url", "qa 제목", "qa 내용") // qa_id는 qa 식별값 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val code=(response as String) //  - 7500 qa 수정 성공, 7501 qa 수정 실패
+//        Log.d("feed add code","$code")
+//
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("feed add fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).qaModifyRequest()
+
+    fun feedDeleteRequest(){
+        val retrofitService = setRetrofitService()
+        val deleteFeed=(params as AddorModifyorDeleteFeed)
+        val call = retrofitService.feedDelete(deleteFeed)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+    // 19. feed 삭제하기
+// feedDeleteRequest 사용법
+//val params= AddorModifyorDeleteFeed("이메일정보", "provider_id", "로그인 타입", "feed_id") // 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능, feed_id는 feed 식별값
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val code=(response as String) //  - 6600 feed 삭제 성공, 6601 feed 삭제 실패
+//        Log.d("feed add code","$code")
+//
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("feed add fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).feedDeleteRequest()
+
+    fun qaDeleteRequest(){
+        val retrofitService = setRetrofitService()
+        val deleteQA=(params as AddorModifyorDeleteQA)
+        val call = retrofitService.qaDelete(deleteQA)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+    // 20. qa 삭제하기
+// qaDeleteRequest 사용법
+//val params= AddorModifyorDeleteQA("이메일정보", "provider_id", "로그인 타입", "qa_id") // 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능, qa_id는 qa 식별값
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val code=(response as String) //  - 7600 qa 삭제 성공, 7601 qa 삭제 실패
+//        Log.d("feed add code","$code")
+//
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("feed add fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).qaDeleteRequest()
 
 //    private fun onegetRealPathfromUri(uri:Uri) : String? {
 //        //android 10 버전 부터는 Uri를 통해 파일의 실제 경로를 얻을 수 있는 방법이 없어졌음
