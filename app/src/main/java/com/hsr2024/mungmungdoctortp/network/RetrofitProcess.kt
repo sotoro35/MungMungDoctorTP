@@ -1270,7 +1270,7 @@ class RetrofitProcess(
     fun hospitalModifyRequest(){
         val retrofitService = setRetrofitService()
         val hospitalAdd=(params as AddorModifyorDeleteHospital)
-        val call = retrofitService.hospitalAdd(hospitalAdd)
+        val call = retrofitService.hospitalModify(hospitalAdd)
         call.enqueue(object : Callback<String> {
             override fun onResponse(p0: Call<String>, response: Response<String>) {
                 if (response.isSuccessful) {
