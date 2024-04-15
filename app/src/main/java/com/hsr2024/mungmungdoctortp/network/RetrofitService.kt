@@ -1,5 +1,6 @@
 package com.hsr2024.mungmungdoctortp.network
 
+import com.hsr2024.mungmungdoctortp.data.AIAdd
 import com.hsr2024.mungmungdoctortp.data.AIRecordList
 import com.hsr2024.mungmungdoctortp.data.AiRequest
 import com.hsr2024.mungmungdoctortp.data.AiResponses
@@ -20,6 +21,7 @@ import com.hsr2024.mungmungdoctortp.data.CommentDataList
 import com.hsr2024.mungmungdoctortp.data.DeleteDog
 import com.hsr2024.mungmungdoctortp.data.FeedCommentList
 import com.hsr2024.mungmungdoctortp.data.FeedFavor
+import com.hsr2024.mungmungdoctortp.data.HospitalAdd
 import com.hsr2024.mungmungdoctortp.data.HospitalRecordList
 import com.hsr2024.mungmungdoctortp.data.HospitalorAiRecordList
 import com.hsr2024.mungmungdoctortp.data.Individual
@@ -184,4 +186,12 @@ interface RetrofitService {
     //해당 반려견의 ai 기록 불러오기
     @POST("/pet/ai_list.php")
     fun aiList(@Body record:HospitalorAiRecordList) : Call<AIRecordList>
+
+    //해당 반려견의 병원 기록 추가하기
+    @POST("/pet/hospital_add.php")
+    fun hospitalAdd(@Body hospitalAdd:HospitalAdd) : Call<String>
+
+    //해당 반려견의 ai 기록 추가하기
+    @POST("/pet/ai_add.php")
+    fun aiAdd(@Body aiAdd:AIAdd) : Call<String>
 }

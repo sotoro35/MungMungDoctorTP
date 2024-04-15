@@ -1,6 +1,7 @@
 package com.hsr2024.mungmungdoctortp.network
 
 import android.content.Context
+import com.hsr2024.mungmungdoctortp.data.AIAdd
 import com.hsr2024.mungmungdoctortp.data.AIRecordList
 import com.hsr2024.mungmungdoctortp.data.LoginData
 import com.hsr2024.mungmungdoctortp.data.LoginResponse
@@ -18,6 +19,7 @@ import com.hsr2024.mungmungdoctortp.data.DeleteDog
 import com.hsr2024.mungmungdoctortp.data.FeedCommentList
 import com.hsr2024.mungmungdoctortp.data.FeedDataList
 import com.hsr2024.mungmungdoctortp.data.FeedFavor
+import com.hsr2024.mungmungdoctortp.data.HospitalAdd
 import com.hsr2024.mungmungdoctortp.data.HospitalRecordList
 import com.hsr2024.mungmungdoctortp.data.HospitalorAiRecordList
 import com.hsr2024.mungmungdoctortp.data.Individual
@@ -1180,6 +1182,88 @@ class RetrofitProcess(
 //    }
 //
 //}).aiListRequest()
+
+    fun hospitalAddRequest(){
+        val retrofitService = setRetrofitService()
+        val hospitalAdd=(params as HospitalAdd)
+        val call = retrofitService.hospitalAdd(hospitalAdd)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+    // 31. 병원 기록 추가하기
+// hospitalAddRequest 사용법
+//val params= HospitalAdd("이메일정보", "provider_id", "로그인 타입", "pet_id", // pet_id는 pet 식별값
+//                          name,                                           // 병원명
+//                          price,                                          // 진단가격
+//                          diagnosis,                                      // 진단명
+//                          visit_date,                                     // 진료일
+//                          description,                                    // 진료내용
+//                          receipt_img_url,                                // 영수증 이미지 url
+//                          clinical_img_url,                               // 진료사진 이미지 url
+// )
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val code=(response as String)             //  - 4204 서비스 회원 아님, 8100 병원 기록 추가 성공, 8101 병원 기록 추가 실패
+//        Log.d("hospital add code","$code")
+//
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("feed add fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).hospitalAddRequest()
+
+    fun aiAddRequest(){
+        val retrofitService = setRetrofitService()
+        val aiAdd=(params as AIAdd)
+        val call = retrofitService.aiAdd(aiAdd)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+    // 32. ai 기록 추가하기
+// aiAddRequest 사용법
+//val params= AIAdd("이메일정보", "provider_id", "로그인 타입", "pet_id", // pet_id는 pet 식별값
+//                          diagnosis_type,                           // 진단한 ai type (eype or skin)
+//                          diagnostic_img_url,                       // ai 진단한 반려견 이미지 url
+//                          diagnosis_result,                         // ai 진단결과 리스트(결막염 80%, 유루증 70%..)
+// )
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val code=(response as String)             //  - 4204 서비스 회원 아님, 9100 ai 기록 추가 성공, 9101 ai 기록 추가 실패
+//        Log.d("hospital add code","$code")
+//
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("feed add fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).aiAddRequest()
 
 //    private fun onegetRealPathfromUri(uri:Uri) : String? {
 //        //android 10 버전 부터는 Uri를 통해 파일의 실제 경로를 얻을 수 있는 방법이 없어졌음
