@@ -74,7 +74,7 @@ class CommunityFragment:Fragment() {
         if (feedAdapter == null) {
             //초기 tap 눌렀을 경우
             var feedData= FeedData("1","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s",
-                "feednickname","https://cdn-icons-png.flaticon.com/512/1361/1361876.png","0",true,"3","Feed 내용","2024-01-02")
+                "feednickname","https://cdn-icons-png.flaticon.com/512/1361/1361876.png","1",true,"3","Feed 내용","2024-01-02")
             tab1Items.add(feedData)
             feedData= FeedData("2","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s",
                 "feednickname","https://cdn-icons-png.flaticon.com/512/1361/1361876.png","2",true,"3","Feed 내용","2024-01-02")
