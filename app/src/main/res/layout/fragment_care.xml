@@ -8,8 +8,8 @@
         android:id="@+id/tv111"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="CareFragment"
-        android:textSize="40sp"
+        android:text="To Vaccine Activity"
+        android:textSize="30sp"
         tools:ignore="MissingConstraints" />
 
 

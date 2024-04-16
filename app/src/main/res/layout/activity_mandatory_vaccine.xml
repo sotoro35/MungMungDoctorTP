@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:navigationIcon="@drawable/baseline_arrow_back_24"
-        android:title="필수예방접종"
+        android:title="1차 접종"
         android:titleTextColor="@color/black"
         android:titleMarginStart="20dp"
         android:background="#F8E6C4"/>

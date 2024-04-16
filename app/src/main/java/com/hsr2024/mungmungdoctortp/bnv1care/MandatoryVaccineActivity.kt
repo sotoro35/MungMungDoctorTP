@@ -28,10 +28,12 @@ class MandatoryVaccineActivity : AppCompatActivity() {
         binding.dateTv.setOnClickListener { showDatePicker() }
 
 
+        val titleText = intent.getStringExtra("titleText") ?: ""
         val checkBox1Text = intent.getStringExtra("checkBox1Text") ?: " "
         val checkBox2Text = intent.getStringExtra("checkBox2Text") ?: " "
         val checkBox3Text = intent.getBooleanExtra("checkBox3Text", false)
 
+        binding.toolBar.title = titleText
         binding.checkBox1Text.text = checkBox1Text
         binding.checkBox2Text.text = checkBox2Text
         binding.checkBox3Text.visibility = if (checkBox3Text) View.VISIBLE else View.GONE
