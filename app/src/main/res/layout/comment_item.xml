@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:layout_margin="16dp">
 
@@ -11,6 +12,14 @@
         android:layout_height="wrap_content"
         android:text="comment_id"
         android:visibility="gone"/>
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:titleCentered="true"
+        android:layout_margin="8dp"
+        app:menu="@menu/toolbar_menu"/>
 
     <LinearLayout
         android:id="@+id/linear2"

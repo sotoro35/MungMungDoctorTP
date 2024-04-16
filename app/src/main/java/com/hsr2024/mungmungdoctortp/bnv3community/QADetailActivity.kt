@@ -30,7 +30,7 @@ class QADetailActivity : AppCompatActivity() {
         items.clear()
         items.add(
             CommentData("1", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s", "commentnickname",
-                "Content 내용", "2024-01-01")
+                "Content 내용", "2024-01-01","0")
         )
         items.add(
             CommentData(
@@ -38,7 +38,7 @@ class QADetailActivity : AppCompatActivity() {
                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s",
                 "anothercommenter",
                 "Another comment",
-                "2024-01-02"
+                "2024-01-02","D"
             )
         )
 

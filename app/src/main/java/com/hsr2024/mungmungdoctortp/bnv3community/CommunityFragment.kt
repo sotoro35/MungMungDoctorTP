@@ -74,13 +74,13 @@ class CommunityFragment:Fragment() {
         if (feedAdapter == null) {
             //초기 tap 눌렀을 경우
             var feedData= FeedData("1","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s",
-                "feednickname","https://cdn-icons-png.flaticon.com/512/1361/1361876.png","1",true,"3","Feed 내용","2024-01-02")
+                "feednickname","https://cdn-icons-png.flaticon.com/512/1361/1361876.png","1","true","3","Feed 내용","2024-01-02","d")
             tab1Items.add(feedData)
             feedData= FeedData("2","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s",
-                "feednickname","https://cdn-icons-png.flaticon.com/512/1361/1361876.png","2",true,"3","Feed 내용","2024-01-02")
+                "feednickname","https://cdn-icons-png.flaticon.com/512/1361/1361876.png","2","true","3","Feed 내용","2024-01-02","d")
             tab1Items.add(feedData)
             feedData= FeedData("3","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s",
-                "feednickname","https://cdn-icons-png.flaticon.com/512/1361/1361876.png","2",true,"3","Feed 내용","2024-01-02")
+                "feednickname","https://cdn-icons-png.flaticon.com/512/1361/1361876.png","2","true","3","Feed 내용","2024-01-02","d")
             tab1Items.add(feedData)
             feedAdapter = FeedListAdapter(requireContext(), tab1Items)
             binding.recyclerView.adapter = feedAdapter
@@ -93,16 +93,16 @@ class CommunityFragment:Fragment() {
         if (qaAdapter == null) {
             //초기 tap 눌렀을 경우
             var qaData= QAData("1","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s","title",
-                "qanickname","3","6")
+                "qanickname","3","6","5","5","5")
             tab2Items.add(qaData)
             qaData= QAData("2","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s","title",
-                "qanickname","3","6")
+                "qanickname","3","6","5","5","5")
             tab2Items.add(qaData)
             qaData= QAData("3","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s","title",
-                "qanickname","3","6")
+                "qanickname","3","6","5","5","5")
             tab2Items.add(qaData)
             qaData= QAData("4","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s","title",
-                "qanickname","3","6")
+                "qanickname","3","6","5","5","5")
             qaAdapter = QAListAdapter(requireContext(), tab2Items)
             binding.recyclerView.adapter = qaAdapter
         } else {

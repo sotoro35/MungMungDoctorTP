@@ -28,13 +28,13 @@ class FeedListAdapter(val context: Context, var items:List<FeedData>) : Adapter<
 
         holder.binding.ivFavorite.setOnClickListener {
             val currentFavoriteCount = holder.binding.tvFavorite.text.toString().toInt()
-            val newFavoriteCount = if (item.isfavorite)currentFavoriteCount -1 else currentFavoriteCount +1
+            val newFavoriteCount = if (item.isFavorite as Boolean)currentFavoriteCount -1 else currentFavoriteCount +1
 
             holder.binding.tvFavorite.text= newFavoriteCount.toString()
 
-            val newHeartImage = if(item.isfavorite) R.drawable.favorite else R.drawable.favorites
+            val newHeartImage = if(item.isFavorite as Boolean) R.drawable.favorite else R.drawable.favorites
             holder.binding.ivFavorite.setImageResource(newHeartImage)
-            item.isfavorite =!item.isfavorite
+            item.isFavorite = item.isFavorite
         }
 
         val imgUrl= "https://43.200.163.153/phpMyAdmin/${item.imgurl}"
