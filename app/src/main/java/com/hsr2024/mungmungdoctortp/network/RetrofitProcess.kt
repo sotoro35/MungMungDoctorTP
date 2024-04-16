@@ -201,13 +201,7 @@ class RetrofitProcess(
 //}).userWithDrawRequest()
 
     fun onefileUploadRequest(){
-//        val uri=(params as Uri)
-//        val imgPath=onegetRealPathfromUri(uri)
-//        val file=File(imgPath)
-//        val requestBody:RequestBody=RequestBody.create(MediaType.parse("image/*"),file) //일종의 진공팩
         val retrofitService = setRetrofitService()
-
-//        val part=MultipartBody.Part.createFormData("img1",file.name,requestBody)
         val part:MultipartBody.Part = (params as Part)
         val call = retrofitService.onefileuploadImage(part)
         call.enqueue(object : Callback<String> {
