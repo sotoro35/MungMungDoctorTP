@@ -2,6 +2,7 @@ package com.hsr2024.mungmungdoctortp.bnv3community
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
@@ -16,11 +17,14 @@ class QAListAdapter(val context:Context, var items:List<QAData>) : Adapter<QALis
     override fun getItemCount()=items.size
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item=items[position]
-        Glide.with(context).load(item.imgurl).into(holder.binding.iv)
+        val imgUrl= "http://43.200.163.153/img/${item.imgurl}"
+        Glide.with(context).load(imgUrl).into(holder.binding.iv)
         holder.binding.tvTitle.text=item.title
         holder.binding.tvNickname.text=item.nickname
         holder.binding.tvViewcount.text=item.view_count
         holder.binding.tvComment.text=item.comment_count
+        Log.d("imgUrl",imgUrl)
+        Glide.with(context).load(imgUrl).into(holder.binding.iv)
 
         holder.binding.root.setOnClickListener {
             val intent= Intent(context, QADetailActivity::class.java)
