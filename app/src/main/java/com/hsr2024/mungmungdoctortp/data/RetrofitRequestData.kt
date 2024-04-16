@@ -4,6 +4,9 @@ package com.hsr2024.mungmungdoctortp.data
 data class LoginData(val email:String="", val password:String="", val access_token:String="", val login_type:String)
 //회원가입 시 보낼 데이터
 data class SignUpData(val email:String, val password:String, val nickname:String)
+//간편회원가입 시 보낼 데이터
+data class EasySignUpData(val provider_id:String, val nickname:String, val login_type:String)
+
 // type 종류
 //  - view : 안구, 피부 ai 진단결과 정보 요청
 //  - del_eye : 안구 ai 진단결과 삭제

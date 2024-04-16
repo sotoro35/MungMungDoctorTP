@@ -23,6 +23,7 @@ import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteHospital
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteQA
 import com.hsr2024.mungmungdoctortp.data.CommentDataList
 import com.hsr2024.mungmungdoctortp.data.DeleteDog
+import com.hsr2024.mungmungdoctortp.data.EasySignUpData
 import com.hsr2024.mungmungdoctortp.data.EssentialVaccinationList
 import com.hsr2024.mungmungdoctortp.data.FeedCommentList
 import com.hsr2024.mungmungdoctortp.data.FeedFavor
@@ -54,6 +55,10 @@ interface RetrofitService {
     //회원가입(이메일)
     @POST("/sign/signup.php")
     fun singUp(@Body signUpData: SignUpData) : Call<String> // 1200 회원 추가 성공, 1201 회원 추가 실패, 4330 닉네임 또는 이메일 중복
+
+    //회원가입(간편회원)
+    @POST("/sign/easy_signup.php")
+    fun easySignUp(@Body signUpData: EasySignUpData) : Call<String> // 1200 회원 추가 성공, 1201 회원 추가 실패, 4330 닉네임 또는 이메일 중복
 
     //회원가입 시 닉네임 중복체크
     @GET("/sign/email_nickname_dupli_check.php")
