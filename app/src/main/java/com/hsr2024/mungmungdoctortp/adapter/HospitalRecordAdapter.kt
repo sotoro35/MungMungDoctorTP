@@ -28,6 +28,7 @@ class HospitalRecordAdapter(val context: Context,val itemlist:List<HospitalRecor
         return  itemlist.size
     }
 
+
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = itemlist[position]
         holder.binding.tvHospitalName.text = item.hospital_name
