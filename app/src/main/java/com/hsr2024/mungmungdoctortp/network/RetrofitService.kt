@@ -12,15 +12,17 @@ import com.hsr2024.mungmungdoctortp.data.SignUpData
 import com.hsr2024.mungmungdoctortp.data.UserChange
 import com.hsr2024.mungmungdoctortp.data.UserDelete
 import com.hsr2024.mungmungdoctortp.data.AddDog
+import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteFeed
+import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteQA
+import com.hsr2024.mungmungdoctortp.data.CommentDataList
 import com.hsr2024.mungmungdoctortp.data.DeleteDog
+import com.hsr2024.mungmungdoctortp.data.FeedCommentList
 import com.hsr2024.mungmungdoctortp.data.Individual
 import com.hsr2024.mungmungdoctortp.data.ModifyDog
-import com.hsr2024.mungmungdoctortp.data.commentDataList
+import com.hsr2024.mungmungdoctortp.data.QACommentList
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.Body
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Multipart
@@ -49,7 +51,7 @@ interface RetrofitService {
     //파일 업로드
     @Multipart
     @POST("/upload/onefileupload.php")
-    fun onefileuploadImage(@Part("file") file: MultipartBody.Part) : Call<String> // 응답값 업로드된 이미지 url, 실패 5404, 성공시 이미지 url
+    fun onefileuploadImage(@Part file: MultipartBody.Part) : Call<String> // 응답값 업로드된 이미지 url, 실패 5404, 성공시 이미지 url
 
     //ai 정보
     @POST("/service/ai.php")
@@ -74,24 +76,44 @@ interface RetrofitService {
     fun searchPlace(@Query("query")query:String, @Query("x") longitude:String, @Query("y")latitude:String) : Call<KakaoSearchPlaceResponse>
 
     // feed list 불러오기
-    @FormUrlEncoded
     @POST("/feed/feed_list.php")
-    fun feedList() : Call<FeedDataList>
+    fun feedList(@Body individual:Individual) : Call<FeedDataList>
 
     // qa list 불러오기
-    @FormUrlEncoded
     @POST("/qa/qa_list.php")
-    fun qaList() : Call<QADataList>
+    fun qaList(@Body individual:Individual) : Call<QADataList>
 
     // feed comment list 불러오기
-    @FormUrlEncoded
     @POST("/feed/comment_list.php")
-    fun feedCommentList(@Field("feed_id") feed_id:String) : Call<commentDataList>
+    fun feedCommentList(@Body feedCommentList:FeedCommentList) : Call<CommentDataList>
 
     // qa comment list 불러오기
-    @FormUrlEncoded
     @POST("/qa/comment_list.php")
-    fun qaCommentList(@Field("qa_id") qa_id:String) : Call<commentDataList>
+    fun qaCommentList(@Body qaCommentList:QACommentList) : Call<CommentDataList>
+
+    // feed 추가
+    @POST("/feed/feed_add.php")
+    fun feedAdd(@Body addFeed:AddorModifyorDeleteFeed) : Call<String>
+
+    // qa 추가
+    @POST("/qa/qa_add.php")
+    fun qaAdd(@Body addQA:AddorModifyorDeleteQA) : Call<String>
+
+    // feed 수정
+    @POST("/feed/feed_modify.php")
+    fun feedModify(@Body modifyFeed:AddorModifyorDeleteFeed) : Call<String>
+
+    // qa 수정
+    @POST("/qa/qa_modify.php")
+    fun qaModify(@Body modifyQA:AddorModifyorDeleteQA) : Call<String>
+
+    // feed 삭제
+    @POST("/feed/feed_delete.php")
+    fun feedDelete(@Body deleteFeed:AddorModifyorDeleteFeed) : Call<String>
+
+    // qa 삭제
+    @POST("/qa/qa_delete.php")
+    fun qaDelete(@Body deleteQA:AddorModifyorDeleteQA) : Call<String>
 
     // 회원탈퇴
     @POST("/user/withdraw.php")
