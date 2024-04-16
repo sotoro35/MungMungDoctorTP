@@ -22,8 +22,4 @@ class G {
     }
 
 }
-    class petG{
-        companion object{
-            var petsList: Pet? = null
-        }
-    }
+

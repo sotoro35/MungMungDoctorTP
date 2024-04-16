@@ -31,10 +31,10 @@ class HospitalRecordAdapter(val context: Context,val itemlist:List<HospitalRecor
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = itemlist[position]
-        holder.binding.tvHospitalName.text = item.hospital_name
-        holder.binding.tvDiseaseName.text = item.disease_name
+        holder.binding.tvHospitalName.text = item.name
+        holder.binding.tvDiseaseName.text = item.diagnosis
         holder.binding.tvPrice.text = item.price
-        holder.binding.tvDate.text = item.date
+        holder.binding.tvDate.text = item.visit_date
 
         holder.binding.tvDelete.setOnClickListener {
             AlertDialog.Builder(context).setMessage("병원기록을 삭제하시겠습니까?")

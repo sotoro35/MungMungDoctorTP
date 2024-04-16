@@ -26,10 +26,10 @@ class AIRecordAdapter(val context:Context, val itemList:List<AIRecordData>) : Ad
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = itemList[position]
-        holder.binding.tvCategory.text = item.category
-        holder.binding.tvDiseaseName1.text = item.disease_name1
-        holder.binding.tvDiseaseName2.text = item.disease_name2
-        holder.binding.tvDate.text = item.date
+        holder.binding.tvCategory.text = item.diagnosis_type
+        holder.binding.tvDiseaseName1.text = item.diagnosis_result
+        holder.binding.tvDiseaseName2.text = item.diagnosis_result
+        holder.binding.tvDate.text = item.id
 
         holder.binding.tvDelete.setOnClickListener {
             // x누르면 삭제

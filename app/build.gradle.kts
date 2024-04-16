@@ -62,6 +62,7 @@ dependencies {
     //tensorflow
     implementation(libs.tensorflow.lite.gpu)
     implementation(libs.tensorflow.lite.metadata)
+    //
     implementation(libs.tensorflow.lite.support)
 
     //카메라x
