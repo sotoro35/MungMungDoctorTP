@@ -8,6 +8,9 @@ import androidx.core.net.toUri
 import com.hsr2024.mungmungdoctortp.databinding.ActivityAiResultBinding
 import com.hsr2024.mungmungdoctortp.ml.EyeModel
 import com.hsr2024.mungmungdoctortp.ml.SkinModel
+import com.hsr2024.mungmungdoctortp.network.RetrofitHelper
+import com.hsr2024.mungmungdoctortp.network.RetrofitProcess
+import com.hsr2024.mungmungdoctortp.network.RetrofitService
 import org.tensorflow.lite.support.image.TensorImage
 import kotlin.collections.sortedByDescending
 
@@ -44,6 +47,7 @@ class AiResultActivity : AppCompatActivity() {
     private fun saveOnCareNote(){
         //서버 Insert
     }
+
 
 
 

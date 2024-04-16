@@ -52,7 +52,7 @@ class NoteActivity : AppCompatActivity() {
 
         //기록하기 버튼 눌렀을때 액티비티 이동
         binding.tvRecordPlus.setOnClickListener {
-            val intent = Intent(this, HealthDetailActivity::class.java)
+            val intent = Intent(this, RecordHosActivity::class.java)
             startActivity(intent)
         }
 

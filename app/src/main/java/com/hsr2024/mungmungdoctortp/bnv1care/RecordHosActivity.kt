@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
@@ -15,8 +16,13 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.loader.content.CursorLoader
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.datepicker.MaterialDatePicker.Builder
+import com.hsr2024.mungmungdoctortp.G
 import com.hsr2024.mungmungdoctortp.R
+import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteHospital
 import com.hsr2024.mungmungdoctortp.databinding.ActivityRecordHosBinding
+import com.hsr2024.mungmungdoctortp.network.RetrofitCallback
+import com.hsr2024.mungmungdoctortp.network.RetrofitHelper
+import com.hsr2024.mungmungdoctortp.network.RetrofitProcess
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -37,6 +43,9 @@ class RecordHosActivity : AppCompatActivity() {
     private lateinit var date:String
     private lateinit var diseaseName:String
     private lateinit var content:String
+
+    var a1 = ""
+    var a2 = ""
 
 
 
@@ -93,8 +102,6 @@ class RecordHosActivity : AppCompatActivity() {
         }else{
 
             //1.서버에 새로운 이미지 업데이트 요청
-//        val retrofitService =
-//            RetrofitHelper.getRetrofitInstance().create(RetrofitService::class.java)
             val dataPart: MutableMap<String, String> = mutableMapOf()
             dataPart["name"] = name
             dataPart["price"] = price
@@ -115,12 +122,114 @@ class RecordHosActivity : AppCompatActivity() {
                 MultipartBody.Part.createFormData("img1", file.name, requestBody)
             }
 
+
+
+
+            if (filePartBillPicture != null) {
+                RetrofitProcess(this,params=filePartBillPicture, callback = object : RetrofitCallback {
+                    override fun onResponseListSuccess(response: List<Any>?) {}
+
+                    override fun onResponseSuccess(response: Any?) {
+                        val code=(response as String)
+                        Log.d("one file upload code","$code") // 실패 시 5404, 성공 시 이미지 경로
+                        if(code != "5404"){
+                            a1 = code
+                        }
+
+                    }
+
+                    override fun onResponseFailure(errorMsg: String?) {
+                        Log.d("one file upload fail",errorMsg!!) // 에러 메시지
+                    }
+
+                }).onefileUploadRequest()
+            }//if
+
+
+
+
+
+            if (filePartCarePicture != null) {
+                RetrofitProcess(this,params=filePartCarePicture, callback = object : RetrofitCallback {
+                    override fun onResponseListSuccess(response: List<Any>?) {}
+
+                    override fun onResponseSuccess(response: Any?) {
+                        val code=(response as String)
+                        Log.d("one file upload code","$code") // 실패 시 5404, 성공 시 이미지 경로
+                        if(code != "5404"){
+                            a2 = code
+
+                            if (a1==null && a2==null){
+                                aaa("", "")
+                            }else if (a1==null && a2!=null){
+                                aaa("", a2)
+                            }else if (a1!=null && a2==null){
+                                aaa(a1, "")
+                            }else if (a1!=null && a2!=null){
+                                aaa(a1, a2)
+                            }
+                        }
+
+                    }
+
+                    override fun onResponseFailure(errorMsg: String?) {
+                        Log.d("one file upload fail",errorMsg!!) // 에러 메시지
+                    }
+
+                }).onefileUploadRequest()
+            }
+
         }//else
 
 
 
-
     }//save()
+
+
+
+
+
+
+
+
+    private fun aaa(filePartBillPicture:String, filePartCarePicture:String){
+
+
+
+                    val params= AddorModifyorDeleteHospital(G.user_email, G.user_providerId, G.loginType, G.pet_id, // pet_id는 pet 식별값
+                                      "",                                             // 병원 기록 식별 값( 안넣어도 됨)
+                                      name,                                           // 병원명
+                                      price,                                          // 진단가격
+                                      diseaseName,                                      // 진단명
+                                      date,                                     // 진료일
+                                      content,                                    // 진료내용
+                                      filePartBillPicture,                                // 영수증 이미지 url
+                                      filePartCarePicture,                               // 진료사진 이미지 url
+             )
+            RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+                override fun onResponseListSuccess(response: List<Any>?) {}
+
+                override fun onResponseSuccess(response: Any?) {
+                    val code=(response as String)             //  - 4204 서비스 회원 아님, 8100 병원 기록 추가 성공, 8101 병원 기록 추가 실패
+                    Log.d("hospital add code","$code")
+
+                }
+
+                override fun onResponseFailure(errorMsg: String?) {
+                    Log.d("hospital add fail",errorMsg!!) // 에러 메시지
+                }
+
+            }).hospitalAddRequest()
+
+            //-------------------------------------------------
+
+
+
+    }//aaa()
+
+
+
+
 
 
 

@@ -45,7 +45,7 @@
         <activity
             android:name=".bnv2map.MapDetailActivity"
             android:exported="false" />
-      
+        <activity
             android:name=".bnv4mypage.DogChangeProfileActivity"
             android:exported="false" />
         <activity
@@ -74,7 +74,6 @@
             android:exported="false" />
         <activity
             android:name=".login.IntroActivity"
-
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
