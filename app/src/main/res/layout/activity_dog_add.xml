@@ -139,11 +139,13 @@
             android:text="생년월일"
             android:textSize="16sp"/>
 
-        <EditText
+        <TextView
             android:id="@+id/add_pet_birthDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
+            android:text="날짜를 선택해주세요"
             android:layout_marginRight="12dp"/>
     </LinearLayout>
     <LinearLayout

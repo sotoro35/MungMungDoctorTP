@@ -210,4 +210,5 @@ class ChangeProfileActivity : AppCompatActivity() {
 
         return file.absolutePath
     }////////////////////////////////////////////////////////////////////////////
+
 }

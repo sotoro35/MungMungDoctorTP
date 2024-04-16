@@ -2,6 +2,7 @@ package com.hsr2024.mungmungdoctortp.bnv4mypage
 
 import android.content.Intent
 import android.database.Cursor
+import android.graphics.Color
 import android.graphics.Paint
 import android.net.Uri
 import android.os.Build
@@ -18,6 +19,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.loader.content.CursorLoader
 import com.bumptech.glide.Glide
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.hsr2024.mungmungdoctortp.G
 import com.hsr2024.mungmungdoctortp.R
 import com.hsr2024.mungmungdoctortp.data.AddDog
@@ -57,6 +59,7 @@ class DogAddActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener { finish() }
         binding.btnAddSave.setOnClickListener { addPet() }
         binding.addPetImage.setOnClickListener { clickImage() }
+        binding.addPetBirthDate.setOnClickListener { showDatePicker() }
 
         binding.addPetBoy.setOnClickListener {
             gender = "남아"
@@ -90,7 +93,7 @@ class DogAddActivity : AppCompatActivity() {
 
         petName = binding.addPetName.text.toString()
         petbreed = binding.addPetBreed.text.toString()
-        birthdate = SimpleDateFormat("yyyyMMdd", Locale.KOREA).format(Date()).toString()
+        birthdate = binding.addPetBirthDate.text.toString().replace("-","")
 
         if (saveCheck(petName, petbreed, birthdate) ) {
         //이미지파일을 MutipartBody.Part 로 포장하여 전송: @Part
@@ -127,30 +130,35 @@ class DogAddActivity : AppCompatActivity() {
     private fun savePet(image:String){
         petName = binding.addPetName.text.toString()
         petbreed = binding.addPetBreed.text.toString()
-        birthdate = SimpleDateFormat("yyyyMMdd", Locale.KOREA).format(Date()).toString()
+        birthdate = binding.addPetBirthDate.text.toString().replace("-","")
+        var dateFormat = SimpleDateFormat("yyyyMMdd", Locale.KOREA)
+        var currentDate = dateFormat.format(Date()).toInt()
+        var selectedDate = binding.addPetBirthDate.text.toString().replace("-","").toInt()
 
         if (saveCheck(petName, petbreed, birthdate) ) {
 
-            val params= AddDog("${G.user_email}", "${G.user_providerId}",
-                "$petName", "$image",
-                "$birthdate", "$gender", "${neutering}",
-                "$petbreed", "${G.loginType}")
-            RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
-                override fun onResponseListSuccess(response: List<Any>?) {}
+            if (currentDate >= selectedDate) {
 
-                override fun onResponseSuccess(response: Any?) {
-                    val code=(response as String)
-                    Log.d("Add Pet code","$code") //  - 5200 펫 추가 성공, 5201 펫 추가 실패, 4204 서비스 회원 아님
-                    Toast.makeText(this@DogAddActivity, "추가성공", Toast.LENGTH_SHORT).show()
-                    finish()
-                }
+                val params= AddDog("${G.user_email}", "${G.user_providerId}",
+                    "$petName", "$image",
+                    "$birthdate", "$gender", "${neutering}",
+                    "$petbreed", "${G.loginType}")
+                RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
+                    override fun onResponseListSuccess(response: List<Any>?) {}
 
-                override fun onResponseFailure(errorMsg: String?) {
-                    Log.d("Add Pet fail",errorMsg!!) // 에러 메시지
-                }
+                    override fun onResponseSuccess(response: Any?) {
+                        val code=(response as String)
+                        Log.d("Add Pet code","$code") //  - 5200 펫 추가 성공, 5201 펫 추가 실패, 4204 서비스 회원 아님
+                        Toast.makeText(this@DogAddActivity, "추가성공", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
 
-            }).petAddRequest()
+                    override fun onResponseFailure(errorMsg: String?) {
+                        Log.d("Add Pet fail",errorMsg!!) // 에러 메시지
+                    }
 
+                }).petAddRequest()
+            }else AlertDialog.Builder(this).setMessage("현재날짜까지 가능합니다").create().show()
         } else AlertDialog.Builder(this).setMessage("관리자에게 문의하세요").create().show()
     }
 
@@ -168,6 +176,11 @@ class DogAddActivity : AppCompatActivity() {
 
             !petName.isNotEmpty() || !petbreed.isNotEmpty() || !birthdate.isNotEmpty() -> {
                 AlertDialog.Builder(this).setMessage("모두 입력해주세요").create().show()
+                boolean = false
+            }
+
+            binding.addPetBirthDate.text.toString().equals("날짜를 선택해주세요") ->{
+                AlertDialog.Builder(this).setMessage("날짜를 입력해주세요").create().show()
                 boolean = false
             }
 
@@ -240,4 +253,20 @@ class DogAddActivity : AppCompatActivity() {
 
         return file.absolutePath
     }////////////////////////////////////////////////////////////////////////////
+
+
+    private fun showDatePicker() {
+        val datePicker = MaterialDatePicker.Builder.datePicker()
+            .setTitleText("날짜 선택")
+            .build()
+
+        datePicker.addOnPositiveButtonClickListener { selection ->
+            val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            binding.addPetBirthDate.text = dateFormatter.format(Date(selection))
+            binding.addPetBirthDate.setTextColor(Color.BLACK)
+        }
+
+        datePicker.show(supportFragmentManager, "DATE_PICKER")
+    }
+
 }//main...

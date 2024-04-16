@@ -91,8 +91,7 @@ class MypageFragment : Fragment() {
                             .show()
 
                         "5500" -> {
-                            Toast.makeText(requireContext(), "리스트 가져오기 성공", Toast.LENGTH_SHORT)
-                                .show()
+                            //Toast.makeText(requireContext(), "리스트 가져오기 성공", Toast.LENGTH_SHORT).show()
 
                             val pets: List<Pet> = data.petList.sortedByDescending {it.pet_id}
                             val mypageAdapter = MypageDogAdapter(requireContext(),pets)
@@ -190,7 +189,7 @@ class MypageFragment : Fragment() {
         builder.setView(dialogV)
         alertDialog = builder.create()
 
-        if (G.user_providerId != null || G.user_providerId != "" ){
+        if (G.user_providerId != null && G.user_providerId != "" ){
             dialogV.findViewById<TextInputLayout>(R.id.input_password_delete1).visibility = View.VISIBLE
 
         }else dialogV.findViewById<TextInputLayout>(R.id.input_password_delete1).visibility = View.INVISIBLE

@@ -75,7 +75,7 @@ class LoginActivity : AppCompatActivity() {
 
                     if(checkbox) saveSharedPreferences()
 
-                    Toast.makeText(this@LoginActivity, "${data.nickname}:${G.user_nickname}", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this@LoginActivity, "${data.nickname}:${G.user_nickname}", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this@LoginActivity,MainActivity::class.java))
                     finish()
                 }

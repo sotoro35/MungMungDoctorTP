@@ -3,6 +3,7 @@ package com.hsr2024.mungmungdoctortp.bnv4mypage
 import android.content.DialogInterface
 import android.content.Intent
 import android.database.Cursor
+import android.graphics.Color
 import android.graphics.Paint
 import android.net.Uri
 import android.os.Build
@@ -18,6 +19,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.loader.content.CursorLoader
 import com.bumptech.glide.Glide
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.gson.Gson
 import com.hsr2024.mungmungdoctortp.G
 import com.hsr2024.mungmungdoctortp.R
@@ -63,6 +65,7 @@ class DogChangeProfileActivity : AppCompatActivity() {
         binding.btnChangeSave.setOnClickListener { changeSave() }
         binding.changePetImage.setOnClickListener { clickImage() }
         binding.btnChangeDelete.setOnClickListener { delete() }
+        binding.changePetBirthDate.setOnClickListener { showDatePicker() }
 
         val s: String? = intent.getStringExtra("pet")
         s?.also {
@@ -174,33 +177,40 @@ class DogChangeProfileActivity : AppCompatActivity() {
 
         petName = binding.changePetName.text.toString()
         petbreed = binding.changePetBreed.text.toString()
-        birthdate = SimpleDateFormat("yyyyMMdd", Locale.KOREA).format(Date()).toString()
+        birthdate = binding.changePetBirthDate.text.toString().replace("-","")
 
-        val params= ModifyDog("${G.user_email}", "${G.user_providerId}",
-            "${pet.pet_id}", "$petName", "$img", "$birthdate",
-            "$gender", "$neutering", "$petbreed", "${G.loginType}")
-        RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
-            override fun onResponseListSuccess(response: List<Any>?) {}
+        var dateFormat = SimpleDateFormat("yyyyMMdd", Locale.KOREA)
+        var currentDate = dateFormat.format(Date()).toInt()
+        var selectedDate = binding.changePetBirthDate.text.toString().replace("-","").toInt()
 
-            override fun onResponseSuccess(response: Any?) {
-                val code=(response as String)
-                Log.d("Modify Pet code","$code") //  - 5300 펫 수정 성공, 5301 펫 수정 실패, 4204 서비스 회원 아님
+        if (currentDate >= selectedDate) {
 
-                when(code){
-                    "5301" -> Toast.makeText(this@DogChangeProfileActivity, "관리자에게 문의하세요", Toast.LENGTH_SHORT).show()
-                    "4204" -> Toast.makeText(this@DogChangeProfileActivity, "관리자에게 문의하세요", Toast.LENGTH_SHORT).show()
-                    "5300" -> {
-                        Toast.makeText(this@DogChangeProfileActivity, "수정이 완료되었습니다", Toast.LENGTH_SHORT).show()
-                        finish()
+            val params= ModifyDog("${G.user_email}", "${G.user_providerId}",
+                "${pet.pet_id}", "$petName", "$img", "$birthdate",
+                "$gender", "$neutering", "$petbreed", "${G.loginType}")
+            RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
+                override fun onResponseListSuccess(response: List<Any>?) {}
+
+                override fun onResponseSuccess(response: Any?) {
+                    val code=(response as String)
+                    Log.d("Modify Pet code","$code") //  - 5300 펫 수정 성공, 5301 펫 수정 실패, 4204 서비스 회원 아님
+
+                    when(code){
+                        "5301" -> Toast.makeText(this@DogChangeProfileActivity, "관리자에게 문의하세요", Toast.LENGTH_SHORT).show()
+                        "4204" -> Toast.makeText(this@DogChangeProfileActivity, "관리자에게 문의하세요", Toast.LENGTH_SHORT).show()
+                        "5300" -> {
+                            Toast.makeText(this@DogChangeProfileActivity, "수정이 완료되었습니다", Toast.LENGTH_SHORT).show()
+                            finish()
+                        }
                     }
                 }
-            }
 
-            override fun onResponseFailure(errorMsg: String?) {
-                Log.d("Modify Pet fail",errorMsg!!) // 에러 메시지
-            }
+                override fun onResponseFailure(errorMsg: String?) {
+                    Log.d("Modify Pet fail",errorMsg!!) // 에러 메시지
+                }
 
-        }).petModifyRequest()
+            }).petModifyRequest()
+        }else AlertDialog.Builder(this).setMessage("현재날짜까지 가능합니다").create().show()
     }
 
     private fun delete(){
@@ -295,5 +305,19 @@ class DogChangeProfileActivity : AppCompatActivity() {
 
         return file.absolutePath
     }////////////////////////////////////////////////////////////////////////////
+
+    private fun showDatePicker() {
+        val datePicker = MaterialDatePicker.Builder.datePicker()
+            .setTitleText("날짜 선택")
+            .build()
+
+        datePicker.addOnPositiveButtonClickListener { selection ->
+            val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            binding.changePetBirthDate.text = dateFormatter.format(Date(selection))
+            binding.changePetBirthDate.setTextColor(Color.BLACK)
+        }
+
+        datePicker.show(supportFragmentManager, "DATE_PICKER")
+    }
 
 }

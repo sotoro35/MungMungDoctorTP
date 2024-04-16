@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.hsr2024.mungmungdoctortp.G
+import com.hsr2024.mungmungdoctortp.R
 import com.hsr2024.mungmungdoctortp.bnv4mypage.DogChangeProfileActivity
 import com.hsr2024.mungmungdoctortp.data.Pet
 import com.hsr2024.mungmungdoctortp.data.Pet2
@@ -29,10 +30,10 @@ class MypageDogAdapter(val context: Context, val pets:List<Pet>):Adapter<MypageD
         val pet = pets[position]
         holder.binding.mypagePetName.text = pet.pet_name
 
-        if (pet.pet_imageUrl !=null || pet.pet_imageUrl != ""){
+        if (pet.pet_imageUrl != null && pet.pet_imageUrl != ""){
             Glide.with(context).load("http://43.200.163.153/img/${pet.pet_imageUrl}").into(holder.binding.mypagePetImage)
             Log.d("프로필사진","http://43.200.163.153/img/${pet.pet_imageUrl}")
-        }
+        }else holder.binding.mypagePetImage.setImageResource(R.drawable.pet_image)
 
         holder.binding.root.setOnClickListener {
             val intent = Intent(context,DogChangeProfileActivity::class.java)

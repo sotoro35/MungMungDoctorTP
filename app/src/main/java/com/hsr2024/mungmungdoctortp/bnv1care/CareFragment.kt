@@ -51,19 +51,13 @@ class CareFragment:Fragment() {
 
         load()
 
-        binding.petName.text = "마이페이지에서\n반려견을 등록해주세요"
-        binding.petBreed.visibility = View.INVISIBLE
-        binding.petBirthDate.visibility = View.INVISIBLE
-        binding.petGender.visibility = View.INVISIBLE
-        binding.petNeutering.visibility = View.INVISIBLE
-        binding.line1.visibility = View.INVISIBLE
-        binding.line2.visibility = View.INVISIBLE
+
 
     }//onView...
 
     private fun changePetProfile(){
 
-        if (G.pet_name != null || G.pet_name != ""){
+        if (G.pet_name != null && G.pet_name != ""){
             binding.petBreed.visibility = View.VISIBLE
             binding.petBirthDate.visibility = View.VISIBLE
             binding.petGender.visibility = View.VISIBLE
@@ -76,7 +70,9 @@ class CareFragment:Fragment() {
             binding.petBirthDate.text = G.pet_birthDate
             binding.petGender.text = G.pet_gender
             binding.petNeutering.text = "중성화 ${G.pet_neutering}"
-            Glide.with(requireContext()).load("http://43.200.163.153/img/${G.pet_imageUrl}").into(binding.petImageUrl)
+            if (G.pet_imageUrl == null || G.pet_imageUrl == "") {
+                binding.petImageUrl.setImageResource(R.drawable.pet_image)
+            }else Glide.with(requireContext()).load("http://43.200.163.153/img/${G.pet_imageUrl}").into(binding.petImageUrl)
         }
     }
 
@@ -114,10 +110,10 @@ class CareFragment:Fragment() {
                         G.pet_neutering = neutering ?: ""
                         G.pet_breed = data.pet_breed ?: ""
 
-                        Log.d("펫정보","${data.pet_name}")
-                        Log.d("펫정보","${data.pet_breed}")
+                        Log.d("펫정보1","${data.pet_name}")
+                        Log.d("펫정보2","${data.petImgUrl}")
 
-                        if (data.pet_name != null || data.pet_name != ""){
+                        if (G.pet_name != null && G.pet_name != ""){
                             binding.petBreed.visibility = View.VISIBLE
                             binding.petBirthDate.visibility = View.VISIBLE
                             binding.petGender.visibility = View.VISIBLE
@@ -125,11 +121,21 @@ class CareFragment:Fragment() {
                             binding.line1.visibility = View.VISIBLE
                             binding.line2.visibility = View.VISIBLE
 
-                            binding.petName.text = data.pet_name
-                            binding.petBreed.text = data.pet_breed
-                            binding.petBirthDate.text = data.pet_birth_date
-                            binding.petGender.text = data.pet_gender
+                            Log.d("펫정보3","${G.pet_name}")
+
+                            binding.petName.text = G.pet_name
+                            binding.petBreed.text = G.pet_breed
+                            binding.petBirthDate.text = G.pet_birthDate
+                            binding.petGender.text = G.pet_gender
                             binding.petNeutering.text = "중성화 ${neutering}"
+                        }else{
+                            binding.petName.text = "마이페이지에서\n반려견을 등록해주세요"
+                            binding.petBreed.visibility = View.INVISIBLE
+                            binding.petBirthDate.visibility = View.INVISIBLE
+                            binding.petGender.visibility = View.INVISIBLE
+                            binding.petNeutering.visibility = View.INVISIBLE
+                            binding.line1.visibility = View.INVISIBLE
+                            binding.line2.visibility = View.INVISIBLE
                         }
 
                         if (data.petImgUrl == null || data.petImgUrl == "") {
@@ -173,8 +179,8 @@ class CareFragment:Fragment() {
                         .show()
 
                     "5500" -> {
-                        Toast.makeText(requireContext(), "리스트 가져오기 성공", Toast.LENGTH_SHORT)
-                            .show()
+//                        Toast.makeText(requireContext(), "리스트 가져오기 성공", Toast.LENGTH_SHORT)
+//                            .show()
 
                         val pets: List<Pet> = data.petList.sortedByDescending {it.pet_id}
 
