@@ -10,13 +10,17 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.hsr2024.mungmungdoctortp.data.AddDog
+import com.hsr2024.mungmungdoctortp.data.AdditionVaccinationList
 import com.hsr2024.mungmungdoctortp.data.AddorDeleteAI
+import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteAdditionVaccination
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteComment
+import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteEssentialVaccination
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteFeed
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteHospital
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteQA
 import com.hsr2024.mungmungdoctortp.data.CommentDataList
 import com.hsr2024.mungmungdoctortp.data.DeleteDog
+import com.hsr2024.mungmungdoctortp.data.EssentialVaccinationList
 import com.hsr2024.mungmungdoctortp.data.FeedCommentList
 import com.hsr2024.mungmungdoctortp.data.FeedDataList
 import com.hsr2024.mungmungdoctortp.data.FeedFavor
@@ -197,13 +201,7 @@ class RetrofitProcess(
 //}).userWithDrawRequest()
 
     fun onefileUploadRequest(){
-//        val uri=(params as Uri)
-//        val imgPath=onegetRealPathfromUri(uri)
-//        val file=File(imgPath)
-//        val requestBody:RequestBody=RequestBody.create(MediaType.parse("image/*"),file) //일종의 진공팩
         val retrofitService = setRetrofitService()
-
-//        val part=MultipartBody.Part.createFormData("img1",file.name,requestBody)
         val part:MultipartBody.Part = (params as Part)
         val call = retrofitService.onefileuploadImage(part)
         call.enqueue(object : Callback<String> {
@@ -1456,5 +1454,349 @@ class RetrofitProcess(
 //    }
 //
 //}).aiDeleteRequest()
+
+    fun listAdditionVaccinationRequest(){
+        val retrofitService = setRetrofitService()
+        val additionVaccination=(params as DeleteDog)
+        val call = retrofitService.additionVaccinationList(additionVaccination)
+        call.enqueue(object : Callback<AdditionVaccinationList> {
+            override fun onResponse(p0: Call<AdditionVaccinationList>, response: Response<AdditionVaccinationList>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<AdditionVaccinationList>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+
+    // 38. 추가 접종 목록
+// listAdditionVaccinationRequest 사용법
+//val params= DeleteDog("이메일정보", "provider_id", "pet_id는", "로그인 타입") // pet_id는 pet 식별값
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val data=(response as AdditionVaccinationList)
+//        data.code                                                  //  - 4204 서비스 회원 아님, 8400 추가 접종 목록 성공, 8401 추가 접종 목록 실패
+//        Log.d("AdditionVaccination List code","data")
+//        data.vaccinationList.forEach{vaccination ->               // forEach문을 돌면서 추가 접종 목록 정보를 가져올 수 있음
+//            vaccination.id                                        // 접종 기록 식별 값
+//            vaccination.heartworm                                 // 심상사상충 접종여부 TRUE OR FALSE
+//            vaccination.external_parasites                        // 외부기생충 접종여부 TRUE OR FALSE
+//            vaccination.vaccine                                   // 기타 접종 이름
+//            vaccination.date                                      // 접종날짜
+//            vaccination.hospital                                  // 접종할 병원 이름
+//            vaccination.memo                                      // 접종 시 메모정보
+//        }
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("AdditionVaccination List fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).listAdditionVaccinationRequest()
+
+    fun listEssentialVaccinationRequest(){
+        val retrofitService = setRetrofitService()
+        val essentialaccination=(params as DeleteDog)
+        val call = retrofitService.essentialVaccinationList(essentialaccination)
+        call.enqueue(object : Callback<EssentialVaccinationList> {
+            override fun onResponse(p0: Call<EssentialVaccinationList>, response: Response<EssentialVaccinationList>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<EssentialVaccinationList>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+    // 39. 필수 접종 목록
+// listEssentialVaccinationRequest 사용법
+    //val params= DeleteDog("이메일정보", "provider_id", "펫 식별값", "로그인 타입")
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val data=(response as EssentialVaccinationList)
+//        Log.d("EssentialVaccination List code","data")
+//        data.code                                                  //  - 4204 서비스 회원 아님, 9400 필수 접종 목록 성공, 9401 필수 접종 목록 실패
+//        data.vaccinationList.forEach{vaccination ->                // forEach문을 돌면서 필수 접종 목록 정보를 가져올 수 있음
+//            vaccination.id                                         // 접종 기록 식별 값
+//            vaccination.shot_number                                // 몇회차 접종(1 ~ 6)
+//            vaccination.comprehensive                              // 종합백신 1차, 종합백신 2차, 종합백신 3차, 종합백신 4차, 종합백신 5차, ""
+//            vaccination.corona_enteritis                           // 코로나 장염1차, 코로나 장염 2차, ""
+//            vaccination.kennel_cough                               // 켄넬코프 1차, 켄넬코프 2차, ""
+//            vaccination.influenza                                  // 인플루엔자 1차, 인플루엔자 2차, ""
+//            vaccination.antibody_titer                             // 항체가검사, ""
+//            vaccination.rabies                                     // 광견병, ""
+//            vaccination.date                                       // 접종날짜
+//            vaccination.hospital                                   // 접종할 병원 이름
+//            vaccination.memo                                       // 접종 시 메모정보
+//        }
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("EssentialVaccination List fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).listEssentialVaccinationRequest()
+
+    fun addAdditionVaccinationRequest(){
+        val retrofitService = setRetrofitService()
+        val vaccinationAdd=(params as AddorModifyorDeleteAdditionVaccination)
+        val call = retrofitService.additionVaccinationAdd(vaccinationAdd)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+
+    // 40. 추가 접종 추가
+// addAdditionVaccinationRequest 사용법
+//val params= AddorModifyorDeleteAdditionVaccination("이메일정보", "provider_id", "로그인 타입", "펫 식별값",
+//            "",                                    // 접종 기록 식별 값
+//            heartworm,                             // 심상사상충 접종여부 TRUE OR FALSE
+//            external_parasites,                    // 외부기생충 접종여부 TRUE OR FALSE
+//            vaccine,                               // 기타 접종 이름
+//            date,                                  // 접종날짜
+//            hospital,                              // 접종할 병원 이름
+//            memo,                                  // 접종 시 메모정보
+// )
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val data=(response as AdditionVaccinationList)
+//        Log.d("AdditionVaccination Add code","data")               //  - 4204 서비스 회원 아님, 8500 추가 접종 추가 성공, 8501 추가 접종 추가 실패
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("AdditionVaccination Add fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).addAdditionVaccinationRequest()
+
+    fun addEssentialVaccinationRequest(){
+        val retrofitService = setRetrofitService()
+        val vaccinationAdd=(params as AddorModifyorDeleteEssentialVaccination)
+        val call = retrofitService.essentialVaccinationAdd(vaccinationAdd)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+    // 41. 필수 접종 추가
+// addEssentialVaccinationRequest 사용법
+//val params= AddorModifyorDeleteEssentialVaccination("이메일정보", "provider_id", "로그인 타입", "펫 식별값",
+//            "",                                    // 접종 기록 식별 값
+//            shot_number,                           // 몇회차 접종(1 ~ 6)
+//            comprehensive,                         // 종합백신 1차, 종합백신 2차, 종합백신 3차, 종합백신 4차, 종합백신 5차, ""
+//            corona_enteritis,                      // 코로나 장염1차, 코로나 장염 2차, ""
+//            kennel_cough,                          // 켄넬코프 1차, 켄넬코프 2차, ""
+//            influenza,                             // 인플루엔자 1차, 인플루엔자 2차, ""
+//            antibody_titer,                        // 항체가검사, ""
+//            rabies,                                // 광견병, ""
+//            date,                                  // 접종날짜
+//            hospital,                              // 접종할 병원 이름
+//            memo,                                  // 접종 시 메모정보
+// )
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val data=(response as EssentialVaccinationList)
+//        Log.d("EssentialVaccination Add code","data")                //  - 4204 서비스 회원 아님, 9500 필수 접종 추가 성공, 9501 필수 접종 추가 실패
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("EssentialVaccination Add fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).addEssentialVaccinationRequest()
+
+    fun modifyAdditionVaccinationRequest(){
+        val retrofitService = setRetrofitService()
+        val vaccinationModify=(params as AddorModifyorDeleteAdditionVaccination)
+        val call = retrofitService.additionVaccinationModify(vaccinationModify)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+
+    // 42. 추가 접종 수정
+// modifyAdditionVaccinationRequest 사용법
+//val params= AddorModifyorDeleteAdditionVaccination("이메일정보", "provider_id", "로그인 타입", "펫 식별값",
+//            id,                                    // 접종 기록 식별 값
+//            heartworm,                             // 심상사상충 접종여부 TRUE OR FALSE
+//            external_parasites,                    // 외부기생충 접종여부 TRUE OR FALSE
+//            vaccine,                               // 기타 접종 이름
+//            date,                                  // 접종날짜
+//            hospital,                              // 접종할 병원 이름
+//            memo,                                  // 접종 시 메모정보
+// )
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val data=(response as AdditionVaccinationList)
+//        Log.d("AdditionVaccination Add code","data")               //  - 4204 서비스 회원 아님, 8600 추가 접종 수정 성공, 8601 추가 접종 수정 실패
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("AdditionVaccination Add fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).modifyAdditionVaccinationRequest()
+
+    fun modifyEssentialVaccinationRequest(){
+        val retrofitService = setRetrofitService()
+        val vaccinationModify=(params as AddorModifyorDeleteEssentialVaccination)
+        val call = retrofitService.essentialVaccinationModify(vaccinationModify)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+    // 43. 필수 접종 수정
+// modifyEssentialVaccinationRequest 사용법
+//val params= AddorModifyorDeleteEssentialVaccination("이메일정보", "provider_id", "로그인 타입", "펫 식별값",
+//            id,                                    // 접종 기록 식별 값
+//            shot_number,                           // 몇회차 접종(1 ~ 6)
+//            comprehensive,                         // 종합백신 1차, 종합백신 2차, 종합백신 3차, 종합백신 4차, 종합백신 5차, ""
+//            corona_enteritis,                      // 코로나 장염1차, 코로나 장염 2차, ""
+//            kennel_cough,                          // 켄넬코프 1차, 켄넬코프 2차, ""
+//            influenza,                             // 인플루엔자 1차, 인플루엔자 2차, ""
+//            antibody_titer,                        // 항체가검사, ""
+//            rabies,                                // 광견병, ""
+//            date,                                  // 접종날짜
+//            hospital,                              // 접종할 병원 이름
+//            memo,                                  // 접종 시 메모정보
+// )
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val data=(response as EssentialVaccinationList)
+//        Log.d("EssentialVaccination Add code","data")                //  - 4204 서비스 회원 아님, 9600 필수 접종 수정 성공, 9601 필수 접종 수정 실패
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("EssentialVaccination Add fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).modifyEssentialVaccinationRequest()
+
+    fun deleteAdditionVaccinationRequest(){
+        val retrofitService = setRetrofitService()
+        val vaccinationModify=(params as AddorModifyorDeleteAdditionVaccination)
+        val call = retrofitService.additionVaccinationModify(vaccinationModify)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+
+    // 44. 추가 접종 삭제
+// deleteAdditionVaccinationRequest 사용법
+//val params= AddorModifyorDeleteAdditionVaccination("이메일정보", "provider_id", "로그인 타입", "펫 식별값",
+//            id                                      // 접종 기록 식별 값
+// )
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val data=(response as AdditionVaccinationList)
+//        Log.d("AdditionVaccination Add code","data")               //  - 4204 서비스 회원 아님, 8700 추가 접종 삭제 성공, 8601 추가 접종 삭제 실패
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("AdditionVaccination Add fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).deleteAdditionVaccinationRequest()
+
+    fun deleteEssentialVaccinationRequest(){
+        val retrofitService = setRetrofitService()
+        val vaccinationDelete=(params as AddorModifyorDeleteEssentialVaccination)
+        val call = retrofitService.essentialVaccinationDelete(vaccinationDelete)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+    // 45. 필수 접종 삭제
+// deleteEssentialVaccinationRequest 사용법
+//val params= AddorModifyorDeleteEssentialVaccination("이메일정보", "provider_id", "로그인 타입", "펫 식별값",
+//            id                                        // 접종 기록 식별 값
+// )
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val data=(response as EssentialVaccinationList)
+//        Log.d("EssentialVaccination Add code","data")                //  - 4204 서비스 회원 아님, 9700 필수 접종 삭제 성공, 9701 필수 접종 삭제 실패
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("EssentialVaccination Add fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).deleteEssentialVaccinationRequest()
 
 } // Class
