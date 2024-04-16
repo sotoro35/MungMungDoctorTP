@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 카메라 기능 사용에 대한 등록 : 카메라가 없는 디바이스에서는 이 앱을 다운로드 할 수 없음 -->
+    <uses-feature android:name="android.hardware.camera.any" /> <!-- 카메라 사용에 대한 퍼미션 : 동적 퍼미션 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
@@ -15,7 +19,34 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".main.MainActivity"
+            android:name=".bnv4mypage.DogChangeProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv1care.AiResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv1care.SkinAiActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv1care.EyeAiActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv4mypage.DogAddActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv4mypage.ChangeProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv4mypage.PersonRuleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".login.SignupActivity"
+            android:exported="false" />
+        <activity
+            android:name=".login.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".login.IntroActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,6 +54,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".main.MainActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
