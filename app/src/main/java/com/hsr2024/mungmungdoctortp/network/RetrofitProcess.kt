@@ -20,6 +20,7 @@ import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteHospital
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteQA
 import com.hsr2024.mungmungdoctortp.data.CommentDataList
 import com.hsr2024.mungmungdoctortp.data.DeleteDog
+import com.hsr2024.mungmungdoctortp.data.EasySignUpData
 import com.hsr2024.mungmungdoctortp.data.EssentialVaccinationList
 import com.hsr2024.mungmungdoctortp.data.FeedCommentList
 import com.hsr2024.mungmungdoctortp.data.FeedDataList
@@ -1798,5 +1799,40 @@ class RetrofitProcess(
 //    }
 //
 //}).deleteEssentialVaccinationRequest()
+
+    fun easySignUpRequest(){
+        val retrofitService = setRetrofitService()
+        val signupData=(params as EasySignUpData)
+        val call = retrofitService.easySignUp(signupData)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+    // 46. 간편회원가입
+// easySignUpRequest 사용법
+//val params= EasySignUpData("provider_id", "닉네임", "로그인 타입")
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val code=(response as String) //  -  - 1200 회원 추가 성공, 1201 회원 추가 실패, 4330 닉네임 또는 이메일 중복
+//        Log.d("qa add code","$code")
+//
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("qa add fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).easySignUpRequest()
 
 } // Class
