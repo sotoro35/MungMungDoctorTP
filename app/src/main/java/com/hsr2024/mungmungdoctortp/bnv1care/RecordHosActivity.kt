@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.loader.content.CursorLoader
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.datepicker.MaterialDatePicker.Builder
 import com.hsr2024.mungmungdoctortp.R
 import com.hsr2024.mungmungdoctortp.databinding.ActivityRecordHosBinding
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -22,6 +24,9 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.OutputStream
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class RecordHosActivity : AppCompatActivity() {
 
@@ -51,7 +56,23 @@ class RecordHosActivity : AppCompatActivity() {
 
 
     private fun selectDate(){
+
         //달력에서 날짜선택
+        val builder= MaterialDatePicker.Builder.datePicker()
+
+        builder.setTitleText("날짜 선택")
+
+        val picker = builder.build()
+        picker.show(supportFragmentManager, picker.toString())
+
+        picker.addOnPositiveButtonClickListener {
+            val selectedDate = Date(it)
+            val dateFamatter = SimpleDateFormat("yyyy년 MM월 dd일", Locale.KOREA)
+            val formattedDate = dateFamatter.format(selectedDate)
+            binding.etDate.setText(formattedDate)
+        }
+
+
 
         //binding.etDate.text에 선택한 날짜 보이게하기
     }//selectDate()

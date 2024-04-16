@@ -1,9 +1,12 @@
 package com.hsr2024.mungmungdoctortp.adapter
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.hsr2024.mungmungdoctortp.bnv1care.HealthDetailActivity
@@ -33,7 +36,19 @@ class HospitalRecordAdapter(val context: Context,val itemlist:List<HospitalRecor
         holder.binding.tvDate.text = item.date
 
         holder.binding.tvDelete.setOnClickListener {
-            //삭제하기
+            AlertDialog.Builder(context).setMessage("병원기록을 삭제하시겠습니까?")
+                .setPositiveButton("삭제", object : DialogInterface.OnClickListener{
+                    override fun onClick(dialog: DialogInterface?, which: Int) {
+                        Toast.makeText(context, "삭제하기", Toast.LENGTH_SHORT).show()
+                        //서버에서 삭제하기
+                    }
+                })
+                .setNegativeButton("취소", object : DialogInterface.OnClickListener{
+                    override fun onClick(dialog: DialogInterface?, which: Int) {
+                        TODO("Not yet implemented")
+                    }
+                })
+
         }//온클릭
 
 

@@ -20,7 +20,8 @@
             app:navigationIcon="@drawable/baseline_arrow_back_ios_24"
             app:title="병원 기록보기"
             app:titleMarginStart="90dp"
-            app:titleTextColor="@color/black" />
+            app:titleTextColor="@color/black"
+            app:menu="@menu/show_hos_menu"/>
 
         <TextView
             android:id="@+id/tv_1"

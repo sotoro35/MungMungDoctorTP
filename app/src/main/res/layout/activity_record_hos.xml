@@ -231,7 +231,7 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/bg_record_hos"
             android:scaleType="centerCrop"
-            android:padding="4dp"/>
+            android:padding="8dp"/>
 
         <ImageView
             android:id="@+id/iv_picture"
@@ -242,7 +242,7 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/bg_record_hos"
             android:scaleType="centerCrop"
-            android:padding="4dp"/>
+            android:padding="8dp"/>
 
 
         <RelativeLayout

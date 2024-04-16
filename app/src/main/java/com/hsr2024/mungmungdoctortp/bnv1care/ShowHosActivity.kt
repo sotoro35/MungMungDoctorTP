@@ -1,7 +1,10 @@
 package com.hsr2024.mungmungdoctortp.bnv1care
 
+import android.content.DialogInterface
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -17,7 +20,40 @@ class ShowHosActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         selectServer()
+
+        binding.toolbar.setOnMenuItemClickListener {
+            deleteHosRecord()
+            true
+        }
     }//온크리
+
+
+
+
+
+    private fun deleteHosRecord(){
+
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("해당 병원기록을 삭제하시겠습니까?")
+        builder.setPositiveButton("삭제",object : DialogInterface.OnClickListener{
+            override fun onClick(dialog: DialogInterface?, which: Int) {
+                Toast.makeText(this@ShowHosActivity, "삭제하기", Toast.LENGTH_SHORT).show()
+                //서버에서 데이터 지우기.delete
+            }
+        })
+        builder.setNegativeButton("취소", object : DialogInterface.OnClickListener{
+            override fun onClick(dialog: DialogInterface?, which: Int) {
+                
+            }
+        })
+
+        builder.create().show()
+
+
+
+    }
+
+
 
 
 
