@@ -35,6 +35,7 @@ import com.hsr2024.mungmungdoctortp.data.QAView
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.Field
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Multipart
@@ -85,7 +86,7 @@ interface RetrofitService {
     //카카오 로컬 검색API를 해줘~ 명세서쓰기 -- 우선 응답type을 스트링으로
     @Headers("Authorization: KakaoAK 1339b7346295d6208b37fac2e7091de1") //REST API 키: 963ec3326effb762f45c440734baacb6
     @GET("/v2/local/search/keyword.json?sort=distance")
-    fun searchPlace(@Query("query")query:String, @Query("x") longitude:String, @Query("y")latitude:String) : Call<KakaoSearchPlaceResponse>
+    fun searchPlace(@Query("query") query:String, @Query("x") longitude: Double, @Query("y") latitude: Double) : Call<KakaoSearchPlaceResponse>
 
     // feed list 불러오기
     @POST("/feed/feed_list.php")

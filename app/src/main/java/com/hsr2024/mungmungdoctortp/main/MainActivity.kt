@@ -1,5 +1,4 @@
 package com.hsr2024.mungmungdoctortp.main
-
 import android.content.Intent
 import android.os.Bundle
 import android.widget.RelativeLayout

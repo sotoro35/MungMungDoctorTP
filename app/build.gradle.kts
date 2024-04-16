@@ -54,6 +54,10 @@ dependencies {
     implementation(libs.circleimageview)
     implementation(libs.converter.scalars)
     implementation(libs.converter.gson)
+    
+    //네이버 지도 SDK는 Google Play 서비스의 FusedLocationProviderClient와 지자기, 가속도 센서를 활용해 최적의 위치를 반환하는 구현체인 FusedLocationSource를 제공합니다.
+    implementation(libs.play.services.location)
+
 
     //tensorflow
     implementation(libs.tensorflow.lite.gpu)
@@ -70,8 +74,14 @@ dependencies {
 
 
 
-
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // 네이버 지도 SDK
+    implementation(libs.map.sdk)
+
+    //머티리얼 칼렌다뷰 의존성
+    implementation (libs.material.calendarview)
+
 }
