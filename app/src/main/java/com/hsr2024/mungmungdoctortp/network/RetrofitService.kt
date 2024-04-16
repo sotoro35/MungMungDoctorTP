@@ -13,13 +13,17 @@ import com.hsr2024.mungmungdoctortp.data.SignUpData
 import com.hsr2024.mungmungdoctortp.data.UserChange
 import com.hsr2024.mungmungdoctortp.data.UserDelete
 import com.hsr2024.mungmungdoctortp.data.AddDog
+import com.hsr2024.mungmungdoctortp.data.AdditionVaccinationList
 import com.hsr2024.mungmungdoctortp.data.AddorDeleteAI
+import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteAdditionVaccination
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteComment
+import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteEssentialVaccination
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteFeed
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteHospital
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteQA
 import com.hsr2024.mungmungdoctortp.data.CommentDataList
 import com.hsr2024.mungmungdoctortp.data.DeleteDog
+import com.hsr2024.mungmungdoctortp.data.EssentialVaccinationList
 import com.hsr2024.mungmungdoctortp.data.FeedCommentList
 import com.hsr2024.mungmungdoctortp.data.FeedFavor
 import com.hsr2024.mungmungdoctortp.data.HospitalRecordList
@@ -214,4 +218,36 @@ interface RetrofitService {
     //해당 반려견의 ai 기록 삭제하기
     @POST("/pet/ai_delete.php")
     fun aiDelete(@Body aiDelete:AddorDeleteAI) : Call<String>
+
+    //해당 반려견의 추가 접종 목록 가져오기
+    @POST("/pet/addition_list.php")
+    fun additionVaccinationList(@Body additionVaccination:DeleteDog) : Call<AdditionVaccinationList>
+
+    //해당 반려견의 필수 접종 목록 가져오기
+    @POST("/pet/essential_list.php")
+    fun essentialVaccinationList(@Body essentialVaccination:DeleteDog) : Call<EssentialVaccinationList>
+
+    //해당 반려견의 추가 접종 작성하기
+    @POST("/pet/addition_add.php")
+    fun additionVaccinationAdd(@Body vaccinationAdd:AddorModifyorDeleteAdditionVaccination) : Call<String>
+
+    //해당 반려견의 필수 접종 작성하기
+    @POST("/pet/essential_add.php")
+    fun essentialVaccinationAdd(@Body vaccinationAdd:AddorModifyorDeleteEssentialVaccination) : Call<String>
+
+    //해당 반려견의 추가 접종 수정하기
+    @POST("/pet/addition_modify.php")
+    fun additionVaccinationModify(@Body vaccinationModify:AddorModifyorDeleteAdditionVaccination) : Call<String>
+
+    //해당 반려견의 필수 접종 수정하기
+    @POST("/pet/essential_modify.php")
+    fun essentialVaccinationModify(@Body vaccinationModify:AddorModifyorDeleteEssentialVaccination) : Call<String>
+
+    //해당 반려견의 추가 접종 삭제하기
+    @POST("/pet/addition_delete.php")
+    fun additionVaccinationDelete(@Body vaccinationDelete:AddorModifyorDeleteAdditionVaccination) : Call<String>
+
+    //해당 반려견의 필수 접종 삭제하기
+    @POST("/pet/essential_delete.php")
+    fun essentialVaccinationDelete(@Body vaccinationDelete:AddorModifyorDeleteEssentialVaccination) : Call<String>
 }
