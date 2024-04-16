@@ -163,7 +163,7 @@
             android:id="@+id/tv_content"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_disease_name"
+            android:layout_below="@id/v4"
             android:layout_alignLeft="@id/tv_disease_name"
             android:layout_marginTop="16dp"
             android:text="어깨아파 목아파 어뜨케 도수도수악악악어깨아파 목아파 어뜨케 도수도수악악악어깨아파 목아파 어뜨케 도수도수악악악어깨아파 목아파 어뜨케 도수도수악악악어깨아파 목아파 어뜨케 도수도수악악악"
@@ -171,12 +171,20 @@
             android:textSize="16sp"
             app:boxStrokeColor="@color/black" />
 
+        <View
+            android:id="@+id/v5"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_below="@id/tv_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/dotted_line" />
+
 
         <TextView
             android:id="@+id/tv_bill"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_content"
+            android:layout_below="@id/v5"
             android:layout_alignLeft="@id/tv_5"
             android:layout_marginTop="24dp"
             android:text="영수증"
