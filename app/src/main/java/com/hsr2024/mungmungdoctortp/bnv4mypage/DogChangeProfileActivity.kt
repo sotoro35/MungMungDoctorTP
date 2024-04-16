@@ -30,6 +30,7 @@ import com.hsr2024.mungmungdoctortp.databinding.ActivityDogChangeProfileBinding
 import com.hsr2024.mungmungdoctortp.network.RetrofitCallback
 import com.hsr2024.mungmungdoctortp.network.RetrofitProcess
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
@@ -145,7 +146,7 @@ class DogChangeProfileActivity : AppCompatActivity() {
         //이미지파일을 MutipartBody.Part 로 포장하여 전송: @Part
         val filePart: MultipartBody.Part? = imgPath?.let { //널이 아니면...
             val file= File(it) // 생선손질..
-            val requestBody: RequestBody = RequestBody.create(MediaType.parse("image/*"),file) // 진공팩포장
+            val requestBody: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(),file) // 진공팩포장
             MultipartBody.Part.createFormData("img1", file.name,requestBody) // 택배상자 포장.. == 리턴되는 값
         }
 

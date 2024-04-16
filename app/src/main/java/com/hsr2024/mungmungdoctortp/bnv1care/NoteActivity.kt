@@ -188,17 +188,7 @@ class NoteActivity : AppCompatActivity() {
 
 
 
-        // 아이템 리스트
-        val items = listOf(
-            HospitalRecordData("제1병원", "목아파", "10만원", "오늘당장"),
-            HospitalRecordData("제2병원", "어깨아파", "10만원", "오늘당장"),
-            HospitalRecordData("제3병원", "댄나아팤ㅋ", "10만원", "오늘당장")
-        )
 
-        // 각 아이템을 리스트에 추가합니다.
-        items.forEach { item ->
-            itemlist.add(item)
-        }
 
 
 

@@ -3,6 +3,7 @@ package com.hsr2024.mungmungdoctortp.bnv1care
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.provider.ContactsContract.CommonDataKinds.Note
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -44,10 +45,13 @@ class CareFragment:Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.selectPet.setOnClickListener { selectPet() }
-        binding.note.setOnClickListener {  }
+        binding.note.setOnClickListener {//노트액티비티 이동
+             startActivity( Intent(requireContext(), NoteActivity::class.java) )    }
         binding.eyeAi.setOnClickListener { startActivity(Intent(requireContext(),EyeAiActivity::class.java)) }
         binding.skinAi.setOnClickListener { startActivity(Intent(requireContext(),SkinAiActivity::class.java)) }
-        binding.btnHealth.setOnClickListener {  }
+        binding.btnHealth.setOnClickListener { //헬쓰인포액티비티 이동
+            startActivity( Intent(requireContext(), HealthInfoActivity::class.java) )
+        }
 
         load()
 

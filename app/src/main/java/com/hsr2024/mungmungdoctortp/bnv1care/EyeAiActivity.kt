@@ -84,7 +84,7 @@ class EyeAiActivity : AppCompatActivity() {
             preview.setSurfaceProvider(binding.preview.surfaceProvider)
 
 
-            // 카메라 선택 [ Front , Back ]
+            // 카메라 선택 [ Front , Back ]ㄹ
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
             cameraProvider.unbindAll()
 
