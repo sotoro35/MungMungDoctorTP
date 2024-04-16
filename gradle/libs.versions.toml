@@ -16,6 +16,7 @@ glide = "5.0.0-rc01"
 circleimageview = "3.1.0"
 converterScalars = "2.11.0"
 converterGson = "2.11.0"
+#내가 추가한거같은데..?
 playServicesLocation = "21.2.0"
 #머티리얼 칼렌다뷰 추가
 prolificinteractiveMaterialCalendarview = "1.4.3"
@@ -36,7 +37,7 @@ map-sdk = { module = "com.naver.maps:map-sdk", version.ref = "mapSdk" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
-play-services-location-v2101 = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocationVersion" }
+#play-services-location-v2101 = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocationVersion" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 circleimageview = { group = "de.hdodenhof", name = "circleimageview", version.ref = "circleimageview" }

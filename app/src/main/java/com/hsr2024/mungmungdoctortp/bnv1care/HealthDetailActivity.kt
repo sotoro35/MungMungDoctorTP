@@ -29,19 +29,19 @@ class HealthDetailActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener { finish() }
 
 
-        if (intent.getStringExtra("eye1") == "eye1") eye1()
-        if (intent.getStringExtra("eye2") == "eye2") eye2()
-        if (intent.getStringExtra("eye3") == "eye3") eye3()
-        if (intent.getStringExtra("eye4") == "eye4") eye4()
-        if (intent.getStringExtra("eye5") == "eye5") eye5()
+        if (intent.getStringExtra("eye1") == "eye1") eye1()//안검염/각막염/결막염
+        if (intent.getStringExtra("eye2") == "eye2") eye2()//안검종양
+        if (intent.getStringExtra("eye3") == "eye3") eye3()//유루증
+        if (intent.getStringExtra("eye4") == "eye4") eye4()//각막궤양
+        if (intent.getStringExtra("eye5") == "eye5") eye5()//백내장
 
 
-        if (intent.getStringExtra("skin1") == "skin1") skin1()
-        if (intent.getStringExtra("skin2") == "skin2") skin2()
-        if (intent.getStringExtra("skin3") == "skin3") skin3()
-        if (intent.getStringExtra("skin4") == "skin4") skin4()
-        if (intent.getStringExtra("skin5") == "skin5") skin5()
-        if (intent.getStringExtra("skin6") == "skin6") skin6()
+        if (intent.getStringExtra("skin1") == "skin1") skin1()//구진/플라크
+        if (intent.getStringExtra("skin2") == "skin2") skin2()//비듬각질상피성잔고리
+        if (intent.getStringExtra("skin3") == "skin3") skin3()//태선화.과다색소침착
+        if (intent.getStringExtra("skin4") == "skin4") skin4()//농포여드름
+        if (intent.getStringExtra("skin5") == "skin5") skin5()//미란궤양
+        if (intent.getStringExtra("skin6") == "skin6") skin6()//결절종괴
 
 
 
@@ -52,7 +52,7 @@ class HealthDetailActivity : AppCompatActivity() {
 
 
 
-    private fun eye1(){
+    private fun eye1(){//안검염.각막염.결막염
 
         val eye1 = Eye1()
 
@@ -69,7 +69,7 @@ class HealthDetailActivity : AppCompatActivity() {
     }
 
 
-    private fun eye2(){
+    private fun eye2(){//안검종양
 
         val eye2 = Eye2()
 
@@ -86,7 +86,7 @@ class HealthDetailActivity : AppCompatActivity() {
     }
 
 
-    private fun eye3(){
+    private fun eye3(){//유루증
 
         val eye3 = Eye3()
 
@@ -103,7 +103,7 @@ class HealthDetailActivity : AppCompatActivity() {
     }
 
 
-    private fun eye4(){
+    private fun eye4(){//각막궤양
 
         val eye4 = Eye4()
 
@@ -120,7 +120,7 @@ class HealthDetailActivity : AppCompatActivity() {
     }
 
 
-    private fun eye5(){
+    private fun eye5(){//백내장
 
         val eye5 = Eye5()
 
@@ -154,7 +154,7 @@ class HealthDetailActivity : AppCompatActivity() {
 
 
 
-    private fun skin1(){
+    private fun skin1(){//구진플라크
         val skin1 = Skin1()
         binding.apply {
             tvName.setText(skin1.name)
@@ -169,7 +169,7 @@ class HealthDetailActivity : AppCompatActivity() {
     }
 
 
-    private fun skin2(){
+    private fun skin2(){//비듬각질상피성잔고리
         val skin2 = Skin2()
         binding.apply {
             tvName.setText(skin2.name)
@@ -184,7 +184,7 @@ class HealthDetailActivity : AppCompatActivity() {
     }
 
 
-    private fun skin3(){
+    private fun skin3(){//태선화.과다색소침착
         val skin3 = Skin3()
         binding.apply {
             tvName.setText(skin3.name)
@@ -199,7 +199,7 @@ class HealthDetailActivity : AppCompatActivity() {
     }
 
 
-    private fun skin4(){
+    private fun skin4(){//농포여드름
         val skin4 = Skin4()
         binding.apply {
             tvName.setText(skin4.name)
@@ -214,7 +214,7 @@ class HealthDetailActivity : AppCompatActivity() {
     }
 
 
-    private fun skin5(){
+    private fun skin5(){//미란궤양
         val skin5 = Skin5()
         binding.apply {
             tvName.setText(skin5.name)
@@ -229,7 +229,7 @@ class HealthDetailActivity : AppCompatActivity() {
     }
 
 
-    private fun skin6(){
+    private fun skin6(){//결절종괴
         val skin6 = Skin6()
         binding.apply {
             tvName.setText(skin6.name)

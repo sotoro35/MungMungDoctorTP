@@ -83,12 +83,12 @@ class HealthInfoActivity : AppCompatActivity() {
         binding.eyeRelative4.setOnClickListener { goIntent4() }//각막궤양
         binding.eyeRelative5.setOnClickListener { goIntent5() }//백내장
 
-        binding.skinRelative1.setOnClickListener { goIntentSkin1() }
-        binding.skinRelative2.setOnClickListener { goIntentSkin2() }
-        binding.skinRelative3.setOnClickListener { goIntentSkin3() }
-        binding.skinRelative4.setOnClickListener { goIntentSkin4() }
-        binding.skinRelative5.setOnClickListener { goIntentSkin5() }
-        binding.skinRelative6.setOnClickListener { goIntentSkin6() }
+        binding.skinRelative1.setOnClickListener { goIntentSkin1() }//구진/플라크
+        binding.skinRelative2.setOnClickListener { goIntentSkin2() }//비듬각질상피성잔고리
+        binding.skinRelative3.setOnClickListener { goIntentSkin3() }//태선화.과다색소침착
+        binding.skinRelative4.setOnClickListener { goIntentSkin4() }//농포.여드름
+        binding.skinRelative5.setOnClickListener { goIntentSkin5() }//미란궤양
+        binding.skinRelative6.setOnClickListener { goIntentSkin6() }//결절종궤
 
 
 

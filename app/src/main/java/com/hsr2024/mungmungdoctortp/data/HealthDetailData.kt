@@ -12,7 +12,7 @@ var skin1: Skin1, var skin2: Skin2,var skin3: Skin3,var skin4: Skin4,var skin5: 
 
 data class Eye1(
     val name:String = "안검염/각막염/결막염",
-    val image: Int = R.drawable.iv_eye1,
+    val image: Int = R.drawable.eye1,
     val category :String = "안구",
     val definition:String = "개의 눈 흰자를 보호하는 부위로 이 부위에 염증이 발생하는 것.",
     val cause :String = "물리·화학적 자극,  세균 또는 바이러스 감염,  알레르기 반응 등이 원인이 됨.",
@@ -24,7 +24,7 @@ data class Eye1(
 
 data class Eye2(
     val name:String = "안검종양",
-    val image: Int = R.drawable.iv_eye1,
+    val image: Int = R.drawable.eye2,
     val category :String = "안구",
     val definition:String = "눈꺼풀에 발생하는 종양",
     val cause :String = "각막질환, 알레르기로 인한 염증이나 눈물의 지방 성분을 분비하는 마이봄샘이 막히는 것을 대표적인 원인으로 봄.",
@@ -34,7 +34,7 @@ data class Eye2(
 
 data class Eye3(
     val name:String = "유루증",
-    val image: Int = R.drawable.iv_eye1,
+    val image: Int = R.drawable.eye3,
     val category :String = "안구",
     val definition:String = "눈물이 결막낭 안에 괴어 눈꺼풀을 넘어 흘러나오는 증세",
     val cause :String = "눈물이 많이 분비되거나 눈자위에 누선에서 코로 이어지는 비루관으로 배출되지 못해서 발생함. 선천적으로 누점이나 비루관에 이상이 있는 경우나 각막염이나 결막염의 영향으로 발생",
@@ -44,7 +44,7 @@ data class Eye3(
 
 data class Eye4(
     val name:String = "각막궤양",
-    val image: Int = R.drawable.iv_eye1,
+    val image: Int = R.drawable.eye4,
     val category :String = "안구",
     val definition:String = "염증이 각막의 깊은 부위까지 퍼져 궤양으로 변하는 단계, 각막궤양의 초기증상.",
     val cause :String = "외상성- 외부 물질이 각막을 자극해서 생기는 염증 대표적인 예로는 눈썹이 눈을 찌르거나, 샴푸 등의 약품이 눈을 자극해서 발생하는 경우가 있음\n비외상성- 곰팡이, 세균, 바이러스 등에 의한 감염, 대사장애, 알레르기 반응 등이 있다.  ",
@@ -54,7 +54,7 @@ data class Eye4(
 
 data class Eye5(
     val name:String = "백내장",
-    val image: Int = R.drawable.iv_eye1,
+    val image: Int = R.drawable.eye5,
     val category :String = "안구",
     val definition:String = "수정체가 뿌옇게 변하거나 불투명해지는 병.",
     val cause :String = "대게 노화에 의해 평균 6세를 넘긴 시점부터 서서히 증상이 진행되며 외상이나 당뇨병, 내분비 이상 등이 원인이 되는 경우도 있음.",
@@ -78,7 +78,7 @@ data class Eye5(
 
 data class Skin1(
     val name:String = "구진/플라크",
-    val image: Int = R.drawable.iv_eye1,
+    val image: Int = R.drawable.skin1,
     val category :String = "피부",
     val definition:String = "알레르기성 접촉성 피부염인 피부사상균으로 인한 질환 중 하나임.",
     val cause :String = "작은 화학물질, 일명 항원과의 지속적인 피부 접촉으로 발생함.",
@@ -92,7 +92,7 @@ data class Skin1(
 
 data class Skin2(
     val name:String = "비듬/각질/상피성잔고리",
-    val image: Int = R.drawable.iv_eye1,
+    val image: Int = R.drawable.skin2,
     val category :String = "피부",
     val definition:String = "인설의 원형 테두리 및 가장자리가 벗겨지는 원형 병변.",
     val cause :String = "알러지나 아토피가 주요 원인이며, 곰팡이나 세균 감염증 및 면역력 저하도 원인이 됨.",
@@ -103,7 +103,7 @@ data class Skin2(
 
 data class Skin3(
     val name:String = "태선화/과다색소침착",
-    val image: Int = R.drawable.iv_eye1,
+    val image: Int = R.drawable.skin3,
     val category :String = "피부",
     val definition:String = "환경 알러젠에 대해 면역이 과항진되는 개의 알러지성 피부염",
     val cause :String = "알레르기 반응 유발 물질은 크게 환경, 식이로 구분되며, 이 중 아토피는 주로 꽃가루나 먼지 등의 환경 알러젠으로 유발됨",
@@ -115,7 +115,7 @@ data class Skin3(
 
 data class Skin4(
     val name:String = "농포/여드름",
-    val image: Int = R.drawable.iv_eye1,
+    val image: Int = R.drawable.skin4,
     val category :String = "피부",
     val definition:String = "세균감염으로 인해서 피부 표면에 농이 발생하는 피부 질환",
     val cause :String = "피부의 면역력이 약한 나이든 강아지에게서 많이 생김. 면역력이 약한 틈을 타 세균이 감염됨.",
@@ -127,7 +127,7 @@ data class Skin4(
 
 data class Skin5(
     val name:String = "미란/궤양",
-    val image: Int = R.drawable.iv_eye1,
+    val image: Int = R.drawable.skin5,
     val category :String = "피부",
     val definition:String = "점막근육판 결손 상태를 미란이라 하며, 이를 넘어 조직이 결손되거나 함몰된 상태를 궤양이라 함.",
     val cause :String = "조직의 염증이 진행되어 발생하거나 조직으로의 산소 및 영양분의 공급이 원활하게 이루어지지 못해 발생하게 됨. " +
@@ -140,7 +140,7 @@ data class Skin5(
 
 data class Skin6(
     val name:String = "결절/종괴",
-    val image: Int = R.drawable.iv_eye1,
+    val image: Int = R.drawable.skin6,
     val category :String = "피부",
     val definition:String = "결절은 증상을 유발하지 않을 수 있는 작고 단단하며 둥근 모양의 종양. 종괴는 종종 통증 및 부기와 같은 증상과 관련된 더 큰 종양임.",
     val cause :String = "유전적 요소뿐 아니라 오염된 공기 등에 함유된 화학물질, 자외선, 방사선, 바이러스 등이 원인이 됨.",
