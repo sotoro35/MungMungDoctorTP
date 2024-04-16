@@ -1,5 +1,6 @@
 package com.hsr2024.mungmungdoctortp.network
 
+import com.hsr2024.mungmungdoctortp.data.AIRecordList
 import com.hsr2024.mungmungdoctortp.data.AiRequest
 import com.hsr2024.mungmungdoctortp.data.AiResponses
 import com.hsr2024.mungmungdoctortp.data.FeedDataList
@@ -12,15 +13,21 @@ import com.hsr2024.mungmungdoctortp.data.SignUpData
 import com.hsr2024.mungmungdoctortp.data.UserChange
 import com.hsr2024.mungmungdoctortp.data.UserDelete
 import com.hsr2024.mungmungdoctortp.data.AddDog
+import com.hsr2024.mungmungdoctortp.data.AddorDeleteAI
+import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteComment
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteFeed
+import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteHospital
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteQA
 import com.hsr2024.mungmungdoctortp.data.CommentDataList
 import com.hsr2024.mungmungdoctortp.data.DeleteDog
 import com.hsr2024.mungmungdoctortp.data.FeedCommentList
+import com.hsr2024.mungmungdoctortp.data.FeedFavor
+import com.hsr2024.mungmungdoctortp.data.HospitalRecordList
+import com.hsr2024.mungmungdoctortp.data.HospitalorAiRecordList
 import com.hsr2024.mungmungdoctortp.data.Individual
 import com.hsr2024.mungmungdoctortp.data.ModifyDog
-import com.hsr2024.mungmungdoctortp.data.Pet
 import com.hsr2024.mungmungdoctortp.data.QACommentList
+import com.hsr2024.mungmungdoctortp.data.QAView
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.Body
@@ -116,6 +123,38 @@ interface RetrofitService {
     @POST("/qa/qa_delete.php")
     fun qaDelete(@Body deleteQA:AddorModifyorDeleteQA) : Call<String>
 
+    // feed 댓글 추가하기
+    @POST("/feed/comment_add.php")
+    fun feedCommentAdd(@Body addComment:AddorModifyorDeleteComment) : Call<String>
+
+    // qa 댓글 추가하기
+    @POST("/qa/comment_add.php")
+    fun qaCommentAdd(@Body addComment:AddorModifyorDeleteComment) : Call<String>
+
+    // feed 댓글 수정하기
+    @POST("/feed/comment_modify.php")
+    fun feedCommentModify(@Body modifyComment:AddorModifyorDeleteComment) : Call<String>
+
+    // qa 댓글 수정하기
+    @POST("/qa/comment_modify.php")
+    fun qaCommentModify(@Body modifyComment:AddorModifyorDeleteComment) : Call<String>
+
+    // feed 댓글 삭제하기
+    @POST("/feed/comment_delete.php")
+    fun feedCommentDelete(@Body deleteComment:AddorModifyorDeleteComment) : Call<String>
+
+    // feed 찜 기능
+    @POST("/feed/favor.php")
+    fun feedFavor(@Body feedFavor:FeedFavor) : Call<String>
+
+    // qa 조회 수 기능
+    @POST("/qa/view.php")
+    fun qaView(@Body qaView:QAView) : Call<String>
+
+    // qa 댓글 삭제하기
+    @POST("/qa/comment_delete.php")
+    fun qaCommentDelete(@Body deleteComment:AddorModifyorDeleteComment) : Call<String>
+
     // 회원탈퇴
     @POST("/user/withdraw.php")
     fun withdraw(@Body userDelete: UserDelete) : Call<String>
@@ -147,4 +186,32 @@ interface RetrofitService {
     //반려견 정보 불러오기
     @POST("/pet/list.php")
     fun petList(@Body individual:Individual) : Call<PetList>
+
+    //해당 반려견의 병원 기록 불러오기
+    @POST("/pet/hospital_list.php")
+    fun hospitalList(@Body record:HospitalorAiRecordList) : Call<HospitalRecordList>
+
+    //해당 반려견의 ai 기록 불러오기
+    @POST("/pet/ai_list.php")
+    fun aiList(@Body record:HospitalorAiRecordList) : Call<AIRecordList>
+
+    //해당 반려견의 병원 기록 추가하기
+    @POST("/pet/hospital_add.php")
+    fun hospitalAdd(@Body hospitalAdd:AddorModifyorDeleteHospital) : Call<String>
+
+    //해당 반려견의 ai 기록 추가하기
+    @POST("/pet/ai_add.php")
+    fun aiAdd(@Body aiAdd:AddorDeleteAI) : Call<String>
+
+    //해당 반려견의 병원 기록 수정하기
+    @POST("/pet/hospital_modify.php")
+    fun hospitalModify(@Body hospitalModify:AddorModifyorDeleteHospital) : Call<String>
+
+    //해당 반려견의 병원 기록 삭제하기
+    @POST("/pet/hospital_delete.php")
+    fun hospitalDelete(@Body hospitalDelete:AddorModifyorDeleteHospital) : Call<String>
+
+    //해당 반려견의 ai 기록 삭제하기
+    @POST("/pet/ai_delete.php")
+    fun aiDelete(@Body aiDelete:AddorDeleteAI) : Call<String>
 }
