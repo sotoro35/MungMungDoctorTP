@@ -125,7 +125,7 @@ class SkinAiActivity : AppCompatActivity() {
                     dialogV.findViewById<TextView>(R.id.test_close).setOnClickListener { alertDialog.dismiss() }
                     dialogV.findViewById<TextView>(R.id.test_start).setOnClickListener {
                         val intent = Intent(this@SkinAiActivity,AiResultActivity::class.java)
-                        intent.putExtra("aiEyeImg",uri.toString())
+                        intent.putExtra("aiSkinImg",uri.toString())
                         startActivity(intent)
                         finish()
                     }

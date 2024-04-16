@@ -17,7 +17,9 @@ import com.hsr2024.mungmungdoctortp.G
 import com.hsr2024.mungmungdoctortp.R
 import com.hsr2024.mungmungdoctortp.adapter.CareSelectDogAdapter
 import com.hsr2024.mungmungdoctortp.adapter.MypageDogAdapter
+import com.hsr2024.mungmungdoctortp.data.DeleteDog
 import com.hsr2024.mungmungdoctortp.data.Individual
+import com.hsr2024.mungmungdoctortp.data.LoginResponse
 import com.hsr2024.mungmungdoctortp.data.Pet
 import com.hsr2024.mungmungdoctortp.data.Pet2
 import com.hsr2024.mungmungdoctortp.data.PetList
@@ -49,33 +51,101 @@ class CareFragment:Fragment() {
 
         load()
 
-
+        binding.petName.text = "마이페이지에서\n반려견을 등록해주세요"
+        binding.petBreed.visibility = View.INVISIBLE
+        binding.petBirthDate.visibility = View.INVISIBLE
+        binding.petGender.visibility = View.INVISIBLE
+        binding.petNeutering.visibility = View.INVISIBLE
+        binding.line1.visibility = View.INVISIBLE
+        binding.line2.visibility = View.INVISIBLE
 
     }//onView...
 
-    private fun load(){
+    private fun changePetProfile(){
 
-        if (G.pet_id != null || G.pet_id != ""){
+        if (G.pet_name != null || G.pet_name != ""){
+            binding.petBreed.visibility = View.VISIBLE
+            binding.petBirthDate.visibility = View.VISIBLE
+            binding.petGender.visibility = View.VISIBLE
+            binding.petNeutering.visibility = View.VISIBLE
+            binding.line1.visibility = View.VISIBLE
+            binding.line2.visibility = View.VISIBLE
+
             binding.petName.text = G.pet_name
             binding.petBreed.text = G.pet_breed
             binding.petBirthDate.text = G.pet_birthDate
             binding.petGender.text = G.pet_gender
             binding.petNeutering.text = "중성화 ${G.pet_neutering}"
-        }else{
-            binding.petName.text = "마이페이지에서\n반려견을 등록해주세요"
-            binding.petBreed.visibility = View.INVISIBLE
-            binding.petBirthDate.visibility = View.INVISIBLE
-            binding.petGender.visibility = View.INVISIBLE
-            binding.petNeutering.visibility = View.INVISIBLE
-            binding.line1.visibility = View.INVISIBLE
-            binding.line2.visibility = View.INVISIBLE
-
-        }
-
-        if (G.pet_imageUrl != null && G.pet_imageUrl != ""){
-            Glide.with(this).load("https://43.200.163.153/img/${G.pet_imageUrl}").into(binding.petImageUrl)
+            Glide.with(requireContext()).load("http://43.200.163.153/img/${G.pet_imageUrl}").into(binding.petImageUrl)
         }
     }
+
+    private fun load(){
+
+        val params= Individual("${G.user_email}", "${G.user_providerId}", "${G.loginType}")
+        RetrofitProcess(requireContext(),params=params, callback = object : RetrofitCallback {
+            override fun onResponseListSuccess(response: List<Any>?) {}
+
+            override fun onResponseSuccess(response: Any?) {
+                val data=(response as LoginResponse)
+                Log.d("login data","$data")
+                // LoginResponse 데이터 출력(email, provider_id, nickname, userImgUrl, pet_id, pet_name, petImgUrl, pet_birth_date, pet_gender, pet_neutered, code)
+                //  - 4204 서비스 회원 아님, 1240 회원 정보 조회 성공, 1250 회원 정보 조회 실패
+                when(data.code){
+                    "4204" -> Toast.makeText(requireContext(), "관리자에게 문의하세요", Toast.LENGTH_SHORT).show()
+                    "1250" -> Toast.makeText(requireContext(), "관리자에게 문의하세요", Toast.LENGTH_SHORT).show()
+                    "1240" -> {
+
+                        var neutering = when(data.pet_neutered){
+                            "1" -> "O"
+                            "0" -> "X"
+                            else -> data.pet_neutered
+                        }
+
+                        G.user_email = data.email ?: ""
+                        G.user_providerId = data.provider_id ?: ""
+                        G.user_nickname = data.nickname ?: ""
+                        G.user_imageUrl = data.userImgUrl ?: ""
+                        G.pet_id = data.pet_id ?: ""
+                        G.pet_name = data.pet_name ?: ""
+                        G.pet_imageUrl = data.petImgUrl ?: ""
+                        G.pet_birthDate = data.pet_birth_date ?: ""
+                        G.pet_gender = data.pet_gender ?: ""
+                        G.pet_neutering = neutering ?: ""
+                        G.pet_breed = data.pet_breed ?: ""
+
+                        Log.d("펫정보","${data.pet_name}")
+                        Log.d("펫정보","${data.pet_breed}")
+
+                        if (data.pet_name != null || data.pet_name != ""){
+                            binding.petBreed.visibility = View.VISIBLE
+                            binding.petBirthDate.visibility = View.VISIBLE
+                            binding.petGender.visibility = View.VISIBLE
+                            binding.petNeutering.visibility = View.VISIBLE
+                            binding.line1.visibility = View.VISIBLE
+                            binding.line2.visibility = View.VISIBLE
+
+                            binding.petName.text = data.pet_name
+                            binding.petBreed.text = data.pet_breed
+                            binding.petBirthDate.text = data.pet_birth_date
+                            binding.petGender.text = data.pet_gender
+                            binding.petNeutering.text = "중성화 ${neutering}"
+                        }
+
+                        if (data.petImgUrl == null || data.petImgUrl == "") {
+                            binding.petImageUrl.setImageResource(R.drawable.pet_image)
+                        }else Glide.with(requireContext()).load("http://43.200.163.153/img/${data.petImgUrl}").into(binding.petImageUrl)
+                    }
+                }
+            }
+
+            override fun onResponseFailure(errorMsg: String?) {
+                Log.d("login fail",errorMsg!!) // 에러 메시지
+            }
+
+        }).userLoadRequest()
+    }
+
 
     lateinit var alertDialog: AlertDialog
     @SuppressLint("MissingInflatedId")
@@ -86,8 +156,6 @@ class CareFragment:Fragment() {
         dialogV.findViewById<TextView>(R.id.dog_empty).visibility = View.VISIBLE
         builder.setView(dialogV)
         alertDialog = builder.create()
-
-
 
         val params= Individual("${G.user_email}", "${G.user_providerId}", "${G.loginType}")
         RetrofitProcess(requireContext(),params=params, callback = object : RetrofitCallback {
@@ -110,6 +178,7 @@ class CareFragment:Fragment() {
 
                         val pets: List<Pet> = data.petList.sortedByDescending {it.pet_id}
 
+
                         if (pets != null){
                             dialogV.findViewById<TextView>(R.id.dog_empty).visibility = View.INVISIBLE
                             val mypageAdapter = CareSelectDogAdapter(requireContext(),pets)
@@ -128,11 +197,30 @@ class CareFragment:Fragment() {
         }).petListRequest()
 
         dialogV.findViewById<TextView>(R.id.btn_select_pet).setOnClickListener {
-            load()
+            changePetProfile()
+            petSelect()
             alertDialog.dismiss() }
         dialogV.findViewById<TextView>(R.id.btn_close).setOnClickListener { alertDialog.dismiss() }
         alertDialog.show()
 
+    }
+
+    private fun petSelect(){
+
+        val params= DeleteDog("${G.user_email}", "${G.user_providerId}", "${G.pet_id}", "${G.loginType}")
+        RetrofitProcess(requireContext(),params=params, callback = object : RetrofitCallback {
+            override fun onResponseListSuccess(response: List<Any>?) {}
+
+            override fun onResponseSuccess(response: Any?) {
+                val data=(response as LoginResponse)
+                Log.d("login data","$data") // LoginResponse 데이터 출력(email, provider_id, nickname, userImgUrl, pet_id, pet_name, petImgUrl, pet_birth_date, pet_gender, pet_neutered, code)
+            }                               //  - 4204 서비스 회원 아님, 5600 펫 선택 성공, 5601 펫 선택 실패
+
+            override fun onResponseFailure(errorMsg: String?) {
+                Log.d("login fail",errorMsg!!) // 에러 메시지
+            }
+
+        }).petSelectRequest()
     }
 
 }

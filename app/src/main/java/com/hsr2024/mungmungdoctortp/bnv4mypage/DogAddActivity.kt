@@ -45,7 +45,7 @@ class DogAddActivity : AppCompatActivity() {
 
 
     var uri:Uri? = null
-    var gender = "girl"
+    var gender = "여아"
     var neutering = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,13 +59,13 @@ class DogAddActivity : AppCompatActivity() {
         binding.addPetImage.setOnClickListener { clickImage() }
 
         binding.addPetBoy.setOnClickListener {
-            gender = "boy"
+            gender = "남아"
             binding.addPetBoy.setBackgroundResource(R.drawable.bg_button2)
             binding.addPetGirl.setBackgroundResource(R.drawable.bg_button)
         }
 
         binding.addPetGirl.setOnClickListener {
-            gender = "girl"
+            gender = "여아"
             binding.addPetBoy.setBackgroundResource(R.drawable.bg_button)
             binding.addPetGirl.setBackgroundResource(R.drawable.bg_button2)
         }
@@ -133,7 +133,7 @@ class DogAddActivity : AppCompatActivity() {
 
             val params= AddDog("${G.user_email}", "${G.user_providerId}",
                 "$petName", "$image",
-                "$birthdate", "$gender", "${neutering.toString()}",
+                "$birthdate", "$gender", "${neutering}",
                 "$petbreed", "${G.loginType}")
             RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
                 override fun onResponseListSuccess(response: List<Any>?) {}

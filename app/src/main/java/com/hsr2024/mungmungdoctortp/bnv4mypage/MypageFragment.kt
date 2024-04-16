@@ -20,7 +20,9 @@ import com.google.android.material.textfield.TextInputLayout
 import com.hsr2024.mungmungdoctortp.G
 import com.hsr2024.mungmungdoctortp.R
 import com.hsr2024.mungmungdoctortp.adapter.MypageDogAdapter
+import com.hsr2024.mungmungdoctortp.data.DeleteDog
 import com.hsr2024.mungmungdoctortp.data.Individual
+import com.hsr2024.mungmungdoctortp.data.LoginResponse
 import com.hsr2024.mungmungdoctortp.data.Pet
 import com.hsr2024.mungmungdoctortp.data.Pet2
 import com.hsr2024.mungmungdoctortp.data.PetList
@@ -58,9 +60,6 @@ class MypageFragment : Fragment() {
         load()
 
         binding.mypageUserNickname.text = G.user_nickname
-        if (G.user_imageUrl.isNotEmpty()) {
-            Glide.with(requireContext()).load("http://43.200.163.153/img/${G.user_imageUrl.trim()}").into(binding.mypageUserImage)
-        }else binding.mypageUserImage.setImageResource(R.drawable.bnv_care)
 
 
 
@@ -73,6 +72,8 @@ class MypageFragment : Fragment() {
 
     @SuppressLint("SuspiciousIndentation")
     private fun load(){
+
+        loadUser()
 
         val params= Individual("${G.user_email}", "${G.user_providerId}", "${G.loginType}")
             RetrofitProcess(requireContext(),params=params, callback = object : RetrofitCallback {
@@ -107,9 +108,50 @@ class MypageFragment : Fragment() {
                 }
 
             }).petListRequest()
+    }
+
+    private fun loadUser(){
+
+        val params= Individual("${G.user_email}", "${G.user_providerId}", "${G.loginType}")
+            RetrofitProcess(requireContext(),params=params, callback = object : RetrofitCallback {
+            override fun onResponseListSuccess(response: List<Any>?) {}
+
+            override fun onResponseSuccess(response: Any?) {
+                val data=(response as LoginResponse)
+                Log.d("login data","$data")
+                // LoginResponse 데이터 출력(email, provider_id, nickname, userImgUrl, pet_id, pet_name, petImgUrl, pet_birth_date, pet_gender, pet_neutered, code)
+                //  - 4204 서비스 회원 아님, 1240 회원 정보 조회 성공, 1250 회원 정보 조회 실패
+                when(data.code){
+                    "4204" -> Toast.makeText(requireContext(), "관리자에게 문의하세요", Toast.LENGTH_SHORT).show()
+                    "1250" -> Toast.makeText(requireContext(), "관리자에게 문의하세요", Toast.LENGTH_SHORT).show()
+                    "1240" -> {
+                        G.user_email = data.email ?: ""
+                        G.user_providerId = data.provider_id ?: ""
+                        G.user_nickname = data.nickname ?: ""
+                        G.user_imageUrl = data.userImgUrl ?: ""
+                        G.pet_id = data.pet_id ?: ""
+                        G.pet_name = data.pet_name ?: ""
+                        G.pet_imageUrl = data.petImgUrl ?: ""
+                        G.pet_birthDate = data.pet_birth_date ?: ""
+                        G.pet_gender = data.pet_gender ?: ""
+                        G.pet_neutering = data.pet_neutered ?: ""
+                        G.pet_breed = data.pet_breed ?: ""
+
+                        if (data.userImgUrl == null || data.userImgUrl == "") {
+                            binding.mypageUserImage.setImageResource(R.drawable.pet_image)
+                        }else Glide.with(requireContext()).load(
+                            "http://43.200.163.153/img/${data.userImgUrl}").into(binding.mypageUserImage)
 
 
+                    }
+                }
+            }
 
+            override fun onResponseFailure(errorMsg: String?) {
+                Log.d("login fail",errorMsg!!) // 에러 메시지
+            }
+
+          }).userLoadRequest()
     }
 
     private fun clickLogout(){
@@ -186,5 +228,6 @@ class MypageFragment : Fragment() {
         }
         alertDialog.show()
     }
+
 
 }

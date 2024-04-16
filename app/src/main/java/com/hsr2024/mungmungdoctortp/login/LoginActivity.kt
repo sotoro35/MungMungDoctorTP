@@ -61,15 +61,15 @@ class LoginActivity : AppCompatActivity() {
             when(data.code){
                 "4200" -> {
                     G.apply {
-                        user_email = data.email
-                        user_nickname = data.nickname
-                        user_imageUrl = data.userImgUrl
-                        pet_id = data.pet_id
-                        pet_name = data.pet_name
-                        pet_imageUrl = data.petImgUrl
-                        pet_birthDate = data.pet_birth_date
-                        pet_gender = data.pet_gender
-                        pet_neutering = data.pet_neutered
+                        user_email = data.email ?: ""
+                        user_nickname = data.nickname ?: ""
+                        user_imageUrl = data.userImgUrl ?: ""
+                        pet_id = data.pet_id ?: ""
+                        pet_name = data.pet_name ?: ""
+                        pet_imageUrl = data.petImgUrl ?: ""
+                        pet_birthDate = data.pet_birth_date ?: ""
+                        pet_gender = data.pet_gender ?: ""
+                        pet_neutering = data.pet_neutered ?: ""
                         loginType = "email"
                     } // G..
 

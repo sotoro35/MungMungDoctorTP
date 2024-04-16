@@ -1,6 +1,7 @@
 package com.hsr2024.mungmungdoctortp.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -36,10 +37,10 @@ class CareSelectDogAdapter(val context: Context, val pets:List<Pet>):
         val pet = pets[position]
         holder.binding.mypagePetName.text = pet.pet_name
 
-        if (pet.pet_imageUrl != null || pet.pet_imageUrl != "") {
-            Glide.with(context).load("http://43.200.163.153/img/${pet.pet_imageUrl}")
-                .into(holder.binding.mypagePetImage)
-        }
+        if (pet.pet_imageUrl == null || pet.pet_imageUrl == "") {
+            holder.binding.mypagePetImage.setImageResource(R.drawable.pet_image)
+        }else Glide.with(context).load("http://43.200.163.153/img/${pet.pet_imageUrl}")
+
 
         if (selectedItemPosition == position) {
             holder.binding.root.setBackgroundResource(R.drawable.bg_button_save)
@@ -60,12 +61,21 @@ class CareSelectDogAdapter(val context: Context, val pets:List<Pet>):
                 // 현재 클릭된 아이템의 배경색을 변경합니다.
                 notifyItemChanged(selectedItemPosition)
 
+                Log.d("선택된펫",pet.pet_name)
+                Log.d("선택된펫",pet.pet_id)
                 G.pet_id = pet.pet_id
+                G.pet_name = pet.pet_name
                 G.pet_imageUrl = pet.pet_imageUrl
                 G.pet_birthDate = pet.pet_birthDate
-                G.pet_gender = pet.pet_gender
-                G.pet_neutering = pet.pet_neutering
                 G.pet_breed = pet.pet_breed
+                G.pet_gender = pet.pet_gender
+
+                var neutering = when(pet.pet_neutering){
+                    "1" -> "O"
+                    "0" -> "X"
+                    else -> pet.pet_neutering
+                }
+                G.pet_neutering = neutering
 
             }
         }

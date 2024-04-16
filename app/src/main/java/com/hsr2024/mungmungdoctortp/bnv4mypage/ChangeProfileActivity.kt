@@ -33,7 +33,7 @@ import java.io.OutputStream
 
 class ChangeProfileActivity : AppCompatActivity() {
 
-    val imgUrl= "https://43.200.163.153/img/${G.user_imageUrl}"
+    val imgUrl= "http://43.200.163.153/img/${G.user_imageUrl}"
 
     private val binding by lazy { ActivityChangeProfileBinding.inflate(layoutInflater) }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +50,6 @@ class ChangeProfileActivity : AppCompatActivity() {
 
         if (G.user_imageUrl.isNotEmpty()) {
             Glide.with(this).load("$imgUrl").into(binding.changeUserImage)
-
         }
 
 
