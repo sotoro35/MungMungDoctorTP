@@ -13,7 +13,7 @@
             android:id="@+id/vaccine_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="심장사상충"
+            android:text="심장사상충, 외부기생충, 기타접종"
             android:textSize="18sp"
             android:textStyle="bold"/>
         <TextView
@@ -23,24 +23,26 @@
             android:layout_alignParentRight="true"
             android:layout_alignBottom="@id/vaccine_name"
             android:text="2024-04-11"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/vaccine_memo"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/vaccine_name"
+            android:textSize="13sp"
+            android:layout_marginTop="4dp"
+            android:text="메모내용" />
         <TextView
             android:id="@+id/vaccine_hospital"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="병원이름"
             android:textSize="14sp"
+            android:layout_marginTop="4dp"
             android:layout_alignParentRight="true"
             android:layout_below="@id/vaccine_date"/>
 
-        <TextView
-            android:id="@+id/vaccine_memo"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/vaccine_name"
-            android:textSize="14sp"
-            android:text="메모내용" />
+
         
         
     </RelativeLayout>

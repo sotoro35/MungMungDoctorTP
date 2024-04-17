@@ -3,11 +3,11 @@ package com.hsr2024.mungmungdoctortp
 class G {
     companion object{
 
-        var user_email:String = ""
+        var user_email:String = "b@b"
         var user_providerId:String = ""
         var user_nickname:String = ""
         var user_imageUrl:String = ""
-        var pet_id:String = ""
+        var pet_id:String = "18"
         var pet_name:String = ""
         var pet_imageUrl:String = ""
         var pet_birthDate:String = ""
