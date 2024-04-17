@@ -257,6 +257,7 @@ class NoteActivity : AppCompatActivity() {
                         inspectionDays.add(calendarDay)
                     }//forEach
 
+
                     //달력에 보일 병원기록 색깔 지정
                     val inspectionColor = Color.parseColor("#5754E1")
                     //쩜찍기 데코레이터 지정
