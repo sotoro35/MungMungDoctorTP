@@ -151,7 +151,7 @@ class NoteActivity : AppCompatActivity() {
                         hospital.receipt_img_url,                            // 영수증 이미지 url
                         hospital.clinical_img_url                           // 진료사진 이미지 url
                     )
-
+Log.d("dfffff",hospital.receipt_img_url)
                     itemlist.add(hospitalRecordData)
                     hospitalDateList.add(hospitalRecordData.visit_date)
                     Log.d("DFdsf", hospitalDateList.toString())
@@ -237,13 +237,8 @@ class NoteActivity : AppCompatActivity() {
                     //aiDateList.add(ai.)
                 }//기차완성
 
-//                aiDateList.add("2024-4-10")
-//                aiDateList.add("2024-4-11")
-//                aiDateList.add("2024-4-12")
-//                aiDateList.add("2024-4-13")
 
                 if (clickedDate == ""){
-
                     Log.d("dfsdfsd", aiDateList.toString())
 
                     //각 날짜 문자열에 대해 처리하기
@@ -258,17 +253,14 @@ class NoteActivity : AppCompatActivity() {
                         inspectionDays.add(calendarDay)
                     }//forEach
 
-
                     //달력에 보일 병원기록 색깔 지정
                     val inspectionColor = Color.parseColor("#5754E1")
                     //쩜찍기 데코레이터 지정
                     calendar.addDecorators(EventDecorator2(inspectionDays, inspectionColor))
                 }//if
 
-
                 // 아답터에 대량의 리스트 넣어주기
                 binding.recyclerViewAI.adapter = AIRecordAdapter(this@NoteActivity, itemList2)
-
             }
 
             override fun onResponseFailure(errorMsg: String?) {
@@ -290,12 +282,10 @@ class NoteActivity : AppCompatActivity() {
         }
 
         override fun decorate(view: DayViewFacade?) {
-
             view?.addSpan(CustomMultipleDotSpan(8f, color))
             view?.addSpan(StyleSpan(Typeface.BOLD))
             view?.addSpan(AbsoluteSizeSpan(20,true))
             view?.addSpan(ForegroundColorSpan(Color.parseColor("#737373")))
-
         }
     }
 

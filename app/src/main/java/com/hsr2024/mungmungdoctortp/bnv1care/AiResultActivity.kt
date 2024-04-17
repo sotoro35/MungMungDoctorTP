@@ -3,8 +3,10 @@ package com.hsr2024.mungmungdoctortp.bnv1care
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
+import com.bumptech.glide.Glide
 import com.hsr2024.mungmungdoctortp.databinding.ActivityAiResultBinding
 import com.hsr2024.mungmungdoctortp.ml.EyeModel
 import com.hsr2024.mungmungdoctortp.ml.SkinModel
@@ -41,11 +43,22 @@ class AiResultActivity : AppCompatActivity() {
         binding.btnResultSave.setOnClickListener { saveOnCareNote() }
 
 
+        val receivedBundle = intent.extras
+        receivedBundle?.apply {
+            if (this.getString("type") == "ai"){
+                binding.result1.text = this.getString("result1")
+                binding.result2.text = this.getString("result2")
+
+                var imgUrl = "http://43.200.163.153/img/"+this.getString("img")
+                Glide.with(this@AiResultActivity).load(imgUrl).into(binding.iv)
+            }
+        }
     }
 
 
     private fun saveOnCareNote(){
         //서버 Insert
+        
     }
 
 
