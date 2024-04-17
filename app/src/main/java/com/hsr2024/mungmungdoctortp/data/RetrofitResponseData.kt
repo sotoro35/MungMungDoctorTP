@@ -77,6 +77,7 @@ data class AIRecordData(
     val diagnosis_type: String,             // 진단한 ai type (eype or skin)
     val diagnostic_img_url: String,         // ai 진단한 반려견 이미지 url
     val diagnosis_result: String,           // ai 진단결과 리스트(결막염 80%, 유루증 70%..)
+    val date: String                        // ai 진단날짜
 )
 
 data class AIRecordList(val aiRecordList:List<AIRecordData>, val code:String)
