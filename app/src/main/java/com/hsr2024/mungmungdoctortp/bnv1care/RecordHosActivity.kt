@@ -213,8 +213,6 @@ class RecordHosActivity : AppCompatActivity() {
     //두개의 이미지가 서버에 한번 갔다와서 이제  imgUrl로 왔건 빈값이건.. 여튼 이제 진짜 서버에 보내기
     private fun sendTotalToServer(billUrl: String, careUrl: String) {
         Log.d("우앙ㅇㅇㅇㅇㅇㅇㅇㅇㅇ", billUrl + "\n" + careUrl)
-
-
         val params = AddorModifyorDeleteHospital(
             G.user_email, G.user_providerId, G.loginType, G.pet_id, // pet_id는 pet 식별값
             "",                                             // 병원 기록 식별 값( 안넣어도 됨)
@@ -238,14 +236,11 @@ class RecordHosActivity : AppCompatActivity() {
                 Toast.makeText(this@RecordHosActivity, "병원기록을 추가하셨습니다", Toast.LENGTH_SHORT).show()
                 finish()
             }
-
             override fun onResponseFailure(errorMsg: String?) {
                 Log.d("hospital add fail", errorMsg!!) // 에러 메시지
                 Toast.makeText(this@RecordHosActivity, "서버에 오류가 생겼습니다.", Toast.LENGTH_SHORT).show()
             }
-
         }).hospitalAddRequest()
-
     }//sendTotalToServer()
 
 
