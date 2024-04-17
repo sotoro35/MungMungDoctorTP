@@ -51,20 +51,6 @@ class AddVaccineActivity : AppCompatActivity() {
 
         datePicker.show(supportFragmentManager, "DATE_PICKER")
     }
-    private fun clickSave(){
-        val cb1 = binding.checkBox1Text.isChecked
-        val cb2 = binding.checkBox2Text.isChecked
-        val vaccineName = binding.et.text.toString()
-        val date = binding.dateTv.text.toString()
-        val hospital = binding.etHospital.text.toString()
-        val memo = binding.etMemo.text.toString()
-        val checkBoxes = listOf(cb1,cb2).count { it }
-
-        if (checkBoxes == 1 || checkBoxes == 2 ){
-
-        }
-
-    }
     private fun addVaccine() {
         val heartworm = binding.checkBox1Text.isChecked.toString()
         val external_parasites = binding.checkBox2Text.isChecked.toString()
@@ -105,6 +91,7 @@ class AddVaccineActivity : AppCompatActivity() {
 
         }).addAdditionVaccinationRequest()
     }
+
     private fun addVaccineRemove() {
 
 
@@ -129,7 +116,6 @@ class AddVaccineActivity : AppCompatActivity() {
                     vaccination.memo                                      // 접종 시 메모정보
                 }
             }
-
             override fun onResponseFailure(errorMsg: String?) {
                 Log.d("AdditionVaccination List fail",errorMsg!!) // 에러 메시지
             }
@@ -137,8 +123,5 @@ class AddVaccineActivity : AppCompatActivity() {
         }).listAdditionVaccinationRequest()
     }
 
-    private fun essentionList() {
-
-    }
 
 }
