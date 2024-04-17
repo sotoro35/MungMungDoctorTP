@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
+import android.text.style.AbsoluteSizeSpan
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.text.style.StyleSpan
@@ -84,8 +85,7 @@ class NoteActivity : AppCompatActivity() {
 
         //"전체보기"버튼 클릭시 서버에서 모든 날짜꺼 전체 가져오기
         binding.btnAll.setOnClickListener {
-            getHospitalRecord("")
-            getAIRecord("")
+            setCalendar()
         }//온클릭리스너
 
 
@@ -290,11 +290,12 @@ class NoteActivity : AppCompatActivity() {
         }
 
         override fun decorate(view: DayViewFacade?) {
-            // view?.addSpan(DotSpan(10f, Color.parseColor("#FFA800")))
-            view?.addSpan(CustomMultipleDotSpan(5f, color))
+
+            view?.addSpan(CustomMultipleDotSpan(8f, color))
             view?.addSpan(StyleSpan(Typeface.BOLD))
-            view?.addSpan(RelativeSizeSpan(1.5f))
+            view?.addSpan(AbsoluteSizeSpan(20,true))
             view?.addSpan(ForegroundColorSpan(Color.parseColor("#737373")))
+
         }
     }
 
@@ -309,9 +310,9 @@ class NoteActivity : AppCompatActivity() {
 
         override fun decorate(view: DayViewFacade?) {
             // view?.addSpan(DotSpan(10f, Color.parseColor("#FFA800")))
-            view?.addSpan(CustomMultipleDotSpan(5f, color))
+            view?.addSpan(CustomMultipleDotSpan(8f, color))
             view?.addSpan(StyleSpan(Typeface.BOLD))
-            view?.addSpan(RelativeSizeSpan(1.5f))
+            view?.addSpan(AbsoluteSizeSpan(20,true))
             view?.addSpan(ForegroundColorSpan(Color.parseColor("#737373")))
         }
     }
@@ -330,7 +331,7 @@ class NoteActivity : AppCompatActivity() {
         override fun decorate(view: DayViewFacade?) {
             view?.setBackgroundDrawable(drawble)
             view?.addSpan(StyleSpan(Typeface.BOLD))
-            view?.addSpan(RelativeSizeSpan(1.3f))
+            view?.addSpan(AbsoluteSizeSpan(17,true))
             view?.addSpan(ForegroundColorSpan(Color.parseColor("#706E6E")))
         }
     }
