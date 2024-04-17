@@ -3,13 +3,18 @@ package com.hsr2024.mungmungdoctortp.bnv1care
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
+import com.hsr2024.mungmungdoctortp.G
+import com.hsr2024.mungmungdoctortp.data.AddorDeleteAI
 import com.hsr2024.mungmungdoctortp.databinding.ActivityAiResultBinding
 import com.hsr2024.mungmungdoctortp.ml.EyeModel
 import com.hsr2024.mungmungdoctortp.ml.EyeModel2
 import com.hsr2024.mungmungdoctortp.ml.SkinMode2
 import com.hsr2024.mungmungdoctortp.ml.SkinModel
+import com.hsr2024.mungmungdoctortp.network.RetrofitCallback
+import com.hsr2024.mungmungdoctortp.network.RetrofitProcess
 import org.tensorflow.lite.support.image.TensorImage
 import kotlin.collections.sortedByDescending
 
@@ -27,11 +32,15 @@ class AiResultActivity : AppCompatActivity() {
 
         if (urieye != null){
             binding.testImage.setImageURI(urieye)
+            diagnosis_type = "eye"
+            diagnostic_img_url = "$urieye"
             testEyeStart()
         }
 
         if (uriskin != null){
             binding.testImage.setImageURI(uriskin)
+            diagnosis_type = "skin"
+            diagnostic_img_url = "$uriskin"
             testSkinStart()
         }
 
@@ -42,9 +51,33 @@ class AiResultActivity : AppCompatActivity() {
 
     }
 
+    var diagnosis_type = ""
+    var diagnostic_img_url = ""
+    var diagnosis_result = ""
+
 
     private fun saveOnCareNote(){
-        //서버 Insert
+
+        val params= AddorDeleteAI("${G.user_email}", "${G.user_providerId}", "${G.loginType}", "${G.pet_id}", // pet_id는 pet 식별값
+                                  "",                                     // ai 기록 식별 값( 안넣어도 됨)
+                                  diagnosis_type,                           // 진단한 ai type (eye or skin)
+                                  diagnostic_img_url,                       // ai 진단한 반려견 이미지 url
+                                  diagnosis_result,                         // ai 진단결과 리스트(결막염 80%, 유루증 70%..)
+         )
+        RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+            override fun onResponseListSuccess(response: List<Any>?) {}
+
+            override fun onResponseSuccess(response: Any?) {
+                val code=(response as String)             //  - 4204 서비스 회원 아님, 9100 ai 기록 추가 성공, 9101 ai 기록 추가 실패
+                Log.d("ai add code","$code")
+
+            }
+
+            override fun onResponseFailure(errorMsg: String?) {
+                Log.d("ai add fail",errorMsg!!) // 에러 메시지
+            }
+
+        }).aiAddRequest()
     }
 
 
@@ -102,6 +135,8 @@ class AiResultActivity : AppCompatActivity() {
             binding.result2Go.setOnClickListener {
                 sendEyeOrSkin(secondLabel)
             }
+
+            diagnosis_result = "$firstLabel : $firstScore%,$secondLabel : $secondScore%"
         }
 
 
@@ -208,8 +243,7 @@ class AiResultActivity : AppCompatActivity() {
                 sendEyeOrSkin(secondLabel)
             }
 
-
-
+            diagnosis_result = "$firstLabel : $firstScore%,$secondLabel : $secondScore%"
         }
 
         model.close()
