@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import com.hsr2024.mungmungdoctortp.databinding.ActivityAiResultBinding
 import com.hsr2024.mungmungdoctortp.ml.EyeModel
+import com.hsr2024.mungmungdoctortp.ml.EyeModel2
+import com.hsr2024.mungmungdoctortp.ml.SkinMode2
 import com.hsr2024.mungmungdoctortp.ml.SkinModel
 import org.tensorflow.lite.support.image.TensorImage
 import kotlin.collections.sortedByDescending
@@ -47,15 +49,9 @@ class AiResultActivity : AppCompatActivity() {
 
 
 
-
-
-
-
-
     private fun testEyeStart(){
-
         //1. 모델 객체생성
-        val model = EyeModel.newInstance(this)
+        val model = EyeModel2.newInstance(this)
 
         //2. 입력이미지 준비
         val image = TensorImage.fromBitmap(
@@ -70,15 +66,11 @@ class AiResultActivity : AppCompatActivity() {
         //4. 분류한 라벨링별 확률 출력
         for ( label in outputs.probabilityAsCategoryList ){
             val translatedLabel = when(label.label){
-                "conjunctivitis" -> "결막염"
-                "cataract" -> "백내장"
-                "entropion" -> "안검내반증"
-                "blepharitis" -> "안검종양"
-                "galactorrhea" -> "유루증"
-                "nuclear_hardening" -> "핵경화"
-                "ulcerative_corneal_disease" -> "궤양성각막질환"
-                "non-ulcerative_corneal_disease" -> "비궤양성각막질환"
-                "pigmented_keratitis" -> "색소침착성각막염"
+                "1" -> "안검염/각막염/결막염"
+                "2" -> "안검종양"
+                "3" -> "유루증"
+                "4" -> "각막궤양"
+                "5" -> "백내장"
                 else -> label.label
             }
             labelList[translatedLabel] = label.score
@@ -163,7 +155,7 @@ class AiResultActivity : AppCompatActivity() {
     private fun testSkinStart(){
 
         //1. 모델 객체생성
-        val model = SkinModel.newInstance(this)
+        val model = SkinMode2.newInstance(this)
 
         //2. 입력이미지 준비
         val image = TensorImage.fromBitmap(
@@ -178,12 +170,12 @@ class AiResultActivity : AppCompatActivity() {
         //4. 분류한 라벨링별 확률 출력
         for ( label in outputs.probabilityAsCategoryList ){
             val translatedLabel = when(label.label){
-                "Papule_Plaque" -> "구진/플라크"
-                "Pustule_Acne" -> "농포/여드름"
-                "erosion_ulcer" -> "미란/궤양"
-                "nodule_mass" -> "결절_종괴"
-                "dandruff_corneous_Epithelial_ring" -> "비듬/각질/상피성잔고리"
-                "Lichenification_Hyperpigmentation" -> "태선화/과다색소침착"
+                "1" -> "구진/플라크"
+                "2" -> "비듬/각질/상피성잔고리"
+                "3" -> "태선화/과다색소침착"
+                "4" -> "농포/여드름"
+                "5" -> "미란/궤양"
+                "6" -> "결절_종괴"
                 else -> label.label
             }
             labelList[translatedLabel] = label.score
