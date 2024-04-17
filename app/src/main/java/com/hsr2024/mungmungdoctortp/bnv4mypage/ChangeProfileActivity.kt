@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
@@ -43,11 +44,17 @@ class ChangeProfileActivity : AppCompatActivity() {
 
         binding.btnChangeUserImage.paintFlags = Paint.UNDERLINE_TEXT_FLAG // 밑줄
         binding.changeUserNickname.text = G.user_nickname
-        binding.userEmailProfile.text = G.user_email
+        binding.userEmailProfile.text = "현재 연결된 계정\n${G.user_email}"
 
         binding.toolbar.setNavigationOnClickListener { finish() }
         binding.changeUserImage.setOnClickListener { clickImage() }
         binding.btnChangeProfile.setOnClickListener { changeProfile() }
+
+        if (G.user_providerId != null && G.user_providerId != ""){
+            binding.changePassword.visibility = View.GONE
+            binding.changePasswordCon.visibility = View.GONE
+            binding.userEmailProfile.text = "현재 연결된 계정\n${G.loginType}"
+        }
 
         if (G.user_imageUrl.isNotEmpty()) {
             Glide.with(this).load("$imgUrl").into(binding.changeUserImage)
@@ -70,8 +77,9 @@ class ChangeProfileActivity : AppCompatActivity() {
             MultipartBody.Part.createFormData("img1", file.name,requestBody) // 택배상자 포장.. == 리턴되는 값
         }
 
-
         if (saveCheck(password,passwordcon)){
+            binding.btnChangeProfile.isEnabled = false
+            Glide.with(this).load(R.drawable.loading).into(binding.loading)
 
             if (filePart != null){
                 RetrofitProcess(this,params=filePart, callback = object : RetrofitCallback {
@@ -97,6 +105,7 @@ class ChangeProfileActivity : AppCompatActivity() {
     }
 
     private fun saveChage(image:String){
+
         val params= UserChange("${G.user_email}", "$password", "${G.user_providerId}", "$image", "${G.loginType}")
         RetrofitProcess(this,params=params, callback = object : RetrofitCallback {
             override fun onResponseListSuccess(response: List<Any>?) {}

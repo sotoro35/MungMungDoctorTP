@@ -85,4 +85,10 @@ dependencies {
     //머티리얼 칼렌다뷰 의존성
     implementation (libs.material.calendarview)
 
+    // 카카오 로그인
+    implementation (libs.v2.user)
+
+    // 네이버 로그인
+    implementation(libs.oauth) // jdk 11
+
 }

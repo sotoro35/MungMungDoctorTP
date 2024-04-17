@@ -46,7 +46,6 @@ class DogAddActivity : AppCompatActivity() {
     lateinit var petbreed:String
     lateinit var birthdate:String
 
-
     var uri:Uri? = null
     var gender = "여아"
     var neutering = false
@@ -89,7 +88,6 @@ class DogAddActivity : AppCompatActivity() {
     }// onCreate
 
 
-
     private fun addPet() {
 
         petName = binding.addPetName.text.toString()
@@ -97,33 +95,54 @@ class DogAddActivity : AppCompatActivity() {
         birthdate = binding.addPetBirthDate.text.toString().replace("-","")
 
         if (saveCheck(petName, petbreed, birthdate) ) {
-        //이미지파일을 MutipartBody.Part 로 포장하여 전송: @Part
-        val filePart: MultipartBody.Part? = imgPath?.let { //널이 아니면...
-            val file = File(it) // 생선손질..
-            val requestBody: RequestBody =
-                RequestBody.create("image/*".toMediaTypeOrNull(), file) // 진공팩포장
-            MultipartBody.Part.createFormData("img1", file.name, requestBody) // 택배상자 포장.. == 리턴되는 값
-        }
 
-        if (filePart != null){
-            RetrofitProcess(this,params=filePart, callback = object : RetrofitCallback {
-                override fun onResponseListSuccess(response: List<Any>?) {}
+            var dateFormat = SimpleDateFormat("yyyyMMdd", Locale.KOREA)
+            var currentDate = dateFormat.format(Date()).toInt()
+            var selectedDate = birthdate.toInt()
 
-                override fun onResponseSuccess(response: Any?) {
-                    val code=(response as String)
-                    Log.d("one file upload code","$code") // 실패 시 5404, 성공 시 이미지 경로
-                    if (code != "5404") {
-                        savePet(code)
-                        Toast . makeText (this@DogAddActivity, "이미지+추가성공", Toast.LENGTH_SHORT).show()
-                    }else Toast . makeText (this@DogAddActivity, "이미지 업로드 실패", Toast.LENGTH_SHORT).show()
+            if (currentDate >= selectedDate) {
+
+                binding.btnAddSave.isEnabled = false
+                Glide.with(this).load(R.drawable.loading).into(binding.loading)
+
+                //이미지파일을 MutipartBody.Part 로 포장하여 전송: @Part
+                val filePart: MultipartBody.Part? = imgPath?.let { //널이 아니면...
+                    val file = File(it) // 생선손질..
+                    val requestBody: RequestBody =
+                        RequestBody.create("image/*".toMediaTypeOrNull(), file) // 진공팩포장
+                    MultipartBody.Part.createFormData(
+                        "img1",
+                        file.name,
+                        requestBody
+                    ) // 택배상자 포장.. == 리턴되는 값
                 }
-                override fun onResponseFailure(errorMsg: String?) {
-                    Log.d("one file upload fail",errorMsg!!) // 에러 메시지
-                    Toast.makeText(this@DogAddActivity, "이미지 업로드 에러", Toast.LENGTH_SHORT).show()
-                }
-            }).onefileUploadRequest()
-        }else savePet("")
 
+                if (filePart != null) {
+                    RetrofitProcess(this, params = filePart, callback = object : RetrofitCallback {
+                        override fun onResponseListSuccess(response: List<Any>?) {}
+
+                        override fun onResponseSuccess(response: Any?) {
+                            val code = (response as String)
+                            Log.d("one file upload code", "$code") // 실패 시 5404, 성공 시 이미지 경로
+                            if (code != "5404") {
+                                savePet(code)
+                                Toast.makeText(this@DogAddActivity, "이미지+추가성공", Toast.LENGTH_SHORT)
+                                    .show()
+                            } else Toast.makeText(
+                                this@DogAddActivity,
+                                "이미지 업로드 실패",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                        override fun onResponseFailure(errorMsg: String?) {
+                            Log.d("one file upload fail", errorMsg!!) // 에러 메시지
+                            Toast.makeText(this@DogAddActivity, "이미지 업로드 에러", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                    }).onefileUploadRequest()
+                } else savePet("")
+            }else AlertDialog.Builder(this).setMessage("현재날짜까지 가능합니다").create().show()
         }
 
     }// addPet..
@@ -132,11 +151,12 @@ class DogAddActivity : AppCompatActivity() {
         petName = binding.addPetName.text.toString()
         petbreed = binding.addPetBreed.text.toString()
         birthdate = binding.addPetBirthDate.text.toString().replace("-","")
-        var dateFormat = SimpleDateFormat("yyyyMMdd", Locale.KOREA)
-        var currentDate = dateFormat.format(Date()).toInt()
-        var selectedDate = binding.addPetBirthDate.text.toString().replace("-","").toInt()
 
         if (saveCheck(petName, petbreed, birthdate) ) {
+
+            var dateFormat = SimpleDateFormat("yyyyMMdd", Locale.KOREA)
+            var currentDate = dateFormat.format(Date()).toInt()
+            var selectedDate = birthdate.toInt()
 
             if (currentDate >= selectedDate) {
 

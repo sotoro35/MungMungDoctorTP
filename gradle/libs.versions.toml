@@ -1,5 +1,5 @@
 [versions]
-agp = "8.3.1"
+agp = "8.3.2"
 kotlin = "1.9.0"
 coreKtx = "1.12.0"
 junit = "4.13.2"
@@ -10,6 +10,7 @@ mapSdk = "3.18.0"
 material = "1.11.0"
 activity = "1.8.0"
 constraintlayout = "2.1.4"
+oauth = "5.9.1"
 playServicesLocationVersion = "21.0.1"
 retrofit = "2.11.0"
 glide = "5.0.0-rc01"
@@ -32,6 +33,7 @@ cameraLifecycleVersion = "1.4.0-alpha04"
 cameraVideo = "1.4.0-alpha04"
 cameraView = "1.4.0-alpha04"
 cameraExtensions = "1.4.0-alpha04"
+v2User = "2.20.1"
 
 
 [libraries]
@@ -47,6 +49,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 #play-services-location-v2101 = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocationVersion" }
+oauth = { module = "com.navercorp.nid:oauth", version.ref = "oauth" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 circleimageview = { group = "de.hdodenhof", name = "circleimageview", version.ref = "circleimageview" }
@@ -67,6 +70,7 @@ androidx-camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycl
 androidx-camera-video = { group = "androidx.camera", name = "camera-video", version.ref = "cameraVideo" }
 androidx-camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "cameraView" }
 androidx-camera-extensions = { group = "androidx.camera", name = "camera-extensions", version.ref = "cameraExtensions" }
+v2-user = { module = "com.kakao.sdk:v2-user", version.ref = "v2User" }
 
 
 

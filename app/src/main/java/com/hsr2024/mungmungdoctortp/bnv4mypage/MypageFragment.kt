@@ -109,8 +109,8 @@ class MypageFragment : Fragment() {
             }).petListRequest()
     }
 
+    @SuppressLint("SuspiciousIndentation")
     private fun loadUser(){
-
         val params= Individual("${G.user_email}", "${G.user_providerId}", "${G.loginType}")
             RetrofitProcess(requireContext(),params=params, callback = object : RetrofitCallback {
             override fun onResponseListSuccess(response: List<Any>?) {}
@@ -182,17 +182,16 @@ class MypageFragment : Fragment() {
 
 
     lateinit var alertDialog: AlertDialog
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint("MissingInflatedId", "CutPasteId")
     private fun userDelete() {
         val dialogV = layoutInflater.inflate(R.layout.dialog_user_delete, null)
         val builder = AlertDialog.Builder(requireContext())
         builder.setView(dialogV)
         alertDialog = builder.create()
+        val inputPassword = dialogV.findViewById<TextInputLayout>(R.id.input_password_delete1)
 
-        if (G.user_providerId != null && G.user_providerId != "" ){
-            dialogV.findViewById<TextInputLayout>(R.id.input_password_delete1).visibility = View.VISIBLE
-
-        }else dialogV.findViewById<TextInputLayout>(R.id.input_password_delete1).visibility = View.INVISIBLE
+        if (G.user_providerId == null || G.user_providerId == "") inputPassword.visibility = View.VISIBLE
+        else inputPassword.visibility = View.INVISIBLE
 
         dialogV.findViewById<TextView>(R.id.btn_close).setOnClickListener { alertDialog.dismiss() }
         dialogV.findViewById<TextView>(R.id.btn_user_delete).setOnClickListener {

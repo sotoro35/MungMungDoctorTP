@@ -37,9 +37,11 @@ class CareSelectDogAdapter(val context: Context, val pets:List<Pet>):
         val pet = pets[position]
         holder.binding.mypagePetName.text = pet.pet_name
 
-        if (pet.pet_imageUrl == null || pet.pet_imageUrl == "") {
-            holder.binding.mypagePetImage.setImageResource(R.drawable.pet_image)
-        }else Glide.with(context).load("http://43.200.163.153/img/${pet.pet_imageUrl}")
+
+        if (pet.pet_imageUrl != null && pet.pet_imageUrl != ""){
+            Glide.with(context).load("http://43.200.163.153/img/${pet.pet_imageUrl}").into(holder.binding.mypagePetImage)
+            Log.d("프로필사진","http://43.200.163.153/img/${pet.pet_imageUrl}")
+        }else holder.binding.mypagePetImage.setImageResource(R.drawable.pet_image)
 
 
         if (selectedItemPosition == position) {

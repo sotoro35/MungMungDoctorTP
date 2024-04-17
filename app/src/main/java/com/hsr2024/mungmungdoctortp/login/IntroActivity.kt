@@ -39,6 +39,7 @@ class IntroActivity : AppCompatActivity() {
                 pet_neutering = preferences.getString("pet_neutering","")!!
                 pet_breed = preferences.getString("pet_breed","")!!
                 loginType = preferences.getString("loginType","")!!
+                user_providerId = ""
 
             }
 

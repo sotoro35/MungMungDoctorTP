@@ -47,7 +47,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
+            android:inputType="textPassword"
             android:background="@drawable/bg_input_layout"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -108,7 +108,9 @@
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:scaleType="centerCrop"
-            android:src="@drawable/kakao_login"/>
+            android:src="@drawable/kakao_login"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"/>
 
         <ImageView
             android:id="@+id/btn_login_naver"
@@ -117,7 +119,9 @@
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/naver_login"/>
+            android:src="@drawable/naver_login"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"/>
 
         <TextView
             android:id="@+id/btn_signup"
