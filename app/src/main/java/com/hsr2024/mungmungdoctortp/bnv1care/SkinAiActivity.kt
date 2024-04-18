@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -24,8 +25,13 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.loader.content.CursorLoader
 import com.hsr2024.mungmungdoctortp.R
 import com.hsr2024.mungmungdoctortp.databinding.ActivitySkinAiBinding
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -93,6 +99,7 @@ class SkinAiActivity : AppCompatActivity() {
         }, ContextCompat.getMainExecutor(this))
     }//startCameraPreview...
 
+    var imgPath: String? = null
     private fun capture(){
         imageCapture ?: return
 
@@ -120,12 +127,15 @@ class SkinAiActivity : AppCompatActivity() {
                     image.setImageURI(uri)
                     val builder = AlertDialog.Builder(this@SkinAiActivity)
                     builder.setView(dialogV)
+                    imgPath = getRealPathFromUri(uri!!)
                     alertDialog = builder.create()
 
                     dialogV.findViewById<TextView>(R.id.test_close).setOnClickListener { alertDialog.dismiss() }
                     dialogV.findViewById<TextView>(R.id.test_start).setOnClickListener {
                         val intent = Intent(this@SkinAiActivity,AiResultActivity::class.java)
                         intent.putExtra("aiSkinImg",uri.toString())
+                        intent.putExtra("aiSkinImg2",imgPath)
+
                         startActivity(intent)
                         finish()
                     }
@@ -164,11 +174,13 @@ class SkinAiActivity : AppCompatActivity() {
                 val builder = AlertDialog.Builder(this)
                 builder.setView(dialogV)
                 alertDialog = builder.create()
+                imgPath = getRealPathFromUri(uri!!)
 
                 dialogV.findViewById<TextView>(R.id.test_close).setOnClickListener { alertDialog.dismiss() }
                 dialogV.findViewById<TextView>(R.id.test_start).setOnClickListener {
                     val intent = Intent(this,AiResultActivity::class.java)
                     intent.putExtra("aiSkinImg",uri.toString())
+                    intent.putExtra("aiSkinImg2",imgPath)
                     startActivity(intent)
                     finish()
                 }
@@ -178,5 +190,46 @@ class SkinAiActivity : AppCompatActivity() {
             }
         }
     }
+
+
+    private fun getRealPathFromUri(uri: Uri): String? {
+
+        // android 10 버전 부터는 Uri를 통해 파일의 실제 경로를 얻을 수 있는 방법이 없어졌음
+        // 그래서 uri에 해당하는 파일을 복사하여 임시로 파일을 만들고 그 파일의 경로를 이용하여 서버에 전송
+
+        // Uri[미디어저장소의 DB 주소]파일의 이름을 얻어오기 - DB SELECT 쿼리작업을 해주는 기능을 가진 객체를 이용
+        val cursorLoader: CursorLoader = CursorLoader(this, uri, null, null, null, null)
+        val cursor: Cursor? = cursorLoader.loadInBackground()
+        val fileName: String? = cursor?.run {
+            moveToFirst()
+            getString(getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME))
+        } // -------------------------------------------------------------------
+
+        // 복사본이 저장될 파일의 경로와 파일명.확장자
+        val file: File = File(externalCacheDir, fileName)
+
+        // 이제 진짜 복사 작업 수행
+        val inputStream: InputStream = contentResolver.openInputStream(uri) ?: return null
+        val outputStream: OutputStream = FileOutputStream(file)
+
+        // 파일복사
+        while (true) {
+            val buf: ByteArray = ByteArray(1024) // 빈 바이트 배열[길이:1KB]
+            val len: Int =
+                inputStream.read(buf) // 스트림을 통해 읽어들인 바이트들을 buf 배열에 넣어줌 -- 읽어드린 바이트 수를 리턴해 줌
+            if (len <= 0) break
+            outputStream.write(buf, 0, len) // 덮어쓰기가 아님..
+            // offset(오프셋-편차) 0을주면 0번부터 1024가 아님.. 0~1023 번 다음은 편차를 주지말고 1024 ~ 로 주라는 의미임
+            // 1024길이만큼 가져오는데.. 편차없이 1024 길이만큼 받다가 읽어드린 바이트(len)의 값만큼 쓰라는 의미임..
+
+        }// while
+
+        // 반복문이 끝났으면 복사가 완료된 것임
+
+        inputStream.close()
+        outputStream.close()
+
+        return file.absolutePath
+    }////////////////////////////////////////////////////////////////////////////
 
 }

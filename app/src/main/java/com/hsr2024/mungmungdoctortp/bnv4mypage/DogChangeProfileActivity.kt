@@ -143,34 +143,58 @@ class DogChangeProfileActivity : AppCompatActivity() {
 
     private fun changeSave(){
 
-        //이미지파일을 MutipartBody.Part 로 포장하여 전송: @Part
-        val filePart: MultipartBody.Part? = imgPath?.let { //널이 아니면...
-            val file= File(it) // 생선손질..
-            val requestBody: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(),file) // 진공팩포장
-            MultipartBody.Part.createFormData("img1", file.name,requestBody) // 택배상자 포장.. == 리턴되는 값
-        }
+        petName = binding.changePetName.text.toString()
+        petbreed = binding.changePetBreed.text.toString()
+        birthdate = binding.changePetBirthDate.text.toString().replace("-","")
 
-        if (filePart != null){
+        var dateFormat = SimpleDateFormat("yyyyMMdd", Locale.KOREA)
+        var currentDate = dateFormat.format(Date()).toInt()
+        var selectedDate = binding.changePetBirthDate.text.toString().replace("-","").toInt()
 
-            Log.d("이미지",filePart.toString())
+        if (currentDate >= selectedDate) {
 
-            RetrofitProcess(this,params=filePart, callback = object : RetrofitCallback {
-                override fun onResponseListSuccess(response: List<Any>?) {}
+            binding.btnChangeSave.isEnabled = false
+            binding.btnChangeDelete.isEnabled = false
+            Glide.with(this).load(R.drawable.loading).into(binding.loading)
 
-                override fun onResponseSuccess(response: Any?) {
-                    val code=(response as String)
-                    Log.d("one file upload code","$code") // 실패 시 5404, 성공 시 이미지 경로
-                    if (code != "5404")  save(code)
-                }
-                override fun onResponseFailure(errorMsg: String?) {
-                    Log.d("one file upload fail",errorMsg!!) // 에러 메시지
-                    Toast.makeText(this@DogChangeProfileActivity, "이미지 업로드 에러", Toast.LENGTH_SHORT).show()
-                }
-            }).onefileUploadRequest()
+            //이미지파일을 MutipartBody.Part 로 포장하여 전송: @Part
+            val filePart: MultipartBody.Part? = imgPath?.let { //널이 아니면...
+                val file = File(it) // 생선손질..
+                val requestBody: RequestBody =
+                    RequestBody.create("image/*".toMediaTypeOrNull(), file) // 진공팩포장
+                MultipartBody.Part.createFormData(
+                    "img1",
+                    file.name,
+                    requestBody
+                ) // 택배상자 포장.. == 리턴되는 값
+            }
 
-        }else save(pet.pet_imageUrl)
+            if (filePart != null) {
 
+                Log.d("이미지", filePart.toString())
 
+                RetrofitProcess(this, params = filePart, callback = object : RetrofitCallback {
+                    override fun onResponseListSuccess(response: List<Any>?) {}
+
+                    override fun onResponseSuccess(response: Any?) {
+                        val code = (response as String)
+                        Log.d("one file upload code", "$code") // 실패 시 5404, 성공 시 이미지 경로
+                        if (code != "5404") save(code)
+                    }
+
+                    override fun onResponseFailure(errorMsg: String?) {
+                        Log.d("one file upload fail", errorMsg!!) // 에러 메시지
+                        Toast.makeText(
+                            this@DogChangeProfileActivity,
+                            "이미지 업로드 에러",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }).onefileUploadRequest()
+
+            } else save(pet.pet_imageUrl)
+
+        }else AlertDialog.Builder(this).setMessage("현재날짜까지 가능합니다").create().show()
 
     }
 
