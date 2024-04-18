@@ -15,16 +15,6 @@
         android:layout_height="match_parent"
         android:visibility="gone"/>
 
-    <ImageView
-        android:id="@+id/preview_line"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerInside"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
-        android:src="@drawable/cameraline"
-        android:visibility="gone"/>
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/preview_capture"
         android:layout_width="80dp"

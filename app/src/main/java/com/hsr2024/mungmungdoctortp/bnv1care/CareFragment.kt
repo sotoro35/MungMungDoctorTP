@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.gms.common.internal.safeparcel.SafeParcelable.Param
 import com.hsr2024.mungmungdoctortp.G
 import com.hsr2024.mungmungdoctortp.R
 import com.hsr2024.mungmungdoctortp.adapter.CareSelectDogAdapter
@@ -27,6 +28,11 @@ import com.hsr2024.mungmungdoctortp.data.PetList
 import com.hsr2024.mungmungdoctortp.databinding.FragmentCareBinding
 import com.hsr2024.mungmungdoctortp.network.RetrofitCallback
 import com.hsr2024.mungmungdoctortp.network.RetrofitProcess
+import okhttp3.internal.format
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 class CareFragment:Fragment() {
 
@@ -69,9 +75,10 @@ class CareFragment:Fragment() {
             binding.line1.visibility = View.VISIBLE
             binding.line2.visibility = View.VISIBLE
 
+            var age = calculateAge(G.pet_birthDate)
             binding.petName.text = G.pet_name
             binding.petBreed.text = G.pet_breed
-            binding.petBirthDate.text = G.pet_birthDate
+            binding.petBirthDate.text = "만 ${age}세"
             binding.petGender.text = G.pet_gender
             binding.petNeutering.text = "중성화 ${G.pet_neutering}"
             if (G.pet_imageUrl == null || G.pet_imageUrl == "") {
@@ -127,9 +134,10 @@ class CareFragment:Fragment() {
 
                             Log.d("펫정보3","${G.pet_name}")
 
+                            var age = calculateAge(G.pet_birthDate)
                             binding.petName.text = G.pet_name
                             binding.petBreed.text = G.pet_breed
-                            binding.petBirthDate.text = G.pet_birthDate
+                            binding.petBirthDate.text = "만 ${age}세"
                             binding.petGender.text = G.pet_gender
                             binding.petNeutering.text = "중성화 ${neutering}"
                         }else{
@@ -188,7 +196,6 @@ class CareFragment:Fragment() {
 
                         val pets: List<Pet> = data.petList.sortedByDescending {it.pet_id}
 
-
                         if (pets != null){
                             dialogV.findViewById<TextView>(R.id.dog_empty).visibility = View.INVISIBLE
                             val mypageAdapter = CareSelectDogAdapter(requireContext(),pets)
@@ -231,6 +238,39 @@ class CareFragment:Fragment() {
             }
 
         }).petSelectRequest()
+    }
+
+    /**
+     * 생년월일을 기준으로 현재 나이 계산
+     * @param unix unixtimestamp
+     */
+
+    fun calculateAge(s: String?): String {
+        val dateString = s ?: return "생일 정보가 없습니다." // s가 null인 경우 예외 처리
+        val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
+        // 현재 날짜 가져오기
+        val currentDate = Calendar.getInstance()
+
+        // 생일 정보 파싱
+        val dateOfBirth = format.parse(dateString) ?: return "올바르지 않은 생일 형식입니다." // 생일 정보가 null이면 예외 처리
+
+        // 생일 정보를 Calendar 객체로 변환
+        val birthCalendar = Calendar.getInstance()
+        birthCalendar.time = dateOfBirth
+
+        // 나이 계산
+        var age = currentDate.get(Calendar.YEAR) - birthCalendar.get(Calendar.YEAR)
+
+        // 생일이 지났는지 확인
+        if (birthCalendar.get(Calendar.MONTH) > currentDate.get(Calendar.MONTH) ||
+            (birthCalendar.get(Calendar.MONTH) == currentDate.get(Calendar.MONTH) &&
+                    birthCalendar.get(Calendar.DAY_OF_MONTH) > currentDate.get(Calendar.DAY_OF_MONTH))
+        ) {
+            age-- // 아직 생일이 지나지 않았다면 나이에서 1을 뺍니다.
+        }
+
+        return "$age"
     }
 
 }

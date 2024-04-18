@@ -183,7 +183,7 @@ class NoteActivity : AppCompatActivity() {
                     calendar.addDecorators(EventDecorator1(hospitalDays, hospitalColor))
                 }//if
 
-
+               
                 //아답터에 대량의 리스트 넣어주기
                 binding.recyclerViewHospital.adapter =
                     HospitalRecordAdapter(this@NoteActivity, itemlist)

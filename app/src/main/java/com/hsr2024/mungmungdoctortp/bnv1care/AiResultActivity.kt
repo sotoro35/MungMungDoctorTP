@@ -2,6 +2,8 @@ package com.hsr2024.mungmungdoctortp.bnv1care
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.util.Log
@@ -40,26 +42,24 @@ class AiResultActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val uriE = intent.getStringExtra("aiEyeImg")
-        val uriS = intent.getStringExtra("aiSkinImg")
-        val urieye = uriE?.toUri()
-        val uriskin = uriS?.toUri()
-        val uploadeye = intent.getStringExtra("aiEyeImg2")
-        val uploadskin = intent.getStringExtra("aiSkinImg2")
 
+        val fileEye = intent.getStringExtra("aiEyeImg")
+        Log.d("비트맵","$fileEye")
+        val fileSkin = intent.getStringExtra("aiSkinImg")
 
-
-        if (urieye != null) {
-            binding.testImage.setImageURI(urieye)
+        if (fileEye != null){
+            loadfile(fileEye)
+            binding.testImage.setImageBitmap(fileDecode)
             diagnosis_type = "eye"
-            diagnostic_img_url = "$uploadeye"
+            diagnostic_img_url = "$fileEye"
             testEyeStart()
         }
 
-        if (uriskin != null) {
-            binding.testImage.setImageURI(uriskin)
+        if (fileSkin != null){
+            loadfile(fileSkin)
+            binding.testImage.setImageBitmap(fileDecode)
             diagnosis_type = "skin"
-            diagnostic_img_url = "$uploadskin"
+            diagnostic_img_url = "$fileSkin"
             testSkinStart()
         }
 
@@ -158,16 +158,10 @@ class AiResultActivity : AppCompatActivity() {
     }//deleteFromServer()
 
 
-
-
-
-
-
-
-
     var diagnosis_type = ""
     var diagnostic_img_url = ""
     var diagnosis_result = ""
+    lateinit var fileDecode:Bitmap
 
 
     private fun saveOnCareNote(image: String) {
@@ -180,57 +174,39 @@ class AiResultActivity : AppCompatActivity() {
             MultipartBody.Part.createFormData("img1", file.name, requestBody) // 택배상자 포장.. == 리턴되는 값
         }
 
-        RetrofitProcess(this, params = filePart!!, callback = object : RetrofitCallback {
-            override fun onResponseListSuccess(response: List<Any>?) {}
 
-            override fun onResponseSuccess(response: Any?) {
-                val code = (response as String)
-                Log.d("one file upload code", "$code") // 실패 시 5404, 성공 시 이미지 경로
-                if (code != "5404") {
-                    val params = AddorDeleteAI(
-                        "${G.user_email}",
-                        "${G.user_providerId}",
-                        "${G.loginType}",
-                        "${G.pet_id}", // pet_id는 pet 식별값
-                        "",                                     // ai 기록 식별 값( 안넣어도 됨)
-                        diagnosis_type,                           // 진단한 ai type (eye or skin)
-                        code,                       // ai 진단한 반려견 이미지 url
-                        diagnosis_result,                         // ai 진단결과 리스트(결막염 80%, 유루증 70%..)
-                    )
-                    RetrofitProcess(
-                        this@AiResultActivity,
-                        params = params,
-                        callback = object : RetrofitCallback {
-                            override fun onResponseListSuccess(response: List<Any>?) {}
+        RetrofitProcess(this,params=filePart!!, callback = object : RetrofitCallback {
+        override fun onResponseListSuccess(response: List<Any>?) {}
 
-                            override fun onResponseSuccess(response: Any?) {
-                                val code =
-                                    (response as String)             //  - 4204 서비스 회원 아님, 9100 ai 기록 추가 성공, 9101 ai 기록 추가 실패
-                                Log.d("ai add code", "$code")
-                                when (code) {
-                                    "4204" -> Toast.makeText(
-                                        this@AiResultActivity,
-                                        "관리자에게 문의하세요",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+        override fun onResponseSuccess(response: Any?) {
+            val code=(response as String)
+            Log.d("one file upload code","$code") // 실패 시 5404, 성공 시 이미지 경로
+            if (code != "5404"){
+                val params= AddorDeleteAI(
+                    "${G.user_email}",
+                    "${G.user_providerId}",
+                    "${G.loginType}",
+                    "${G.pet_id}", // pet_id는 pet 식별값
+                    "",                 // ai 기록 식별 값( 안넣어도 됨)
+                    diagnosis_type,        // 진단한 ai type (eye or skin)
+                    code,                   // ai 진단한 반려견 이미지 url
+                    diagnosis_result,       // ai 진단결과 리스트(결막염 80%, 유루증 70%..)
+                )
+                RetrofitProcess(this@AiResultActivity, params=params, callback = object : RetrofitCallback {
+                    override fun onResponseListSuccess(response: List<Any>?) {}
 
-                                    "9101" -> Toast.makeText(
-                                        this@AiResultActivity,
-                                        "관리자에게 문의하세요",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-
-                                    "9100" -> {
-                                        Toast.makeText(
-                                            this@AiResultActivity,
-                                            "기록이 완료되었습니다",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                        finish()
-                                        startActivity(Intent(this@AiResultActivity, NoteActivity::class.java))
+                    override fun onResponseSuccess(response: Any?) {
+                        val code=(response as String)             //  - 4204 서비스 회원 아님, 9100 ai 기록 추가 성공, 9101 ai 기록 추가 실패
+                        Log.d("ai add code","$code")
+                        when(code){
+                            "4204" -> Toast.makeText(this@AiResultActivity, "관리자에게 문의하세요", Toast.LENGTH_SHORT).show()
+                            "9101" -> Toast.makeText(this@AiResultActivity, "관리자에게 문의하세요", Toast.LENGTH_SHORT).show()
+                            "9100" -> {
+                                Toast.makeText(this@AiResultActivity, "기록이 완료되었습니다", Toast.LENGTH_SHORT).show()
+                                finish()
+                                startActivity(Intent(this@AiResultActivity, NoteActivity::class.java))                                     
                                     }
                                 }
-
                             }
 
                             override fun onResponseFailure(errorMsg: String?) {
@@ -410,5 +386,14 @@ class AiResultActivity : AppCompatActivity() {
 
 
     }//testSkin
+
+    private fun loadfile(file:String) {
+        val fileExist = File(file).exists()
+        Log.d("파일불러오기", "$fileExist")
+        if (fileExist) {
+            fileDecode = BitmapFactory.decodeFile(file)
+            Log.d("파일디코드", "$fileDecode")
+        }
+    }
 
 }

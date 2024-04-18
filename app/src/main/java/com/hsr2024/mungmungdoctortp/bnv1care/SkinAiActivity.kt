@@ -5,10 +5,13 @@ import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -28,6 +31,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.loader.content.CursorLoader
 import com.hsr2024.mungmungdoctortp.R
 import com.hsr2024.mungmungdoctortp.databinding.ActivitySkinAiBinding
+import com.takusemba.cropme.CropLayout
+import com.takusemba.cropme.OnCropListener
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -49,7 +54,6 @@ class SkinAiActivity : AppCompatActivity() {
         binding.aiSkinGallery.setOnClickListener { clickGallery() }
         binding.previewCapture.setOnClickListener { capture() }
 
-        binding.previewLine.visibility = View.GONE
         binding.preview.visibility = View.GONE
         binding.previewCapture.visibility = View.GONE
         binding.skinLinear.visibility = View.VISIBLE
@@ -72,7 +76,6 @@ class SkinAiActivity : AppCompatActivity() {
     var imageCapture: ImageCapture? =null // 프리뷰 작업이 시작될때 객체 생성
 
     private fun startCameraPreview(){
-        binding.previewLine.visibility = View.VISIBLE
         binding.preview.visibility = View.VISIBLE
         binding.previewCapture.visibility = View.VISIBLE
         binding.skinLinear.visibility = View.GONE
@@ -100,6 +103,9 @@ class SkinAiActivity : AppCompatActivity() {
     }//startCameraPreview...
 
     var imgPath: String? = null
+    lateinit var cropbitmap: Bitmap
+    lateinit var file:File
+
     private fun capture(){
         imageCapture ?: return
 
@@ -115,7 +121,7 @@ class SkinAiActivity : AppCompatActivity() {
         // 촬영한 사진을 저장학 객체
         val outputFileOptions = ImageCapture.OutputFileOptions.Builder(
             contentResolver, MediaStore.Images.Media.EXTERNAL_CONTENT_URI,contentValues).build()
-        imageCapture!!.takePicture(outputFileOptions,ContextCompat.getMainExecutor(this),object :
+            imageCapture!!.takePicture(outputFileOptions,ContextCompat.getMainExecutor(this),object :
             ImageCapture.OnImageSavedCallback {
             override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
 
@@ -123,8 +129,10 @@ class SkinAiActivity : AppCompatActivity() {
 
                 if (uri != null){
                     val dialogV = layoutInflater.inflate(R.layout.dialog_ai_image,null)
-                    val image = dialogV.findViewById<ImageView>(R.id.test_select_image)
-                    image.setImageURI(uri)
+                    val image = dialogV.findViewById<CropLayout>(R.id.test_select_image)
+                    image.setUri(uri!!)
+
+
                     val builder = AlertDialog.Builder(this@SkinAiActivity)
                     builder.setView(dialogV)
                     imgPath = getRealPathFromUri(uri!!)
@@ -132,12 +140,26 @@ class SkinAiActivity : AppCompatActivity() {
 
                     dialogV.findViewById<TextView>(R.id.test_close).setOnClickListener { alertDialog.dismiss() }
                     dialogV.findViewById<TextView>(R.id.test_start).setOnClickListener {
-                        val intent = Intent(this@SkinAiActivity,AiResultActivity::class.java)
-                        intent.putExtra("aiSkinImg",uri.toString())
-                        intent.putExtra("aiSkinImg2",imgPath)
+                        image.crop()
+                        image.addOnCropListener(object : OnCropListener{
+                            override fun onFailure(e: Exception) {
+                                Toast.makeText(this@SkinAiActivity, "관리자에게문의하세요", Toast.LENGTH_SHORT).show()
+                                Log.d("크롭에러","${e.message}")
+                            }
 
-                        startActivity(intent)
-                        finish()
+                            override fun onSuccess(bitmap: Bitmap) {
+                                cropbitmap = bitmap
+                                savefile(cropbitmap)
+                                val intent = Intent(this@SkinAiActivity,AiResultActivity::class.java)
+                                //intent.putExtra("aiSkinImg",uri.toString())
+                                //intent.putExtra("aiSkinImg2",imgPath)
+                                intent.putExtra("aiSkinImg",file.absolutePath.toString())
+                                startActivity(intent)
+                                finish()
+                            }
+
+                        })
+
                     }
                     alertDialog.show()
 
@@ -167,10 +189,9 @@ class SkinAiActivity : AppCompatActivity() {
         if (it.resultCode == RESULT_OK){
             uri = it.data?.data
             if (uri != null){
-
                 val dialogV = layoutInflater.inflate(R.layout.dialog_ai_image,null)
-                val image = dialogV.findViewById<ImageView>(R.id.test_select_image)
-                image.setImageURI(uri)
+                val image = dialogV.findViewById<CropLayout>(R.id.test_select_image)
+                image.setUri(uri!!)
                 val builder = AlertDialog.Builder(this)
                 builder.setView(dialogV)
                 alertDialog = builder.create()
@@ -178,17 +199,60 @@ class SkinAiActivity : AppCompatActivity() {
 
                 dialogV.findViewById<TextView>(R.id.test_close).setOnClickListener { alertDialog.dismiss() }
                 dialogV.findViewById<TextView>(R.id.test_start).setOnClickListener {
-                    val intent = Intent(this,AiResultActivity::class.java)
-                    intent.putExtra("aiSkinImg",uri.toString())
-                    intent.putExtra("aiSkinImg2",imgPath)
-                    startActivity(intent)
-                    finish()
+                    image.crop()
+                    image.addOnCropListener(object :OnCropListener{
+                        override fun onFailure(e: Exception) {
+                            Toast.makeText(this@SkinAiActivity, "관리자에게문의하세요", Toast.LENGTH_SHORT).show()
+                            Log.d("크롭에러","${e.message}")
+                        }
+
+                        override fun onSuccess(bitmap: Bitmap) {
+                            val intent = Intent(this@SkinAiActivity,AiResultActivity::class.java)
+                            //intent.putExtra("aiSkinImg",uri.toString())
+                            //intent.putExtra("aiSkinImg2",imgPath)
+                            intent.putExtra("aiSkinImg",file.absolutePath.toString())
+                            startActivity(intent)
+                            finish()
+                        }
+
+                    })
+
                 }
 
                 alertDialog.show()
 
             }
         }
+    }
+
+    private fun savefile(bitmap: Bitmap){
+        // 내장 저장공간의 외부 저장소 중에서 공용영역에 저장 - 앱을 삭제해도 파일은 남아 있는 영역
+
+        // 공용영역의 경로부터
+        val path: File = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+        // 경로는 정해졌으니 저장될 파일의 이름과 확장자 정하기 - 중복되지 않도록 날짜를 이용하여 명명
+        val sdf: android.icu.text.SimpleDateFormat =
+            android.icu.text.SimpleDateFormat("yyyyMMddHHmmss")
+        val fileName:String = "IMG_"+sdf.format(Date()) + ".jpg" //"IMG_20240219143924.jpg
+
+        // 경로와 파일명을 결합
+        file = File(path, fileName)
+
+        // stream에서는 경로의 폴더가 있으면 냅두고 없으면 만들는 기능이 있기에.. 미리 만들어둘 필요가 없음
+        //file.createNewFile()
+
+        // 파일을 스트림에 넣어줌
+        val outputStream = FileOutputStream(file)
+
+        // 비트맵 압축
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100,outputStream)
+
+        outputStream.flush()
+        outputStream.close()
+
+        // 여기까지 경로가 잘 되었는지 확인
+        //AlertDialog.Builder(this).setMessage(file.toString()).create().show()
+
     }
 
 
