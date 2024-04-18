@@ -34,11 +34,6 @@ class AIRecordAdapter(val context:Context, val itemList:List<AIRecordData>) : Ad
         holder.binding.tvDiseaseName2.text = item.diagnosis_result
         holder.binding.tvDate.text = item.id
 
-        holder.binding.tvDelete.setOnClickListener {
-            // x누르면 삭제
-        }//온클릭리스너
-
-
 
         holder.binding.root.setOnClickListener {
             //바인딩루트누르면 상네내용으로 이동

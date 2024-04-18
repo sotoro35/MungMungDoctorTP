@@ -98,6 +98,7 @@ class RecordHosActivity : AppCompatActivity() {
         //1.서버에 새로운 이미지 업데이트 요청
         val dataPart: MutableMap<String, String> = mutableMapOf()
         dataPart["name"] = name
+        Log.d("dsfffff", name)
         dataPart["price"] = price
         dataPart["date"] = date
         dataPart["diseaseName"] = diseaseName

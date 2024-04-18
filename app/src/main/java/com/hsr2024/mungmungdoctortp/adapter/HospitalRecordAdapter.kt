@@ -43,21 +43,7 @@ class HospitalRecordAdapter(val context: Context,val itemlist:List<HospitalRecor
         holder.binding.tvPrice.text = item.price
         holder.binding.tvDate.text = item.visit_date
 
-        holder.binding.tvDelete.setOnClickListener {
-            AlertDialog.Builder(context).setMessage("병원기록을 삭제하시겠습니까?")
-                .setPositiveButton("삭제", object : DialogInterface.OnClickListener{
-                    override fun onClick(dialog: DialogInterface?, which: Int) {
-                        Toast.makeText(context, "삭제하기", Toast.LENGTH_SHORT).show()
-                        //서버에서 삭제하기
-                    }
-                })
-                .setNegativeButton("취소", object : DialogInterface.OnClickListener{
-                    override fun onClick(dialog: DialogInterface?, which: Int) {
-                        TODO("Not yet implemented")
-                    }
-                })
 
-        }//온클릭
 
 
         //바인딩루트 클릭시 상세페이지이동
@@ -72,33 +58,13 @@ class HospitalRecordAdapter(val context: Context,val itemlist:List<HospitalRecor
             bundle.putString("content", item.description)//내용
             bundle.putString("bill_img", item.receipt_img_url)
             bundle.putString("clinic_img", item.clinical_img_url)
+            bundle.putString("id", item.id)
 
             val intent = Intent(context, ShowHosActivity::class.java)
             intent.putExtras(bundle)
             context.startActivity(intent)
         }//온클릭
 
-        holder.binding.tvDelete.setOnClickListener {
-            // hospitalDeleteRequest 사용법
-            val params= AddorModifyorDeleteHospital(
-                G.user_email, G.user_providerId, G.loginType, G.pet_id, // pet_id는 pet 식별값
-                                                    //??? id // 병원 기록 식별 값
-             )
-            RetrofitProcess(context, params=params, callback = object : RetrofitCallback {
-                override fun onResponseListSuccess(response: List<Any>?) {}
-
-                override fun onResponseSuccess(response: Any?) {
-                    val code=(response as String)             //  - 4204 서비스 회원 아님, 8300 병원 기록 삭제 성공, 8301 병원 기록 삭제 실패
-                    Log.d("hospital delete code","$code")
-
-                }
-
-                override fun onResponseFailure(errorMsg: String?) {
-                    Log.d("hospital delete fail",errorMsg!!) // 에러 메시지
-                }
-
-            }).hospitalDeleteRequest()
-        }//온클릭
 
     }
 

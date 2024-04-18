@@ -1,6 +1,7 @@
 package com.hsr2024.mungmungdoctortp.bnv1care
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -10,8 +11,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
+import com.hsr2024.mungmungdoctortp.G
 import com.hsr2024.mungmungdoctortp.R
+import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteHospital
 import com.hsr2024.mungmungdoctortp.databinding.ActivityShowHosBinding
+import com.hsr2024.mungmungdoctortp.network.RetrofitCallback
+import com.hsr2024.mungmungdoctortp.network.RetrofitProcess
 
 class ShowHosActivity : AppCompatActivity() {
 
@@ -22,6 +27,8 @@ class ShowHosActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setting()
+
+        binding.toolbar.setNavigationOnClickListener { finish() }
 
         binding.toolbar.setOnMenuItemClickListener {
             deleteHosRecord()
@@ -41,6 +48,7 @@ class ShowHosActivity : AppCompatActivity() {
             override fun onClick(dialog: DialogInterface?, which: Int) {
                 Toast.makeText(this@ShowHosActivity, "삭제하기", Toast.LENGTH_SHORT).show()
                 //서버에서 데이터 지우기.delete
+                deleteFromServer()
             }
         })
         builder.setNegativeButton("취소", object : DialogInterface.OnClickListener{
@@ -54,7 +62,36 @@ class ShowHosActivity : AppCompatActivity() {
 
 
     }
+    
+    
+    private fun deleteFromServer(){
+        val receivedBundle = intent.extras
+        val id = receivedBundle?.getString("id") ?: ""
 
+        //hospitalDeleteRequest 사용법
+        val params= AddorModifyorDeleteHospital(G.user_email, G.user_providerId, G.loginType, G.pet_id, // pet_id는 pet 식별값
+            id// 병원 기록 식별 값
+         )
+        RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+            override fun onResponseListSuccess(response: List<Any>?) {}
+
+            override fun onResponseSuccess(response: Any?) {
+                val code=(response as String)             //  - 4204 서비스 회원 아님, 8300 병원 기록 삭제 성공, 8301 병원 기록 삭제 실패
+                Log.d("hospital delete codeaa","$code")
+                Toast.makeText(this@ShowHosActivity, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@ShowHosActivity, NoteActivity::class.java)
+                startActivity(intent)
+
+            }
+
+            override fun onResponseFailure(errorMsg: String?) {
+                Log.d("hospital delete fail",errorMsg!!) // 에러 메시지
+                Toast.makeText(this@ShowHosActivity, "서버문제로 삭제 실패했습니다.", Toast.LENGTH_SHORT).show()
+            }
+
+        }).hospitalDeleteRequest()
+
+    }//deleteFromServer()
 
 
 

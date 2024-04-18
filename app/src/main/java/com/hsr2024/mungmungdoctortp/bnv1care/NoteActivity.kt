@@ -92,6 +92,14 @@ class NoteActivity : AppCompatActivity() {
     }//oncreate
 
 
+    override fun onResume() {
+        super.onResume()
+        setCalendar()
+    }
+
+
+
+
     //화면 처음에 보여질 칼렌더 세팅하기
     private fun setCalendar() {
 
