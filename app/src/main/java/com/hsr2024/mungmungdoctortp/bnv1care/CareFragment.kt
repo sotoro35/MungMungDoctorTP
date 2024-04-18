@@ -196,7 +196,6 @@ class CareFragment:Fragment() {
 
                         val pets: List<Pet> = data.petList.sortedByDescending {it.pet_id}
 
-
                         if (pets != null){
                             dialogV.findViewById<TextView>(R.id.dog_empty).visibility = View.INVISIBLE
                             val mypageAdapter = CareSelectDogAdapter(requireContext(),pets)

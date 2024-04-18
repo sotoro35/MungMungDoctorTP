@@ -34,6 +34,7 @@ cameraVideo = "1.4.0-alpha04"
 cameraView = "1.4.0-alpha04"
 cameraExtensions = "1.4.0-alpha04"
 v2User = "2.20.1"
+cropme = "2.0.8"
 
 
 [libraries]
@@ -71,6 +72,7 @@ androidx-camera-video = { group = "androidx.camera", name = "camera-video", vers
 androidx-camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "cameraView" }
 androidx-camera-extensions = { group = "androidx.camera", name = "camera-extensions", version.ref = "cameraExtensions" }
 v2-user = { module = "com.kakao.sdk:v2-user", version.ref = "v2User" }
+cropme = { group = "com.github.takusemba", name = "cropme", version.ref = "cropme" }
 
 
 
