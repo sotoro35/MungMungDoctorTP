@@ -209,12 +209,12 @@ class NoteActivity : AppCompatActivity() {
         //AI검사기록 받아오기  clickedDate==""이면 모든데이터가 오고, 특정날짜가 있으면 그거에 맞는것만 데이터가 오고..
 
         val aiList:MutableList<AIRecordData> = mutableListOf()
-        val ai1 = AIRecordData("안구", "눈충혈80푸로", "눈튀나옴80프로", "2024/03/24")
-        val ai2 = AIRecordData("피부", "푸석거림30프루", "기미79프로", "2024/03/24")
-        val ai3 = AIRecordData("안구", "눈충혈80푸로", "눈튀나옴80프로", "2024/03/24")
-        aiList.add(ai1)
-        aiList.add(ai2)
-        aiList.add(ai3)
+//        val ai1 = AIRecordData("안구", "눈충혈80푸로", "눈튀나옴80프로", "2024/03/24")
+//        val ai2 = AIRecordData("피부", "푸석거림30프루", "기미79프로", "2024/03/24")
+//        val ai3 = AIRecordData("안구", "눈충혈80푸로", "눈튀나옴80프로", "2024/03/24")
+//        aiList.add(ai1)
+//        aiList.add(ai2)
+//        aiList.add(ai3)
 
         // 이후 아답터에 대량의 리스트 넣어주기
         binding.recyclerViewAI.adapter = AIRecordAdapter(this, aiList)
