@@ -8,8 +8,8 @@
 
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="150dp"
-        android:layout_height="200dp"
+        android:layout_width="230dp"
+        android:layout_height="130dp"
         android:elevation="4dp"
         app:cardCornerRadius="8dp"
         android:backgroundTint="@color/white"
@@ -36,34 +36,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="어깨결림 70프로"
-                android:textSize="16sp"
+                android:textSize="13sp"
                 android:textColor="@color/black"
                 android:layout_below="@id/tv_category"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="16dp"/>
-            <TextView
-                android:id="@+id/tv_disease_name2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="목안움직임80프로"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:layout_below="@id/tv_disease_name1"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="8dp"/>
-
-
-
-            <TextView
-                android:id="@+id/tv_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2024/03/14"
-                android:textSize="13sp"
-                android:textColor="#8B8686"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="12dp"/>
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_centerHorizontal="true"/>
 
 
 

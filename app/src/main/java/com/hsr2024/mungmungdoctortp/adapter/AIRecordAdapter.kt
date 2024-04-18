@@ -29,11 +29,23 @@ class AIRecordAdapter(val context:Context, val itemList:List<AIRecordData>) : Ad
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = itemList[position]
-        holder.binding.tvCategory.text = item.diagnosis_type
-        holder.binding.tvDiseaseName1.text = item.diagnosis_result
-        holder.binding.tvDiseaseName2.text = item.diagnosis_result
-        holder.binding.tvDate.text = item.id
+        if (item.diagnosis_type=="eye"){
+            holder.binding.tvCategory.text = "안구"
+        }
+        if (item.diagnosis_type=="skin"){
+            holder.binding.tvCategory.text = "피부"
+        }
 
+
+
+        // 쉼표를 기준으로 문자열 분할
+        val parts = item.diagnosis_result.split(",")
+        // 각 부분을 개행 문자로 연결하여 줄 바꿈
+        val new = parts.joinToString ("\n")
+
+
+
+        holder.binding.tvDiseaseName1.text = new
 
         holder.binding.root.setOnClickListener {
             //바인딩루트누르면 상네내용으로 이동
@@ -42,6 +54,7 @@ class AIRecordAdapter(val context:Context, val itemList:List<AIRecordData>) : Ad
             bundle.putString("result1", item.diagnosis_result)
             bundle.putString("result2", item.diagnosis_result)
             bundle.putString("img", item.diagnostic_img_url)
+            bundle.putString("id", item.id)
 
             val intent = Intent(context, AiResultActivity::class.java)
 
