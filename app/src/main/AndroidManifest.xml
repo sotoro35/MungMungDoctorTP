@@ -44,6 +44,9 @@
             android:name=".bnv2map.MapDetailActivity"
             android:exported="false" />
         <activity
+            android:name=".bnv4mypage.DogChangeProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".bnv1care.AiResultActivity"
             android:exported="false" />
         <activity

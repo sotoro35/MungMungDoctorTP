@@ -2,11 +2,14 @@ package com.hsr2024.mungmungdoctortp.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.hsr2024.mungmungdoctortp.bnv1care.AiResultActivity
 import com.hsr2024.mungmungdoctortp.bnv1care.HealthDetailActivity
+import com.hsr2024.mungmungdoctortp.bnv1care.ShowHosActivity
 import com.hsr2024.mungmungdoctortp.data.AIRecordData
 import com.hsr2024.mungmungdoctortp.databinding.RecyclerItemAiRecordBinding
 
@@ -26,20 +29,36 @@ class AIRecordAdapter(val context:Context, val itemList:List<AIRecordData>) : Ad
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = itemList[position]
-        holder.binding.tvCategory.text = item.diagnosis_type
-        holder.binding.tvDiseaseName1.text = item.diagnosis_result
-        holder.binding.tvDiseaseName2.text = item.diagnosis_result
-        holder.binding.tvDate.text = item.id
-
-        holder.binding.tvDelete.setOnClickListener {
-            // x누르면 삭제
-        }//온클릭리스너
+        if (item.diagnosis_type=="eye"){
+            holder.binding.tvCategory.text = "안구"
+        }
+        if (item.diagnosis_type=="skin"){
+            holder.binding.tvCategory.text = "피부"
+        }
 
 
+
+        // 쉼표를 기준으로 문자열 분할
+        val parts = item.diagnosis_result.split(",")
+        // 각 부분을 개행 문자로 연결하여 줄 바꿈
+        val new = parts.joinToString ("\n")
+
+
+
+        holder.binding.tvDiseaseName1.text = new
 
         holder.binding.root.setOnClickListener {
             //바인딩루트누르면 상네내용으로 이동
-            val intent = Intent(context, HealthDetailActivity::class.java)
+            val bundle = Bundle()
+            bundle.putString("type", "ai")
+            bundle.putString("result1", item.diagnosis_result)
+            bundle.putString("result2", item.diagnosis_result)
+            bundle.putString("img", item.diagnostic_img_url)
+            bundle.putString("id", item.id)
+
+            val intent = Intent(context, AiResultActivity::class.java)
+
+            intent.putExtras(bundle)
             context.startActivity(intent)
         }//온클릭리스너
 
