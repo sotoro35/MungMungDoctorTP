@@ -1232,7 +1232,7 @@ class RetrofitProcess(
     }
     // 32. ai 기록 목록 불러오기
 // aiListRequest 사용법
-//val params= HospitalorAiRecord("이메일정보", "provider_id", "로그인 타입", "pet_id", "date") // pet_id는 pet 식별값
+//val params= HospitalorAiRecordList("이메일정보", "provider_id", "로그인 타입", "pet_id", "date") // pet_id는 pet 식별값
     // date : 날짜를 선택해서 검색, 전체 날짜 검색할 경우 빈 값
 //RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
 //    override fun onResponseListSuccess(response: List<Any>?) {}
@@ -1245,6 +1245,7 @@ class RetrofitProcess(
 //          ai.diagnosis_type                             // 진단한 ai type (eye or skin)
 //          ai.diagnostic_img_url                         // ai 진단한 반려견 이미지 url
 //          ai.diagnosis_result                           // ai 진단결과 리스트(결막염 80%, 유루증 70%..)
+//          ai.date                                       // ai 진단날짜
 //        }
 //    }
 //

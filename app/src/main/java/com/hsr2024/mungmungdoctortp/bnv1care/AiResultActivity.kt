@@ -3,14 +3,24 @@ package com.hsr2024.mungmungdoctortp.bnv1care
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
+import com.hsr2024.mungmungdoctortp.G
+import com.hsr2024.mungmungdoctortp.data.AddorDeleteAI
 import com.hsr2024.mungmungdoctortp.databinding.ActivityAiResultBinding
 import com.hsr2024.mungmungdoctortp.ml.EyeModel
 import com.hsr2024.mungmungdoctortp.ml.EyeModel2
 import com.hsr2024.mungmungdoctortp.ml.SkinMode2
 import com.hsr2024.mungmungdoctortp.ml.SkinModel
+import com.hsr2024.mungmungdoctortp.network.RetrofitCallback
+import com.hsr2024.mungmungdoctortp.network.RetrofitProcess
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.tensorflow.lite.support.image.TensorImage
+import java.io.File
 import kotlin.collections.sortedByDescending
 
 class AiResultActivity : AppCompatActivity() {
@@ -22,30 +32,131 @@ class AiResultActivity : AppCompatActivity() {
 
         val uriE = intent.getStringExtra("aiEyeImg")
         val uriS = intent.getStringExtra("aiSkinImg")
-        val uriskin = uriS?.toUri()
         val urieye = uriE?.toUri()
+        val uriskin = uriS?.toUri()
+        val uploadeye = intent.getStringExtra("aiEyeImg2")
+        val uploadskin = intent.getStringExtra("aiSkinImg2")
+
 
         if (urieye != null){
             binding.testImage.setImageURI(urieye)
+            diagnosis_type = "eye"
+            diagnostic_img_url = "$uploadeye"
             testEyeStart()
         }
 
         if (uriskin != null){
             binding.testImage.setImageURI(uriskin)
+            diagnosis_type = "skin"
+            diagnostic_img_url = "$uploadskin"
             testSkinStart()
         }
 
-
         binding.toolbar.setNavigationOnClickListener { finish() }
-        binding.btnResultSave.setOnClickListener { saveOnCareNote() }
+        binding.btnResultSave.setOnClickListener { saveOnCareNote(diagnostic_img_url) }
+    }
 
+    var diagnosis_type = ""
+    var diagnostic_img_url = ""
+    var diagnosis_result = ""
+
+
+    private fun saveOnCareNote(image:String){
+
+        //이미지파일을 MutipartBody.Part 로 포장하여 전송: @Part
+        val filePart: MultipartBody.Part? = image?.let { //널이 아니면...
+            val file= File(it) // 생선손질..
+            val requestBody: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(),file) // 진공팩포장
+            MultipartBody.Part.createFormData("img1", file.name,requestBody) // 택배상자 포장.. == 리턴되는 값
+        }
+
+        RetrofitProcess(this,params=filePart!!, callback = object : RetrofitCallback {
+        override fun onResponseListSuccess(response: List<Any>?) {}
+
+        override fun onResponseSuccess(response: Any?) {
+            val code=(response as String)
+            Log.d("one file upload code","$code") // 실패 시 5404, 성공 시 이미지 경로
+            if (code != "5404"){
+                val params= AddorDeleteAI("${G.user_email}", "${G.user_providerId}", "${G.loginType}", "${G.pet_id}", // pet_id는 pet 식별값
+                    "",                                     // ai 기록 식별 값( 안넣어도 됨)
+                    diagnosis_type,                           // 진단한 ai type (eye or skin)
+                    code,                       // ai 진단한 반려견 이미지 url
+                    diagnosis_result,                         // ai 진단결과 리스트(결막염 80%, 유루증 70%..)
+                )
+                RetrofitProcess(this@AiResultActivity, params=params, callback = object : RetrofitCallback {
+                    override fun onResponseListSuccess(response: List<Any>?) {}
+
+                    override fun onResponseSuccess(response: Any?) {
+                        val code=(response as String)             //  - 4204 서비스 회원 아님, 9100 ai 기록 추가 성공, 9101 ai 기록 추가 실패
+                        Log.d("ai add code","$code")
+                        when(code){
+                            "4204" -> Toast.makeText(this@AiResultActivity, "관리자에게 문의하세요", Toast.LENGTH_SHORT).show()
+                            "9101" -> Toast.makeText(this@AiResultActivity, "관리자에게 문의하세요", Toast.LENGTH_SHORT).show()
+                            "9100" -> {
+                                Toast.makeText(this@AiResultActivity, "기록이 완료되었습니다", Toast.LENGTH_SHORT).show()
+                                finish()
+                            }
+                        }
+
+                    }
+                    override fun onResponseFailure(errorMsg: String?) {
+                        Log.d("ai add fail",errorMsg!!) // 에러 메시지
+                    }
+
+                }).aiAddRequest()
+
+            }
+        }
+
+        override fun onResponseFailure(errorMsg: String?) {
+            Log.d("one file upload fail",errorMsg!!) // 에러 메시지
+        }
+
+        }).onefileUploadRequest()
 
     }
 
 
-    private fun saveOnCareNote(){
-        //서버 Insert
-    }
+
+    private fun sendEyeOrSkin(label : String){
+
+        val intent = Intent(this, HealthDetailActivity::class.java)
+        if (label =="결막염"){
+            intent.putExtra("eye1", "eye1")//안검염/각막염/결막염
+        }else if (label =="백내장"){
+            intent.putExtra("eye5", "eye5")//백내장
+        }else if (label =="안검내반증"){
+            intent.putExtra("eye1", "eye1")//?
+        }else if (label =="안검종양"){
+            intent.putExtra("eye2", "eye2")//안검종양
+        }else if (label =="유루증"){
+            intent.putExtra("eye3", "eye3")//유루증
+        }else if (label =="핵경화"){
+            intent.putExtra("eye1", "eye1")//?
+        }else if (label =="궤양성각막질환"){
+            intent.putExtra("eye4", "eye4")//각막궤양
+        }else if (label =="비궤양성각막질환"){
+            intent.putExtra("eye1", "eye1")//?
+        }else if (label =="색소침착성각막염"){
+            intent.putExtra("eye1", "eye1")//?
+            //-------------- 여기부터 skin-----------
+        }else if (label == "구진/플라크"){
+            intent.putExtra("skin1", "skin1")
+        }else if (label == "농포/여드름"){
+            intent.putExtra("skin4", "skin4")
+        }else if (label == "미란/궤양"){
+            intent.putExtra("skin5", "skin5")
+        }else if (label == "결절_종괴"){
+            intent.putExtra("skin6", "skin6")
+        }else if (label == "비듬/각질/상피성잔고리"){
+            intent.putExtra("skin2", "skin2")
+        }else if (label == "태선화/과다색소침착"){
+            intent.putExtra("skin3", "skin3")
+        }
+
+        startActivity(intent)
+
+    }//sendEye()
 
 
 
@@ -102,6 +213,8 @@ class AiResultActivity : AppCompatActivity() {
             binding.result2Go.setOnClickListener {
                 sendEyeOrSkin(secondLabel)
             }
+
+            diagnosis_result = "$firstLabel : $firstScore%,$secondLabel : $secondScore%"
         }
 
 
@@ -110,47 +223,6 @@ class AiResultActivity : AppCompatActivity() {
 
     }// testEye
 
-
-
-    private fun sendEyeOrSkin(label : String){
-
-        val intent = Intent(this, HealthDetailActivity::class.java)
-        if (label =="결막염"){
-            intent.putExtra("eye1", "eye1")//안검염/각막염/결막염
-        }else if (label =="백내장"){
-            intent.putExtra("eye5", "eye5")//백내장
-        }else if (label =="안검내반증"){
-            intent.putExtra("eye1", "eye1")//?
-        }else if (label =="안검종양"){
-            intent.putExtra("eye2", "eye2")//안검종양
-        }else if (label =="유루증"){
-            intent.putExtra("eye3", "eye3")//유루증
-        }else if (label =="핵경화"){
-            intent.putExtra("eye1", "eye1")//?
-        }else if (label =="궤양성각막질환"){
-            intent.putExtra("eye4", "eye4")//각막궤양
-        }else if (label =="비궤양성각막질환"){
-            intent.putExtra("eye1", "eye1")//?
-        }else if (label =="색소침착성각막염"){
-            intent.putExtra("eye1", "eye1")//?
-            //-------------- 여기부터 skin-----------
-        }else if (label == "구진/플라크"){
-            intent.putExtra("skin1", "skin1")
-        }else if (label == "농포/여드름"){
-            intent.putExtra("skin4", "skin4")
-        }else if (label == "미란/궤양"){
-            intent.putExtra("skin5", "skin5")
-        }else if (label == "결절_종괴"){
-            intent.putExtra("skin6", "skin6")
-        }else if (label == "비듬/각질/상피성잔고리"){
-            intent.putExtra("skin2", "skin2")
-        }else if (label == "태선화/과다색소침착"){
-            intent.putExtra("skin3", "skin3")
-        }
-
-        startActivity(intent)
-
-    }//sendEye()
 
     private fun testSkinStart(){
 
@@ -208,8 +280,7 @@ class AiResultActivity : AppCompatActivity() {
                 sendEyeOrSkin(secondLabel)
             }
 
-
-
+            diagnosis_result = "$firstLabel : $firstScore%,$secondLabel : $secondScore%"
         }
 
         model.close()
