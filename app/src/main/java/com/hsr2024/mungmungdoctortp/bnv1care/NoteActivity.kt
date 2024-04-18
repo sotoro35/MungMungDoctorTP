@@ -98,8 +98,6 @@ class NoteActivity : AppCompatActivity() {
     }
 
 
-
-
     //화면 처음에 보여질 칼렌더 세팅하기
     private fun setCalendar() {
 
@@ -159,14 +157,14 @@ class NoteActivity : AppCompatActivity() {
                         hospital.receipt_img_url,                            // 영수증 이미지 url
                         hospital.clinical_img_url                           // 진료사진 이미지 url
                     )
-Log.d("dfffff",hospital.receipt_img_url)
+                    Log.d("dfffff", hospital.receipt_img_url)
                     itemlist.add(hospitalRecordData)
                     hospitalDateList.add(hospitalRecordData.visit_date)
                     Log.d("DFdsf", hospitalDateList.toString())
 
                 }//기차완성.
 
-                if (clickedDate == ""){
+                if (clickedDate == "") {
                     //각 날짜 문자열에 대해 처리하기
                     hospitalDateList.forEach { dateString ->
                         //날짜 문자열을 Date객체로 파싱
@@ -237,16 +235,17 @@ Log.d("dfffff",hospital.receipt_img_url)
                         ai.id,                                         // ai 기록 식별 값
                         ai.diagnosis_type,                             // 진단한 ai type (eype or skin)
                         ai.diagnostic_img_url,                         // ai 진단한 반려견 이미지 url
-                        ai.diagnosis_result                           // ai 진단결과 리스트(결막염 80%, 유루증 70%..)
+                        ai.diagnosis_result,
+                        ai.date// ai 진단결과 리스트(결막염 80%, 유루증 70%..)
                     )
 
                     itemList2.add(aiRecordData)
                     Log.d("fdfsdf", itemList2.toString())
-                    //aiDateList.add(ai.)
+                    aiDateList.add(ai.date)
                 }//기차완성
 
 
-                if (clickedDate == ""){
+                if (clickedDate == "") {
                     Log.d("dfsdfsd", aiDateList.toString())
 
                     //각 날짜 문자열에 대해 처리하기
@@ -292,7 +291,7 @@ Log.d("dfffff",hospital.receipt_img_url)
         override fun decorate(view: DayViewFacade?) {
             view?.addSpan(CustomMultipleDotSpan(8f, color))
             view?.addSpan(StyleSpan(Typeface.BOLD))
-            view?.addSpan(AbsoluteSizeSpan(20,true))
+            view?.addSpan(AbsoluteSizeSpan(20, true))
             view?.addSpan(ForegroundColorSpan(Color.parseColor("#737373")))
         }
     }
@@ -310,7 +309,7 @@ Log.d("dfffff",hospital.receipt_img_url)
             // view?.addSpan(DotSpan(10f, Color.parseColor("#FFA800")))
             view?.addSpan(CustomMultipleDotSpan(8f, color))
             view?.addSpan(StyleSpan(Typeface.BOLD))
-            view?.addSpan(AbsoluteSizeSpan(20,true))
+            view?.addSpan(AbsoluteSizeSpan(20, true))
             view?.addSpan(ForegroundColorSpan(Color.parseColor("#737373")))
         }
     }
@@ -329,7 +328,7 @@ Log.d("dfffff",hospital.receipt_img_url)
         override fun decorate(view: DayViewFacade?) {
             view?.setBackgroundDrawable(drawble)
             view?.addSpan(StyleSpan(Typeface.BOLD))
-            view?.addSpan(AbsoluteSizeSpan(17,true))
+            view?.addSpan(AbsoluteSizeSpan(17, true))
             view?.addSpan(ForegroundColorSpan(Color.parseColor("#706E6E")))
         }
     }
