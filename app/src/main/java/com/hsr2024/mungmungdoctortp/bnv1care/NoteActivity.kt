@@ -301,6 +301,7 @@ class NoteActivity : AppCompatActivity() {
     }
 
 
+
     //검사한날 데코레이터(파란점)
     inner class EventDecorator2(val dates: HashSet<CalendarDay>, val color: Int) :
         DayViewDecorator {//EventDecorator
