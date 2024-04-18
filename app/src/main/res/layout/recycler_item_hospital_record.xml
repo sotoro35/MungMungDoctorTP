@@ -27,19 +27,9 @@
             android:textSize="18sp"
             android:textColor="#FFA800"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/tv_delete"/>
-        <TextView
-            android:id="@+id/tv_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="  x  "
-            android:textSize="18sp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="4dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackground"/>
+            android:layout_marginTop="24dp"
+            />
+
 
         <TextView
             android:id="@+id/tv_disease_name"

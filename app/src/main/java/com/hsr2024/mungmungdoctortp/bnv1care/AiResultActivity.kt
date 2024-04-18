@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.util.Log
+import com.bumptech.glide.Glide
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
@@ -14,6 +15,8 @@ import com.hsr2024.mungmungdoctortp.ml.EyeModel
 import com.hsr2024.mungmungdoctortp.ml.EyeModel2
 import com.hsr2024.mungmungdoctortp.ml.SkinMode2
 import com.hsr2024.mungmungdoctortp.ml.SkinModel
+import com.hsr2024.mungmungdoctortp.network.RetrofitHelper
+import com.hsr2024.mungmungdoctortp.network.RetrofitService
 import com.hsr2024.mungmungdoctortp.network.RetrofitCallback
 import com.hsr2024.mungmungdoctortp.network.RetrofitProcess
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -59,6 +62,19 @@ class AiResultActivity : AppCompatActivity() {
     var diagnosis_type = ""
     var diagnostic_img_url = ""
     var diagnosis_result = ""
+
+
+        val receivedBundle = intent.extras
+        receivedBundle?.apply {
+            if (this.getString("type") == "ai"){
+                binding.result1.text = this.getString("result1")
+                binding.result2.text = this.getString("result2")
+
+                var imgUrl = "http://43.200.163.153/img/"+this.getString("img")
+                Glide.with(this@AiResultActivity).load(imgUrl).into(binding.iv)
+            }
+        }
+    }
 
 
     private fun saveOnCareNote(image:String){
@@ -157,8 +173,6 @@ class AiResultActivity : AppCompatActivity() {
         startActivity(intent)
 
     }//sendEye()
-
-
 
     private fun testEyeStart(){
         //1. 모델 객체생성
