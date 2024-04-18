@@ -40,7 +40,7 @@ class CustomMultipleDotSpan : LineBackgroundSpan {
             //빨간점이면 - 병원갔다온날은 왼쪽에
             paint.color = color
             canvas.drawCircle(
-                ((left + right) / 2 + 20).toFloat(),
+                ((left + right) / 2 + 15).toFloat(),
                 bottom + radius,
                 radius,
                 paint

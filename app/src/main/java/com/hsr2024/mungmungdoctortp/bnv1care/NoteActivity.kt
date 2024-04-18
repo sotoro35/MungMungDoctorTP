@@ -190,7 +190,7 @@ class NoteActivity : AppCompatActivity() {
 
                 //-------------검사한날-----------------------------
                 //서버에서 AI기록 갖고오기 -> aiDataList에 들어가고 -> 색과 함꼐 데코레이터 지정
-                getAIRecord("")
+                getAIRecord(clickedDate)
 
             }//레스폰스 석세스
 
@@ -202,6 +202,10 @@ class NoteActivity : AppCompatActivity() {
 
 
     }//getHospitalRecord
+
+
+
+
 
 
     //서버 - AI검사기록 특정날짜꺼 받아오기(날짜가 ""이면 모든날짜가져옴)
@@ -289,7 +293,7 @@ class NoteActivity : AppCompatActivity() {
         }
 
         override fun decorate(view: DayViewFacade?) {
-            view?.addSpan(CustomMultipleDotSpan(8f, color))
+            view?.addSpan(CustomMultipleDotSpan(10f, color))
             view?.addSpan(StyleSpan(Typeface.BOLD))
             view?.addSpan(AbsoluteSizeSpan(20, true))
             view?.addSpan(ForegroundColorSpan(Color.parseColor("#737373")))
@@ -307,7 +311,7 @@ class NoteActivity : AppCompatActivity() {
 
         override fun decorate(view: DayViewFacade?) {
             // view?.addSpan(DotSpan(10f, Color.parseColor("#FFA800")))
-            view?.addSpan(CustomMultipleDotSpan(8f, color))
+            view?.addSpan(CustomMultipleDotSpan(10f, color))
             view?.addSpan(StyleSpan(Typeface.BOLD))
             view?.addSpan(AbsoluteSizeSpan(20, true))
             view?.addSpan(ForegroundColorSpan(Color.parseColor("#737373")))
