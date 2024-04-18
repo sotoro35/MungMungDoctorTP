@@ -78,7 +78,7 @@ class CareFragment:Fragment() {
             var age = calculateAge(G.pet_birthDate)
             binding.petName.text = G.pet_name
             binding.petBreed.text = G.pet_breed
-            binding.petBirthDate.text = "$age"
+            binding.petBirthDate.text = "만 ${age}세"
             binding.petGender.text = G.pet_gender
             binding.petNeutering.text = "중성화 ${G.pet_neutering}"
             if (G.pet_imageUrl == null || G.pet_imageUrl == "") {
