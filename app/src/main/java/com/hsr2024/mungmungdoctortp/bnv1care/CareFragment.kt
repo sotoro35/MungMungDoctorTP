@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.gms.common.internal.safeparcel.SafeParcelable.Param
@@ -44,15 +43,15 @@ class CareFragment:Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_care, container, false)
+//        val view = inflater.inflate(R.layout.fragment_care, container, false)
 
-        val buttonToVaccine = view.findViewById<Button>(R.id.tv111)
-        buttonToVaccine.setOnClickListener {
-            val intent = Intent(activity, VaccineActivity::class.java)
-            startActivity(intent)
-        }
+//        val buttonToVaccine = view.findViewById<Button>(R.id.tv111)
+//        buttonToVaccine.setOnClickListener {
+//            val intent = Intent(activity, VaccineActivity::class.java)
+//            startActivity(intent)
+//        }
 
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -67,7 +66,7 @@ class CareFragment:Fragment() {
             startActivity( Intent(requireContext(), HealthInfoActivity::class.java) )
         }
 
-        //binding.btnVaccine.setOnClickListener { startActivity(Intent(requireContext(),VaccineActivity::class.java)) }
+        binding.btnVaccine.setOnClickListener { startActivity(Intent(requireContext(),VaccineActivity::class.java)) }
 
         load()
 
