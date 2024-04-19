@@ -1,48 +1,203 @@
 package com.hsr2024.mungmungdoctortp.bnv3community
 
+import android.content.Context
+import android.content.Intent
+import android.database.Cursor
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.loader.content.CursorLoader
+import com.bumptech.glide.Glide
+import com.google.gson.Gson
+import com.hsr2024.mungmungdoctortp.FeedG
+import com.hsr2024.mungmungdoctortp.G
+import com.hsr2024.mungmungdoctortp.QAG
+import com.hsr2024.mungmungdoctortp.R
+import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteComment
+import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteQA
 import com.hsr2024.mungmungdoctortp.data.CommentData
+import com.hsr2024.mungmungdoctortp.data.CommentDataList
+import com.hsr2024.mungmungdoctortp.data.QACommentList
+import com.hsr2024.mungmungdoctortp.data.QAData
 import com.hsr2024.mungmungdoctortp.databinding.ActivityQadetailBinding
 import com.hsr2024.mungmungdoctortp.main.CommentListAdapter
+import com.hsr2024.mungmungdoctortp.network.RetrofitCallback
+import com.hsr2024.mungmungdoctortp.network.RetrofitProcess
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.io.OutputStream
 
 class QADetailActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityQadetailBinding.inflate(layoutInflater) }
     private var commentAdapter: CommentListAdapter? = null
     private val items: MutableList<CommentData> = mutableListOf()
+
+    var profile_imgurl: String? = null
+    var nickname: String? = null
+    var title: String? = null
+    var content: String? = null
+    var img: String? = null
+    var comment_count: String? = null
+    var view_count: String? = null
+
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.toolbar.setOnClickListener { finish() }
+        binding.toolbar.setNavigationOnClickListener { finish() }
+        load()
 
-        commentAdapter = CommentListAdapter(this, items)
-        binding.recyclerView.adapter = commentAdapter
+//        val s=intent.getStringExtra("QAData")
+//        val qaData= Gson().fromJson(s, QAData::class.java)
+         //댓글 목록불러오기
+//        val params= QACommentList("${qaData.qa_id}", "${G.user_email}", "${G.user_providerId}", "email") // 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능
+//        RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//            override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//            override fun onResponseSuccess(response: Any?) {
+//                val data = (response as CommentDataList)
+//                Log.d("qa comment list  code", "$data")
+//                data.code                              // - 7300 qa comment 목록 성공, 7301 qa comment 목록 실패, 4204 서비스 회원 아님
+//                if(data.code=="7300") {
+//                    binding.recyclerView.adapter=CommentListAdapter(this@QADetailActivity,data.commentDatas)
+//                }
+//
+//
+//            }
+//
+//            override fun onResponseFailure(errorMsg: String?) {
+//                Log.d("qa comment list fail", errorMsg!!) // 에러 메시지
+//            }
+//        }).qaCommentListRequest()
+//
+//        setting()//화면보여질때 정보들 세팅하기..
+//
+//
+//        //binding.tvRegister.setOnClickListener { clickregister() }
+//        commentAdapter = CommentListAdapter(this, items)
+//        binding.recyclerView.adapter = commentAdapter
+
+        binding.toolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menu_insert -> {
+//                    QAG.QAName = qaData.title
+//                    QAG.QAImg = qaData.imgurl
+//                    QAG.QAText = qaData.content
+                    val intent = Intent(this@QADetailActivity, QAInsertActivity::class.java)
+                    intent.putExtra("profile_imgurl", profile_imgurl)
+                    intent.putExtra("nickname", nickname)
+                    intent.putExtra("title", title)
+                    intent.putExtra("img", img)
+                    intent.putExtra("comment_count", comment_count)
+                    intent.putExtra("view_count", view_count)
+                    intent.putExtra("content",content)
+                    startActivity(intent)
+                    finish()
+                    true
+                }
+
+                R.id.menu_delete -> {
+                    AlertDialog.Builder(this)
+                        .setTitle("삭제 하시겠습니까?")
+                        .setMessage("삭제하시면 복구하실 수 없습니다")
+                        .setPositiveButton("확인") { dialog, which ->
+                            Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                        }
+                        .setNegativeButton("취소") { dialog, which ->
+                            dialog.dismiss()
+                        }
+                        .create().show()
+                    true
+                }
+
+                else -> false
+
+            }
+        }
 
 
-    }
+    }//oncreate()
 
     override fun onResume() {
         super.onResume()
         // 임시 데이터 추가
+        load()
 
-        items.clear()
-        items.add(
-            CommentData("1", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s", "commentnickname",
-                "Content 내용", "2024-01-01","0")
-        )
-        items.add(
-            CommentData(
-                "2",
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_bPVLRowjzhD-ZGGFR4030vnxuvqueINKSNcbtg5Lpg&s",
-                "anothercommenter",
-                "Another comment",
-                "2024-01-02","D"
-            )
-        )
+    }
 
-        // RecyclerView 갱신
+
+    private fun setting(){
+
+        profile_imgurl = intent.getStringExtra("profileImg")
+        nickname = intent.getStringExtra("nickname")
+        title = intent.getStringExtra("title")
+        content = intent.getStringExtra("content")
+        img = intent.getStringExtra("img")
+        comment_count = intent.getStringExtra("comment_count")
+        view_count = intent.getStringExtra("view_count")
+
+        Log.d("dsfasdfl", profile_imgurl.toString())
+
+        Glide.with(this).load(profile_imgurl).into(binding.circleIv)
+        binding.tvNickname.text = nickname
+        binding.tvTitle.text = title
+        Glide.with(this).load(img).into(binding.iv)
+        binding.tvComment.text = comment_count
+        binding.tvWatch.text= view_count
+        binding.tvContent.text = content
+
+    }//테이크인포메이션
+
+
+
+
+    private fun load(){
+
+        val s=intent.getStringExtra("QAData")
+        val qaData= Gson().fromJson(s, QAData::class.java)
+        //댓글 목록불러오기
+        val params= QACommentList("${qaData.qa_id}", "${G.user_email}", "${G.user_providerId}", "email") // 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능
+        RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+            override fun onResponseListSuccess(response: List<Any>?) {}
+
+            override fun onResponseSuccess(response: Any?) {
+                val data = (response as CommentDataList)
+                Log.d("qa comment list  code", "$data")
+                data.code                              // - 7300 qa comment 목록 성공, 7301 qa comment 목록 실패, 4204 서비스 회원 아님
+                if(data.code=="7300") {
+                    binding.recyclerView.adapter=CommentListAdapter(this@QADetailActivity,data.commentDatas)
+
+                }
+
+            }
+
+            override fun onResponseFailure(errorMsg: String?) {
+                Log.d("qa comment list fail", errorMsg!!) // 에러 메시지
+            }
+        }).qaCommentListRequest()
+
+        setting()//화면보여질때 정보들 세팅하기..
+
+
+        //binding.tvRegister.setOnClickListener { clickregister() }
+        commentAdapter = CommentListAdapter(this, items)
+        binding.recyclerView.adapter = commentAdapter
         commentAdapter?.notifyDataSetChanged()
+
+
     }
 }

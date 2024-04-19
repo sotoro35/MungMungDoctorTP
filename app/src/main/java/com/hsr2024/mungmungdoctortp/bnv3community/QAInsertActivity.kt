@@ -16,29 +16,25 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.loader.content.CursorLoader
 import com.bumptech.glide.Glide
+import com.hsr2024.mungmungdoctortp.FeedG
 import com.hsr2024.mungmungdoctortp.G
+import com.hsr2024.mungmungdoctortp.QAG
 import com.hsr2024.mungmungdoctortp.R
-import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteFeed
-import com.hsr2024.mungmungdoctortp.data.FeedFavor
-import com.hsr2024.mungmungdoctortp.databinding.ActivityFeedBinding
-import com.hsr2024.mungmungdoctortp.databinding.FeeditemBinding
+import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteQA
+import com.hsr2024.mungmungdoctortp.databinding.ActivityQainsertBinding
 import com.hsr2024.mungmungdoctortp.network.RetrofitCallback
-import com.hsr2024.mungmungdoctortp.network.RetrofitHelper
 import com.hsr2024.mungmungdoctortp.network.RetrofitProcess
-import com.hsr2024.mungmungdoctortp.network.RetrofitService
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.create
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.OutputStream
 
-class FeedActivity : AppCompatActivity() {
+class QAInsertActivity : AppCompatActivity() {
 
-    private val binding by lazy { ActivityFeedBinding.inflate(layoutInflater) }
-
+    private val binding by lazy { ActivityQainsertBinding.inflate(layoutInflater) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -46,7 +42,31 @@ class FeedActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener { finish() }
 
         binding.iv.setOnClickListener { openGallery() }
-        binding.tvRegister.setOnClickListener { clickregister() }
+        binding.tvInsert.setOnClickListener { clickinsert() }
+
+        load()
+    }//onCreate()
+
+    val im= "http://43.200.163.153/img/${QAG.QAImg}"
+
+
+
+    private fun load(){
+
+        val profile_imgurl = intent.getStringExtra("profile_imgurl")
+        val nickname = intent.getStringExtra("nickname")
+        val title = intent.getStringExtra("title")
+        val img = intent.getStringExtra("img")
+        val comment_count = intent.getStringExtra("comment_count")
+        val view_count = intent.getStringExtra("view_count")
+        val content = intent.getStringExtra("content")
+
+
+        //Glide.with(this).load("http://43.200.163.153/img/${img}").into(binding.iv)
+
+        binding.inputName.setText(QAG.QAName)
+        binding.inputContent.setText(QAG.QAText)
+        Glide.with(this).load(im).into(binding.iv)
 
     }
 
@@ -105,9 +125,7 @@ class FeedActivity : AppCompatActivity() {
         //AlertDialog.Builder(this).setMessage(file.absolutePath).create().show()
         return file.absolutePath
     }///////////////////////////////////////////////////////////////////////////////////
-
-
-    private fun clickregister() {
+    private fun clickinsert() {
         val file: MultipartBody.Part? = imgPath?.let {
             val file = File(it)
             val requestBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
@@ -134,36 +152,35 @@ class FeedActivity : AppCompatActivity() {
         }else AlertDialog.Builder(this).setMessage("이미지를 등록해주세요.").create().show()
 
     }
-
-    private fun save(img: String) {
+    private fun save(img:String){
+        var title = binding.inputLayoutName.editText!!.text.toString()
         var content = binding.inputLayoutContent.editText!!.text.toString()
-        val params = AddorModifyorDeleteFeed(
-            "${G.user_email}", "${G.user_providerId}", "email", "", "$img", "$content"
-        ) // 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능
-        RetrofitProcess(this, params = params, callback = object : RetrofitCallback {
+        val params= AddorModifyorDeleteQA("${G.user_email}", "${G.user_providerId}", "email",
+            "${QAG.QAId}", "$img", "$title", "$content") // qa_id는 qa 식별값
+        RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
             override fun onResponseListSuccess(response: List<Any>?) {}
 
             override fun onResponseSuccess(response: Any?) {
-                val code = (response as String) //  - 4204 서비스 회원 아님, 6400 feed 추가 성공, 6401 feed 추가 실패
-                Log.d("feed add code", "$code")
-
+                val code=(response as String) //  - 4204 서비스 회원 아님, 7500 qa 수정 성공, 7501 qa 수정 실패
+                Log.d("qa modify code","$code")
                 when (code) {
                     "4204" -> {
-                        Toast.makeText(this@FeedActivity, "관리자에게 문의하세요.", Toast.LENGTH_SHORT).show()
-                        Log.d("feed오류", "서비스 회원 아님")
+                        Toast.makeText(this@QAInsertActivity, "관리자에게 문의하세요.", Toast.LENGTH_SHORT)
+                            .show()
+                        Log.d("qa오류", "서비스 회원 아님")
                     }
 
-                    "6401" -> {
+                    "7501" -> {
                         Toast.makeText(
-                            this@FeedActivity,
+                            this@QAInsertActivity,
                             "관리자에게 문의하세요",
                             Toast.LENGTH_SHORT
                         ).show()
-                        Log.d("feed오류", "추가 실패")
+                        Log.d("qa오류", "수정 실패")
                     }
 
-                    "6400" -> {
-                        Toast.makeText(this@FeedActivity, "등록이 완료되었습니다.", Toast.LENGTH_SHORT)
+                    "7500" -> {
+                        Toast.makeText(this@QAInsertActivity, "수정이 완료되었습니다.", Toast.LENGTH_SHORT)
                             .show()
                         finish()
                     }
@@ -171,11 +188,11 @@ class FeedActivity : AppCompatActivity() {
             }
 
             override fun onResponseFailure(errorMsg: String?) {
-                Log.d("feed add fail", errorMsg!!) // 에러 메시지
+                Log.d("qa modify fail",errorMsg!!) // 에러 메시지
             }
 
-        }).feedAddRequest()
-
+        }).qaModifyRequest()
     }
+
 
 }

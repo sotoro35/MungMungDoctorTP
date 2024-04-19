@@ -32,7 +32,6 @@ class QAAddActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityQaaddBinding.inflate(layoutInflater) }
     private val commentAdapter: CommentListAdapter? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -115,7 +114,7 @@ class QAAddActivity : AppCompatActivity() {
                 override fun onResponseSuccess(response: Any?) {
                     val code = (response as String)
                     Log.d("one file upload code", "$code") // 실패 시 5404, 성공 시 이미지 경로
-                    if (code != "5404"){
+                    if (code != "5404") {
                         save(code)
                     }
                 }
@@ -126,13 +125,11 @@ class QAAddActivity : AppCompatActivity() {
 
             }).onefileUploadRequest()
         }
-
     }
-
     private fun save(img:String){
         var title = binding.inputLayoutName.editText!!.text.toString()
         var content= binding.inputLayoutContent.editText!!.text.toString()
-        val params= AddorModifyorDeleteQA("b@b", "${G.user_providerId}",
+        val params= AddorModifyorDeleteQA("${G.user_email}", "${G.user_providerId}",
             "email", "", "$img", "$title", "$content")
         RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
             override fun onResponseListSuccess(response: List<Any>?) {}
@@ -166,4 +163,5 @@ class QAAddActivity : AppCompatActivity() {
 
         }).qaAddRequest()
     }
+
 }
