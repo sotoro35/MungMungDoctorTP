@@ -61,6 +61,17 @@ class CommunityFragment:Fragment() {
         val tab1Items = getItemListforTab1()
         val tab2Items = getItemListforTab2()
 
+        // 초기 설정
+        setupTab1()
+        binding.fabFavor.setOnClickListener {
+            if (fabstate == 0) {
+                startActivity(Intent(context, FeedActivity::class.java))
+            } else {
+                startActivity(Intent(context, QAAddActivity::class.java))
+            }
+
+        }
+
         // itemList 초기화
         binding.tablayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -82,16 +93,7 @@ class CommunityFragment:Fragment() {
             override fun onTabReselected(p0: TabLayout.Tab?) {}
 
         })
-        // 초기 설정
-        setupTab1()
-        binding.fabFavor.setOnClickListener {
-            if (fabstate == 0) {
-                startActivity(Intent(context, FeedActivity::class.java))
-            } else {
-                startActivity(Intent(context, QAAddActivity::class.java))
-            }
 
-        }
 
     }//onViewCreated
 
