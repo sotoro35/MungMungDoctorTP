@@ -111,7 +111,7 @@ class CommunityFragment:Fragment() {
 
     //아이템 리스트 업데이트
     private fun setupTab1() {
-        val params = Individual("${G.user_email}", "${G.user_providerId}", "email") // 비 로그인 상태일 경우 Individual()으로 생성가능
+        val params = Individual("${G.user_email}", "${G.user_providerId}", "${G.loginType}") // 비 로그인 상태일 경우 Individual()으로 생성가능
         RetrofitProcess(requireContext(), params = params, callback = object : RetrofitCallback {
             override fun onResponseListSuccess(response: List<Any>?) {}
 
@@ -138,7 +138,7 @@ class CommunityFragment:Fragment() {
 
     private fun setupTab2() {
         val params =
-            Individual("${G.user_email}", "${G.user_providerId}", "email") // 비 로그인 상태일 경우 Individual()으로 생성가능
+            Individual("${G.user_email}", "${G.user_providerId}", "${G.loginType}") // 비 로그인 상태일 경우 Individual()으로 생성가능
         RetrofitProcess(requireContext(), params = params, callback = object : RetrofitCallback {
             override fun onResponseListSuccess(response: List<Any>?) {}
 

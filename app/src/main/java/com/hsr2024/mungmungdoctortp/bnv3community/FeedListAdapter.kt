@@ -80,7 +80,7 @@ class FeedListAdapter(val context: Context, var items:List<FeedData>) : Adapter<
         }
 
         holder.binding.ivFavorite.setOnClickListener {
-        val params= FeedFavor("${G.user_email}", "${G.user_providerId}", "email", "${item.feed_id}") // feed_id feed 식별값
+        val params= FeedFavor("${G.user_email}", "${G.user_providerId}", "${G.loginType}", "${item.feed_id}") // feed_id feed 식별값
         RetrofitProcess(context, params=params, callback = object : RetrofitCallback {
             override fun onResponseListSuccess(response: List<Any>?) {}
 
@@ -95,6 +95,15 @@ class FeedListAdapter(val context: Context, var items:List<FeedData>) : Adapter<
                     val newFavoriteCount = if (item.isFavorite)currentFavoriteCount -1 else currentFavoriteCount +1
 
                     holder.binding.tvFavorite.text= newFavoriteCount.toString()
+
+                    val newHeartImage = if(item.isFavorite) R.drawable.favorite else R.drawable.favorites
+
+                    //val favor = if(item.isFavorite) false else true
+
+                    holder.binding.ivFavorite.setImageResource(newHeartImage)
+                    item.isFavorite =! item.isFavorite
+
+                    //holder.binding.tvFavorite.text= newFavoriteCount.toString()
 
                     }
                     "6901"->{
@@ -122,6 +131,9 @@ class FeedListAdapter(val context: Context, var items:List<FeedData>) : Adapter<
 //
 //            holder.binding.ivFavorite.setImageResource(newHeartImage)
 //            item.isFavorite =! item.isFavorite
+
+//            val currentFavoriteCount = holder.binding.tvFavorite.text.toString().toInt()
+//            val newFavoriteCount = if (item.isFavorite)currentFavoriteCount -1 else currentFavoriteCount +1
         }
 
 
@@ -142,7 +154,7 @@ class FeedListAdapter(val context: Context, var items:List<FeedData>) : Adapter<
     var sss:String = ""
     fun feedDelete(feedid:String){
 
-            val params= AddorModifyorDeleteFeed("${G.user_email}", "${G.user_providerId}", "email", "$feedid") // feed_id는 feed 식별값
+            val params= AddorModifyorDeleteFeed("${G.user_email}", "${G.user_providerId}", "${G.loginType}", "$feedid") // feed_id는 feed 식별값
             RetrofitProcess(context, params=params, callback = object : RetrofitCallback {
                 override fun onResponseListSuccess(response: List<Any>?) {}
 

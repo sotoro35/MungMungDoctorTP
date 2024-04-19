@@ -121,7 +121,7 @@ class QADetailActivity : AppCompatActivity() {
 
 
     private fun load(){
-        val params= QA("${QAG.QAId}", "${G.user_email}", "${G.user_providerId}", "email") // qa_id는 qa 식별자
+        val params= QA("${QAG.QAId}", "${G.user_email}", "${G.user_providerId}", "${G.loginType}") // qa_id는 qa 식별자
         RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
             override fun onResponseListSuccess(response: List<Any>?) {}
 
@@ -161,7 +161,7 @@ class QADetailActivity : AppCompatActivity() {
         val s=intent.getStringExtra("QAData")
         val qaData= Gson().fromJson(s, QAData::class.java)
         //댓글 목록불러오기
-        val params= QACommentList("${qaData.qa_id}", "${G.user_email}", "${G.user_providerId}", "email") // 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능
+        val params= QACommentList("${qaData.qa_id}", "${G.user_email}", "${G.user_providerId}", "${G.loginType}") // 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능
         RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
             override fun onResponseListSuccess(response: List<Any>?) {}
 

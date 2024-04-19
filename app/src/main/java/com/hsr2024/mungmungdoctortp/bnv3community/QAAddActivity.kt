@@ -131,7 +131,7 @@ class QAAddActivity : AppCompatActivity() {
         var title = binding.inputLayoutName.editText!!.text.toString()
         var content= binding.inputLayoutContent.editText!!.text.toString()
         val params= AddorModifyorDeleteQA("${G.user_email}", "${G.user_providerId}",
-            "email", "", "$img", "$title", "$content")
+            "${G.loginType}", "", "$img", "$title", "$content")
         RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
             override fun onResponseListSuccess(response: List<Any>?) {}
 

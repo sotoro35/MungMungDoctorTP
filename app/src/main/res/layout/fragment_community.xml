@@ -48,7 +48,7 @@
         android:backgroundTint="#f8e6c4"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="40dp"
         android:layout_marginRight="16dp"
         android:src="@drawable/add"/>
 
