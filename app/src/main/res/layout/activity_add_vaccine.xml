@@ -28,20 +28,7 @@
         android:layout_margin="14dp"
         android:textSize="20sp"/>
 
-    <TextView
-        android:id="@+id/add_vaccine_remove"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="12dp"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:layout_alignParentRight="true"
-        android:text="삭제"
-        android:background="@drawable/add_vaccine_textview"
-        android:textSize="15sp"
-        android:layout_alignBottom="@id/tv1"/>
+
 
     <CheckBox
         android:id="@+id/checkBox1Text"
@@ -182,7 +169,7 @@
 
     <Button
         android:id="@+id/btn_save"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="저장"
@@ -191,6 +178,22 @@
         android:layout_margin="12dp"
         android:layout_alignParentBottom="true"
         android:backgroundTint="#F6E447" />
+
+    <Button
+        android:id="@+id/btn_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:text="삭제"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:backgroundTint="#C1BDC1"
+        android:textSize="12sp"
+        android:visibility="visible"/>
 
 
 </RelativeLayout>

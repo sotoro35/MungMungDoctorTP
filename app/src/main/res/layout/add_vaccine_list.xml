@@ -13,6 +13,7 @@
             android:id="@+id/vaccine_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/vaccine_date"
             android:text="심장사상충, 외부기생충, 기타접종"
             android:textSize="18sp"
             android:textStyle="bold"/>
@@ -20,8 +21,7 @@
             android:id="@+id/vaccine_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignBottom="@id/vaccine_name"
+            android:layout_marginBottom="4dp"
             android:text="2024-04-11"
             android:textSize="15sp" />
         <TextView
@@ -37,10 +37,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="병원이름"
-            android:textSize="14sp"
-            android:layout_marginTop="4dp"
+            android:textSize="15sp"
+            android:layout_marginRight="8dp"
             android:layout_alignParentRight="true"
-            android:layout_below="@id/vaccine_date"/>
+            android:layout_alignTop="@id/vaccine_date"/>
 
 
         
