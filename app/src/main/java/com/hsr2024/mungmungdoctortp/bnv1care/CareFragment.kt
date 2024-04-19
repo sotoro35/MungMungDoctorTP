@@ -62,7 +62,6 @@ class CareFragment:Fragment() {
         load()
 
 
-
     }//onView...
 
     private fun changePetProfile(){
