@@ -13,20 +13,28 @@ import com.hsr2024.mungmungdoctortp.data.SignUpData
 import com.hsr2024.mungmungdoctortp.data.UserChange
 import com.hsr2024.mungmungdoctortp.data.UserDelete
 import com.hsr2024.mungmungdoctortp.data.AddDog
+import com.hsr2024.mungmungdoctortp.data.AdditionVaccinationList
 import com.hsr2024.mungmungdoctortp.data.AddorDeleteAI
+import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteAdditionVaccination
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteComment
+import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteEssentialVaccination
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteFeed
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteHospital
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteQA
 import com.hsr2024.mungmungdoctortp.data.CommentDataList
 import com.hsr2024.mungmungdoctortp.data.DeleteDog
+import com.hsr2024.mungmungdoctortp.data.EasySignUpData
+import com.hsr2024.mungmungdoctortp.data.EssentialVaccinationList
 import com.hsr2024.mungmungdoctortp.data.FeedCommentList
 import com.hsr2024.mungmungdoctortp.data.FeedFavor
 import com.hsr2024.mungmungdoctortp.data.HospitalRecordList
 import com.hsr2024.mungmungdoctortp.data.HospitalorAiRecordList
 import com.hsr2024.mungmungdoctortp.data.Individual
 import com.hsr2024.mungmungdoctortp.data.ModifyDog
+import com.hsr2024.mungmungdoctortp.data.QA
+import com.hsr2024.mungmungdoctortp.data.QABoard
 import com.hsr2024.mungmungdoctortp.data.QACommentList
+import com.hsr2024.mungmungdoctortp.data.QAData
 import com.hsr2024.mungmungdoctortp.data.QAView
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -50,6 +58,10 @@ interface RetrofitService {
     //회원가입(이메일)
     @POST("/sign/signup.php")
     fun singUp(@Body signUpData: SignUpData) : Call<String> // 1200 회원 추가 성공, 1201 회원 추가 실패, 4330 닉네임 또는 이메일 중복
+
+    //회원가입(간편회원)
+    @POST("/sign/easy_signup.php")
+    fun easySignUp(@Body signUpData: EasySignUpData) : Call<String> // 1200 회원 추가 성공, 1201 회원 추가 실패, 4330 닉네임 또는 이메일 중복
 
     //회원가입 시 닉네임 중복체크
     @GET("/sign/email_nickname_dupli_check.php")
@@ -214,4 +226,40 @@ interface RetrofitService {
     //해당 반려견의 ai 기록 삭제하기
     @POST("/pet/ai_delete.php")
     fun aiDelete(@Body aiDelete:AddorDeleteAI) : Call<String>
+
+    //해당 반려견의 추가 접종 목록 가져오기
+    @POST("/pet/addition_list.php")
+    fun additionVaccinationList(@Body additionVaccination:DeleteDog) : Call<AdditionVaccinationList>
+
+    //해당 반려견의 필수 접종 목록 가져오기
+    @POST("/pet/essential_list.php")
+    fun essentialVaccinationList(@Body essentialVaccination:DeleteDog) : Call<EssentialVaccinationList>
+
+    //해당 반려견의 추가 접종 작성하기
+    @POST("/pet/addition_add.php")
+    fun additionVaccinationAdd(@Body vaccinationAdd:AddorModifyorDeleteAdditionVaccination) : Call<String>
+
+    //해당 반려견의 필수 접종 작성하기
+    @POST("/pet/essential_add.php")
+    fun essentialVaccinationAdd(@Body vaccinationAdd:AddorModifyorDeleteEssentialVaccination) : Call<String>
+
+    //해당 반려견의 추가 접종 수정하기
+    @POST("/pet/addition_modify.php")
+    fun additionVaccinationModify(@Body vaccinationModify:AddorModifyorDeleteAdditionVaccination) : Call<String>
+
+    //해당 반려견의 필수 접종 수정하기
+    @POST("/pet/essential_modify.php")
+    fun essentialVaccinationModify(@Body vaccinationModify:AddorModifyorDeleteEssentialVaccination) : Call<String>
+
+    //해당 반려견의 추가 접종 삭제하기
+    @POST("/pet/addition_delete.php")
+    fun additionVaccinationDelete(@Body vaccinationDelete:AddorModifyorDeleteAdditionVaccination) : Call<String>
+
+    //해당 반려견의 필수 접종 삭제하기
+    @POST("/pet/essential_delete.php")
+    fun essentialVaccinationDelete(@Body vaccinationDelete:AddorModifyorDeleteEssentialVaccination) : Call<String>
+
+    //QA 1개 불러오기
+    @POST("/qa/qa.php")
+    fun qa(@Body qa:QA) : Call<QABoard>
 }

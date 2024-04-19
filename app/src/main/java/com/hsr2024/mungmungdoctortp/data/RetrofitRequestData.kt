@@ -4,6 +4,9 @@ package com.hsr2024.mungmungdoctortp.data
 data class LoginData(val email:String="", val password:String="", val access_token:String="", val login_type:String)
 //회원가입 시 보낼 데이터
 data class SignUpData(val email:String, val password:String, val nickname:String)
+//간편회원가입 시 보낼 데이터
+data class EasySignUpData(val provider_id:String, val nickname:String, val login_type:String)
+
 // type 종류
 //  - view : 안구, 피부 ai 진단결과 정보 요청
 //  - del_eye : 안구 ai 진단결과 삭제
@@ -70,3 +73,36 @@ data class AddorDeleteAI(
     val diagnostic_img_url: String="",         // ai 진단한 반려견 이미지 url
     val diagnosis_result: String=""            // ai 진단결과 리스트(결막염 80%, 유루증 70%..)
 )
+
+//추가 접종 기록 추가하기(id 값 안 넣어도 됨), 수정, 삭제(heartworm, external_parasites, .. 등 안 넣어도 됨)
+data class AddorModifyorDeleteAdditionVaccination(
+    val email:String="", val provider_id:String="", val login_type:String, val pet_id:String,
+    val id: String="",                         // 접종 기록 식별 값
+    val heartworm: String="FALSE",             // 심상사상충 접종여부 TRUE OR FALSE
+    val external_parasites: String="FALSE",    // 외부기생충 접종여부 TRUE OR FALSE
+    val vaccine: String="",                    // 기타 접종 이름
+    val date: String="",                       // 접종날짜
+    val hospital: String="",                   // 접종할 병원 이름
+    val memo: String=""                        // 접종 시 메모정보
+)
+
+//필수 접종 기록 추가하기(id 값 안 넣어도 됨), 수정, 삭제(shot_number, comprehensive, .. 등 안 넣어도 됨)
+data class AddorModifyorDeleteEssentialVaccination(
+    val email:String="", val provider_id:String="", val login_type:String, val pet_id:String,
+    val id: String="",                         // 접종 기록 식별 값
+    val shot_number: String="",                // 몇회차 접종(1 ~ 6)
+    val comprehensive: String="",              // 종합백신 1차, 종합백신 2차, 종합백신 3차, 종합백신 4차, 종합백신 5차, ""
+    val corona_enteritis: String="",           // 코로나 장염1차, 코로나 장염 2차, ""
+    val kennel_cough: String="",               // 켄넬코프 1차, 켄넬코프 2차, ""
+    val influenza: String="",                  // 인플루엔자 1차, 인플루엔자 2차, ""
+    val antibody_titer: String="",             // 항체가검사, ""
+    val rabies: String="",                     // 광견병, ""
+    val date: String="",                       // 접종날짜
+    val hospital: String="",                   // 접종할 병원 이름
+    val memo: String=""                        // 접종 시 메모정보
+)
+
+// 추가, 필수 접종 기록 목록 요청 시 DeleteDog 클래스 사용
+
+//qa 1개 불러오기
+data class QA(val qa_id:String, val email:String="", val provider_id:String="", val login_type:String)

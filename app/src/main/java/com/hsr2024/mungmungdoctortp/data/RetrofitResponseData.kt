@@ -77,6 +77,36 @@ data class AIRecordData(
     val diagnosis_type: String,             // 진단한 ai type (eype or skin)
     val diagnostic_img_url: String,         // ai 진단한 반려견 이미지 url
     val diagnosis_result: String,           // ai 진단결과 리스트(결막염 80%, 유루증 70%..)
+    val date: String                        // ai 진단날짜
 )
 
 data class AIRecordList(val aiRecordList:List<AIRecordData>, val code:String)
+
+data class AdditionVaccination(
+    val id: String="",                         // 접종 기록 식별 값
+    val heartworm: String="FALSE",             // 심상사상충 접종여부 TRUE OR FALSE
+    val external_parasites: String="FALSE",    // 외부기생충 접종여부 TRUE OR FALSE
+    val vaccine: String="",                    // 기타 접종 이름
+    val date: String="",                       // 접종날짜
+    val hospital: String="",                   // 접종할 병원 이름
+    val memo: String=""                        // 접종 시 메모정보
+)
+
+data class EssentialVaccination(
+    val id: String="",                         // 접종 기록 식별 값
+    val shot_number: String="",                // 몇회차 접종(1 ~ 6)
+    val comprehensive: String="",              // 종합백신 1차, 종합백신 2차, 종합백신 3차, 종합백신 4차, 종합백신 5차, ""
+    val corona_enteritis: String="",           // 코로나 장염1차, 코로나 장염 2차, ""
+    val kennel_cough: String="",               // 켄넬코프 1차, 켄넬코프 2차, ""
+    val influenza: String="",                  // 인플루엔자 1차, 인플루엔자 2차, ""
+    val antibody_titer: String="",             // 항체가검사, ""
+    val rabies: String="",                     // 광견병, ""
+    val date: String="",                       // 접종날짜
+    val hospital: String="",                   // 접종할 병원 이름
+    val memo: String=""                        // 접종 시 메모정보
+)
+
+data class AdditionVaccinationList(val vaccinationList:List<AdditionVaccination>, val code:String)
+data class EssentialVaccinationList(val vaccinationList:List<EssentialVaccination>, val code:String)
+
+data class QABoard(val qa_id:String, val profile_imgurl: String, val nickname :String, val imgurl:String, val title:String, val content:String, val view_count:String, val comment_count:String, val myQA:String, val code:String)
