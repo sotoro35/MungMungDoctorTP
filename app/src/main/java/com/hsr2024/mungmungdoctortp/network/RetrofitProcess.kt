@@ -20,6 +20,7 @@ import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteHospital
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteQA
 import com.hsr2024.mungmungdoctortp.data.CommentDataList
 import com.hsr2024.mungmungdoctortp.data.DeleteDog
+import com.hsr2024.mungmungdoctortp.data.EasySignUpData
 import com.hsr2024.mungmungdoctortp.data.EssentialVaccinationList
 import com.hsr2024.mungmungdoctortp.data.FeedCommentList
 import com.hsr2024.mungmungdoctortp.data.FeedDataList
@@ -1191,7 +1192,7 @@ class RetrofitProcess(
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
 //    override fun onResponseSuccess(response: Any?) {
-//        val date=(response as HospitalRecordList)
+//        val data=(response as HospitalRecordList)
 //        data.code                              //  4204 서비스 회원 아님, 8000 병원 기록 목록 성공, 8001 병원 기록 목록 실패
 //        data.hospitalRecordList.forEach{hospital ->           // forEach문을 돌면서 hospital 기록을 가져올 수 있음
 //          hospital.id                                         // 병원 기록 식별 값
@@ -1231,19 +1232,20 @@ class RetrofitProcess(
     }
     // 32. ai 기록 목록 불러오기
 // aiListRequest 사용법
-//val params= HospitalorAiRecord("이메일정보", "provider_id", "로그인 타입", "pet_id", "date") // pet_id는 pet 식별값
+//val params= HospitalorAiRecordList("이메일정보", "provider_id", "로그인 타입", "pet_id", "date") // pet_id는 pet 식별값
     // date : 날짜를 선택해서 검색, 전체 날짜 검색할 경우 빈 값
 //RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
 //    override fun onResponseSuccess(response: Any?) {
-//        val date=(response as AIRecordList)
+//        val data=(response as AIRecordList)
 //        data.code                              //  4204 서비스 회원 아님, 9000 ai 기록 목록 성공, 9001 ai 기록 목록 실패
-//        data.hospitalRecordList.forEach{ai ->           // forEach문을 돌면서 ai 기록을 가져올 수 있음
+//        data.aiRecordList.forEach{ai ->           // forEach문을 돌면서 ai 기록을 가져올 수 있음
 //          ai.id                                         // ai 기록 식별 값
-//          ai.diagnosis_type                             // 진단한 ai type (eype or skin)
+//          ai.diagnosis_type                             // 진단한 ai type (eye or skin)
 //          ai.diagnostic_img_url                         // ai 진단한 반려견 이미지 url
 //          ai.diagnosis_result                           // ai 진단결과 리스트(결막염 80%, 유루증 70%..)
+//          ai.date                                       // ai 진단날짜
 //        }
 //    }
 //
@@ -1318,7 +1320,7 @@ class RetrofitProcess(
 // aiAddRequest 사용법
 //val params= AddorDeleteAI("이메일정보", "provider_id", "로그인 타입", "pet_id", // pet_id는 pet 식별값
 //                          "",                                       // ai 기록 식별 값( 안넣어도 됨)
-//                          diagnosis_type,                           // 진단한 ai type (eype or skin)
+//                          diagnosis_type,                           // 진단한 ai type (eye or skin)
 //                          diagnostic_img_url,                       // ai 진단한 반려견 이미지 url
 //                          diagnosis_result,                         // ai 진단결과 리스트(결막염 80%, 유루증 70%..)
 // )
@@ -1475,14 +1477,14 @@ class RetrofitProcess(
 
     // 38. 추가 접종 목록
 // listAdditionVaccinationRequest 사용법
-//val params= DeleteDog("이메일정보", "provider_id", "pet_id는", "로그인 타입") // pet_id는 pet 식별값
+//val params= DeleteDog("이메일정보", "provider_id", "pet_id", "로그인 타입") // pet_id는 pet 식별값
 //RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val data=(response as AdditionVaccinationList)
 //        data.code                                                  //  - 4204 서비스 회원 아님, 8400 추가 접종 목록 성공, 8401 추가 접종 목록 실패
-//        Log.d("AdditionVaccination List code","data")
+//        Log.d("AdditionVaccination List code","$data")
 //        data.vaccinationList.forEach{vaccination ->               // forEach문을 돌면서 추가 접종 목록 정보를 가져올 수 있음
 //            vaccination.id                                        // 접종 기록 식별 값
 //            vaccination.heartworm                                 // 심상사상충 접종여부 TRUE OR FALSE
@@ -1525,13 +1527,13 @@ class RetrofitProcess(
 //
 //    override fun onResponseSuccess(response: Any?) {
 //        val data=(response as EssentialVaccinationList)
-//        Log.d("EssentialVaccination List code","data")
+//        Log.d("EssentialVaccination List code","$data")
 //        data.code                                                  //  - 4204 서비스 회원 아님, 9400 필수 접종 목록 성공, 9401 필수 접종 목록 실패
 //        data.vaccinationList.forEach{vaccination ->                // forEach문을 돌면서 필수 접종 목록 정보를 가져올 수 있음
 //            vaccination.id                                         // 접종 기록 식별 값
 //            vaccination.shot_number                                // 몇회차 접종(1 ~ 6)
 //            vaccination.comprehensive                              // 종합백신 1차, 종합백신 2차, 종합백신 3차, 종합백신 4차, 종합백신 5차, ""
-//            vaccination.corona_enteritis                           // 코로나 장염1차, 코로나 장염 2차, ""
+//            vaccination.corona_enteritis                           // 코로나 장염 1차, 코로나 장염 2차, ""
 //            vaccination.kennel_cough                               // 켄넬코프 1차, 켄넬코프 2차, ""
 //            vaccination.influenza                                  // 인플루엔자 1차, 인플루엔자 2차, ""
 //            vaccination.antibody_titer                             // 항체가검사, ""
@@ -1581,8 +1583,8 @@ class RetrofitProcess(
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
 //    override fun onResponseSuccess(response: Any?) {
-//        val data=(response as AdditionVaccinationList)
-//        Log.d("AdditionVaccination Add code","data")               //  - 4204 서비스 회원 아님, 8500 추가 접종 추가 성공, 8501 추가 접종 추가 실패
+//        val code=(response as String)
+//        Log.d("AdditionVaccination Add code","$code")               //  - 4204 서비스 회원 아님, 8500 추가 접종 추가 성공, 8501 추가 접종 추가 실패
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
@@ -1614,7 +1616,7 @@ class RetrofitProcess(
 //            "",                                    // 접종 기록 식별 값
 //            shot_number,                           // 몇회차 접종(1 ~ 6)
 //            comprehensive,                         // 종합백신 1차, 종합백신 2차, 종합백신 3차, 종합백신 4차, 종합백신 5차, ""
-//            corona_enteritis,                      // 코로나 장염1차, 코로나 장염 2차, ""
+//            corona_enteritis,                      // 코로나 장염 1차, 코로나 장염 2차, ""
 //            kennel_cough,                          // 켄넬코프 1차, 켄넬코프 2차, ""
 //            influenza,                             // 인플루엔자 1차, 인플루엔자 2차, ""
 //            antibody_titer,                        // 항체가검사, ""
@@ -1627,8 +1629,8 @@ class RetrofitProcess(
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
 //    override fun onResponseSuccess(response: Any?) {
-//        val data=(response as EssentialVaccinationList)
-//        Log.d("EssentialVaccination Add code","data")                //  - 4204 서비스 회원 아님, 9500 필수 접종 추가 성공, 9501 필수 접종 추가 실패
+//        val code=(response as String)
+//        Log.d("EssentialVaccination Add code","$code")                //  - 4204 서비스 회원 아님, 9500 필수 접종 추가 성공, 9501 필수 접종 추가 실패
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
@@ -1670,8 +1672,8 @@ class RetrofitProcess(
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
 //    override fun onResponseSuccess(response: Any?) {
-//        val data=(response as AdditionVaccinationList)
-//        Log.d("AdditionVaccination Add code","data")               //  - 4204 서비스 회원 아님, 8600 추가 접종 수정 성공, 8601 추가 접종 수정 실패
+//        val code=(response as String)
+//        Log.d("AdditionVaccination Add code","$code")               //  - 4204 서비스 회원 아님, 8600 추가 접종 수정 성공, 8601 추가 접종 수정 실패
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
@@ -1703,7 +1705,7 @@ class RetrofitProcess(
 //            id,                                    // 접종 기록 식별 값
 //            shot_number,                           // 몇회차 접종(1 ~ 6)
 //            comprehensive,                         // 종합백신 1차, 종합백신 2차, 종합백신 3차, 종합백신 4차, 종합백신 5차, ""
-//            corona_enteritis,                      // 코로나 장염1차, 코로나 장염 2차, ""
+//            corona_enteritis,                      // 코로나 장염 1차, 코로나 장염 2차, ""
 //            kennel_cough,                          // 켄넬코프 1차, 켄넬코프 2차, ""
 //            influenza,                             // 인플루엔자 1차, 인플루엔자 2차, ""
 //            antibody_titer,                        // 항체가검사, ""
@@ -1716,8 +1718,8 @@ class RetrofitProcess(
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
 //    override fun onResponseSuccess(response: Any?) {
-//        val data=(response as EssentialVaccinationList)
-//        Log.d("EssentialVaccination Add code","data")                //  - 4204 서비스 회원 아님, 9600 필수 접종 수정 성공, 9601 필수 접종 수정 실패
+//        val code=(response as String)
+//        Log.d("EssentialVaccination Add code","$code")                //  - 4204 서비스 회원 아님, 9600 필수 접종 수정 성공, 9601 필수 접종 수정 실패
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
@@ -1729,7 +1731,7 @@ class RetrofitProcess(
     fun deleteAdditionVaccinationRequest(){
         val retrofitService = setRetrofitService()
         val vaccinationModify=(params as AddorModifyorDeleteAdditionVaccination)
-        val call = retrofitService.additionVaccinationModify(vaccinationModify)
+        val call = retrofitService.additionVaccinationDelete(vaccinationModify)
         call.enqueue(object : Callback<String> {
             override fun onResponse(p0: Call<String>, response: Response<String>) {
                 if (response.isSuccessful) {
@@ -1753,8 +1755,8 @@ class RetrofitProcess(
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
 //    override fun onResponseSuccess(response: Any?) {
-//        val data=(response as AdditionVaccinationList)
-//        Log.d("AdditionVaccination Add code","data")               //  - 4204 서비스 회원 아님, 8700 추가 접종 삭제 성공, 8601 추가 접종 삭제 실패
+//        val code=(response as String)
+//        Log.d("AdditionVaccination Add code","$code")               //  - 4204 서비스 회원 아님, 8700 추가 접종 삭제 성공, 8601 추가 접종 삭제 실패
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
@@ -1806,8 +1808,8 @@ class RetrofitProcess(
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
 //    override fun onResponseSuccess(response: Any?) {
-//        val data=(response as EssentialVaccinationList)
-//        Log.d("EssentialVaccination Add code","data")                //  - 4204 서비스 회원 아님, 9700 필수 접종 삭제 성공, 9701 필수 접종 삭제 실패
+//        val code=(response as String)
+//        Log.d("EssentialVaccination Add code","$code")                //  - 4204 서비스 회원 아님, 9700 필수 접종 삭제 성공, 9701 필수 접종 삭제 실패
 //    }
 //
 //    override fun onResponseFailure(errorMsg: String?) {
@@ -1815,5 +1817,40 @@ class RetrofitProcess(
 //    }
 //
 //}).deleteEssentialVaccinationRequest()
+
+    fun easySignUpRequest(){
+        val retrofitService = setRetrofitService()
+        val signupData=(params as EasySignUpData)
+        val call = retrofitService.easySignUp(signupData)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(p0: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<String>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+    // 46. 간편회원가입
+// easySignUpRequest 사용법
+//val params= EasySignUpData("provider_id", "닉네임", "로그인 타입")
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val code=(response as String) //  -  - 1200 회원 추가 성공, 1201 회원 추가 실패, 4330 닉네임 또는 이메일 중복
+//        Log.d("qa add code","$code")
+//
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("qa add fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).easySignUpRequest()
 
 } // Class
