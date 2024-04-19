@@ -163,9 +163,12 @@ class QADetailActivity : AppCompatActivity() {
     }//테이크인포메이션
 
 
-
-
     private fun load(){
+
+
+    }
+
+    private fun commentload(){
 
         val s=intent.getStringExtra("QAData")
         val qaData= Gson().fromJson(s, QAData::class.java)
@@ -189,9 +192,6 @@ class QADetailActivity : AppCompatActivity() {
                 Log.d("qa comment list fail", errorMsg!!) // 에러 메시지
             }
         }).qaCommentListRequest()
-
-        setting()//화면보여질때 정보들 세팅하기..
-
 
         //binding.tvRegister.setOnClickListener { clickregister() }
         commentAdapter = CommentListAdapter(this, items)
