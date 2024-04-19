@@ -18,6 +18,8 @@ class G {
         var pet_neutering: String = ""
         var pet_breed: String = ""
         var loginType: String = ""
+    }
+}
 
         class FeedG {
             companion object {
@@ -36,8 +38,6 @@ class G {
 
             }
         }
-    }
-}
 
 
 

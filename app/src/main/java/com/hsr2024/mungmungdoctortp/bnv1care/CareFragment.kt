@@ -13,10 +13,8 @@ import androidx.fragment.app.Fragment
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable.Param
 import com.hsr2024.mungmungdoctortp.G
 import com.hsr2024.mungmungdoctortp.R
 import com.hsr2024.mungmungdoctortp.adapter.CareSelectDogAdapter
@@ -30,7 +28,6 @@ import com.hsr2024.mungmungdoctortp.data.PetList
 import com.hsr2024.mungmungdoctortp.databinding.FragmentCareBinding
 import com.hsr2024.mungmungdoctortp.network.RetrofitCallback
 import com.hsr2024.mungmungdoctortp.network.RetrofitProcess
-import okhttp3.internal.format
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -46,11 +43,6 @@ class CareFragment:Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_care, container, false)
 
-        val buttonToVaccine = view.findViewById<Button>(R.id.tv111)
-        buttonToVaccine.setOnClickListener {
-            val intent = Intent(activity, VaccineActivity::class.java)
-            startActivity(intent)
-        }
 
         return view
     }
@@ -65,7 +57,11 @@ class CareFragment:Fragment() {
         binding.skinAi.setOnClickListener { startActivity(Intent(requireContext(),SkinAiActivity::class.java)) }
         binding.btnHealth.setOnClickListener { //헬쓰인포액티비티 이동
             startActivity( Intent(requireContext(), HealthInfoActivity::class.java) )
+
+            binding.btnVaccine.setOnClickListener { startActivity(Intent(requireContext(),VaccineActivity::class.java)) }
+
         }
+
 
         load()
 
