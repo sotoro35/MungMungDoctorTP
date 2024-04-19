@@ -31,7 +31,10 @@ import com.hsr2024.mungmungdoctortp.data.HospitalRecordList
 import com.hsr2024.mungmungdoctortp.data.HospitalorAiRecordList
 import com.hsr2024.mungmungdoctortp.data.Individual
 import com.hsr2024.mungmungdoctortp.data.ModifyDog
+import com.hsr2024.mungmungdoctortp.data.QA
+import com.hsr2024.mungmungdoctortp.data.QABoard
 import com.hsr2024.mungmungdoctortp.data.QACommentList
+import com.hsr2024.mungmungdoctortp.data.QAData
 import com.hsr2024.mungmungdoctortp.data.QAView
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -255,4 +258,8 @@ interface RetrofitService {
     //해당 반려견의 필수 접종 삭제하기
     @POST("/pet/essential_delete.php")
     fun essentialVaccinationDelete(@Body vaccinationDelete:AddorModifyorDeleteEssentialVaccination) : Call<String>
+
+    //QA 1개 불러오기
+    @POST("/qa/qa.php")
+    fun qa(@Body qa:QA) : Call<QABoard>
 }

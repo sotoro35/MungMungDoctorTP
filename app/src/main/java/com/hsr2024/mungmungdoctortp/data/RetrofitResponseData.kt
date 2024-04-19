@@ -108,3 +108,5 @@ data class EssentialVaccination(
 
 data class AdditionVaccinationList(val vaccinationList:List<AdditionVaccination>, val code:String)
 data class EssentialVaccinationList(val vaccinationList:List<EssentialVaccination>, val code:String)
+
+data class QABoard(val qa_id:String, val profile_imgurl: String, val nickname :String, val imgurl:String, val title:String, val content:String, val view_count:String, val comment_count:String, val myQA:String, val code:String)
