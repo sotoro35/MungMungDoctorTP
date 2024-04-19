@@ -96,6 +96,15 @@ class FeedListAdapter(val context: Context, var items:List<FeedData>) : Adapter<
 
                     holder.binding.tvFavorite.text= newFavoriteCount.toString()
 
+                    val newHeartImage = if(item.isFavorite) R.drawable.favorite else R.drawable.favorites
+
+                    //val favor = if(item.isFavorite) false else true
+
+                    holder.binding.ivFavorite.setImageResource(newHeartImage)
+                    item.isFavorite =! item.isFavorite
+
+                    //holder.binding.tvFavorite.text= newFavoriteCount.toString()
+
                     }
                     "6901"->{
 //                        holder.binding.tvFavorite.text = (item.favorite.toInt() -1 ).toString()
@@ -122,6 +131,9 @@ class FeedListAdapter(val context: Context, var items:List<FeedData>) : Adapter<
 //
 //            holder.binding.ivFavorite.setImageResource(newHeartImage)
 //            item.isFavorite =! item.isFavorite
+
+//            val currentFavoriteCount = holder.binding.tvFavorite.text.toString().toInt()
+//            val newFavoriteCount = if (item.isFavorite)currentFavoriteCount -1 else currentFavoriteCount +1
         }
 
 
