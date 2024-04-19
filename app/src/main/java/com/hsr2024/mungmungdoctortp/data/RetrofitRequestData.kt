@@ -103,3 +103,6 @@ data class AddorModifyorDeleteEssentialVaccination(
 )
 
 // 추가, 필수 접종 기록 목록 요청 시 DeleteDog 클래스 사용
+
+//qa 1개 불러오기
+data class QA(val qa_id:String, val email:String="", val provider_id:String="", val login_type:String)

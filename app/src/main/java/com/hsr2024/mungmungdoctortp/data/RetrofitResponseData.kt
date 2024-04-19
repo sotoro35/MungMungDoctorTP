@@ -1,5 +1,10 @@
 package com.hsr2024.mungmungdoctortp.data
 
+import retrofit2.Call
+import retrofit2.http.GET
+import retrofit2.http.Headers
+import retrofit2.http.Query
+
 // code 종류
 //  - 200 : 작업성공
 // diagnosis_result 진단결과
@@ -13,6 +18,10 @@ data class AiResponses(
     val eye:AiResponse,
     val skin:AiResponse
 )
+
+
+
+
 
 data class LoginResponse(
     val email:String="",                // 회원 이메일
@@ -28,6 +37,7 @@ data class LoginResponse(
     val pet_breed:String="",            // 회원 선택된 펫 견종
     val code:String=""                  // 4200 회원, 4204 회원 아님, 4203 이메일 로그인 정보 틀림, 1200 회원 추가 성공, 1201 회원 추가 실패
 )
+
 
 data class KakaoSearchPlaceResponse(var meta: PlaceMeta, var documents: List<Place>)
 
@@ -49,7 +59,7 @@ data class Place(
 //qa 및 feed 데이터
 data class QAData(val qa_id:String, val profile_imgurl: String, val nickname :String, val imgurl:String, val title:String, val content:String, val view_count:String, val comment_count:String, val myQA:String)
 data class QADataList(val qaDatas: List<QAData>, val code:String)
-data class FeedData(val feed_id:String, val profile_imgurl: String, val nickname: String, val imgurl:String, val favorite:String, var isFavorite:String, val comment: String, val content:String, val create_date:String, val myFeed:String )
+data class FeedData(val feed_id:String, val profile_imgurl: String, val nickname: String, val imgurl:String, val favorite:String, var isFavorite:Boolean, val comment: String, val content:String, val create_date:String, val myFeed:String )
 data class FeedDataList(val feedDatas: List<FeedData>, val code:String)
 data class CommentData(val comment_id:String, val profile_imgurl: String, val nickname: String, val content: String, val create_date: String, val myComment:String)
 data class CommentDataList(val commentDatas: List<CommentData>, val code:String)
@@ -108,3 +118,5 @@ data class EssentialVaccination(
 
 data class AdditionVaccinationList(val vaccinationList:List<AdditionVaccination>, val code:String)
 data class EssentialVaccinationList(val vaccinationList:List<EssentialVaccination>, val code:String)
+data class QABoard(val qa_id:String, val profile_imgurl: String, val nickname :String, val imgurl:String, val title:String, val content:String, val view_count:String, val comment_count:String, val myQA:String, val code:String)
+

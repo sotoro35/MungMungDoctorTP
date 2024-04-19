@@ -30,7 +30,10 @@ import com.hsr2024.mungmungdoctortp.data.HospitalorAiRecordList
 import com.hsr2024.mungmungdoctortp.data.Individual
 import com.hsr2024.mungmungdoctortp.data.ModifyDog
 import com.hsr2024.mungmungdoctortp.data.PetList
+import com.hsr2024.mungmungdoctortp.data.QA
+import com.hsr2024.mungmungdoctortp.data.QABoard
 import com.hsr2024.mungmungdoctortp.data.QACommentList
+import com.hsr2024.mungmungdoctortp.data.QAData
 import com.hsr2024.mungmungdoctortp.data.QADataList
 import com.hsr2024.mungmungdoctortp.data.QAView
 import com.hsr2024.mungmungdoctortp.data.UserChange
@@ -1852,5 +1855,48 @@ class RetrofitProcess(
 //    }
 //
 //}).easySignUpRequest()
+    fun QARequest(){
+        val retrofitService = setRetrofitService()
+        val qa=(params as QA)
+        val call = retrofitService.qa(qa)
+        call.enqueue(object : Callback<QABoard> {
+            override fun onResponse(p0: Call<QABoard>, response: Response<QABoard>) {
+                if (response.isSuccessful) {
+                    val s= response.body()
+                    s ?: return
+                    callback?.onResponseSuccess(s)
+                }
+            }
+            override fun onFailure(p0: Call<QABoard>, t: Throwable) {
+                callback?.onResponseFailure(t.message)
+            }
+        })
+    }
+
+    // 47. QA 1개 불러오기
+// QARequest 사용법
+//val params= QA("qa_id", "이메일 정보", "provider_id", "로그인 타입") // qa_id는 qa 식별자
+//RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+//    override fun onResponseListSuccess(response: List<Any>?) {}
+//
+//    override fun onResponseSuccess(response: Any?) {
+//        val data=(response as QABoard)
+//        data.code                                                  //  - 4204 서비스 회원 아님, 7220 qa 성공, 7221 qa 실패
+//        data.qa_id
+//        data.profile_imgurl
+//        data.nickname
+//        data.imgurl
+//        data.title
+//        data.content
+//        data.view_count
+//        data.comment_count
+//        data.myQA
+//    }
+//
+//    override fun onResponseFailure(errorMsg: String?) {
+//        Log.d("qa fail",errorMsg!!) // 에러 메시지
+//    }
+//
+//}).QARequest()
 
 } // Class
