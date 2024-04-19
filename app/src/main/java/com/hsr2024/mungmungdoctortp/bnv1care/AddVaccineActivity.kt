@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
@@ -37,7 +38,6 @@ class AddVaccineActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(binding.root)
-        vaccineId = intent.getStringExtra("id")
 
         binding.toolBar.setNavigationOnClickListener { finish() }
 
@@ -45,6 +45,8 @@ class AddVaccineActivity : AppCompatActivity() {
         binding.btnSave.setOnClickListener { addVaccine() }
         binding.btnDelete.setOnClickListener { addVaccineDelete() }
 
+
+        binding.btnDelete.visibility = if (vaccineId == null) View.GONE else View.VISIBLE
         initializeFormData()
         setupSaveButton()
 
@@ -165,31 +167,38 @@ class AddVaccineActivity : AppCompatActivity() {
     }
 
     private fun deleteVaccination() {
-        val params = AddorModifyorDeleteAdditionVaccination(
-            "${G.user_email}", "${G.user_providerId}", "email", "${G.pet_id}",
-            ""  // 접종 기록 식별 값이 필요합니다.
-        )
+        val params = vaccineId?.let {
+            AddorModifyorDeleteAdditionVaccination(
+                email = G.user_email,
+                provider_id = G.user_providerId,
+                login_type = "email",
+                pet_id = G.pet_id,
+                id = it, // 수정할 기록의 식별자
 
-        RetrofitProcess(this@AddVaccineActivity, params = params, callback = object : RetrofitCallback {
-            override fun onResponseListSuccess(response: List<Any>?) {}
+        )}
 
-            override fun onResponseSuccess(response: Any?) {
-                val code = response as String
-                Log.d("AdditionVaccination Delete code", code)
-                when (code) {
-                    "8700" -> {
-                        Toast.makeText(this@AddVaccineActivity, "삭제 완료되었습니다.", Toast.LENGTH_SHORT).show()
-                        finish()
+        if (params != null) {
+            RetrofitProcess(this@AddVaccineActivity, params = params, callback = object : RetrofitCallback {
+                override fun onResponseListSuccess(response: List<Any>?) {}
+
+                override fun onResponseSuccess(response: Any?) {
+                    val code = response as String
+                    Log.d("AdditionVaccination Delete code", code)
+                    when (code) {
+                        "8700" -> {
+                            Toast.makeText(this@AddVaccineActivity, "삭제 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                            finish()
+                        }
+                        else -> Toast.makeText(this@AddVaccineActivity, "삭제 실패: $code", Toast.LENGTH_SHORT).show()
                     }
-                    else -> Toast.makeText(this@AddVaccineActivity, "삭제 실패: $code", Toast.LENGTH_SHORT).show()
                 }
-            }
 
-            override fun onResponseFailure(errorMsg: String?) {
-                Log.d("AdditionVaccination Delete fail", errorMsg ?: "Unknown error")
-                Toast.makeText(this@AddVaccineActivity, "네트워크 오류: $errorMsg", Toast.LENGTH_SHORT).show()
-            }
-        }).deleteAdditionVaccinationRequest()
+                override fun onResponseFailure(errorMsg: String?) {
+                    Log.d("AdditionVaccination Delete fail", errorMsg ?: "Unknown error")
+                    Toast.makeText(this@AddVaccineActivity, "네트워크 오류: $errorMsg", Toast.LENGTH_SHORT).show()
+                }
+            }).deleteAdditionVaccinationRequest()
+        }
     }
 
 

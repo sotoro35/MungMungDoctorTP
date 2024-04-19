@@ -35,7 +35,7 @@
         android:layout_below="@id/tv1"
         android:text="종합백신"
         android:textSize="16sp"
-        android:layout_marginLeft="16dp"/>
+        android:layout_marginLeft="12dp"/>
 
     <CheckBox
         android:id="@+id/checkBox2Text"
@@ -45,7 +45,7 @@
         android:layout_alignBottom="@id/checkBox1Text"
         android:text="코로나 장염"
         android:textSize="16sp"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginLeft="8dp"/>
 
     <CheckBox
         android:id="@+id/checkBox3Text"
@@ -55,7 +55,7 @@
         android:layout_alignBottom="@id/checkBox2Text"
         android:text="항체가검사"
         android:textSize="16sp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="8dp"
         android:visibility="gone"/>
 
     <View

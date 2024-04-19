@@ -30,16 +30,22 @@ class VaccineActivity : AppCompatActivity() {
 
         binding.iv.setOnClickListener { finish() }
         binding.btnAdd.setOnClickListener { startActivity(Intent(this,AddVaccineActivity::class.java)) }
-        binding.vac1.setOnClickListener { toMandatoryActivity("1차 접종","종합백신","코로나 장염",false) }
-        binding.vac2.setOnClickListener { toMandatoryActivity("2차 접종","종합백신","코로나 장염",false) }
-        binding.vac3.setOnClickListener { toMandatoryActivity("3차 접종","종합백신","켄넬코프",false) }
-        binding.vac4.setOnClickListener { toMandatoryActivity("4차 접종","종합백신","켄넬코프",false) }
-        binding.vac5.setOnClickListener { toMandatoryActivity("5차 접종","종합백신","인플루엔자",false) }
-        binding.vac6.setOnClickListener { toMandatoryActivity("6차 접종","광견병","인플루엔자",true) }
+        binding.vac1.setOnClickListener { toMandatoryActivity("1차 접종","종합백신 1차","코로나 장염 1차",false) }
+        binding.vac2.setOnClickListener { toMandatoryActivity("2차 접종","종합백신 2차","코로나 장염 2차",false) }
+        binding.vac3.setOnClickListener { toMandatoryActivity("3차 접종","종합백신 3차","켄넬코프 1차",false) }
+        binding.vac4.setOnClickListener { toMandatoryActivity("4차 접종","종합백신 4차","켄넬코프 2차",false) }
+        binding.vac5.setOnClickListener { toMandatoryActivity("5차 접종","종합백신 5차","인플루엔자 1차",false) }
+        binding.vac6.setOnClickListener { toMandatoryActivity("6차 접종","광견병","인플루엔자 2차",true) }
 
         setupRecyclerView()
         fetchDataFromServer()
 
+
+
+    }
+    override fun onResume() {
+        super.onResume()
+        fetchDataFromServer()
     }
     private fun setupRecyclerView() {
         adapter = VaccineAdapter(this, vaccineList) { vaccination ->
@@ -65,7 +71,7 @@ class VaccineActivity : AppCompatActivity() {
             override fun onResponseSuccess(response: Any?) {
                 val data = response as AdditionVaccinationList
                 when (data.code) {
-                    "8401" -> Toast.makeText(this@VaccineActivity, "접종 목록 실패", Toast.LENGTH_SHORT).show()
+                    "8401" -> Toast.makeText(this@VaccineActivity, "기록된 접종이 없습니다.", Toast.LENGTH_SHORT).show()
                     "4204" -> Toast.makeText(this@VaccineActivity, "회원 정보 확인 필요", Toast.LENGTH_SHORT).show()
                     "8400" -> {Toast.makeText(this@VaccineActivity, "추가 접종 목록 성공", Toast.LENGTH_SHORT).show()
                         val vaccines: List<AdditionVaccination> = data.vaccinationList.sortedByDescending { it.id }
@@ -87,9 +93,9 @@ class VaccineActivity : AppCompatActivity() {
         binding.rvAddVaccine.adapter = adapter
     }
 
-    private fun toMandatoryActivity(titleText: String,checkBox1Text: String, checkBox2Text: String,checkBox3Text: Boolean) {
+    private fun toMandatoryActivity(titleText: String, checkBox1Text: String, checkBox2Text: String, checkBox3Text: Boolean) {
         val intent = Intent(this, MandatoryVaccineActivity::class.java).apply {
-            putExtra("titleText",titleText )
+            putExtra("titleText", titleText)
             putExtra("checkBox1Text", checkBox1Text)
             putExtra("checkBox2Text", checkBox2Text)
             putExtra("checkBox3Text", checkBox3Text)

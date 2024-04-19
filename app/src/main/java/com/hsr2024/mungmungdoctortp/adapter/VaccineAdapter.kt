@@ -37,6 +37,8 @@ class VaccineAdapter(
             vaccineDate.text = vaccination.date
             vaccineHospital.text = vaccination.hospital
             vaccineMemo.text = vaccination.memo
+
+
         }
 
 
@@ -57,6 +59,14 @@ class VaccineAdapter(
         vaccineList = newVaccineList
         notifyDataSetChanged()
     }
+
+    //holder.binding.root.setOnClickListener {
+    //            val intent = Intent(context,ItemDetailActivity::class.java)
+    //            val gson= Gson()
+    //            val s:String = gson.toJson(item) // 객체 --> json String
+    //            intent.putExtra("place",s)
+    //            context.startActivity(intent)
+    //        }
 
 
 }
