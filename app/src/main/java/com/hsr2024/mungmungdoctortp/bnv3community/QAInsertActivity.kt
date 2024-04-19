@@ -21,6 +21,8 @@ import com.hsr2024.mungmungdoctortp.G
 import com.hsr2024.mungmungdoctortp.QAG
 import com.hsr2024.mungmungdoctortp.R
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteQA
+import com.hsr2024.mungmungdoctortp.data.QA
+import com.hsr2024.mungmungdoctortp.data.QABoard
 import com.hsr2024.mungmungdoctortp.databinding.ActivityQainsertBinding
 import com.hsr2024.mungmungdoctortp.network.RetrofitCallback
 import com.hsr2024.mungmungdoctortp.network.RetrofitProcess
@@ -35,6 +37,14 @@ import java.io.OutputStream
 class QAInsertActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityQainsertBinding.inflate(layoutInflater) }
+
+    var profile_imgurl = ""
+    var nickname = ""
+    var title = ""
+    var img = ""
+    var comment_count = ""
+    var view_count = ""
+    var content = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -49,24 +59,37 @@ class QAInsertActivity : AppCompatActivity() {
 
     val im= "http://43.200.163.153/img/${QAG.QAImg}"
 
+        private fun load(){
+            val params= QA("${QAG.QAId}", "${G.user_email}", "${G.user_providerId}", "email") // qa_id는 qa 식별자
+            RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+                override fun onResponseListSuccess(response: List<Any>?) {}
 
+                override fun onResponseSuccess(response: Any?) {
+                    val data=(response as QABoard)//  - 4204 서비스 회원 아님, 7220 qa 성공, 7221 qa 실패
 
-    private fun load(){
+                    if (data.code == "7220"){
+                        profile_imgurl = "http://43.200.163.153/img/${data.profile_imgurl}"
+                        nickname = data.nickname
+                        title = data.title
+                        content = data.content
+                        img = "http://43.200.163.153/img/${data.imgurl}"
+                        comment_count = data.comment_count
+                        view_count = data.view_count
 
-        val profile_imgurl = intent.getStringExtra("profile_imgurl")
-        val nickname = intent.getStringExtra("nickname")
-        val title = intent.getStringExtra("title")
-        val img = intent.getStringExtra("img")
-        val comment_count = intent.getStringExtra("comment_count")
-        val view_count = intent.getStringExtra("view_count")
-        val content = intent.getStringExtra("content")
+                        binding.inputName.setText(title)
+                        binding.inputContent.setText(content)
+                        Glide.with(this@QAInsertActivity).load(img).into(binding.iv)
 
+                    }
 
-        //Glide.with(this).load("http://43.200.163.153/img/${img}").into(binding.iv)
+                }
 
-        binding.inputName.setText(QAG.QAName)
-        binding.inputContent.setText(QAG.QAText)
-        Glide.with(this).load(im).into(binding.iv)
+                override fun onResponseFailure(errorMsg: String?) {
+                    Log.d("qa fail",errorMsg!!) // 에러 메시지
+                }
+
+            }).QARequest()
+
 
     }
 

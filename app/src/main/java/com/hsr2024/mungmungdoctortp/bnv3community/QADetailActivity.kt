@@ -23,6 +23,8 @@ import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteComment
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteQA
 import com.hsr2024.mungmungdoctortp.data.CommentData
 import com.hsr2024.mungmungdoctortp.data.CommentDataList
+import com.hsr2024.mungmungdoctortp.data.QA
+import com.hsr2024.mungmungdoctortp.data.QABoard
 import com.hsr2024.mungmungdoctortp.data.QACommentList
 import com.hsr2024.mungmungdoctortp.data.QAData
 import com.hsr2024.mungmungdoctortp.databinding.ActivityQadetailBinding
@@ -51,62 +53,17 @@ class QADetailActivity : AppCompatActivity() {
     var comment_count: String? = null
     var view_count: String? = null
 
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         binding.toolbar.setNavigationOnClickListener { finish() }
         load()
-
-//        val s=intent.getStringExtra("QAData")
-//        val qaData= Gson().fromJson(s, QAData::class.java)
-         //댓글 목록불러오기
-//        val params= QACommentList("${qaData.qa_id}", "${G.user_email}", "${G.user_providerId}", "email") // 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능
-//        RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
-//            override fun onResponseListSuccess(response: List<Any>?) {}
-//
-//            override fun onResponseSuccess(response: Any?) {
-//                val data = (response as CommentDataList)
-//                Log.d("qa comment list  code", "$data")
-//                data.code                              // - 7300 qa comment 목록 성공, 7301 qa comment 목록 실패, 4204 서비스 회원 아님
-//                if(data.code=="7300") {
-//                    binding.recyclerView.adapter=CommentListAdapter(this@QADetailActivity,data.commentDatas)
-//                }
-//
-//
-//            }
-//
-//            override fun onResponseFailure(errorMsg: String?) {
-//                Log.d("qa comment list fail", errorMsg!!) // 에러 메시지
-//            }
-//        }).qaCommentListRequest()
-//
-//        setting()//화면보여질때 정보들 세팅하기..
-//
-//
-//        //binding.tvRegister.setOnClickListener { clickregister() }
-//        commentAdapter = CommentListAdapter(this, items)
-//        binding.recyclerView.adapter = commentAdapter
-
         binding.toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_insert -> {
-//                    QAG.QAName = qaData.title
-//                    QAG.QAImg = qaData.imgurl
-//                    QAG.QAText = qaData.content
                     val intent = Intent(this@QADetailActivity, QAInsertActivity::class.java)
-                    intent.putExtra("profile_imgurl", profile_imgurl)
-                    intent.putExtra("nickname", nickname)
-                    intent.putExtra("title", title)
-                    intent.putExtra("img", img)
-                    intent.putExtra("comment_count", comment_count)
-                    intent.putExtra("view_count", view_count)
-                    intent.putExtra("content",content)
                     startActivity(intent)
-                    finish()
                     true
                 }
 
@@ -164,7 +121,38 @@ class QADetailActivity : AppCompatActivity() {
 
 
     private fun load(){
+        val params= QA("${QAG.QAId}", "${G.user_email}", "${G.user_providerId}", "email") // qa_id는 qa 식별자
+        RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+            override fun onResponseListSuccess(response: List<Any>?) {}
 
+            override fun onResponseSuccess(response: Any?) {
+                val data=(response as QABoard)//  - 4204 서비스 회원 아님, 7220 qa 성공, 7221 qa 실패
+
+                if (data.code == "7220"){
+                    profile_imgurl = "http://43.200.163.153/img/${data.profile_imgurl}"
+                    nickname = data.nickname
+                    title = data.title
+                    content = data.content
+                    img = "http://43.200.163.153/img/${data.imgurl}"
+                    comment_count = data.comment_count
+                    view_count = data.view_count
+
+                    Glide.with(this@QADetailActivity).load(profile_imgurl).into(binding.circleIv)
+                    binding.tvNickname.text = nickname
+                    binding.tvTitle.text = title
+                    Glide.with(this@QADetailActivity).load(img).into(binding.iv)
+                    binding.tvComment.text = comment_count
+                    binding.tvWatch.text= view_count
+                    binding.tvContent.text = content
+                }
+
+            }
+
+            override fun onResponseFailure(errorMsg: String?) {
+                Log.d("qa fail",errorMsg!!) // 에러 메시지
+            }
+
+        }).QARequest()
 
     }
 

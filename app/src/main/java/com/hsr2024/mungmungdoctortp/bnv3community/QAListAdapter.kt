@@ -22,7 +22,6 @@ class QAListAdapter(val context:Context, var items:List<QAData>) : Adapter<QALis
 
         val imgUrl= "http://43.200.163.153/img/${item.imgurl}"
         val proFileImgUrl= "http://43.200.163.153/img/${item.profile_imgurl}"
-        Log.d("dfffff", item.profile_imgurl)
         Glide.with(context).load(imgUrl).into(holder.binding.iv)
         holder.binding.tvTitle.text=item.title
         holder.binding.tvNickname.text=item.nickname
@@ -32,23 +31,8 @@ class QAListAdapter(val context:Context, var items:List<QAData>) : Adapter<QALis
         Glide.with(context).load(imgUrl).into(holder.binding.iv)
 
         holder.binding.root.setOnClickListener {
-            val intent= Intent(context, QADetailActivity::class.java)
-            intent.putExtra("profileImg", proFileImgUrl)
-            intent.putExtra("nickname", item.nickname)
-            intent.putExtra("title",item.title)
-            intent.putExtra("content", item.content)
-            intent.putExtra("img", imgUrl)
-            intent.putExtra("comment_count", item.comment_count)
-            intent.putExtra("view_count", item.view_count)
-            val s= Gson().toJson(item)
-            intent.putExtra("QAData",s)
-            context.startActivity(intent)
-
+           val intent= Intent(context, QADetailActivity::class.java)
             QAG.QAId = item.qa_id
-            QAG.QAText = item.content
-            QAG.QAName = item.title
-            QAG.QAImg = item.imgurl
-
 
             Log.d("내용", item.content)
             Log.d("dsffff", imgUrl)
