@@ -40,12 +40,10 @@ class AIRecordAdapter(val context:Context, val itemList:List<AIRecordData>) : Ad
 
         // 쉼표를 기준으로 문자열 분할
         val parts = item.diagnosis_result.split(",")
-        // 각 부분을 개행 문자로 연결하여 줄 바꿈
-        val new = parts.joinToString ("\n")
-
-
-
-        holder.binding.tvDiseaseName1.text = new
+        val firstPart = parts[0].trim() //trim : 양쪽 공백을 제거한다는뜻.
+        val secondPart = parts[1].trim()
+        holder.binding.tvDiseaseName1.text = firstPart
+        holder.binding.tvDiseaseName2.text = secondPart
 
         holder.binding.root.setOnClickListener {
             //바인딩루트누르면 상네내용으로 이동
