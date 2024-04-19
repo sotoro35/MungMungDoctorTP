@@ -27,6 +27,7 @@ import com.hsr2024.mungmungdoctortp.network.RetrofitHelper
 import com.hsr2024.mungmungdoctortp.network.RetrofitProcess
 import com.hsr2024.mungmungdoctortp.network.RetrofitService
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.create
@@ -110,9 +111,10 @@ class FeedActivity : AppCompatActivity() {
     private fun clickregister() {
         val file: MultipartBody.Part? = imgPath?.let {
             val file = File(it)
-            val requestBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
+            val requestBody: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(),file)
             MultipartBody.Part.createFormData("img1", file.name, requestBody)
         }
+
         if (file != null) {
             RetrofitProcess(this, params = file, callback = object : RetrofitCallback {
                 override fun onResponseListSuccess(response: List<Any>?) {}

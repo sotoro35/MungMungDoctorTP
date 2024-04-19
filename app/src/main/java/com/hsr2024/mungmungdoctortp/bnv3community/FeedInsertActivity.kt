@@ -24,6 +24,7 @@ import com.hsr2024.mungmungdoctortp.databinding.ActivityFeedInsertBinding
 import com.hsr2024.mungmungdoctortp.network.RetrofitCallback
 import com.hsr2024.mungmungdoctortp.network.RetrofitProcess
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
@@ -112,7 +113,7 @@ class FeedInsertActivity : AppCompatActivity() {
     private fun clickinsert() {
         val file: MultipartBody.Part? = imgPath?.let {
             val file = File(it)
-            val requestBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), file)
+            val requestBody: RequestBody = RequestBody.create("image/*".toMediaTypeOrNull(),file)
             MultipartBody.Part.createFormData("img1", file.name, requestBody)
         }
         if (file != null) {
