@@ -38,9 +38,17 @@ class HospitalRecordAdapter(val context: Context,val itemlist:List<HospitalRecor
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val item = itemlist[position]
-        holder.binding.tvHospitalName.text = item.name
+        if (item.name == "") {
+            holder.binding.tvHospitalName.text = "병원이름 미정"
+        }else{
+            holder.binding.tvHospitalName.text = item.name
+        }
         holder.binding.tvDiseaseName.text = item.diagnosis
-        holder.binding.tvPrice.text = item.price
+        if (item.price.contains("가격 미정")){
+            holder.binding.tvPrice.text = "가격 미정"
+        }else{
+            holder.binding.tvPrice.text = "${item.price}원"
+        }
         holder.binding.tvDate.text = item.visit_date
 
 

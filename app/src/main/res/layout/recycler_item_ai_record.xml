@@ -44,6 +44,19 @@
                 android:layout_marginTop="16dp"
                 android:layout_centerHorizontal="true"/>
 
+            <TextView
+                android:id="@+id/tv_disease_name2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="어깨결림 70프로"
+                android:textSize="13sp"
+                android:textColor="@color/black"
+                android:layout_below="@id/tv_disease_name1"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_centerHorizontal="true"/>
+
 
 
 

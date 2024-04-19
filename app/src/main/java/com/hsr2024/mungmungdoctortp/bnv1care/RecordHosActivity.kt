@@ -32,11 +32,11 @@ class RecordHosActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityRecordHosBinding.inflate(layoutInflater) }
 
-    private lateinit var name: String
-    private lateinit var price: String
-    private lateinit var date: String
-    private lateinit var diseaseName: String
-    private lateinit var content: String
+    private  var name: String = ""
+    private  var price: String= "1000"
+    private  var date: String = ""
+    private  var diseaseName: String = ""
+    private  var content: String = ""
 
 
     var filePartBillPicture: MultipartBody.Part? = null
@@ -85,6 +85,10 @@ class RecordHosActivity : AppCompatActivity() {
         binding.apply {
             name = etName.text.toString()
             price = etPrice.text.toString()
+            if (etPrice.text.toString()==""){
+                price = "가격 미정"
+            }
+            Log.d("fsssff", price)
             date = etDate.text.toString()
             diseaseName = etDiseaseName.text.toString()
             content = etContent.editText!!.text.toString()
@@ -225,10 +229,10 @@ class RecordHosActivity : AppCompatActivity() {
             billUrl,                                // 영수증 이미지 url
             careUrl,                               // 진료사진 이미지 url
         )
-        Log.d("우ddddddd", "$name, ${price},$date $billUrl, $careUrl")
+        Log.d("우ddddddd", "$name, ${price}, $diseaseName, $date, $content, $billUrl, $careUrl")
 
         RetrofitProcess(this, params = params, callback = object : RetrofitCallback {
-            override fun onResponseListSuccess(response: List<Any>?) {}
+            override fun onResponseListSuccess(response: List<Any>?) { Log.d( "fffss", "dffffff")}
 
             override fun onResponseSuccess(response: Any?) {
                 val code =

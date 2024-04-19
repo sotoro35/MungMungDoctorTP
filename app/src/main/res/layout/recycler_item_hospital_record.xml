@@ -19,54 +19,50 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tv_hospital_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="본정형외과24시"
-            android:textSize="18sp"
-            android:textColor="#FFA800"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp"
-            />
+            <TextView
+                android:id="@+id/tv_hospital_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="24dp"
+                android:text="본정형외과24시"
+                android:textColor="#FFA800"
+                android:textSize="18sp" />
 
 
-        <TextView
-            android:id="@+id/tv_disease_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="승모근아파"
-            android:textSize="18sp"
-            android:textColor="@color/black"
-            android:layout_below="@id/tv_hospital_name"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"/>
+            <TextView
+                android:id="@+id/tv_disease_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_hospital_name"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:text="승모근아파"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/tv_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="500000"
-            android:textSize="16sp"
-            android:textColor="@color/black"
-            android:layout_below="@id/tv_disease_name"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="12dp"/>
-
-
-        <TextView
-            android:id="@+id/tv_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2024/03/14"
-            android:textSize="13sp"
-            android:textColor="#8B8686"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="12dp"/>
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_disease_name"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:text="500000"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
 
-
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp"
+                android:text="2024/03/14"
+                android:textColor="#8B8686"
+                android:textSize="13sp" />
 
 
         </RelativeLayout>
