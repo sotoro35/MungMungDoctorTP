@@ -18,7 +18,7 @@
         app:title="게시물 보기"
         app:titleCentered="true"
         android:layout_margin="8dp"
-        app:menu="@menu/toolbar_menu"/>
+        app:menu="@menu/community_toolbar_menu"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

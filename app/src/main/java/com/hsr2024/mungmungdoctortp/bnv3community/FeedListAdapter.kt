@@ -79,9 +79,10 @@ class FeedListAdapter(val context: Context, var items:List<FeedData>) : Adapter<
                     }
                     else -> false
                 }
-        }
+            }
 
-        }
+        }else holder.binding.toolbar.overflowIcon = null
+
 
         holder.binding.ivFavorite.setOnClickListener {
         val params= FeedFavor("${G.user_email}", "${G.user_providerId}", "${G.loginType}", "${item.feed_id}") // feed_id feed 식별값

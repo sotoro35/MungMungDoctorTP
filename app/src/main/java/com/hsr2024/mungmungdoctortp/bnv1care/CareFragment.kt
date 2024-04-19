@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.gms.common.internal.safeparcel.SafeParcelable.Param
 import com.hsr2024.mungmungdoctortp.G
 import com.hsr2024.mungmungdoctortp.R
 import com.hsr2024.mungmungdoctortp.adapter.CareSelectDogAdapter
@@ -28,6 +29,7 @@ import com.hsr2024.mungmungdoctortp.data.PetList
 import com.hsr2024.mungmungdoctortp.databinding.FragmentCareBinding
 import com.hsr2024.mungmungdoctortp.network.RetrofitCallback
 import com.hsr2024.mungmungdoctortp.network.RetrofitProcess
+import okhttp3.internal.format
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -41,10 +43,15 @@ class CareFragment:Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_care, container, false)
+//        val view = inflater.inflate(R.layout.fragment_care, container, false)
 
+//        val buttonToVaccine = view.findViewById<Button>(R.id.tv111)
+//        buttonToVaccine.setOnClickListener {
+//            val intent = Intent(activity, VaccineActivity::class.java)
+//            startActivity(intent)
+//        }
 
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,14 +64,11 @@ class CareFragment:Fragment() {
         binding.skinAi.setOnClickListener { startActivity(Intent(requireContext(),SkinAiActivity::class.java)) }
         binding.btnHealth.setOnClickListener { //헬쓰인포액티비티 이동
             startActivity( Intent(requireContext(), HealthInfoActivity::class.java) )
-
-            binding.btnVaccine.setOnClickListener { startActivity(Intent(requireContext(),VaccineActivity::class.java)) }
-
         }
 
+        binding.btnVaccine.setOnClickListener { startActivity(Intent(requireContext(),VaccineActivity::class.java)) }
 
         load()
-
 
 
     }//onView...
@@ -113,8 +117,8 @@ class CareFragment:Fragment() {
                             else -> data.pet_neutered
                         }
 
-                        G.user_email = data.email ?: ""
-                        G.user_providerId = data.provider_id ?: ""
+                        //G.user_email = data.email ?: ""
+                       // G.user_providerId = data.provider_id ?: ""
                         G.user_nickname = data.nickname ?: ""
                         G.user_imageUrl = data.userImgUrl ?: ""
                         G.pet_id = data.pet_id ?: ""

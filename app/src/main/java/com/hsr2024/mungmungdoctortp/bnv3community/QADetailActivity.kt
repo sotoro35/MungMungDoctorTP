@@ -88,7 +88,7 @@ class QADetailActivity : AppCompatActivity() {
 
                 }
             }
-        }
+        }else binding.toolbar.overflowIcon = null
 
     }//oncreate()
 
