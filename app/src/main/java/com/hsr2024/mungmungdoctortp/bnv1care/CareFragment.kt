@@ -59,6 +59,8 @@ class CareFragment:Fragment() {
             startActivity( Intent(requireContext(), HealthInfoActivity::class.java) )
         }
 
+        //binding.btnVaccine.setOnClickListener { startActivity(Intent(requireContext(),VaccineActivity::class.java)) }
+
         load()
 
 
