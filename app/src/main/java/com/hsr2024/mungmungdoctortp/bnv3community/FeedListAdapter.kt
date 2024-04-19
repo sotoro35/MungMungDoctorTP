@@ -80,7 +80,7 @@ class FeedListAdapter(val context: Context, var items:List<FeedData>) : Adapter<
         }
 
         holder.binding.ivFavorite.setOnClickListener {
-        val params= FeedFavor("${G.user_email}", "${G.user_providerId}", "email", "${item.feed_id}") // feed_id feed 식별값
+        val params= FeedFavor("${G.user_email}", "${G.user_providerId}", "${G.loginType}", "${item.feed_id}") // feed_id feed 식별값
         RetrofitProcess(context, params=params, callback = object : RetrofitCallback {
             override fun onResponseListSuccess(response: List<Any>?) {}
 
@@ -154,7 +154,7 @@ class FeedListAdapter(val context: Context, var items:List<FeedData>) : Adapter<
     var sss:String = ""
     fun feedDelete(feedid:String){
 
-            val params= AddorModifyorDeleteFeed("${G.user_email}", "${G.user_providerId}", "email", "$feedid") // feed_id는 feed 식별값
+            val params= AddorModifyorDeleteFeed("${G.user_email}", "${G.user_providerId}", "${G.loginType}", "$feedid") // feed_id는 feed 식별값
             RetrofitProcess(context, params=params, callback = object : RetrofitCallback {
                 override fun onResponseListSuccess(response: List<Any>?) {}
 

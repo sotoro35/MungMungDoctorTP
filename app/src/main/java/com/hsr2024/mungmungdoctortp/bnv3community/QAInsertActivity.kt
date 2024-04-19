@@ -61,7 +61,7 @@ class QAInsertActivity : AppCompatActivity() {
     val im= "http://43.200.163.153/img/${QAG.QAImg}"
 
         private fun load(){
-            val params= QA("${QAG.QAId}", "${G.user_email}", "${G.user_providerId}", "email") // qa_id는 qa 식별자
+            val params= QA("${QAG.QAId}", "${G.user_email}", "${G.user_providerId}", "${G.loginType}") // qa_id는 qa 식별자
             RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
                 override fun onResponseListSuccess(response: List<Any>?) {}
 
@@ -179,7 +179,7 @@ class QAInsertActivity : AppCompatActivity() {
     private fun save(img:String){
         var title = binding.inputLayoutName.editText!!.text.toString()
         var content = binding.inputLayoutContent.editText!!.text.toString()
-        val params= AddorModifyorDeleteQA("${G.user_email}", "${G.user_providerId}", "email",
+        val params= AddorModifyorDeleteQA("${G.user_email}", "${G.user_providerId}", "${G.loginType}",
             "${QAG.QAId}", "$img", "$title", "$content") // qa_id는 qa 식별값
         RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
             override fun onResponseListSuccess(response: List<Any>?) {}

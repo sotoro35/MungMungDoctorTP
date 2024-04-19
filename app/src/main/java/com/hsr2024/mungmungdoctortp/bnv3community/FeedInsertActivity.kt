@@ -139,7 +139,7 @@ class FeedInsertActivity : AppCompatActivity() {
     }
     private fun save(img: String) {
         var content = binding.inputLayoutContent.editText!!.text.toString()
-        val params = AddorModifyorDeleteFeed("${G.user_email}", "${G.user_providerId}", "email",
+        val params = AddorModifyorDeleteFeed("${G.user_email}", "${G.user_providerId}", "${G.loginType}",
             "${FeedG.FeedId}", "$img", "$content") // feed_id는 feed 식별값
         RetrofitProcess(this, params = params, callback = object : RetrofitCallback {
             override fun onResponseListSuccess(response: List<Any>?) {}

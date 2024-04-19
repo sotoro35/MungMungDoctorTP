@@ -140,7 +140,7 @@ class FeedActivity : AppCompatActivity() {
     private fun save(img: String) {
         var content = binding.inputLayoutContent.editText!!.text.toString()
         val params = AddorModifyorDeleteFeed(
-            "${G.user_email}", "${G.user_providerId}", "email", "", "$img", "$content"
+            "${G.user_email}", "${G.user_providerId}", "${G.loginType}", "", "$img", "$content"
         ) // 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능
         RetrofitProcess(this, params = params, callback = object : RetrofitCallback {
             override fun onResponseListSuccess(response: List<Any>?) {}
