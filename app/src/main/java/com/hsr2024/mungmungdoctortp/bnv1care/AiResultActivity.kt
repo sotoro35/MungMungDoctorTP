@@ -283,6 +283,7 @@ class AiResultActivity : AppCompatActivity() {
         }
         startActivity(intent)
 
+
     }//sendEye()
 
     private fun testEyeStart() {
