@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-
     <item android:id="@+id/menu_care" android:title="케어" android:icon="@drawable/bnv_care"/>
     <item android:id="@+id/menu_map" android:title="지도" android:icon="@drawable/bnv_map"/>
     <item android:id="@+id/menu_community" android:title="소통" android:icon="@drawable/bnv_community"/>
+    <item android:id="@+id/menu_mypage" android:title="My" android:icon="@drawable/bnv_community"/>
 
 </menu>

@@ -2,15 +2,23 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 3개 추가했음 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 카메라 기능 사용에 대한 등록 : 카메라가 없는 디바이스에서는 이 앱을 다운로드 할 수 없음 -->
+    <uses-feature android:name="android.hardware.camera.any" /> <!-- 카메라 사용에 대한 퍼미션 : 동적 퍼미션 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
+        android:name=".GlobalApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/launcher_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/launcher_icon_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MungMungDoctorTP"
         android:usesCleartextTraffic="true"
@@ -34,14 +42,88 @@
             android:name=".bnv3community.QADetailActivity"
             android:exported="false" />
         <activity
-            android:name=".main.MainActivity"
+            android:name=".login.EasyloginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv1care.ShowHosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv1care.RecordHosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv1care.NoteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv1care.HealthDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv1care.HealthInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv2map.MapDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv4mypage.DogChangeProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv1care.AiResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv1care.SkinAiActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv1care.EyeAiActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv4mypage.DogAddActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv4mypage.ChangeProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv4mypage.DogChangeProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv4mypage.PersonRuleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".login.SignupActivity"
+            android:exported="false" />
+        <activity
+            android:name=".login.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".login.IntroActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity> <!-- 네이버 map에 클라이언트 아이디 지정하기 -->
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="1eaqvacjgg" />
+
+        <!-- 카카오 로그인 -->
+        <activity
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+
+            <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
+            <data android:host="oauth"
+                android:scheme="kakao$a70223c33209f3483730b5960c7232ee" />
+        </intent-filter>
+
         </activity>
+
+        <activity
+            android:name=".main.MainActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

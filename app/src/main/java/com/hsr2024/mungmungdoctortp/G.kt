@@ -1,9 +1,11 @@
 package com.hsr2024.mungmungdoctortp
 
+import com.hsr2024.mungmungdoctortp.data.Pet
+import com.hsr2024.mungmungdoctortp.data.Pet2
+
 class G {
     companion object {
-
-        var user_email: String = "b@b"
+        var user_email: String = ""
         var user_providerId: String = ""
         var user_nickname: String = ""
         var user_imageUrl: String = ""
@@ -13,7 +15,9 @@ class G {
         var pet_birthDate: String = ""
         var pet_gender: String = ""
         var pet_neutering: String = ""
-
+        var pet_breed: String = ""
+        var loginType: String = ""
+     
     }
 }
 
@@ -33,3 +37,6 @@ class QAG {
         var QAImg: String = ""
     }
 }
+
+
+

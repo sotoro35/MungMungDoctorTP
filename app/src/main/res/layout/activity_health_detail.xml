@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".bnv1care.HealthDetailActivity"
+    android:background="@color/white">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:title="병명이름"
+        android:layout_marginLeft="16dp"
+        app:titleTextColor="@color/black"
+        app:navigationIcon="@drawable/baseline_arrow_back_ios_24"
+        android:layout_marginBottom="24dp"
+        app:titleMarginStart="40dp"
+        />
+
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:padding="4dp"
+        android:layout_below="@id/toolbar"
+        android:layout_marginLeft="24dp"
+        android:background="@drawable/bg_shape_health_detail"
+        />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="병명이름"
+        android:textSize="24sp"
+        android:layout_toRightOf="@id/iv"
+        android:layout_marginTop="140dp"
+        android:layout_marginLeft="24dp"/>
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/iv"
+        android:layout_alignBottom="@id/iv"
+        android:text="                           "
+        android:textColor="#F89A9A"
+        android:padding="4dp"
+        android:background="#6FE4E4E4"/>
+
+    <TextView
+        android:id="@+id/tv_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/tv"
+        android:layout_alignBottom="@id/iv"
+        android:text="안구"
+        android:textColor="#F89A9A"
+        android:padding="4dp"
+        android:background="#6FE4E4E4"/>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv"
+        android:layout_marginTop="24dp"
+        android:padding="24dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="정의"
+                android:textSize="17sp"
+                android:background="@drawable/bg_shape_health_detail"
+                android:paddingRight="16dp"
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"/>
+            <TextView
+                android:id="@+id/tv_definition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. "
+                android:textSize="15sp"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="원인"
+                android:textSize="17sp"
+                android:background="@drawable/bg_shape_health_detail"
+                android:paddingRight="16dp"
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_marginTop="16dp"/>
+
+            <TextView
+                android:id="@+id/tv_cause"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. "
+                android:textSize="15sp"/>
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="증상"
+                android:textSize="17sp"
+                android:background="@drawable/bg_shape_health_detail"
+                android:paddingRight="16dp"
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_marginTop="16dp"/>
+
+            <TextView
+                android:id="@+id/tv_symptom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. "
+                android:textSize="15sp"/>
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="치료법 및 예방법"
+                android:textSize="17sp"
+                android:background="@drawable/bg_shape_health_detail"
+                android:paddingRight="16dp"
+                android:paddingLeft="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_marginTop="16dp"/>
+
+            <TextView
+                android:id="@+id/tv_method"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="70dp"
+                android:text="원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. 원인이 나열된다. "
+                android:textSize="15sp"/>
+
+
+
+
+
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>
