@@ -1,6 +1,7 @@
 package com.hsr2024.mungmungdoctortp.bnv1care
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -106,6 +107,7 @@ class SkinAiActivity : AppCompatActivity() {
     lateinit var cropbitmap: Bitmap
     lateinit var file:File
 
+    @SuppressLint("SuspiciousIndentation")
     private fun capture(){
         imageCapture ?: return
 

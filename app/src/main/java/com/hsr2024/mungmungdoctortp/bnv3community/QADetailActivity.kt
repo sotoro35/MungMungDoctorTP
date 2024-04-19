@@ -52,6 +52,7 @@ class QADetailActivity : AppCompatActivity() {
     var img: String? = null
     var comment_count: String? = null
     var view_count: String? = null
+    var myqa:String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,33 +60,35 @@ class QADetailActivity : AppCompatActivity() {
 
         binding.toolbar.setNavigationOnClickListener { finish() }
         load()
-        binding.toolbar.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.menu_insert -> {
-                    val intent = Intent(this@QADetailActivity, QAInsertActivity::class.java)
-                    startActivity(intent)
-                    true
+
+        if (myqa == "1"){
+            binding.toolbar.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.menu_insert -> {
+                        val intent = Intent(this@QADetailActivity, QAInsertActivity::class.java)
+                        startActivity(intent)
+                        true
+                    }
+
+                    R.id.menu_delete -> {
+                        AlertDialog.Builder(this)
+                            .setTitle("삭제 하시겠습니까?")
+                            .setMessage("삭제하시면 복구하실 수 없습니다")
+                            .setPositiveButton("확인") { dialog, which ->
+                                Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                            }
+                            .setNegativeButton("취소") { dialog, which ->
+                                dialog.dismiss()
+                            }
+                            .create().show()
+                        true
+                    }
+
+                    else -> false
+
                 }
-
-                R.id.menu_delete -> {
-                    AlertDialog.Builder(this)
-                        .setTitle("삭제 하시겠습니까?")
-                        .setMessage("삭제하시면 복구하실 수 없습니다")
-                        .setPositiveButton("확인") { dialog, which ->
-                            Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
-                        }
-                        .setNegativeButton("취소") { dialog, which ->
-                            dialog.dismiss()
-                        }
-                        .create().show()
-                    true
-                }
-
-                else -> false
-
             }
         }
-
 
     }//oncreate()
 
@@ -120,6 +123,7 @@ class QADetailActivity : AppCompatActivity() {
     }//테이크인포메이션
 
 
+
     private fun load(){
         val params= QA("${QAG.QAId}", "${G.user_email}", "${G.user_providerId}", "${G.loginType}") // qa_id는 qa 식별자
         RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
@@ -136,6 +140,7 @@ class QADetailActivity : AppCompatActivity() {
                     img = "http://43.200.163.153/img/${data.imgurl}"
                     comment_count = data.comment_count
                     view_count = data.view_count
+                    myqa = data.myQA
 
                     Glide.with(this@QADetailActivity).load(profile_imgurl).into(binding.circleIv)
                     binding.tvNickname.text = nickname

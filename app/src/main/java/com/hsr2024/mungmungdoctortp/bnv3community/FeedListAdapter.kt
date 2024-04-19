@@ -46,37 +46,41 @@ class FeedListAdapter(val context: Context, var items:List<FeedData>) : Adapter<
 
         Log.d("imgUrl",imgUrl)
         Glide.with(context).load(imgUrl).into(holder.binding.iv)
-        holder.binding.toolbar.setOnMenuItemClickListener { toolbar->
-            when(toolbar.itemId){
-                R.id.menu_insert->{
-                    FeedG.FeedId = item.feed_id
-                    FeedG.FeedText = item.content
-                    FeedG.FeedImg = item.imgurl
-                    val intent = Intent(context,FeedInsertActivity::class.java)
-                    context.startActivity(intent)
-                    true
+
+        if (item.myFeed == "1"){
+            holder.binding.toolbar.setOnMenuItemClickListener { toolbar->
+                when(toolbar.itemId){
+                    R.id.menu_insert->{
+                        FeedG.FeedId = item.feed_id
+                        FeedG.FeedText = item.content
+                        FeedG.FeedImg = item.imgurl
+                        val intent = Intent(context,FeedInsertActivity::class.java)
+                        context.startActivity(intent)
+                        true
+                    }
+                    R.id.menu_delete -> {
+                        AlertDialog.Builder(context)
+                            .setTitle("삭제 하시겠습니까?")
+                            .setMessage("삭제하시면 복구하실 수 없습니다")
+                            .setPositiveButton("확인") { dialog, which ->
+                                Toast.makeText(context, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                                //서버에서 삭제
+                                sss = item.feed_id
+                                feedDelete(item.feed_id)
+                                items = items.filter { item.feed_id != sss }
+                                notifyDataSetChanged()
+                                dialog.dismiss()
+                            }
+                            .setNegativeButton("취소") { dialog, which ->
+                                dialog.dismiss()
+                            }
+                            .create().show()
+                        true
+                    }
+                    else -> false
                 }
-                R.id.menu_delete -> {
-                    AlertDialog.Builder(context)
-                        .setTitle("삭제 하시겠습니까?")
-                        .setMessage("삭제하시면 복구하실 수 없습니다")
-                        .setPositiveButton("확인") { dialog, which ->
-                            Toast.makeText(context, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
-                        //서버에서 삭제
-                            sss = item.feed_id
-                            feedDelete(item.feed_id)
-                            items = items.filter { item.feed_id != sss }
-                            notifyDataSetChanged()
-                            dialog.dismiss()
-                        }
-                        .setNegativeButton("취소") { dialog, which ->
-                            dialog.dismiss()
-                        }
-                        .create().show()
-                    true
-                }
-                else -> false
-            }
+        }
+
         }
 
         holder.binding.ivFavorite.setOnClickListener {
