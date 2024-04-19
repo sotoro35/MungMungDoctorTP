@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <com.takusemba.cropme.CropLayout
+        android:id="@+id/test_select_image"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:adjustViewBounds="true"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/icon_gallery"
+        app:cropme_background_alpha="100%"
+        app:cropme_frame_height_percent="100%"
+        app:cropme_frame_width_percent="100%"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="검사부위를 크게 보이게 해주세요.\n위 사진으로 검사가 진행됩니다"
+        android:layout_marginTop="12dp"
+        android:gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp">
+        <TextView
+            android:id="@+id/test_start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="검사시작"
+            android:gravity="center"
+            android:padding="16dp"
+            android:layout_weight="1"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/bg_button2"/>
+
+        <TextView
+            android:id="@+id/test_close"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="취소"
+            android:gravity="center"
+            android:padding="16dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="32dp"
+            android:background="@drawable/bg_button2"/>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

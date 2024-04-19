@@ -1,5 +1,10 @@
 package com.hsr2024.mungmungdoctortp.data
 
+import retrofit2.Call
+import retrofit2.http.GET
+import retrofit2.http.Headers
+import retrofit2.http.Query
+
 // code 종류
 //  - 200 : 작업성공
 // diagnosis_result 진단결과
@@ -13,6 +18,10 @@ data class AiResponses(
     val eye:AiResponse,
     val skin:AiResponse
 )
+
+
+
+
 
 data class LoginResponse(
     val email:String="",                // 회원 이메일
@@ -28,6 +37,7 @@ data class LoginResponse(
     val pet_breed:String="",            // 회원 선택된 펫 견종
     val code:String=""                  // 4200 회원, 4204 회원 아님, 4203 이메일 로그인 정보 틀림, 1200 회원 추가 성공, 1201 회원 추가 실패
 )
+
 
 data class KakaoSearchPlaceResponse(var meta: PlaceMeta, var documents: List<Place>)
 
@@ -108,3 +118,4 @@ data class EssentialVaccination(
 
 data class AdditionVaccinationList(val vaccinationList:List<AdditionVaccination>, val code:String)
 data class EssentialVaccinationList(val vaccinationList:List<EssentialVaccination>, val code:String)
+
