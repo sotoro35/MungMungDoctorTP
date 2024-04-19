@@ -209,6 +209,9 @@ class SkinAiActivity : AppCompatActivity() {
                         }
 
                         override fun onSuccess(bitmap: Bitmap) {
+                            cropbitmap = bitmap
+                            savefile(cropbitmap)
+
                             val intent = Intent(this@SkinAiActivity,AiResultActivity::class.java)
                             //intent.putExtra("aiSkinImg",uri.toString())
                             //intent.putExtra("aiSkinImg2",imgPath)

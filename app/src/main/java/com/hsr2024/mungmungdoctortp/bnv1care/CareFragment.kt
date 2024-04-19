@@ -118,8 +118,8 @@ class CareFragment:Fragment() {
                             else -> data.pet_neutered
                         }
 
-                        G.user_email = data.email ?: ""
-                        G.user_providerId = data.provider_id ?: ""
+                        //G.user_email = data.email ?: ""
+                       // G.user_providerId = data.provider_id ?: ""
                         G.user_nickname = data.nickname ?: ""
                         G.user_imageUrl = data.userImgUrl ?: ""
                         G.pet_id = data.pet_id ?: ""
