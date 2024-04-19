@@ -1863,7 +1863,7 @@ class RetrofitProcess(
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
 //    override fun onResponseSuccess(response: Any?) {
-//        val data=(response as QAData)
+//        val data=(response as QABoard)
 //        data.code                                                  //  - 4204 서비스 회원 아님, 7220 qa 성공, 7221 qa 실패
 //        data.qa_id
 //        data.profile_imgurl
