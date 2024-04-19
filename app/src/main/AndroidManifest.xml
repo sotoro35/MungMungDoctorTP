@@ -23,6 +23,33 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".bnv1care.MandatoryVaccineActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv1care.AddVaccineActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv1care.VaccineActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv3community.QAInsertActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv3community.FeedInsertActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv3community.FeedActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv3community.CommentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv3community.QAAddActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv3community.QADetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".login.EasyloginActivity"
             android:exported="false" />
         <activity
@@ -60,9 +87,6 @@
             android:exported="false" />
         <activity
             android:name=".bnv4mypage.ChangeProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".bnv4mypage.DogChangeProfileActivity"
             android:exported="false" />
         <activity
             android:name=".bnv4mypage.PersonRuleActivity"

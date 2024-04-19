@@ -19,5 +19,25 @@ class G {
         var pet_breed: String = ""
         var loginType: String = ""
 
+        class FeedG {
+            companion object {
+                var FeedId: String = ""
+                var FeedText: String = ""
+                var FeedImg: String = ""
+            }
+        }
+
+        class QAG {
+            companion object {
+                var QAId: String = ""
+                var QAName: String = ""
+                var QAText: String = ""
+                var QAImg: String = ""
+
+            }
+        }
     }
 }
+
+
+

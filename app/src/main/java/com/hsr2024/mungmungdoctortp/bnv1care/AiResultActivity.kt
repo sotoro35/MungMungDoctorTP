@@ -17,8 +17,10 @@ import com.hsr2024.mungmungdoctortp.data.AddorDeleteAI
 import com.hsr2024.mungmungdoctortp.databinding.ActivityAiResultBinding
 import com.hsr2024.mungmungdoctortp.ml.EyeModel
 import com.hsr2024.mungmungdoctortp.ml.EyeModel2
+import com.hsr2024.mungmungdoctortp.ml.EyeModel419
 import com.hsr2024.mungmungdoctortp.ml.SkinMode2
 import com.hsr2024.mungmungdoctortp.ml.SkinModel
+import com.hsr2024.mungmungdoctortp.ml.SkinModel419
 import com.hsr2024.mungmungdoctortp.network.RetrofitHelper
 import com.hsr2024.mungmungdoctortp.network.RetrofitService
 import com.hsr2024.mungmungdoctortp.network.RetrofitCallback
@@ -257,11 +259,12 @@ class AiResultActivity : AppCompatActivity() {
         }
         startActivity(intent)
 
+
     }//sendEye()
 
     private fun testEyeStart() {
         //1. 모델 객체생성
-        val model = EyeModel2.newInstance(this)
+        val model = EyeModel419.newInstance(this)
 
         //2. 입력이미지 준비
         val image = TensorImage.fromBitmap(
@@ -326,7 +329,7 @@ class AiResultActivity : AppCompatActivity() {
     private fun testSkinStart() {
 
         //1. 모델 객체생성
-        val model = SkinMode2.newInstance(this)
+        val model = SkinModel419.newInstance(this)
 
         //2. 입력이미지 준비
         val image = TensorImage.fromBitmap(
