@@ -24,6 +24,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".bnv1care.MandatoryVaccineActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv1care.AddVaccineActivity"
+            android:exported="false" />
+        <activity
+            android:name=".bnv1care.VaccineActivity"
+            android:exported="false" />
+        <activity
             android:name=".bnv3community.QAInsertActivity"
             android:exported="false" />
         <activity
@@ -94,6 +103,7 @@
             android:exported="false" />
         <activity
             android:name=".login.IntroActivity"
+
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

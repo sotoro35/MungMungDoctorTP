@@ -280,6 +280,14 @@
         android:layout_marginTop="4dp"
         android:layout_marginBottom="8dp"/>
 
+    <Button
+        android:id="@+id/tv111"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="To Vaccine Activity"
+        android:textSize="30sp"
+        tools:ignore="MissingConstraints" />
+
     <TextView
         android:id="@+id/btn_vaccine"
         android:layout_width="match_parent"
@@ -295,5 +303,6 @@
         android:layout_below="@id/line4"
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"/>
+
 
 </RelativeLayout>

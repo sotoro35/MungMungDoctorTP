@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:layout_margin="8dp"
+    android:backgroundTint="#F8EBD3">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="12dp">
+        <TextView 
+            android:id="@+id/vaccine_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/vaccine_date"
+            android:text="심장사상충, 외부기생충, 기타접종"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/vaccine_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="2024-04-11"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/vaccine_memo"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/vaccine_name"
+            android:textSize="13sp"
+            android:layout_marginTop="4dp"
+            android:text="메모내용" />
+        <TextView
+            android:id="@+id/vaccine_hospital"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="병원이름"
+            android:textSize="15sp"
+            android:layout_marginRight="8dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/vaccine_date"/>
+
+
+        
+        
+    </RelativeLayout>
+
+
+
+
+
+</com.google.android.material.card.MaterialCardView>

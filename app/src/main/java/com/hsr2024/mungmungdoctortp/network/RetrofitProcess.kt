@@ -1749,7 +1749,7 @@ class RetrofitProcess(
         })
     }
 
-    // 44. 추가 접종 삭제
+//     44. 추가 접종 삭제
 // deleteAdditionVaccinationRequest 사용법
 //val params= AddorModifyorDeleteAdditionVaccination("이메일정보", "provider_id", "로그인 타입", "펫 식별값",
 //            id                                      // 접종 기록 식별 값
@@ -1766,7 +1766,24 @@ class RetrofitProcess(
 //        Log.d("AdditionVaccination Add fail",errorMsg!!) // 에러 메시지
 //    }
 //
-//}).deleteAdditionVaccinationRequest()
+//}).deleteAdditionVaccinationRequest() 44. 추가 접종 삭제
+//// deleteAdditionVaccinationRequest 사용법
+////val params= AddorModifyorDeleteAdditionVaccination("이메일정보", "provider_id", "로그인 타입", "펫 식별값",
+////            id                                      // 접종 기록 식별 값
+//// )
+////RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+////    override fun onResponseListSuccess(response: List<Any>?) {}
+////
+////    override fun onResponseSuccess(response: Any?) {
+////        val data=(response as AdditionVaccinationList)
+////        Log.d("AdditionVaccination Add code","data")               //  - 4204 서비스 회원 아님, 8700 추가 접종 삭제 성공, 8601 추가 접종 삭제 실패
+////    }
+////
+////    override fun onResponseFailure(errorMsg: String?) {
+////        Log.d("AdditionVaccination Add fail",errorMsg!!) // 에러 메시지
+////    }
+////
+////}).deleteAdditionVaccinationRequest()
 
     fun deleteEssentialVaccinationRequest(){
         val retrofitService = setRetrofitService()
