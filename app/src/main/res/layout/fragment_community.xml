@@ -1,36 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="#f8e6c4">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tablayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        app:tabMode="fixed"
-        android:backgroundTint="#f8e6c4">
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tablayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:tabMode="fixed"
+            android:backgroundTint="#f8e6c4">
 
-    <com.google.android.material.tabs.TabItem
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="피드" />
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="피드" />
 
-    <com.google.android.material.tabs.TabItem
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Q&amp;A"/>
-
-    </com.google.android.material.tabs.TabLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/bg_community">
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Q&amp;A"/>
+        </com.google.android.material.tabs.TabLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
@@ -38,20 +31,28 @@
             android:layout_height="match_parent"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
-            android:layout_marginTop="16dp"/>
+            android:layout_below="@id/tablayout"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="40dp"
+            android:background="@drawable/bg_community"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_favor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/Widget.MaterialComponents.FloatingActionButton"
-        android:backgroundTint="#f8e6c4"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="40dp"
-        android:layout_marginRight="16dp"
-        android:src="@drawable/add"/>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_favor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/ShapeAppearanceOverlay.Material3.FloatingActionButton"
+            android:backgroundTint="#f8e6c4"
+            android:background="#f8e6c4"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/add"/>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    </RelativeLayout>
 
-</LinearLayout>
+
+</RelativeLayout>
