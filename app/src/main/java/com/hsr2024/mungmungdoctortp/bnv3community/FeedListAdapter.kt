@@ -32,15 +32,9 @@ class FeedListAdapter(val context: Context, var items:List<FeedData>) : Adapter<
         val item=items[position]
         val profile= "http://43.200.163.153/img/${item.profile_imgurl}"
         val imgUrl= "http://43.200.163.153/img/${item.imgurl}"
-
-        if(item.imgurl != "" && item.imgurl != null){
-            Glide.with(context).load(imgUrl).into(holder.binding.iv)
-        }else holder.binding.iv.setImageResource(R.drawable.baseline_image_24)
-
-        if (item.profile_imgurl != "" && item.profile_imgurl != null){
-            Glide.with(context).load(profile).into(holder.binding.circleIv2)
-        }else holder.binding.circleIv2.setImageResource(R.drawable.pet_image)
+        Glide.with(context).load(profile).into(holder.binding.circleIv2)
         holder.binding.tv.text=item.nickname
+        Glide.with(context).load(imgUrl).into(holder.binding.iv)
         holder.binding.tvFavorite.text=item.favorite
         holder.binding.tvComment.text=item.comment
         holder.binding.content.text=item.content
@@ -91,45 +85,45 @@ class FeedListAdapter(val context: Context, var items:List<FeedData>) : Adapter<
 
 
         holder.binding.ivFavorite.setOnClickListener {
-        val params= FeedFavor("${G.user_email}", "${G.user_providerId}", "${G.loginType}", "${item.feed_id}") // feed_id feed 식별값
-        RetrofitProcess(context, params=params, callback = object : RetrofitCallback {
-            override fun onResponseListSuccess(response: List<Any>?) {}
+            val params= FeedFavor("${G.user_email}", "${G.user_providerId}", "${G.loginType}", "${item.feed_id}") // feed_id feed 식별값
+            RetrofitProcess(context, params=params, callback = object : RetrofitCallback {
+                override fun onResponseListSuccess(response: List<Any>?) {}
 
-            override fun onResponseSuccess(response: Any?) {
-                val code=(response as String) //  - 4204 서비스 회원 아님, 6900 feed 찜 추가 성공, 6901 feed 찜 삭제, 6902 feed 찜 실패
-                Log.d("feed favor code","$code")
+                override fun onResponseSuccess(response: Any?) {
+                    val code=(response as String) //  - 4204 서비스 회원 아님, 6900 feed 찜 추가 성공, 6901 feed 찜 삭제, 6902 feed 찜 실패
+                    Log.d("feed favor code","$code")
 
-                when(code){
-                    "6900"-> {
+                    when(code){
+                        "6900"-> {
 
-                    val currentFavoriteCount = holder.binding.tvFavorite.text.toString().toInt()
-                    val newFavoriteCount = if (item.isFavorite)currentFavoriteCount -1 else currentFavoriteCount +1
+                            val currentFavoriteCount = holder.binding.tvFavorite.text.toString().toInt()
+                            val newFavoriteCount = if (item.isFavorite)currentFavoriteCount -1 else currentFavoriteCount +1
 
-                    holder.binding.tvFavorite.text= newFavoriteCount.toString()
+                            holder.binding.tvFavorite.text= newFavoriteCount.toString()
 
-                    val newHeartImage = if(item.isFavorite) R.drawable.favorite else R.drawable.favorites
+                            val newHeartImage = if(item.isFavorite) R.drawable.favorite else R.drawable.favorites
 
-                    //val favor = if(item.isFavorite) false else true
+                            //val favor = if(item.isFavorite) false else true
 
-                    holder.binding.ivFavorite.setImageResource(newHeartImage)
-                    item.isFavorite =! item.isFavorite
+                            holder.binding.ivFavorite.setImageResource(newHeartImage)
+                            item.isFavorite =! item.isFavorite
 
-                    //holder.binding.tvFavorite.text= newFavoriteCount.toString()
+                            //holder.binding.tvFavorite.text= newFavoriteCount.toString()
 
-                    }
-                    "6901"->{
+                        }
+                        "6901"->{
 //                        holder.binding.tvFavorite.text = (item.favorite.toInt() -1 ).toString()
 //                        holder.binding.ivFavorite.setImageResource(R.drawable.favorite)
+                        }
                     }
+
                 }
 
-            }
+                override fun onResponseFailure(errorMsg: String?) {
+                    Log.d("feed favor fail",errorMsg!!) // 에러 메시지
+                }
 
-            override fun onResponseFailure(errorMsg: String?) {
-                Log.d("feed favor fail",errorMsg!!) // 에러 메시지
-            }
-
-         }).feedFavorRequest()
+            }).feedFavorRequest()
 
 //            val currentFavoriteCount = holder.binding.tvFavorite.text.toString().toInt()
 //            val newFavoriteCount = if (item.isFavorite)currentFavoriteCount -1 else currentFavoriteCount +1
@@ -149,7 +143,7 @@ class FeedListAdapter(val context: Context, var items:List<FeedData>) : Adapter<
 
 
 
-        holder.binding.root.setOnClickListener {
+        holder.binding.ivComment.setOnClickListener {
             val intent= Intent(context, CommentActivity::class.java)
             intent.putExtra("feed",item.feed_id)
             context.startActivity(intent)
@@ -165,45 +159,45 @@ class FeedListAdapter(val context: Context, var items:List<FeedData>) : Adapter<
     var sss:String = ""
     fun feedDelete(feedid:String){
 
-            val params= AddorModifyorDeleteFeed("${G.user_email}", "${G.user_providerId}", "${G.loginType}", "$feedid") // feed_id는 feed 식별값
-            RetrofitProcess(context, params=params, callback = object : RetrofitCallback {
-                override fun onResponseListSuccess(response: List<Any>?) {}
+        val params= AddorModifyorDeleteFeed("${G.user_email}", "${G.user_providerId}", "${G.loginType}", "$feedid") // feed_id는 feed 식별값
+        RetrofitProcess(context, params=params, callback = object : RetrofitCallback {
+            override fun onResponseListSuccess(response: List<Any>?) {}
 
-                override fun onResponseSuccess(response: Any?) {
-                    val code=(response as String) //  - 4204 서비스 회원 아님, 6600 feed 삭제 성공, 6601 feed 삭제 실패
-                    Log.d("feed delete code","$code")
+            override fun onResponseSuccess(response: Any?) {
+                val code=(response as String) //  - 4204 서비스 회원 아님, 6600 feed 삭제 성공, 6601 feed 삭제 실패
+                Log.d("feed delete code","$code")
 
-                    when (code) {
-                        "4204" -> {
-                            Toast.makeText(context, "관리자에게 문의하세요.", Toast.LENGTH_SHORT).show()
-                            Log.d("feed오류", "서비스 회원 아님")
-                        }
-
-                        "6601" -> {
-                            Toast.makeText(
-                                context,
-                                "관리자에게 문의하세요",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            Log.d("feed오류", "삭제 실패")
-                        }
-
-                        "6600" -> {
-                            Toast.makeText(context, "삭제 완료되었습니다.", Toast.LENGTH_SHORT)
-                                .show()
-                            sss= "성공"
-
-                        }
+                when (code) {
+                    "4204" -> {
+                        Toast.makeText(context, "관리자에게 문의하세요.", Toast.LENGTH_SHORT).show()
+                        Log.d("feed오류", "서비스 회원 아님")
                     }
 
+                    "6601" -> {
+                        Toast.makeText(
+                            context,
+                            "관리자에게 문의하세요",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        Log.d("feed오류", "삭제 실패")
+                    }
+
+                    "6600" -> {
+                        Toast.makeText(context, "삭제 완료되었습니다.", Toast.LENGTH_SHORT)
+                            .show()
+                        sss= "성공"
+
+                    }
                 }
 
-                override fun onResponseFailure(errorMsg: String?) {
-                    Log.d("feed delete fail",errorMsg!!) // 에러 메시지
-                }
+            }
 
-            }).feedDeleteRequest()
+            override fun onResponseFailure(errorMsg: String?) {
+                Log.d("feed delete fail",errorMsg!!) // 에러 메시지
+            }
+
+        }).feedDeleteRequest()
 
 
-        }
+    }
 }
