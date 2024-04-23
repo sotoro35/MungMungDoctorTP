@@ -35,6 +35,7 @@ class QAG {
         var QAName:String=""
         var QAText: String = ""
         var QAImg: String = ""
+        var QA:String = ""
 
     }
 }

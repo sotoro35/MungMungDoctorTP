@@ -61,34 +61,68 @@ class QADetailActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener { finish() }
         load()
 
-        if (myqa == "1"){
-            binding.toolbar.setOnMenuItemClickListener { menuItem ->
-                when (menuItem.itemId) {
-                    R.id.menu_insert -> {
-                        val intent = Intent(this@QADetailActivity, QAInsertActivity::class.java)
-                        startActivity(intent)
-                        true
-                    }
+        Log.d("큐에이G",QAG.QA)
+        Log.d("큐에이my",myqa)
+        Log.d("큐에이id",QAG.QAId)
 
-                    R.id.menu_delete -> {
-                        AlertDialog.Builder(this)
-                            .setTitle("삭제 하시겠습니까?")
-                            .setMessage("삭제하시면 복구하실 수 없습니다")
-                            .setPositiveButton("확인") { dialog, which ->
-                                Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
-                            }
-                            .setNegativeButton("취소") { dialog, which ->
-                                dialog.dismiss()
-                            }
-                            .create().show()
-                        true
-                    }
 
-                    else -> false
 
-                }
-            }
-        }else binding.toolbar.overflowIcon = null
+      if (QAG.QA == "1") {
+          binding.toolbar.setOnMenuItemClickListener { toolbar ->
+              when (toolbar.itemId) {
+                  R.id.menu_insert -> {
+                      val intent = Intent(this@QADetailActivity, QAInsertActivity::class.java)
+                      startActivity(intent)
+                      true
+                  }
+
+                  R.id.menu_delete -> {
+                      AlertDialog.Builder(this)
+                          .setTitle("삭제 하시겠습니까?")
+                          .setMessage("삭제하시면 복구하실 수 없습니다")
+                          .setPositiveButton("확인") { dialog, which ->
+                              Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                          }
+                          .setNegativeButton("취소") { dialog, which ->
+                              dialog.dismiss()
+                          }
+                          .create().show()
+                      true
+                  }
+
+                  else -> false
+              }
+          }
+      }
+
+//          if (QAG.QA == "1"){
+//            binding.toolbar.setOnMenuItemClickListener { menuItem ->
+//                when (menuItem.itemId) {
+//                    R.id.menu_insert -> {
+//                        val intent = Intent(this@QADetailActivity, QAInsertActivity::class.java)
+//                        startActivity(intent)
+//                        true
+//                    }
+//
+//                    R.id.menu_delete -> {
+//                        AlertDialog.Builder(this)
+//                            .setTitle("삭제 하시겠습니까?")
+//                            .setMessage("삭제하시면 복구하실 수 없습니다")
+//                            .setPositiveButton("확인") { dialog, which ->
+//                                Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+//                            }
+//                            .setNegativeButton("취소") { dialog, which ->
+//                                dialog.dismiss()
+//                            }
+//                            .create().show()
+//                        true
+//                    }
+//
+//                    else -> false
+//
+//                }
+//            }
+//        }else binding.toolbar.overflowIcon = null
 
     }//oncreate()
 
@@ -141,6 +175,8 @@ class QADetailActivity : AppCompatActivity() {
                     comment_count = data.comment_count
                     view_count = data.view_count
                     myqa = data.myQA
+
+                    Log.d("큐에이load",myqa)
 
                     Glide.with(this@QADetailActivity).load(profile_imgurl).into(binding.circleIv)
                     binding.tvNickname.text = nickname

@@ -173,7 +173,7 @@ class QAInsertActivity : AppCompatActivity() {
 
             }).onefileUploadRequest()
 
-        }else AlertDialog.Builder(this).setMessage("이미지를 등록해주세요.").create().show()
+        }else save(img)
 
     }
     private fun save(img:String){

@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -87,7 +88,11 @@ class FeedListAdapter(val context: Context, var items:List<FeedData>) : Adapter<
                 }
             }
 
-        }else holder.binding.toolbar.overflowIcon = null
+        }else{
+            holder.binding.toolbar.overflowIcon = null
+            holder.binding.toolbar.isEnabled = false
+        }
+
 
 
         holder.binding.ivFavorite.setOnClickListener {

@@ -23,7 +23,7 @@ class QAListAdapter(val context:Context, var items:List<QAData>) : Adapter<QALis
         val imgUrl= "http://43.200.163.153/img/${item.imgurl}"
         val proFileImgUrl= "http://43.200.163.153/img/${item.profile_imgurl}"
         Glide.with(context).load(imgUrl).into(holder.binding.iv)
-        holder.binding.tvTitle.text=item.title
+        holder.binding.tvTitle.text="${item.title}\n ${item.myQA}"
         holder.binding.tvNickname.text=item.nickname
         holder.binding.tvViewcount.text=item.view_count
         holder.binding.tvComment.text=item.comment_count
@@ -33,10 +33,9 @@ class QAListAdapter(val context:Context, var items:List<QAData>) : Adapter<QALis
         holder.binding.root.setOnClickListener {
            val intent= Intent(context, QADetailActivity::class.java)
             QAG.QAId = item.qa_id
-
+            QAG.QA = item.myQA
             Log.d("내용", item.content)
             Log.d("dsffff", imgUrl)
-
 
             context.startActivity(intent)
         }
