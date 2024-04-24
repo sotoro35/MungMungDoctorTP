@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.loader.content.CursorLoader
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
-import com.hsr2024.mungmungdoctortp.FeedG
 import com.hsr2024.mungmungdoctortp.G
 import com.hsr2024.mungmungdoctortp.QAG
 import com.hsr2024.mungmungdoctortp.R
@@ -53,13 +52,42 @@ class QADetailActivity : AppCompatActivity() {
     var comment_count: String? = null
     var view_count: String? = null
     var myqa:String = ""
+    var commentId=""
+    var methodType="add"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.toolbar.setNavigationOnClickListener { finish() }
+        binding.toolbar.setNavigationOnClickListener {
+            finish()
+            QAG.QAId=""
+        }
         load()
+        commentList()
+
+        //댓글 처리
+        binding.tvRegister.setOnClickListener {
+            if(methodType=="add") { // 댓글 추가 시
+                val comment=binding.layoutComment.editText?.text.toString()
+                if(comment!="") {
+                    commentAdd(comment)
+                    binding.layoutComment.editText?.setText("")
+                }
+            } else if (methodType=="modify"){ // 댓글 수정 시
+                val comment=binding.layoutComment.editText?.text.toString()
+                if(comment!="") {
+                    commentModify(comment)
+                    binding.layoutComment.editText?.setText("")
+                }
+            }
+        }
+
+        binding.ivComment.setOnClickListener {
+            val intent= Intent(this, CommentActivity::class.java)
+            intent.putExtra("qa",QAG.QAId)
+            startActivity(intent)
+        }
 
         if (myqa == "1"){
             binding.toolbar.setOnMenuItemClickListener { menuItem ->
@@ -96,7 +124,7 @@ class QADetailActivity : AppCompatActivity() {
         super.onResume()
         // 임시 데이터 추가
         load()
-
+        commentList()
     }
 
 
@@ -160,7 +188,32 @@ class QADetailActivity : AppCompatActivity() {
         }).QARequest()
 
     }
+    fun commentList() {
+        val params = QACommentList(
+            "${QAG.QAId}",
+            "${G.user_email}",
+            "${G.user_providerId}",
+            "${G.loginType}"
+        ) // 비로그인일 경우 이메일 정보, provider_id, login_type 빈 값 가능
+        RetrofitProcess(this, params = params, callback = object : RetrofitCallback {
+            override fun onResponseListSuccess(response: List<Any>?) {}
 
+            override fun onResponseSuccess(response: Any?) {
+                val data = (response as CommentDataList)
+                if (data.code == "7300") {
+                    items.clear()
+                    items.addAll(data.commentDatas)
+                    commentAdapter = CommentListAdapter(this@QADetailActivity, items)
+                    binding.recyclerView.adapter = commentAdapter
+                    commentAdapter?.notifyDataSetChanged()
+                }
+            }
+
+            override fun onResponseFailure(errorMsg: String?) {
+                Log.d("qa comment list fail", errorMsg!!) // 에러 메시지
+            }
+        }).qaCommentListRequest()
+    }
     private fun commentload(){
 
         val s=intent.getStringExtra("QAData")
@@ -192,5 +245,50 @@ class QADetailActivity : AppCompatActivity() {
         commentAdapter?.notifyDataSetChanged()
 
 
+    }
+
+    private fun commentAdd(comment:String) {
+        val params= AddorModifyorDeleteComment("${G.user_email}", "${G.user_providerId}", "${G.loginType}", "${QAG.QAId}", "", "$comment" )
+        // comment_id는 댓글  식별 값
+        RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+            override fun onResponseListSuccess(response: List<Any>?) {}
+
+            override fun onResponseSuccess(response: Any?) {
+                val code=(response as String) //  - 4204 서비스 회원 아님, 7650 qa 댓글 추가 성공, 7651 qa 댓글 추가 실패
+                if(code=="7650") Toast.makeText(this@QADetailActivity, "댓글 작성을 완료 하였습니다.", Toast.LENGTH_SHORT).show()
+                commentList()
+
+            }
+
+            override fun onResponseFailure(errorMsg: String?) {
+                Log.d("qa comment Add fail",errorMsg!!) // 에러 메시지
+            }
+
+        }).qaCommentAddRequest()
+    }
+
+    private fun commentModify(comment:String) {
+        val params= AddorModifyorDeleteComment("${G.user_email}", "${G.user_providerId}", "${G.loginType}", "${QAG.QAId}", "$commentId", "$comment" )
+        RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+            override fun onResponseListSuccess(response: List<Any>?) {}
+
+            override fun onResponseSuccess(response: Any?) {
+                val code=(response as String)
+                if(code=="7700") Toast.makeText(this@QADetailActivity, "댓글 수정을 완료 하였습니다.", Toast.LENGTH_SHORT).show()
+                commentList()
+                methodType="add"
+                commentId=""
+                binding.layoutComment.editText?.setText("")
+
+            }
+
+            override fun onResponseFailure(errorMsg: String?) {
+                Log.d("qa comment modify fail",errorMsg!!) // 에러 메시지
+            }
+
+        }).qaCommentModifyRequest()
+    }
+    fun setEditText(text:String) {
+        binding.layoutComment.editText?.setText("$text")
     }
 }
