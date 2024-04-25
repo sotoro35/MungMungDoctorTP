@@ -78,100 +78,100 @@
         android:layout_height="match_parent"
         android:layout_below="@id/tv_mandatory">
 
-    <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/gridLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnCount="3"
-        android:rowCount="2"
-        android:layout_below="@id/tv_mandatory"
-        android:padding="8dp"
-        android:layout_marginTop="12dp"
-        android:alignmentMode="alignMargins"
-        android:useDefaultMargins="true">
-
-        <TextView
-            android:id="@+id/vac1"
-            android:layout_width="0dp"
-            android:layout_height="130dp"
-            android:layout_columnWeight="1"
-            android:text="1차 접종"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:background="#F8E6C4"
-            android:layout_row="0"
-            android:layout_column="0"/>
-
-        <TextView
-            android:id="@+id/vac2"
-            android:layout_width="0dp"
-            android:layout_height="130dp"
-            android:layout_columnWeight="1"
-            android:text="2차 접종"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:background="#F8E6C4"
-            android:layout_row="0"
-            android:layout_column="1"/>
-
-        <TextView
-            android:id="@+id/vac3"
-            android:layout_width="0dp"
-            android:layout_height="130dp"
-            android:layout_columnWeight="1"
-            android:text="3차 접종"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:background="#F8E6C4"
-            android:layout_row="0"
-            android:layout_column="2"/>
-
-        <TextView
-            android:id="@+id/vac4"
-            android:layout_width="0dp"
-            android:layout_height="130dp"
-            android:layout_columnWeight="1"
-            android:text="4차 접종"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:background="#F8E6C4"
-            android:layout_row="1"
-            android:layout_column="0"/>
-
-        <TextView
-            android:id="@+id/vac5"
-            android:layout_width="0dp"
-            android:layout_height="130dp"
-            android:layout_columnWeight="1"
-            android:text="5차 접종"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:background="#F8E6C4"
-            android:layout_row="1"
-            android:layout_column="1"/>
-
-        <TextView
-            android:id="@+id/vac6"
-            android:layout_width="0dp"
-            android:layout_height="130dp"
-            android:layout_columnWeight="1"
-            android:text="6차 접종"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:background="#F8E6C4"
-            android:layout_row="1"
-            android:layout_column="2"/>
-
-    </GridLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/mandatoty_vaccine"
+        <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/gridLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:columnCount="3"
+            android:rowCount="2"
+            android:layout_below="@id/tv_mandatory"
             android:padding="8dp"
             android:layout_marginTop="12dp"
-            android:visibility="visible"/>
+            android:alignmentMode="alignMargins"
+            android:useDefaultMargins="true">
+
+            <TextView
+                android:id="@+id/vac1"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_columnWeight="1"
+                android:text="1차 접종"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:background="#F8E6C4"
+                android:layout_row="0"
+                android:layout_column="0"/>
+
+            <TextView
+                android:id="@+id/vac2"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_columnWeight="1"
+                android:text="2차 접종"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:background="#F8E6C4"
+                android:layout_row="0"
+                android:layout_column="1"/>
+
+            <TextView
+                android:id="@+id/vac3"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_columnWeight="1"
+                android:text="3차 접종"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:background="#F8E6C4"
+                android:layout_row="0"
+                android:layout_column="2"/>
+
+            <TextView
+                android:id="@+id/vac4"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_columnWeight="1"
+                android:text="4차 접종"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:background="#F8E6C4"
+                android:layout_row="1"
+                android:layout_column="0"/>
+
+            <TextView
+                android:id="@+id/vac5"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_columnWeight="1"
+                android:text="5차 접종"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:background="#F8E6C4"
+                android:layout_row="1"
+                android:layout_column="1"/>
+
+            <TextView
+                android:id="@+id/vac6"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_columnWeight="1"
+                android:text="6차 접종"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:background="#F8E6C4"
+                android:layout_row="1"
+                android:layout_column="2"/>
+
+        </GridLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mandatoty_vaccine"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:padding="8dp"
+                android:layout_marginTop="12dp"
+                android:visibility="invisible"/>
 
     </FrameLayout>
 

@@ -1,8 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:textSize="20sp"
-    android:background="#F8E6C4"
-    android:padding="8dp" />
+    android:backgroundTint="#CE8820">
+
+    <TextView
+        android:id="@+id/vaccine_num"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:textSize="60sp"
+        android:gravity="center"
+        android:text="1차"
+        android:textColor="@color/black"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+    <TextView
+        android:id="@+id/vaccine_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="종합백신\n코로나 장염\n항체가 검사"
+        android:textSize="50sp"
+        android:padding="16dp"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"/>
+
+        <TextView
+            android:id="@+id/vaccine_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="2024-04-20"
+            android:layout_marginTop="80dp"
+            android:textSize="32sp"/>
+
+        <TextView
+            android:id="@+id/vaccine_hospital"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="병원이름"
+            android:textColor="@color/black"
+            android:textSize="28sp"/>
+        <TextView
+            android:id="@+id/vaccine_memo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="memo"
+            android:visibility="gone"/>
+
+
+
+    </LinearLayout>
+
+
+
+</com.google.android.material.card.MaterialCardView>
