@@ -51,12 +51,9 @@ class CommentActivity : AppCompatActivity() {
         if(feedId!=null) { //
             boardType="feed"
             boardId=feedId!!
-        } else if(qaId!=null){
+        } else {
             boardType="qa"
             boardId=qaId!!
-        } else {    // qaDetailAcvtivity에서 보여질 경우
-            boardType=""
-            boardId=""
         }
     }
 

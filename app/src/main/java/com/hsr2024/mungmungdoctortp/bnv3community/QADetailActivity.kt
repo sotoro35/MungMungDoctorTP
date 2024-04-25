@@ -86,6 +86,7 @@ class QADetailActivity : AppCompatActivity() {
         binding.ivComment.setOnClickListener {
             val intent= Intent(this, CommentActivity::class.java)
             intent.putExtra("qa",QAG.QAId)
+            QAG.QAId=""
             startActivity(intent)
         }
 

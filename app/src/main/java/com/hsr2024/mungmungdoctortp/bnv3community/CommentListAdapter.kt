@@ -42,7 +42,6 @@ class CommentListAdapter(val context:Context, var items:List<CommentData>) : Ada
         holder.binding.toolbar.setOnMenuItemClickListener { toolbar->
             when(toolbar.itemId){
                 R.id.menu_insert->{
-                    Toast.makeText(context, "$boardType", Toast.LENGTH_SHORT).show()
                     if(boardType=="feed" || boardType=="qa") {
                         (context as CommentActivity).setEditText(holder.binding.tvTitle.text.toString())
                         (context as CommentActivity).methodType="modify"
