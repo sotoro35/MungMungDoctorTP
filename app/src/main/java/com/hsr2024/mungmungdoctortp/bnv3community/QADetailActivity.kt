@@ -26,6 +26,7 @@ import com.hsr2024.mungmungdoctortp.data.QA
 import com.hsr2024.mungmungdoctortp.data.QABoard
 import com.hsr2024.mungmungdoctortp.data.QACommentList
 import com.hsr2024.mungmungdoctortp.data.QAData
+import com.hsr2024.mungmungdoctortp.data.QAView
 import com.hsr2024.mungmungdoctortp.databinding.ActivityQadetailBinding
 import com.hsr2024.mungmungdoctortp.main.CommentListAdapter
 import com.hsr2024.mungmungdoctortp.network.RetrofitCallback
@@ -118,7 +119,7 @@ class QADetailActivity : AppCompatActivity() {
                 }
             }
         }else binding.toolbar.overflowIcon = null
-
+        qaView()
     }//oncreate()
 
     override fun onResume() {
@@ -291,5 +292,23 @@ class QADetailActivity : AppCompatActivity() {
     }
     fun setEditText(text:String) {
         binding.layoutComment.editText?.setText("$text")
+    }
+
+    private fun qaView() {
+        val params= QAView("${G.user_email}", "${G.user_providerId}", "${G.loginType}", "${QAG.QAId}", )
+        RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+            override fun onResponseListSuccess(response: List<Any>?) {}
+
+            override fun onResponseSuccess(response: Any?) {
+                val code=(response as String) //  - 4204 서비스 회원 아님, 7900 qa 조회 수 증가 성공, 7901 qa 조회 수 그대로, 7902 조회 수 증가 실패
+                if(code=="7900") Log.d("qa view success","$code")
+
+            }
+
+            override fun onResponseFailure(errorMsg: String?) {
+                Log.d("qa view fail",errorMsg!!) // 에러 메시지
+            }
+
+        }).qaViewRequest()
     }
 }
