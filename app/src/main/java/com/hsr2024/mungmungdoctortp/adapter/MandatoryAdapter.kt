@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.hsr2024.mungmungdoctortp.data.AdditionVaccination
 import com.hsr2024.mungmungdoctortp.data.EssentialVaccination
 import com.hsr2024.mungmungdoctortp.databinding.MandatoryVaccineListBinding
 
@@ -50,5 +51,9 @@ class MandatoryAdapter(
             vaccination.antibody_titer.takeIf { it.isNotEmpty() },
             vaccination.rabies.takeIf { it.isNotEmpty() }
         ).joinToString(separator = "\n")
+    }
+    fun manUpdateData(mandatoryVaccineList: List<EssentialVaccination>) {
+        vaccineList = mandatoryVaccineList
+        notifyDataSetChanged()
     }
 }
