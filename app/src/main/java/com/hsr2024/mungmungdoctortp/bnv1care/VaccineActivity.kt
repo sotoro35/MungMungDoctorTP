@@ -72,6 +72,8 @@ class VaccineActivity : AppCompatActivity() {
         binding.rvAddVaccine.layoutManager = LinearLayoutManager(this)
         binding.rvAddVaccine.adapter = adapter
     }
+    
+
     private fun fetchDataFromServer() {
         val params = DeleteDog("${G.user_email}", "${G.user_providerId}", "${G.pet_id}", "email")
 
@@ -121,7 +123,9 @@ class VaccineActivity : AppCompatActivity() {
             }
 
             override fun onResponseFailure(errorMsg: String?) {
-                Log.d("EssentialVaccination List fail", errorMsg!!) // 에러 메시지
+                val errorLog = errorMsg ?: "No additional error information"
+                Log.d("EssentialVaccination List fail",errorLog)
+                Toast.makeText(this@VaccineActivity, "데이터 실패", Toast.LENGTH_SHORT).show()
             }
 
         }).listEssentialVaccinationRequest()
