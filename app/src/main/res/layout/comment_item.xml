@@ -19,7 +19,7 @@
         android:layout_height="50dp"
         app:titleCentered="true"
         android:layout_margin="8dp"
-        app:menu="@menu/toolbar_menu"/>
+        app:menu="@menu/community_toolbar_menu"/>
 
     <LinearLayout
         android:id="@+id/linear2"

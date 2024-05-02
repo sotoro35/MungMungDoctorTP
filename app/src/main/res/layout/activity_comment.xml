@@ -30,7 +30,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layout_comment"
         android:layout_width="300dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:hint="댓글은 1000자까지 작성 가능"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textMultiLine"
-            android:lines="1"
+            android:maxLines="3"
             android:gravity="center"/>
     </com.google.android.material.textfield.TextInputLayout>
 
