@@ -50,18 +50,18 @@ class MandatoryVaccineActivity : AppCompatActivity() {
 
 
         val shotNumber = intent.getIntExtra("shotNumber", 1)
-        val titleText = intent.getStringExtra("titleText") ?: ""
+        var titleText = intent.getStringExtra("titleText") ?: ""
         val checkBox1Text = intent.getStringExtra("checkBox1Text") ?: " "
         val checkBox2Text = intent.getStringExtra("checkBox2Text") ?: " "
         val checkBox3Text = intent.getBooleanExtra("checkBox3Text", false)
 
-        when(titleText){
-            "1차 접종" -> titleN = 1
-            "2차 접종" -> titleN = 2
-            "3차 접종" -> titleN = 3
-            "4차 접종" -> titleN = 4
-            "5차 접종" -> titleN = 5
-            "6차 접종" -> titleN = 6
+        when(shotNumber){
+            1 -> titleText = "1차 접종"
+            2 -> titleText = "2차 접종"
+            3 -> titleText = "3차 접종"
+            4 -> titleText = "4차 접종"
+            5 -> titleText = "5차 접종"
+            6 -> titleText = "6차 접종"
         }
 
         binding.toolBar.title = titleText
@@ -94,18 +94,18 @@ class MandatoryVaccineActivity : AppCompatActivity() {
         val date = binding.dateTv.text.toString()
         val hospital = binding.etHospital.text.toString()
         val memo = binding.etMemo.text.toString()
-        when (titleN){
-            1 -> {comprehensive = binding.checkBox1Text.text.toString()
+        when(binding.toolBar.title){
+            "1차 접종" -> {comprehensive = binding.checkBox1Text.text.toString()
                 corona_enteritis = binding.checkBox2Text.text.toString()}
-            2 -> {comprehensive = binding.checkBox1Text.text.toString()
+            "2차 접종" -> {comprehensive = binding.checkBox1Text.text.toString()
                 corona_enteritis = binding.checkBox2Text.text.toString()}
-            3 -> {comprehensive = binding.checkBox1Text.text.toString()
+            "3차 접종" -> {comprehensive = binding.checkBox1Text.text.toString()
                 kennel_cough = binding.checkBox2Text.text.toString()}
-            4 -> {comprehensive = binding.checkBox1Text.text.toString()
+            "4차 접종" -> {comprehensive = binding.checkBox1Text.text.toString()
                 kennel_cough = binding.checkBox2Text.text.toString()}
-            5 -> {comprehensive = binding.checkBox1Text.text.toString()
+            "5차 접종" -> {comprehensive = binding.checkBox1Text.text.toString()
                 influenza = binding.checkBox2Text.text.toString()}
-            6 -> {rabies = binding.checkBox1Text.text.toString()
+            "6차 접종" -> {rabies = binding.checkBox1Text.text.toString()
                 influenza = binding.checkBox2Text.text.toString()
                 antibody_titer = binding.checkBox3Text.text.toString()}
         }
