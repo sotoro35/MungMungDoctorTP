@@ -45,22 +45,6 @@ class VaccineActivity : AppCompatActivity() {
         binding.vac5.setOnClickListener { toMandatoryActivity(5,"차 접종","종합백신 5차","인플루엔자 1차",false) }
         binding.vac6.setOnClickListener { toMandatoryActivity(6,"차 접종","광견병","인플루엔자 2차",true) }
 
-        mandatoryAdapter = MandatoryAdapter(mandatoryVaccineList) { essentialVaccination ->
-            val intent = Intent(this@VaccineActivity, MandatoryVaccineActivity::class.java)
-            intent.putExtra("vaccinationId", essentialVaccination.id)
-            intent.putExtra("shotNumber", essentialVaccination.shot_number)
-            intent.putExtra("comprehensive", essentialVaccination.comprehensive)
-            intent.putExtra("coronaEnteritis", essentialVaccination.corona_enteritis)
-            intent.putExtra("kennelCough", essentialVaccination.kennel_cough)
-            intent.putExtra("influenza", essentialVaccination.influenza)
-            intent.putExtra("antibodyTiter", essentialVaccination.antibody_titer)
-            intent.putExtra("rabies", essentialVaccination.rabies)
-            intent.putExtra("date", essentialVaccination.date)
-            intent.putExtra("hospital", essentialVaccination.hospital)
-            intent.putExtra("memo", essentialVaccination.memo)
-            startActivity(intent)
-        }
-
         setupRecyclerView()
         fetchDataFromServer()
         mandatoryDataFromServer()
@@ -129,9 +113,9 @@ class VaccineActivity : AppCompatActivity() {
                 val data = (response as EssentialVaccinationList)
                 Log.d("EssentialVaccination List code", "$data")
                 when (data.code) {   //  - 4204 서비스 회원 아님, 9400 필수 접종 목록 성공, 9401 필수 접종 목록 실패
-                    "9401" -> Toast.makeText(this@VaccineActivity, "기록된 필수접종이 없습니다.", Toast.LENGTH_SHORT).show()
+                    "9401" -> Toast.makeText(this@VaccineActivity, "기록된 접종이 없습니다.", Toast.LENGTH_SHORT).show()
                     "4204" -> Toast.makeText(this@VaccineActivity, "회원 정보 확인 필요", Toast.LENGTH_SHORT).show()
-                    "9400" -> { Toast.makeText(this@VaccineActivity, "필수 접종 목록 성공", Toast.LENGTH_SHORT).show()
+                    "9400" -> { Toast.makeText(this@VaccineActivity, "추가 접종 목록 성공", Toast.LENGTH_SHORT).show()
                         val mandatoryVaccines: List<EssentialVaccination> = data.vaccinationList.sortedByDescending { it.id }
                         updateMandatoryVaccineList(mandatoryVaccines)
                     }
