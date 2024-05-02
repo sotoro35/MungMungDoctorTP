@@ -89,8 +89,8 @@ class MandatoryVaccineActivity : AppCompatActivity() {
         datePicker.show(supportFragmentManager, "DATE_PICKER")
     }
     private fun mandatoryVaccine(){
-        val shot_number = titleN.toString()
 
+        val shot_number = binding.toolBar.title.toString().filter { it.isDigit() }
         val date = binding.dateTv.text.toString()
         val hospital = binding.etHospital.text.toString()
         val memo = binding.etMemo.text.toString()
