@@ -35,7 +35,6 @@ class MandatoryVaccineActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMandatoryVaccineBinding.inflate(layoutInflater) }
 
-    private var titleN:Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,6 +72,8 @@ class MandatoryVaccineActivity : AppCompatActivity() {
 
 
     }//온크리
+
+
 
 
     private fun showDatePicker() {

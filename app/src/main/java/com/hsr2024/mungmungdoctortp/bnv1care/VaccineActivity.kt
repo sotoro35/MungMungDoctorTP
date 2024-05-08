@@ -10,7 +10,6 @@ import androidx.lifecycle.ReportFragment.Companion.reportFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hsr2024.mungmungdoctortp.G
-import com.hsr2024.mungmungdoctortp.adapter.MandatoryAdapter
 import com.hsr2024.mungmungdoctortp.adapter.VaccineAdapter
 import com.hsr2024.mungmungdoctortp.data.AdditionVaccination
 import com.hsr2024.mungmungdoctortp.data.AdditionVaccinationList
@@ -26,9 +25,6 @@ class VaccineActivity : AppCompatActivity() {
     private val binding by lazy { ActivityVaccineBinding.inflate(layoutInflater) }
     private lateinit var adapter: VaccineAdapter
     private var vaccineList = mutableListOf<AdditionVaccination>()
-
-    private lateinit var mandatoryAdapter: MandatoryAdapter
-    private var mandatoryVaccineList = mutableListOf<EssentialVaccination>()
     companion object {
         private const val REQUEST_EDIT_VACCINE = 1001
     }
@@ -47,7 +43,6 @@ class VaccineActivity : AppCompatActivity() {
 
         setupRecyclerView()
         fetchDataFromServer()
-        mandatoryDataFromServer()
 
 
 
@@ -55,7 +50,6 @@ class VaccineActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         fetchDataFromServer()
-        mandatoryDataFromServer()
     }
     private fun setupRecyclerView() {
         adapter = VaccineAdapter(this, vaccineList) { vaccination ->
@@ -104,44 +98,8 @@ class VaccineActivity : AppCompatActivity() {
         adapter.updateData(vaccines)
         binding.rvAddVaccine.adapter = adapter
     }
-    private fun mandatoryDataFromServer() {
-        val params = DeleteDog("${G.user_email}", "${G.user_providerId}", "${G.pet_id}", "email")
-        RetrofitProcess(this, params = params, callback = object : RetrofitCallback {
-            override fun onResponseListSuccess(response: List<Any>?) {}
 
-            override fun onResponseSuccess(response: Any?) {
-                val data = (response as EssentialVaccinationList)
-                Log.d("EssentialVaccination List code", "$data")
-                when (data.code) {   //  - 4204 서비스 회원 아님, 9400 필수 접종 목록 성공, 9401 필수 접종 목록 실패
-                    "9401" -> Toast.makeText(this@VaccineActivity, "기록된 접종이 없습니다.", Toast.LENGTH_SHORT).show()
-                    "4204" -> Toast.makeText(this@VaccineActivity, "회원 정보 확인 필요", Toast.LENGTH_SHORT).show()
-                    "9400" -> { Toast.makeText(this@VaccineActivity, "추가 접종 목록 성공", Toast.LENGTH_SHORT).show()
-                        val mandatoryVaccines: List<EssentialVaccination> = data.vaccinationList.sortedByDescending { it.id }
-                        updateMandatoryVaccineList(mandatoryVaccines)
-                    }
-                }
 
-            }
-
-            override fun onResponseFailure(errorMsg: String?) {
-                val errorLog = errorMsg ?: "No additional error information"
-                Log.d("EssentialVaccination List fail",errorLog)
-                Toast.makeText(this@VaccineActivity, "데이터 실패", Toast.LENGTH_SHORT).show()
-            }
-
-        }).listEssentialVaccinationRequest()
-    }
-
-    private fun updateMandatoryVaccineList(mandatoryVaccines : List<EssentialVaccination>){
-        if (mandatoryVaccines.isNotEmpty()) {
-            mandatoryAdapter.manUpdateData(mandatoryVaccines)
-            binding.mandatotyVaccine.layoutManager = GridLayoutManager(this, 3)
-            binding.mandatotyVaccine.adapter = mandatoryAdapter
-            binding.mandatotyVaccine.visibility = View.VISIBLE  // Set RecyclerView visible
-        } else {
-            binding.mandatotyVaccine.visibility = View.GONE  // Keep RecyclerView hidden if no data
-        }
-    }
 
     private fun toMandatoryActivity(shotNumber:Int, titleText: String, checkBox1Text: String, checkBox2Text: String, checkBox3Text: Boolean) {
         val intent = Intent(this, MandatoryVaccineActivity::class.java).apply {
