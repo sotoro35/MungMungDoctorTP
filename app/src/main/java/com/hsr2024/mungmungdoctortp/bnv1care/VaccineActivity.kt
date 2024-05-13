@@ -87,7 +87,7 @@ class VaccineActivity : AppCompatActivity() {
                 putExtra("hospital",essentialVaccination.hospital )
                 putExtra("memo",essentialVaccination.memo)
             }
-            startActivityForResult(intent, REQUEST_EDIT_VACCINE)
+            startActivity(intent)
         }
         binding.essentialVaccine.adapter = essentialAdapter
     }
@@ -156,7 +156,6 @@ class VaccineActivity : AppCompatActivity() {
     private fun updateEssentialVaccinationList(vaccines: List<EssentialVaccination>) {
         essentialAdapter.updateData(vaccines)
         binding.essentialVaccine.adapter = essentialAdapter
-        binding.essentialVaccine.scrollToPosition(0)
 
     }
 

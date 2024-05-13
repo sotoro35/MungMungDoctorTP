@@ -21,6 +21,7 @@ import com.hsr2024.mungmungdoctortp.network.RetrofitProcess
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.math.log
 
 class EssentialVaccineActivity : AppCompatActivity() {
 
@@ -30,7 +31,6 @@ class EssentialVaccineActivity : AppCompatActivity() {
     var influenza = ""
     var antibody_titer = ""
     var rabies = ""
-
 
     private var shotNumber = 0
 
@@ -96,27 +96,39 @@ class EssentialVaccineActivity : AppCompatActivity() {
     private fun mandatoryVaccine(){
 
 
-
         val shot_number = binding.shotNumber.selectedItem.toString().filter { it.isDigit() }
         val date = binding.dateTv.text.toString()
         val hospital = binding.etHospital.text.toString()
         val memo = binding.etMemo.text.toString()
 
-        when(shot_number){
-            "1" -> {comprehensive = binding.checkBox1Text.text.toString()
-                corona_enteritis = binding.checkBox2Text.text.toString()}
-            "2" -> {comprehensive = binding.checkBox1Text.text.toString()
-                corona_enteritis = binding.checkBox2Text.text.toString()}
-            "3" -> {comprehensive = binding.checkBox1Text.text.toString()
-                kennel_cough = binding.checkBox2Text.text.toString()}
-            "4" -> {comprehensive = binding.checkBox1Text.text.toString()
-                kennel_cough = binding.checkBox2Text.text.toString()}
-            "5" -> {comprehensive = binding.checkBox1Text.text.toString()
-                influenza = binding.checkBox2Text.text.toString()}
-            "6" -> {rabies = binding.checkBox1Text.text.toString()
-                influenza = binding.checkBox2Text.text.toString()
-                antibody_titer = binding.checkBox3Text.text.toString()}
+        when(shot_number) {
+            "1" -> {
+                if (binding.checkBox1Text.isChecked) comprehensive = binding.checkBox1Text.text.toString()
+                if (binding.checkBox2Text.isChecked) corona_enteritis = binding.checkBox2Text.text.toString()
+            }
+            "2" -> {
+                if (binding.checkBox1Text.isChecked) comprehensive = binding.checkBox1Text.text.toString()
+                if (binding.checkBox2Text.isChecked) corona_enteritis = binding.checkBox2Text.text.toString()
+            }
+            "3" -> {
+                if (binding.checkBox1Text.isChecked) comprehensive = binding.checkBox1Text.text.toString()
+                if (binding.checkBox2Text.isChecked) kennel_cough = binding.checkBox2Text.text.toString()
+            }
+            "4" -> {
+                if (binding.checkBox1Text.isChecked) comprehensive = binding.checkBox1Text.text.toString()
+                if (binding.checkBox2Text.isChecked) kennel_cough = binding.checkBox2Text.text.toString()
+            }
+            "5" -> {
+                if (binding.checkBox1Text.isChecked) comprehensive = binding.checkBox1Text.text.toString()
+                if (binding.checkBox2Text.isChecked) influenza = binding.checkBox2Text.text.toString()
+            }
+            "6" -> {
+                if (binding.checkBox1Text.isChecked) rabies = binding.checkBox1Text.text.toString()
+                if (binding.checkBox2Text.isChecked) influenza = binding.checkBox2Text.text.toString()
+                if (binding.checkBox3Text.isChecked) antibody_titer = binding.checkBox3Text.text.toString()
+            }
         }
+        
         if (comprehensive.isEmpty() && corona_enteritis.isEmpty() && kennel_cough.isEmpty() && influenza.isEmpty() && antibody_titer.isEmpty() && rabies.isEmpty()){
             Toast.makeText(this, "접종 정보를 하나 이상 체크하세요.", Toast.LENGTH_SHORT).show()
             return
