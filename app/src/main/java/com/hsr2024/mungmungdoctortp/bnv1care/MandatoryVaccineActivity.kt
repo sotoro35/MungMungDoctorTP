@@ -14,7 +14,6 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.hsr2024.mungmungdoctortp.G
 import com.hsr2024.mungmungdoctortp.R
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteEssentialVaccination
-import com.hsr2024.mungmungdoctortp.data.EssentialVaccination
 import com.hsr2024.mungmungdoctortp.data.EssentialVaccinationList
 import com.hsr2024.mungmungdoctortp.databinding.ActivityMandatoryVaccineBinding
 import com.hsr2024.mungmungdoctortp.network.RetrofitCallback
@@ -43,22 +42,25 @@ class MandatoryVaccineActivity : AppCompatActivity() {
 
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         binding.toolBar.setNavigationOnClickListener { finish() }
+
         binding.dateTv.setOnClickListener { showDatePicker() }
 
 
         val shotNumber = intent.getIntExtra("shotNumber", 1)
+        var titleText = intent.getStringExtra("titleText") ?: ""
         val checkBox1Text = intent.getStringExtra("checkBox1Text") ?: " "
         val checkBox2Text = intent.getStringExtra("checkBox2Text") ?: " "
         val checkBox3Text = intent.getBooleanExtra("checkBox3Text", false)
 
-        var titleText = when(shotNumber) {
-            1 -> "1차 접종"
-            2 -> "2차 접종"
-            3 -> "3차 접종"
-            4 -> "4차 접종"
-            5 -> "5차 접종"
-            else -> "6차 접종"
+        when(shotNumber){
+            1 -> titleText = "1차 접종"
+            2 -> titleText = "2차 접종"
+            3 -> titleText = "3차 접종"
+            4 -> titleText = "4차 접종"
+            5 -> titleText = "5차 접종"
+            6 -> titleText = "6차 접종"
         }
 
         binding.toolBar.title = titleText
@@ -68,90 +70,8 @@ class MandatoryVaccineActivity : AppCompatActivity() {
 
         binding.btnSave.setOnClickListener { mandatoryVaccine() }
 
-        loadVaccineDataByShotNumber(shotNumber)
 
     }//온크리
-
-    private fun loadVaccineDataByShotNumber(shotNumber: Int) {
-        val params = AddorModifyorDeleteEssentialVaccination(
-            email = G.user_email,
-            provider_id = G.user_providerId,
-            login_type = G.loginType,
-            pet_id = G.pet_id,
-            shot_number = shotNumber.toString()
-        )
-
-        RetrofitProcess(this, params = params, callback = object : RetrofitCallback {
-            override fun onResponseListSuccess(response: List<Any>?) {
-                try {
-                    val list = response as? List<EssentialVaccination> ?: return
-                    list.find { it.shot_number == shotNumber.toString() }?.let { updateUI(it) }
-                } catch (e: Exception) {
-                    Log.e("MandatoryVaccineActivity", "Error processing vaccination data", e)
-                    Toast.makeText(this@MandatoryVaccineActivity, "Error processing data: ${e.message}", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            override fun onResponseSuccess(response: Any?) {
-                // This case may not be needed if handling only lists
-            }
-
-            override fun onResponseFailure(errorMsg: String?) {
-                Toast.makeText(this@MandatoryVaccineActivity, "Data loading failed: $errorMsg", Toast.LENGTH_SHORT).show()
-            }
-        }).listEssentialVaccinationRequest()
-    }
-    private fun updateUI(vaccination: EssentialVaccination) {
-        when (vaccination.shot_number) {
-            "1" -> {
-                binding.checkBox1Text.text = "종합백신 1차"
-                binding.checkBox1Text.isChecked = vaccination.comprehensive.isNotEmpty()
-                binding.checkBox2Text.text = "코로나 장염 1차"
-                binding.checkBox2Text.isChecked = vaccination.corona_enteritis.isNotEmpty()
-            }
-
-            "2" -> {
-                binding.checkBox1Text.text = "종합백신 2차"
-                binding.checkBox1Text.isChecked = vaccination.comprehensive.isNotEmpty()
-                binding.checkBox2Text.text = "코로나 장염 2차"
-                binding.checkBox2Text.isChecked = vaccination.corona_enteritis.isNotEmpty()
-            }
-
-            "3" -> {
-                binding.checkBox1Text.text = "종합백신 3차"
-                binding.checkBox1Text.isChecked = vaccination.comprehensive.isNotEmpty()
-                binding.checkBox2Text.text = "켄넬코프 1차"
-                binding.checkBox2Text.isChecked = vaccination.kennel_cough.isNotEmpty()
-            }
-            "4" -> {
-                binding.checkBox1Text.text = "종합백신 4차"
-                binding.checkBox1Text.isChecked = vaccination.comprehensive.isNotEmpty()
-                binding.checkBox1Text.isChecked = vaccination.comprehensive.isNotEmpty()
-                binding.checkBox2Text.text = "켄넬코프 2차"
-                binding.checkBox2Text.isChecked = vaccination.corona_enteritis.isNotEmpty()
-            }
-
-            "5" -> {
-                binding.checkBox1Text.text = "종합백신 5차"
-                binding.checkBox1Text.isChecked = vaccination.comprehensive.isNotEmpty()
-                binding.checkBox2Text.text = "인플루엔자 1차"
-                binding.checkBox2Text.isChecked = vaccination.corona_enteritis.isNotEmpty()
-            }
-
-            "6" -> {
-                binding.checkBox1Text.text = "광견병"
-                binding.checkBox1Text.isChecked = vaccination.comprehensive.isNotEmpty()
-                binding.checkBox2Text.text = "인플루엔자 2차"
-                binding.checkBox2Text.isChecked = vaccination.kennel_cough.isNotEmpty()
-                binding.checkBox3Text.text = "항체가검사"
-                binding.checkBox3Text.isChecked = vaccination.antibody_titer.isNotEmpty()
-            }
-
-        }
-        binding.dateTv.text = vaccination.date
-        binding.etHospital.setText(vaccination.hospital)
-        binding.etMemo.setText(vaccination.memo)
-    }
 
 
 

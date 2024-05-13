@@ -46,13 +46,21 @@ class AddVaccineActivity : AppCompatActivity() {
         binding.btnDelete.setOnClickListener { addVaccineDelete() }
 
 
-        binding.btnDelete.visibility = if (vaccineId == null) View.GONE else View.VISIBLE
+        vaccineId = intent.getStringExtra("id")
+        if (vaccineId != null) {
+            // vaccineId가 있으면 삭제 버튼을 보이게 설정
+            binding.btnDelete.visibility = View.GONE // 삭제를 해도 삭제된게 바로 보여지지 않아 삭제기능은 없는걸로..
+        } else {
+            // vaccineId가 없으면 삭제 버튼을 숨김
+            binding.btnDelete.visibility = View.GONE
+        }
         initializeFormData()
         setupSaveButton()
 
     }
     private fun initializeFormData() {
         vaccineId = intent.getStringExtra("id")
+        Log.d("AddVaccineActivity", "Received vaccineId: $vaccineId")
         // 인텐트에서 데이터 받기
         val heartworm = intent.getStringExtra("heartworm") == "TRUE"
         val externalParasites = intent.getStringExtra("external_parasites") == "TRUE"
@@ -187,6 +195,7 @@ class AddVaccineActivity : AppCompatActivity() {
                     when (code) {
                         "8700" -> {
                             Toast.makeText(this@AddVaccineActivity, "삭제 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                            setResult(Activity.RESULT_OK)  // 삭제 성공 후 결과 설정
                             finish()
                         }
                         else -> Toast.makeText(this@AddVaccineActivity, "삭제 실패: $code", Toast.LENGTH_SHORT).show()
