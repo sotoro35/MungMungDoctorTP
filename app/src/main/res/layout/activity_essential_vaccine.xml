@@ -12,11 +12,11 @@
         android:id="@+id/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#F8E6C4"
         android:navigationIcon="@drawable/baseline_arrow_back_24"
-        android:title="1차 접종"
-        android:titleTextColor="@color/black"
+        android:title="필수예방접종 추가"
         android:titleMarginStart="20dp"
-        android:background="#F8E6C4"/>
+        android:titleTextColor="@color/black" />
 
     <TextView
         android:id="@+id/tv1"
@@ -27,6 +27,16 @@
         android:layout_below="@id/tool_bar"
         android:layout_margin="16dp"
         android:textSize="20sp"/>
+
+    <Spinner
+        android:id="@+id/shot_number"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_below="@id/tool_bar"
+        android:layout_toRightOf="@id/tv1"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/add_vaccine_textview"
+        android:padding="12dp" />
 
     <CheckBox
         android:id="@+id/checkBox1Text"
@@ -58,11 +68,13 @@
         android:layout_marginLeft="8dp"
         android:visibility="gone"/>
 
+
+
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_below="@id/checkBox2Text"
+        android:layout_below="@id/checkBox1Text"
         android:background="#D6D2D2"
         android:layout_marginTop="16dp"/>
 
@@ -176,21 +188,6 @@
         android:layout_below="@id/et_memo"
         android:backgroundTint="#F6E447" />
 
-    <Button
-        android:id="@+id/btn_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:layout_below="@id/btn_save"
-        android:text="기록삭제"
-        android:layout_centerHorizontal="true"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:backgroundTint="#C1BDC1"
-        android:textSize="12sp"
-        android:visibility="visible"/>
 
 
 

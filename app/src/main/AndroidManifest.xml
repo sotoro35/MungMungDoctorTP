@@ -23,7 +23,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".bnv1care.MandatoryVaccineActivity"
+            android:name=".bnv1care.EssentialVaccineActivity"
             android:exported="false" />
         <activity
             android:name=".bnv1care.AddVaccineActivity"
@@ -108,24 +108,22 @@
         </activity> <!-- 네이버 map에 클라이언트 아이디 지정하기 -->
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
-            android:value="1eaqvacjgg" />
-
-        <!-- 카카오 로그인 -->
+            android:value="1eaqvacjgg" /> <!-- 카카오 로그인 -->
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">
-        <intent-filter>
-            <action android:name="android.intent.action.VIEW" />
-            <category android:name="android.intent.category.DEFAULT" />
-            <category android:name="android.intent.category.BROWSABLE" />
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
-            <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
-            <data android:host="oauth"
-                android:scheme="kakao$a70223c33209f3483730b5960c7232ee" />
-        </intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
+                <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
+                <data
+                    android:host="oauth"
+                    android:scheme="kakao$a70223c33209f3483730b5960c7232ee" />
+            </intent-filter>
         </activity>
-
         <activity
             android:name=".main.MainActivity"
             android:exported="false" />

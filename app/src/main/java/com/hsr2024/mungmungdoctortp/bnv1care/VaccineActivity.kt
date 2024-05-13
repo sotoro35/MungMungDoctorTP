@@ -10,6 +10,7 @@ import androidx.lifecycle.ReportFragment.Companion.reportFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hsr2024.mungmungdoctortp.G
+import com.hsr2024.mungmungdoctortp.adapter.EssentialVaccinationAdapter
 import com.hsr2024.mungmungdoctortp.adapter.VaccineAdapter
 import com.hsr2024.mungmungdoctortp.data.AdditionVaccination
 import com.hsr2024.mungmungdoctortp.data.AdditionVaccinationList
@@ -24,6 +25,7 @@ class VaccineActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityVaccineBinding.inflate(layoutInflater) }
     private lateinit var adapter: VaccineAdapter
+    private lateinit var essentialAdapter: EssentialVaccinationAdapter
     private var vaccineList = mutableListOf<AdditionVaccination>()
     companion object {
         private const val REQUEST_EDIT_VACCINE = 1001
@@ -32,26 +34,22 @@ class VaccineActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+
+
         binding.iv.setOnClickListener { finish() }
         binding.btnAdd.setOnClickListener { startActivity(Intent(this,AddVaccineActivity::class.java)) }
-        binding.vac1.setOnClickListener { toMandatoryActivity(1,"차 접종","종합백신 1차","코로나 장염 1차",false) }
-        binding.vac2.setOnClickListener { toMandatoryActivity(2,"차 접종","종합백신 2차","코로나 장염 2차",false) }
-        binding.vac3.setOnClickListener { toMandatoryActivity(3,"차 접종","종합백신 3차","켄넬코프 1차",false) }
-        binding.vac4.setOnClickListener { toMandatoryActivity(4,"차 접종","종합백신 4차","켄넬코프 2차",false) }
-        binding.vac5.setOnClickListener { toMandatoryActivity(5,"차 접종","종합백신 5차","인플루엔자 1차",false) }
-        binding.vac6.setOnClickListener { toMandatoryActivity(6,"차 접종","광견병","인플루엔자 2차",true) }
+        binding.addVc.setOnClickListener { startActivity(Intent(this,EssentialVaccineActivity::class.java)) }
 
         setupRecyclerView()
+        essentialRecyclerView()
         fetchDataFromServer()
-        //mandatoryDataFromServer()
-
-
+        essentialDataFromServer()
 
     }
     override fun onResume() {
         super.onResume()
         fetchDataFromServer()
-        //mandatoryDataFromServer()
+        essentialDataFromServer()
     }
     private fun setupRecyclerView() {
         adapter = VaccineAdapter(this, vaccineList) { vaccination ->
@@ -69,6 +67,31 @@ class VaccineActivity : AppCompatActivity() {
         binding.rvAddVaccine.layoutManager = LinearLayoutManager(this)
         binding.rvAddVaccine.adapter = adapter
     }
+    private fun essentialRecyclerView() {
+
+        val esRecyclerManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.essentialVaccine.layoutManager = esRecyclerManager
+
+        // EssentialVaccination의 빈 리스트를 명시적으로 타입과 함께 전달
+        essentialAdapter = EssentialVaccinationAdapter(this,emptyList()) { essentialVaccination ->
+            val intent = Intent(this,MandatoryVaccineActivity::class.java).apply {
+                putExtra("id",essentialVaccination.id)
+                putExtra("shot_number",essentialVaccination.shot_number.filter { it.isDigit() })
+                putExtra("comprehensive",essentialVaccination.comprehensive)
+                putExtra("corona_enteritis",essentialVaccination.corona_enteritis)
+                putExtra("kennel_cough",essentialVaccination.kennel_cough )
+                putExtra("influenza",essentialVaccination.influenza  )
+                putExtra("antibody_titer",essentialVaccination.antibody_titer )
+                putExtra("rabies",essentialVaccination.rabies )
+                putExtra("date",essentialVaccination.date )
+                putExtra("hospital",essentialVaccination.hospital )
+                putExtra("memo",essentialVaccination.memo)
+            }
+            startActivityForResult(intent, REQUEST_EDIT_VACCINE)
+        }
+        binding.essentialVaccine.adapter = essentialAdapter
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_EDIT_VACCINE && resultCode == RESULT_OK) {
@@ -106,43 +129,40 @@ class VaccineActivity : AppCompatActivity() {
         binding.rvAddVaccine.adapter = adapter
         binding.rvAddVaccine.scrollToPosition(0)
     }
-    private fun mandatoryDataFromServer(){
+
+    private fun essentialDataFromServer(){
         val params= DeleteDog("${G.user_email}", "${G.user_providerId}", "${G.pet_id}", "email")
         RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
             override fun onResponseListSuccess(response: List<Any>?) {}
 
             override fun onResponseSuccess(response: Any?) {
-                val data = response as EssentialVaccinationList
+                val data=(response as EssentialVaccinationList)
                 when (data.code) {
-                    "9400" -> { // 데이터 로드 성공
-                        val intent = Intent(this@VaccineActivity, MandatoryVaccineActivity::class.java).apply {
-                            putExtra("vaccinationList", ArrayList(data.vaccinationList))
-                        }
-                        startActivity(intent)
-                    }
-                    else -> {
-                        Toast.makeText(this@VaccineActivity, "데이터 로드 실패: ${data.code}", Toast.LENGTH_SHORT).show()
+                    "9401" -> Toast.makeText(this@VaccineActivity, "기록된 접종이 없습니다.", Toast.LENGTH_SHORT).show()
+                    "4204" -> Toast.makeText(this@VaccineActivity, "회원 정보 확인 필요", Toast.LENGTH_SHORT).show()
+                    "9400" -> {Toast.makeText(this@VaccineActivity, "필수 접종 목록 성공", Toast.LENGTH_SHORT).show()
+                        val vaccines: List<EssentialVaccination> = data.vaccinationList.sortedByDescending { it.id }
+                        updateEssentialVaccinationList(vaccines)
                     }
                 }
             }
+
             override fun onResponseFailure(errorMsg: String?) {
-                Toast.makeText(this@VaccineActivity, "데이터 로드 실패: $errorMsg", Toast.LENGTH_SHORT).show()
+                Log.d("EssentialVaccination List fail",errorMsg!!) // 에러 메시지
             }
+
         }).listEssentialVaccinationRequest()
     }
+    private fun updateEssentialVaccinationList(vaccines: List<EssentialVaccination>) {
+        essentialAdapter.updateData(vaccines)
+        binding.essentialVaccine.adapter = essentialAdapter
+        binding.essentialVaccine.scrollToPosition(0)
 
-
-
-    private fun toMandatoryActivity(shotNumber:Int, titleText: String, checkBox1Text: String, checkBox2Text: String, checkBox3Text: Boolean) {
-        val intent = Intent(this, MandatoryVaccineActivity::class.java).apply {
-            putExtra("shotNumber",shotNumber)
-            putExtra("titleText", titleText)
-            putExtra("checkBox1Text", checkBox1Text)
-            putExtra("checkBox2Text", checkBox2Text)
-            putExtra("checkBox3Text", checkBox3Text)
-        }
-        startActivity(intent)
     }
+
+
+
+
 
 
 

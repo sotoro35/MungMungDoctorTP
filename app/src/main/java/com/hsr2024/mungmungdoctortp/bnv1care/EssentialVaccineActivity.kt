@@ -4,78 +4,81 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.hsr2024.mungmungdoctortp.G
 import com.hsr2024.mungmungdoctortp.R
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteEssentialVaccination
-import com.hsr2024.mungmungdoctortp.data.EssentialVaccinationList
-import com.hsr2024.mungmungdoctortp.databinding.ActivityMandatoryVaccineBinding
+import com.hsr2024.mungmungdoctortp.databinding.ActivityEssentialVaccineBinding
 import com.hsr2024.mungmungdoctortp.network.RetrofitCallback
 import com.hsr2024.mungmungdoctortp.network.RetrofitProcess
 import java.text.SimpleDateFormat
-import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-class MandatoryVaccineActivity : AppCompatActivity() {
+class EssentialVaccineActivity : AppCompatActivity() {
 
-    private var comprehensive = ""
-    private var corona_enteritis = ""
-    private var kennel_cough = ""
-    private var influenza = ""
-    private var antibody_titer = ""
-    private var rabies = ""
-
-
-    private val binding by lazy { ActivityMandatoryVaccineBinding.inflate(layoutInflater) }
+    var comprehensive = ""
+    var corona_enteritis = ""
+    var kennel_cough = ""
+    var influenza = ""
+    var antibody_titer = ""
+    var rabies = ""
 
 
+    private var shotNumber = 0
+
+    private val binding by lazy { ActivityEssentialVaccineBinding.inflate(layoutInflater) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         binding.toolBar.setNavigationOnClickListener { finish() }
-
-        binding.dateTv.setOnClickListener { showDatePicker() }
-
-
-        val shotNumber = intent.getIntExtra("shotNumber", 1)
-        var titleText = intent.getStringExtra("titleText") ?: ""
-        val checkBox1Text = intent.getStringExtra("checkBox1Text") ?: " "
-        val checkBox2Text = intent.getStringExtra("checkBox2Text") ?: " "
-        val checkBox3Text = intent.getBooleanExtra("checkBox3Text", false)
-
-        when(shotNumber){
-            1 -> titleText = "1차 접종"
-            2 -> titleText = "2차 접종"
-            3 -> titleText = "3차 접종"
-            4 -> titleText = "4차 접종"
-            5 -> titleText = "5차 접종"
-            6 -> titleText = "6차 접종"
-        }
-
-        binding.toolBar.title = titleText
-        binding.checkBox1Text.text = checkBox1Text
-        binding.checkBox2Text.text = checkBox2Text
-        binding.checkBox3Text.visibility = if (checkBox3Text) View.VISIBLE else View.GONE
-
         binding.btnSave.setOnClickListener { mandatoryVaccine() }
+        binding.dateTv.setOnClickListener { showDatePicker() }
+        setupSpinner()
 
+    }
 
-    }//온크리
+    private fun setupSpinner() {
+        val stages = listOf("1차 접종", "2차 접종", "3차 접종", "4차 접종", "5차 접종", "6차 접종")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, stages)
+        binding.shotNumber.adapter = adapter
 
+        binding.shotNumber.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                updateCheckboxes(position)
+                shotNumber = position + 1
+            }
 
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+    }
+    private fun updateCheckboxes(position: Int) {
+        val vaccineOptions = listOf(
+            listOf("종합백신 1차", "코로나 장염 1차"),
+            listOf("종합백신 2차", "코로나 장염 2차"),
+            listOf("종합백신 3차", "켄넬코프 1차"),
+            listOf("종합백신 4차", "켄넬코프 2차"),
+            listOf("종합백신 5차", "인플루엔자 1차"),
+            listOf("광견병", "인플루엔자 2차", "항체가검사")
+        )
 
+        val options = vaccineOptions[position]
+        binding.checkBox1Text.text = options.getOrNull(0) ?: ""  // 첫 번째 옵션, 없으면 비움
+        binding.checkBox2Text.text = options.getOrNull(1) ?: ""  // 두 번째 옵션, 없으면 비움
+        binding.checkBox3Text.text = options.getOrNull(2) ?: ""  // 세 번째 옵션, 없으면 비움
 
+        // 세 번째 체크박스의 보이기/숨기기
+        binding.checkBox3Text.visibility = if (position == 5) View.VISIBLE else View.GONE
+    }
     private fun showDatePicker() {
         val datePicker = MaterialDatePicker.Builder.datePicker()
             .setTitleText("날짜 선택")
@@ -89,30 +92,33 @@ class MandatoryVaccineActivity : AppCompatActivity() {
 
         datePicker.show(supportFragmentManager, "DATE_PICKER")
     }
+
     private fun mandatoryVaccine(){
 
-        val shot_number = binding.toolBar.title.toString().filter { it.isDigit() }
+
+
+        val shot_number = binding.shotNumber.selectedItem.toString().filter { it.isDigit() }
         val date = binding.dateTv.text.toString()
         val hospital = binding.etHospital.text.toString()
         val memo = binding.etMemo.text.toString()
-        when(binding.toolBar.title){
-            "1차 접종" -> {comprehensive = binding.checkBox1Text.text.toString()
+
+        when(shot_number){
+            "1" -> {comprehensive = binding.checkBox1Text.text.toString()
                 corona_enteritis = binding.checkBox2Text.text.toString()}
-            "2차 접종" -> {comprehensive = binding.checkBox1Text.text.toString()
+            "2" -> {comprehensive = binding.checkBox1Text.text.toString()
                 corona_enteritis = binding.checkBox2Text.text.toString()}
-            "3차 접종" -> {comprehensive = binding.checkBox1Text.text.toString()
+            "3" -> {comprehensive = binding.checkBox1Text.text.toString()
                 kennel_cough = binding.checkBox2Text.text.toString()}
-            "4차 접종" -> {comprehensive = binding.checkBox1Text.text.toString()
+            "4" -> {comprehensive = binding.checkBox1Text.text.toString()
                 kennel_cough = binding.checkBox2Text.text.toString()}
-            "5차 접종" -> {comprehensive = binding.checkBox1Text.text.toString()
+            "5" -> {comprehensive = binding.checkBox1Text.text.toString()
                 influenza = binding.checkBox2Text.text.toString()}
-            "6차 접종" -> {rabies = binding.checkBox1Text.text.toString()
+            "6" -> {rabies = binding.checkBox1Text.text.toString()
                 influenza = binding.checkBox2Text.text.toString()
                 antibody_titer = binding.checkBox3Text.text.toString()}
         }
-
         if (comprehensive.isEmpty() && corona_enteritis.isEmpty() && kennel_cough.isEmpty() && influenza.isEmpty() && antibody_titer.isEmpty() && rabies.isEmpty()){
-            Toast.makeText(this, "접종 정보를 하나 이상 입력하세요.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "접종 정보를 하나 이상 체크하세요.", Toast.LENGTH_SHORT).show()
             return
         }
         if (date.isEmpty()){
@@ -136,7 +142,7 @@ class MandatoryVaccineActivity : AppCompatActivity() {
             date,                                  // 접종날짜
             hospital,                              // 접종할 병원 이름
             memo,                                  // 접종 시 메모정보
- )
+        )
         RetrofitProcess(this, params = params, callback = object : RetrofitCallback {
             override fun onResponseListSuccess(response: List<Any>?) {}
 
@@ -144,17 +150,26 @@ class MandatoryVaccineActivity : AppCompatActivity() {
                 val data = response as String
                 Log.d("EssentialVaccination Add code",data)
                 when (data) {
-                    "4204", "9501" -> Toast.makeText(this@MandatoryVaccineActivity, "오류 발생: 관리자에게 문의하세요", Toast.LENGTH_SHORT).show()
+                    "4204", "9501" -> Toast.makeText(this@EssentialVaccineActivity, "오류 발생: 관리자에게 문의하세요", Toast.LENGTH_SHORT).show()
                     "9500" -> {
-                        Toast.makeText(this@MandatoryVaccineActivity, "접종 정보가 성공적으로 추가되었습니다", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@EssentialVaccineActivity, "접종 정보가 성공적으로 추가되었습니다", Toast.LENGTH_SHORT).show()
                         finish()
                     }
                 }
             }
 
             override fun onResponseFailure(errorMsg: String?) {
-                Toast.makeText(this@MandatoryVaccineActivity, "실패: $errorMsg", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@EssentialVaccineActivity, "실패: $errorMsg", Toast.LENGTH_SHORT).show()
             }
         }).addEssentialVaccinationRequest()
+
+
+
     }
+
+
+
+
+
+
 }
