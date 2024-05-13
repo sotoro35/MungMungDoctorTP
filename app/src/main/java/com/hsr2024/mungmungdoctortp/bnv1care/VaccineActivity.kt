@@ -43,6 +43,7 @@ class VaccineActivity : AppCompatActivity() {
 
         setupRecyclerView()
         fetchDataFromServer()
+        //mandatoryDataFromServer()
 
 
 
@@ -50,6 +51,7 @@ class VaccineActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         fetchDataFromServer()
+        //mandatoryDataFromServer()
     }
     private fun setupRecyclerView() {
         adapter = VaccineAdapter(this, vaccineList) { vaccination ->
@@ -67,7 +69,13 @@ class VaccineActivity : AppCompatActivity() {
         binding.rvAddVaccine.layoutManager = LinearLayoutManager(this)
         binding.rvAddVaccine.adapter = adapter
     }
-    
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_EDIT_VACCINE && resultCode == RESULT_OK) {
+            fetchDataFromServer()  // 데이터를 다시 불러와 리스트를 갱신
+            binding.rvAddVaccine.adapter?.notifyDataSetChanged()
+        }
+    }
 
     private fun fetchDataFromServer() {
         val params = DeleteDog("${G.user_email}", "${G.user_providerId}", "${G.pet_id}", "email")
@@ -93,10 +101,34 @@ class VaccineActivity : AppCompatActivity() {
             }
         }).listAdditionVaccinationRequest()
     }
-
     private fun updateVaccinationList(vaccines: List<AdditionVaccination>) {
         adapter.updateData(vaccines)
         binding.rvAddVaccine.adapter = adapter
+        binding.rvAddVaccine.scrollToPosition(0)
+    }
+    private fun mandatoryDataFromServer(){
+        val params= DeleteDog("${G.user_email}", "${G.user_providerId}", "${G.pet_id}", "email")
+        RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
+            override fun onResponseListSuccess(response: List<Any>?) {}
+
+            override fun onResponseSuccess(response: Any?) {
+                val data = response as EssentialVaccinationList
+                when (data.code) {
+                    "9400" -> { // 데이터 로드 성공
+                        val intent = Intent(this@VaccineActivity, MandatoryVaccineActivity::class.java).apply {
+                            putExtra("vaccinationList", ArrayList(data.vaccinationList))
+                        }
+                        startActivity(intent)
+                    }
+                    else -> {
+                        Toast.makeText(this@VaccineActivity, "데이터 로드 실패: ${data.code}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            override fun onResponseFailure(errorMsg: String?) {
+                Toast.makeText(this@VaccineActivity, "데이터 로드 실패: $errorMsg", Toast.LENGTH_SHORT).show()
+            }
+        }).listEssentialVaccinationRequest()
     }
 
 
@@ -110,12 +142,6 @@ class VaccineActivity : AppCompatActivity() {
             putExtra("checkBox3Text", checkBox3Text)
         }
         startActivity(intent)
-    }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_EDIT_VACCINE && resultCode == RESULT_OK) {
-            fetchDataFromServer()  // 데이터를 다시 불러와 리스트를 갱신
-        }
     }
 
 

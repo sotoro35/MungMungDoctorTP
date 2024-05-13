@@ -166,15 +166,31 @@
 
     <Button
         android:id="@+id/btn_save"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="저장"
         android:textStyle="bold"
         android:textColor="@color/black"
+        android:layout_marginTop="60dp"
+        android:layout_below="@id/et_memo"
+        android:backgroundTint="#F6E447" />
+
+    <Button
+        android:id="@+id/btn_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="12dp"
-        android:layout_alignParentBottom="true"
-        android:backgroundTint="#F6E447"/>
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_below="@id/btn_save"
+        android:text="기록삭제"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:backgroundTint="#C1BDC1"
+        android:textSize="12sp"
+        android:visibility="visible"/>
 
 
 

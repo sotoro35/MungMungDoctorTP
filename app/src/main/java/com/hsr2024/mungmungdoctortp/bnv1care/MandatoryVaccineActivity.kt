@@ -13,7 +13,11 @@ import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.hsr2024.mungmungdoctortp.G
 import com.hsr2024.mungmungdoctortp.R
+import com.hsr2024.mungmungdoctortp.data.AdditionVaccination
+import com.hsr2024.mungmungdoctortp.data.AdditionVaccinationList
 import com.hsr2024.mungmungdoctortp.data.AddorModifyorDeleteEssentialVaccination
+import com.hsr2024.mungmungdoctortp.data.DeleteDog
+import com.hsr2024.mungmungdoctortp.data.EssentialVaccination
 import com.hsr2024.mungmungdoctortp.data.EssentialVaccinationList
 import com.hsr2024.mungmungdoctortp.databinding.ActivityMandatoryVaccineBinding
 import com.hsr2024.mungmungdoctortp.network.RetrofitCallback
@@ -33,7 +37,10 @@ class MandatoryVaccineActivity : AppCompatActivity() {
     private var rabies = ""
 
 
+
     private val binding by lazy { ActivityMandatoryVaccineBinding.inflate(layoutInflater) }
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +53,7 @@ class MandatoryVaccineActivity : AppCompatActivity() {
         binding.toolBar.setNavigationOnClickListener { finish() }
 
         binding.dateTv.setOnClickListener { showDatePicker() }
+
 
 
         val shotNumber = intent.getIntExtra("shotNumber", 1)
@@ -72,7 +80,6 @@ class MandatoryVaccineActivity : AppCompatActivity() {
 
 
     }//온크리
-
 
 
 
