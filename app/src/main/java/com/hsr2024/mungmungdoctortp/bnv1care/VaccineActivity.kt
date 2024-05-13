@@ -74,7 +74,7 @@ class VaccineActivity : AppCompatActivity() {
 
         // EssentialVaccination의 빈 리스트를 명시적으로 타입과 함께 전달
         essentialAdapter = EssentialVaccinationAdapter(this,emptyList()) { essentialVaccination ->
-            val intent = Intent(this,MandatoryVaccineActivity::class.java).apply {
+            val intent = Intent(this,EssentialVaccineActivity::class.java).apply {
                 putExtra("id",essentialVaccination.id)
                 putExtra("shot_number",essentialVaccination.shot_number.filter { it.isDigit() })
                 putExtra("comprehensive",essentialVaccination.comprehensive)
