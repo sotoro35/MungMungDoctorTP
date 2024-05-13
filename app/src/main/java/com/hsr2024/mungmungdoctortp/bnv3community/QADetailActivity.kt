@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -91,34 +92,34 @@ class QADetailActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        if (myqa == "1"){
-            binding.toolbar.setOnMenuItemClickListener { menuItem ->
-                when (menuItem.itemId) {
-                    R.id.menu_insert -> {
-                        val intent = Intent(this@QADetailActivity, QAInsertActivity::class.java)
-                        startActivity(intent)
-                        true
-                    }
-
-                    R.id.menu_delete -> {
-                        AlertDialog.Builder(this)
-                            .setTitle("삭제 하시겠습니까?")
-                            .setMessage("삭제하시면 복구하실 수 없습니다")
-                            .setPositiveButton("확인") { dialog, which ->
-                                Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
-                            }
-                            .setNegativeButton("취소") { dialog, which ->
-                                dialog.dismiss()
-                            }
-                            .create().show()
-                        true
-                    }
-
-                    else -> false
-
-                }
-            }
-        }else binding.toolbar.overflowIcon = null
+//        if (myqa == "1"){
+//            binding.toolbar.setOnMenuItemClickListener { menuItem ->
+//                when (menuItem.itemId) {
+//                    R.id.menu_insert -> {
+//                        val intent = Intent(this@QADetailActivity, QAInsertActivity::class.java)
+//                        startActivity(intent)
+//                        true
+//                    }
+//
+//                    R.id.menu_delete -> {
+//                        AlertDialog.Builder(this)
+//                            .setTitle("삭제 하시겠습니까?")
+//                            .setMessage("삭제하시면 복구하실 수 없습니다")
+//                            .setPositiveButton("확인") { dialog, which ->
+//                                Toast.makeText(this, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+//                            }
+//                            .setNegativeButton("취소") { dialog, which ->
+//                                dialog.dismiss()
+//                            }
+//                            .create().show()
+//                        true
+//                    }
+//
+//                    else -> false
+//
+//                }
+//            }
+//        }
         qaView()
     }//oncreate()
 
@@ -171,6 +172,38 @@ class QADetailActivity : AppCompatActivity() {
                     comment_count = data.comment_count
                     view_count = data.view_count
                     myqa = data.myQA
+
+                    if (myqa == "1") binding.toolbar.visibility = View.VISIBLE
+                    else binding.toolbar.visibility = View.INVISIBLE
+
+                    if (myqa == "1"){
+                        binding.toolbar.setOnMenuItemClickListener { menuItem ->
+                            when (menuItem.itemId) {
+                                R.id.menu_insert -> {
+                                    val intent = Intent(this@QADetailActivity, QAInsertActivity::class.java)
+                                    startActivity(intent)
+                                    true
+                                }
+
+                                R.id.menu_delete -> {
+                                    AlertDialog.Builder(this@QADetailActivity)
+                                        .setTitle("삭제 하시겠습니까?")
+                                        .setMessage("삭제하시면 복구하실 수 없습니다")
+                                        .setPositiveButton("확인") { dialog, which ->
+                                            Toast.makeText(this@QADetailActivity, "삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                                        }
+                                        .setNegativeButton("취소") { dialog, which ->
+                                            dialog.dismiss()
+                                        }
+                                        .create().show()
+                                    true
+                                }
+
+                                else -> false
+
+                            }
+                        }
+                    }
 
                     Glide.with(this@QADetailActivity).load(profile_imgurl).into(binding.circleIv)
                     binding.tvNickname.text = nickname

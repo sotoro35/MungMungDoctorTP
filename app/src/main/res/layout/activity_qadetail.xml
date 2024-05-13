@@ -20,15 +20,21 @@
         android:layout_margin="8dp"
         app:menu="@menu/community_toolbar_menu"/>
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
+        android:layout_above="@+id/layout_comment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:padding="16dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/circle_iv"
         android:layout_width="40dp"
+
         android:layout_height="40dp"
         android:layout_margin="8dp"
         android:src="@drawable/aa"/>
@@ -113,7 +119,8 @@
         android:orientation="vertical"
         android:scrollbars="vertical"/>
 
-    </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layout_comment"
@@ -146,4 +153,4 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/bg_layout"/>
 
-</RelativeLayout>
+        </RelativeLayout>
