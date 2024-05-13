@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="12dp"
+    android:layout_margin="8dp"
+    android:backgroundTint="#EC9690">
+
+    <RelativeLayout
+        android:layout_width="150dp"
+        android:layout_height="200dp"
+        android:layout_margin="12dp"
+        android:layout_marginHorizontal="20dp">
+
+        <TextView
+            android:id="@+id/shot_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1차 접종"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_margin="4dp"
+            android:textSize="30sp"
+            android:layout_centerHorizontal="true"/>
+
+
+        <TextView
+            android:id="@+id/vaccine_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/shot_number"
+            android:text="심장사상충,\n외부기생충,\n기타접종"
+            android:textSize="18sp"
+            android:layout_marginTop="30dp"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:id="@+id/vaccine_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/vaccine_hospital"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/white"
+            android:text="2024-04-11"
+            android:textSize="15sp"
+            android:layout_centerHorizontal="true"/>
+
+
+        <TextView
+            android:id="@+id/vaccine_hospital"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="-2dp"
+            android:text="병원이름"
+            android:gravity="center_horizontal"
+            android:textSize="18sp"
+            android:textColor="#F4460F"
+            android:layout_centerHorizontal="true"/>
+
+
+    </RelativeLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

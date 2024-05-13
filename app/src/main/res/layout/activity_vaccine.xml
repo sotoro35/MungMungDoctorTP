@@ -72,91 +72,27 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="24dp" />
 
-    <LinearLayout
-        android:id="@+id/ll"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/essential_vaccine"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_below="@id/tv_mandatory"
         android:padding="8dp"
-        android:layout_marginTop="12dp">
+        android:layout_marginTop="12dp" />
 
-        <TextView
-            android:id="@+id/vac1"
-            android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:layout_weight="1"
-            android:text="1차 접종"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:layout_margin="8dp"
-            android:background="#F8E6C4"/>
-
-        <TextView
-            android:id="@+id/vac2"
-            android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:layout_weight="1"
-            android:text="2차 접종"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:layout_margin="8dp"
-            android:background="#F8E6C4"/>
-        <TextView
-            android:id="@+id/vac3"
-            android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:layout_weight="1"
-            android:text="3차 접종"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:layout_margin="8dp"
-            android:background="#F8E6C4"/>
-
-    </LinearLayout>
-
-    <LinearLayout
+    <TextView
+        android:id="@+id/add_vc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/ll"
-        android:padding="8dp">
+        android:text="필수예방접종 추가하기"
+        android:gravity="center"
+        android:drawableEnd="@drawable/baseline_mode_24"
+        android:background="@drawable/add_vaccine_textview"
+        android:padding="16dp"
+        android:layout_below="@id/essential_vaccine"
+        android:layout_margin="16dp"/>
 
-        <TextView
-            android:id="@+id/vac4"
-            android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:layout_weight="1"
-            android:text="4차 접종"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:layout_margin="8dp"
-            android:background="#F8E6C4"/>
-
-        <TextView
-            android:id="@+id/vac5"
-            android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:layout_weight="1"
-            android:text="5차 접종"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:layout_margin="8dp"
-            android:background="#F8E6C4"/>
-
-        <TextView
-            android:id="@+id/vac6"
-            android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:layout_weight="1"
-            android:text="6차 접종"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:layout_margin="8dp"
-            android:background="#F8E6C4"/>
-
-
-    </LinearLayout>
 
 
 

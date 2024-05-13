@@ -1522,9 +1522,9 @@ class RetrofitProcess(
             }
         })
     }
-    // 39. 필수 접종 목록
+//     39. 필수 접종 목록
 // listEssentialVaccinationRequest 사용법
-    //val params= DeleteDog("이메일정보", "provider_id", "펫 식별값", "로그인 타입")
+//    val params= DeleteDog("이메일정보", "provider_id", "펫 식별값", "로그인 타입")
 //RetrofitProcess(this, params=params, callback = object : RetrofitCallback {
 //    override fun onResponseListSuccess(response: List<Any>?) {}
 //
@@ -1702,7 +1702,7 @@ class RetrofitProcess(
             }
         })
     }
-    // 43. 필수 접종 수정
+//     43. 필수 접종 수정
 // modifyEssentialVaccinationRequest 사용법
 //val params= AddorModifyorDeleteEssentialVaccination("이메일정보", "provider_id", "로그인 타입", "펫 식별값",
 //            id,                                    // 접종 기록 식별 값
