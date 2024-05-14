@@ -25,8 +25,8 @@ class QAListAdapter(val context:Context, var items:List<QAData>) : Adapter<QALis
         Glide.with(context).load(imgUrl).into(holder.binding.iv)
         holder.binding.tvTitle.text=item.title
         holder.binding.tvNickname.text=item.nickname
-        holder.binding.tvViewcount.text=item.view_count
-        holder.binding.tvComment.text=item.comment_count
+        holder.binding.tvViewcount.text="조회 ${item.view_count}"
+        holder.binding.tvComment.text="댓글 ${item.comment_count}"
         Log.d("imgUrl",imgUrl)
         Glide.with(context).load(imgUrl).into(holder.binding.iv)
 

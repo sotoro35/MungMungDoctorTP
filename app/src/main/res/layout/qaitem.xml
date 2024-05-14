@@ -65,14 +65,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="12dp"
-            android:textSize="10sp"
+            android:textSize="8sp"
             android:text="조회 0" />
 
         <TextView
             android:id="@+id/tv_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:textSize="8sp"
             android:layout_marginRight="8dp"
             android:text="댓글 0" />
 

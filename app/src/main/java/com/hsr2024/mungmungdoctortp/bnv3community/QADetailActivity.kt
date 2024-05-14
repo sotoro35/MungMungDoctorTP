@@ -143,7 +143,12 @@ class QADetailActivity : AppCompatActivity() {
 
         Log.d("dsfasdfl", profile_imgurl.toString())
 
-        Glide.with(this).load(profile_imgurl).into(binding.circleIv)
+        if(profile_imgurl != null && profile_imgurl != ""){
+            Glide.with(this).load(profile_imgurl).into(binding.circleIv)
+        }else binding.circleIv.setImageResource(R.drawable.pet_image)
+
+        Log.d("프로필사진","${profile_imgurl}")
+
         binding.tvNickname.text = nickname
         binding.tvTitle.text = title
         Glide.with(this).load(img).into(binding.iv)
@@ -172,6 +177,7 @@ class QADetailActivity : AppCompatActivity() {
                     comment_count = data.comment_count
                     view_count = data.view_count
                     myqa = data.myQA
+
 
                     if (myqa == "1") binding.toolbar.visibility = View.VISIBLE
                     else binding.toolbar.visibility = View.INVISIBLE
@@ -205,7 +211,13 @@ class QADetailActivity : AppCompatActivity() {
                         }
                     }
 
-                    Glide.with(this@QADetailActivity).load(profile_imgurl).into(binding.circleIv)
+                    if(data.profile_imgurl != null && data.profile_imgurl != ""){
+                        Glide.with(this@QADetailActivity).load(profile_imgurl).into(binding.circleIv)
+                    }else binding.circleIv.setImageResource(R.drawable.pet_image)
+
+                    Log.d("프로필사진","${data.profile_imgurl}")
+
+                    //Glide.with(this@QADetailActivity).load(profile_imgurl).into(binding.circleIv)
                     binding.tvNickname.text = nickname
                     binding.tvTitle.text = title
                     Glide.with(this@QADetailActivity).load(img).into(binding.iv)

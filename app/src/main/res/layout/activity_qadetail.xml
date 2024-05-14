@@ -154,6 +154,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:backgroundTint="@color/white"
+        android:layout_weight="1"
         android:background="@drawable/bg_layout">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"

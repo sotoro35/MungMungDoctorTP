@@ -33,7 +33,11 @@ class FeedListAdapter(val context: Context, var items:List<FeedData>) : Adapter<
         val item=items[position]
         val profile= "http://43.200.163.153/img/${item.profile_imgurl}"
         val imgUrl= "http://43.200.163.153/img/${item.imgurl}"
-        Glide.with(context).load(profile).into(holder.binding.circleIv2)
+
+        if (item.profile_imgurl != null && item.profile_imgurl != ""){
+            Glide.with(context).load(profile).into(holder.binding.circleIv2)
+        }else holder.binding.circleIv2.setImageResource(R.drawable.pet_image)
+
         holder.binding.tv.text=item.nickname
         Glide.with(context).load(imgUrl).into(holder.binding.iv)
         holder.binding.tvFavorite.text=item.favorite
