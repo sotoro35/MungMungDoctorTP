@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".bnv3community.FeedInsertActivity"
+    android:orientation="vertical"
     android:background="@color/white">
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -22,6 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:src="@drawable/baseline_image_24"
+        android:scaleType="centerCrop"
         android:layout_below="@id/toolbar"/>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -51,9 +53,9 @@
         android:layout_marginTop="8dp"
         android:layout_below="@id/input_layout_content"
         android:background="@drawable/bg_btn"
-        android:layout_margin="32dp"
+        android:layout_margin="16dp"
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"/>
 
 
-</RelativeLayout>
+</LinearLayout>
