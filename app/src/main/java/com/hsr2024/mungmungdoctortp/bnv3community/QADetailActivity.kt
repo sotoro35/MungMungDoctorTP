@@ -61,7 +61,7 @@ class QADetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.toolbar.setNavigationOnClickListener {
+        binding.toolbar2.setNavigationOnClickListener {
             finish()
             QAG.QAId=""
         }
