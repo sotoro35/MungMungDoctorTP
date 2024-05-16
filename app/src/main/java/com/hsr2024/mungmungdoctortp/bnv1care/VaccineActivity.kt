@@ -74,7 +74,7 @@ class VaccineActivity : AppCompatActivity() {
         essentialAdapter = EssentialVaccinationAdapter(this, emptyList()) { essentialVaccination ->
             val intent = Intent(this,EssentialVaccineActivity::class.java).apply {
                 putExtra("id",essentialVaccination.id)
-                putExtra("shot_number",essentialVaccination.shot_number.filter { it.isDigit() })
+                putExtra("shot_number",essentialVaccination.shot_number)
                 putExtra("comprehensive",essentialVaccination.comprehensive)
                 putExtra("corona_enteritis",essentialVaccination.corona_enteritis)
                 putExtra("kennel_cough",essentialVaccination.kennel_cough )
@@ -107,9 +107,10 @@ class VaccineActivity : AppCompatActivity() {
             override fun onResponseSuccess(response: Any?) {
                 val data = response as AdditionVaccinationList
                 when (data.code) {
-                    "8401" -> Toast.makeText(this@VaccineActivity, "기록된 접종이 없습니다.", Toast.LENGTH_SHORT).show()
-                    "4204" -> Toast.makeText(this@VaccineActivity, "회원 정보 확인 필요", Toast.LENGTH_SHORT).show()
-                    "8400" -> {Toast.makeText(this@VaccineActivity, "추가 접종 목록 성공", Toast.LENGTH_SHORT).show()
+                    "8401" -> Log.d("VaccineActivity", "기록된 접종이 없습니다.")
+                    "4204" -> Log.d("VaccineActivity", "회원 정보 확인 필요")
+                    "8400" -> {
+                        Log.d("VaccineActivity", "추가 접종 목록 성공")
                         val vaccines: List<AdditionVaccination> = data.vaccinationList.sortedByDescending { it.id }
                         updateVaccinationList(vaccines)
                     }
@@ -119,7 +120,6 @@ class VaccineActivity : AppCompatActivity() {
             override fun onResponseFailure(errorMsg: String?) {
                 val errorLog = errorMsg ?: "No additional error information"
                 Log.d("AdditionVaccination List fail", errorLog)
-                Toast.makeText(this@VaccineActivity, "데이터 로드 실패: $errorLog", Toast.LENGTH_SHORT).show()
             }
         }).listAdditionVaccinationRequest()
     }
@@ -138,9 +138,10 @@ class VaccineActivity : AppCompatActivity() {
             override fun onResponseSuccess(response: Any?) {
                 val data=(response as EssentialVaccinationList)
                 when (data.code) {
-                    "9401" -> Toast.makeText(this@VaccineActivity, "기록된 접종이 없습니다.", Toast.LENGTH_SHORT).show()
-                    "4204" -> Toast.makeText(this@VaccineActivity, "회원 정보 확인 필요", Toast.LENGTH_SHORT).show()
-                    "9400" -> {Toast.makeText(this@VaccineActivity, "필수 접종 목록 성공", Toast.LENGTH_SHORT).show()
+                    "9401" -> Log.d("VaccineActivity", "기록된 접종이 없습니다.")
+                    "4204" -> Log.d("VaccineActivity", "회원 정보 확인 필요")
+                    "9400" -> {
+                        Log.d("VaccineActivity", "필수 접종 목록 성공")
                         val vaccines: List<EssentialVaccination> = data.vaccinationList.sortedByDescending { it.id }
                         updateEssentialVaccinationList(vaccines)
                     }

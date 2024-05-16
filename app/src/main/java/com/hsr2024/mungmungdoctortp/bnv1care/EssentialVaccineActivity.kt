@@ -34,7 +34,7 @@ class EssentialVaccineActivity : AppCompatActivity() {
     var rabies = ""
 
     private var vaccineId: String? = null
-    private var shotNumber = 0
+    private var shotNumber : String = ""
 
     private val binding by lazy { ActivityEssentialVaccineBinding.inflate(layoutInflater) }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,8 +44,8 @@ class EssentialVaccineActivity : AppCompatActivity() {
 
 
         binding.toolBar.setNavigationOnClickListener { finish() }
-        setupSaveButton()
-        binding.btnSave.setOnClickListener { mandatoryVaccine() }
+
+        binding.btnSave.setOnClickListener { setupSaveButton() }
         binding.dateTv.setOnClickListener { showDatePicker() }
         setupSpinner()
         initializeFormData()
@@ -53,7 +53,7 @@ class EssentialVaccineActivity : AppCompatActivity() {
     private fun initializeFormData() {
         vaccineId = intent.getStringExtra("id")
         Log.d("AddVaccineActivity", "Received vaccineId: $vaccineId")
-        val shotNumberStr = intent.getStringExtra("shot_number")
+        shotNumber = intent.getStringExtra("shot_number").toString()
         comprehensive = intent.getStringExtra("comprehensive").orEmpty()
         corona_enteritis = intent.getStringExtra("corona_enteritis").orEmpty()
         kennel_cough = intent.getStringExtra("kennel_cough").orEmpty()
@@ -64,36 +64,37 @@ class EssentialVaccineActivity : AppCompatActivity() {
         val hospital = intent.getStringExtra("hospital").orEmpty()
         val memo = intent.getStringExtra("memo").orEmpty()
 
-        shotNumber = shotNumberStr?.toIntOrNull() ?: 0
-        binding.shotNumber.setSelection(shotNumber - 1)
+        Log.d("EssentialVaccineActivity", "Received data: id=$vaccineId, shotNumber=$shotNumber, date=$date")
 
+        val shotIndex = shotNumber.toIntOrNull() ?: 0
+        binding.shotNumber.setSelection(shotIndex - 1)
         binding.dateTv.text = date
         binding.dateTv.setTextColor(Color.BLACK)
         binding.etHospital.setText(hospital)
         binding.etMemo.setText(memo)
 
         when (shotNumber) {
-            1 -> {
+            "1" -> {
                 binding.checkBox1Text.isChecked = comprehensive.isNotEmpty()
                 binding.checkBox2Text.isChecked = corona_enteritis.isNotEmpty()
             }
-            2 -> {
+            "2" -> {
                 binding.checkBox1Text.isChecked = comprehensive.isNotEmpty()
                 binding.checkBox2Text.isChecked = corona_enteritis.isNotEmpty()
             }
-            3 -> {
+            "3" -> {
                 binding.checkBox1Text.isChecked = comprehensive.isNotEmpty()
                 binding.checkBox2Text.isChecked = kennel_cough.isNotEmpty()
             }
-            4 -> {
+            "4" -> {
                 binding.checkBox1Text.isChecked = comprehensive.isNotEmpty()
                 binding.checkBox2Text.isChecked = kennel_cough.isNotEmpty()
             }
-            5 -> {
+            "5" -> {
                 binding.checkBox1Text.isChecked = comprehensive.isNotEmpty()
                 binding.checkBox2Text.isChecked = influenza.isNotEmpty()
             }
-            6 -> {
+            "6" -> {
                 binding.checkBox1Text.isChecked = rabies.isNotEmpty()
                 binding.checkBox2Text.isChecked = influenza.isNotEmpty()
                 binding.checkBox3Text.isChecked = antibody_titer.isNotEmpty()
@@ -110,7 +111,7 @@ class EssentialVaccineActivity : AppCompatActivity() {
         binding.shotNumber.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 updateCheckboxes(position)
-                shotNumber = position + 1
+                shotNumber = (position + 1).toString()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
@@ -229,13 +230,14 @@ class EssentialVaccineActivity : AppCompatActivity() {
                     "4204", "9501" -> Toast.makeText(this@EssentialVaccineActivity, "오류 발생: 관리자에게 문의하세요", Toast.LENGTH_SHORT).show()
                     "9500" -> {
                         Toast.makeText(this@EssentialVaccineActivity, "접종 정보가 성공적으로 추가되었습니다", Toast.LENGTH_SHORT).show()
+                        Log.d("ShotNumber",shot_number)
                         finish()
                     }
                 }
             }
 
             override fun onResponseFailure(errorMsg: String?) {
-                Toast.makeText(this@EssentialVaccineActivity, "실패: $errorMsg", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@EssentialVaccineActivity, "접종 추가 실패.", Toast.LENGTH_SHORT).show()
             }
         }).addEssentialVaccinationRequest()
 
