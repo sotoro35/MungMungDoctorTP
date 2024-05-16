@@ -3,6 +3,7 @@ package com.hsr2024.mungmungdoctortp.login
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -35,7 +36,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.btnTest.setOnClickListener { startActivity(Intent(this,MainActivity::class.java)) }
+        //binding.btnTest.setOnClickListener { startActivity(Intent(this,MainActivity::class.java)) }
+        binding.btnTest.visibility = View.GONE
 
         binding.btnLogin.setOnClickListener { login() }
         binding.btnLoginKakao.setOnClickListener { Kakao() }
