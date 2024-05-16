@@ -3,11 +3,8 @@ package com.hsr2024.mungmungdoctortp.bnv1care
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ReportFragment.Companion.reportFragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hsr2024.mungmungdoctortp.G
 import com.hsr2024.mungmungdoctortp.adapter.EssentialVaccinationAdapter
@@ -27,6 +24,7 @@ class VaccineActivity : AppCompatActivity() {
     private lateinit var adapter: VaccineAdapter
     private lateinit var essentialAdapter: EssentialVaccinationAdapter
     private var vaccineList = mutableListOf<AdditionVaccination>()
+    private var essvaccineList = mutableListOf<EssentialVaccinationList>()
     companion object {
         private const val REQUEST_EDIT_VACCINE = 1001
     }
@@ -73,7 +71,7 @@ class VaccineActivity : AppCompatActivity() {
         binding.essentialVaccine.layoutManager = esRecyclerManager
 
         // EssentialVaccination의 빈 리스트를 명시적으로 타입과 함께 전달
-        essentialAdapter = EssentialVaccinationAdapter(this,emptyList()) { essentialVaccination ->
+        essentialAdapter = EssentialVaccinationAdapter(this, emptyList()) { essentialVaccination ->
             val intent = Intent(this,EssentialVaccineActivity::class.java).apply {
                 putExtra("id",essentialVaccination.id)
                 putExtra("shot_number",essentialVaccination.shot_number.filter { it.isDigit() })
@@ -87,7 +85,7 @@ class VaccineActivity : AppCompatActivity() {
                 putExtra("hospital",essentialVaccination.hospital )
                 putExtra("memo",essentialVaccination.memo)
             }
-            startActivity(intent)
+            startActivityForResult(intent, REQUEST_EDIT_VACCINE)
         }
         binding.essentialVaccine.adapter = essentialAdapter
     }
@@ -97,6 +95,7 @@ class VaccineActivity : AppCompatActivity() {
         if (requestCode == REQUEST_EDIT_VACCINE && resultCode == RESULT_OK) {
             fetchDataFromServer()  // 데이터를 다시 불러와 리스트를 갱신
             binding.rvAddVaccine.adapter?.notifyDataSetChanged()
+            essentialDataFromServer()
         }
     }
 
@@ -129,6 +128,7 @@ class VaccineActivity : AppCompatActivity() {
         binding.rvAddVaccine.adapter = adapter
         binding.rvAddVaccine.scrollToPosition(0)
     }
+
 
     private fun essentialDataFromServer(){
         val params= DeleteDog("${G.user_email}", "${G.user_providerId}", "${G.pet_id}", "email")
