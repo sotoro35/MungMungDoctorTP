@@ -21,7 +21,7 @@
         android:layout_marginTop="-1dp"
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
-        android:padding="8dp"
+        android:layout_marginBottom="8dp"
         android:text="다른 반려견 보기 +" />
 
     <com.google.android.material.card.MaterialCardView
@@ -135,7 +135,7 @@
         android:layout_below="@id/cardview"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="20dp"/>
     <View
         android:id="@+id/line"
         android:layout_width="match_parent"
@@ -145,7 +145,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="4dp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="20dp"/>
 
     <RelativeLayout
         android:id="@+id/note_ai"
@@ -255,8 +255,9 @@
         android:padding="8dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         android:layout_below="@id/note_ai"
+        android:layout_marginBottom="16dp"
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"/>
 
@@ -269,7 +270,7 @@
         android:layout_below="@id/btn_health"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="8dp"/>
     <View
         android:id="@+id/line4"
         android:layout_width="match_parent"

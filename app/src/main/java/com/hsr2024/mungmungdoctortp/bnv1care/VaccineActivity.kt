@@ -47,6 +47,8 @@ class VaccineActivity : AppCompatActivity() {
     }
     override fun onResume() {
         super.onResume()
+        setupRecyclerView()
+        essentialRecyclerView()
         fetchDataFromServer()
         essentialDataFromServer()
     }

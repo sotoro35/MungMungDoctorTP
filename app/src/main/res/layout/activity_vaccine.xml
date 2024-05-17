@@ -41,12 +41,13 @@
     <ScrollView
         android:id="@+id/sv"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_below="@id/tv_add"
-        android:padding="8dp">
+        android:layout_height="200dp"
+        android:layout_below="@id/tv_add">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_add_vaccine"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
@@ -79,7 +80,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_mandatory"
         android:padding="8dp"
-        android:layout_marginTop="12dp" />
+        android:layout_marginTop="12dp"
+        android:layout_above="@id/add_vc"/>
 
     <TextView
         android:id="@+id/add_vc"
@@ -90,10 +92,7 @@
         android:drawableEnd="@drawable/baseline_mode_24"
         android:background="@drawable/add_vaccine_textview"
         android:padding="16dp"
-        android:layout_below="@id/essential_vaccine"
+        android:layout_alignParentBottom="true"
         android:layout_margin="16dp"/>
-
-
-
 
 </RelativeLayout>
