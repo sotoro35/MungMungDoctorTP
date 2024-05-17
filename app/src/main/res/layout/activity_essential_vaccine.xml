@@ -30,12 +30,12 @@
 
     <Spinner
         android:id="@+id/shot_number"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="40dp"
         android:layout_below="@id/tool_bar"
         android:layout_toRightOf="@id/tv1"
         android:layout_marginTop="7dp"
-        android:background="@drawable/add_vaccine_textview"
+        android:background="@drawable/spinner_background"
         android:padding="12dp" />
 
     <CheckBox
@@ -161,7 +161,7 @@
     <EditText
         android:id="@+id/et_memo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:hint="메모입력(최대 40자)"
         android:inputType="text"
         android:gravity="start"
@@ -182,11 +182,29 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="저장"
+        android:padding="12dp"
+        android:textStyle="bold"
+        android:fontFamily="@font/custom_font"
+        android:textColor="@color/black"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="12dp"
+        android:backgroundTint="#FF9800" />
+
+    <Button
+        android:id="@+id/btn_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="기록삭제"
         android:textStyle="bold"
         android:textColor="@color/black"
-        android:layout_marginTop="60dp"
-        android:layout_below="@id/et_memo"
-        android:backgroundTint="#F6E447" />
+        android:backgroundTint="#C1BDC1"
+        android:textSize="12sp"
+        android:visibility="visible"/>
 
 
 

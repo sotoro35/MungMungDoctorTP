@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:padding="12dp"
     android:layout_margin="8dp"
-    android:backgroundTint="#EC9690">
+    style="@style/EssentialCustomCardViewStyle">
 
     <RelativeLayout
         android:layout_width="150dp"
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/shot_number"
             android:text="심장사상충,\n외부기생충,\n기타접종"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:layout_marginTop="30dp"
             android:textStyle="bold"
             android:layout_centerHorizontal="true"/>
@@ -55,8 +55,8 @@
             android:layout_marginTop="-2dp"
             android:text="병원이름"
             android:gravity="center_horizontal"
-            android:textSize="18sp"
-            android:textColor="#F4460F"
+            android:textSize="16sp"
+            android:textColor="#565554"
             android:layout_centerHorizontal="true"/>
 
 
