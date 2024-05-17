@@ -177,7 +177,8 @@
         android:textStyle="bold"
         android:fontFamily="@font/custom_font"
         android:textColor="@color/black"
-        android:layout_below="@id/et_memo"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="12dp"
         android:backgroundTint="#FF9800" />
 
     <Button
@@ -187,14 +188,14 @@
         android:layout_margin="12dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:layout_below="@id/btn_save"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         android:text="기록삭제"
-        android:layout_centerHorizontal="true"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:backgroundTint="#C1BDC1"
         android:textSize="12sp"
-        android:visibility="invisible"/>
+        android:visibility="visible"/>
 
 
 </RelativeLayout>

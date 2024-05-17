@@ -49,7 +49,7 @@ class AddVaccineActivity : AppCompatActivity() {
         vaccineId = intent.getStringExtra("id")
         if (vaccineId != null) {
             // vaccineId가 있으면 삭제 버튼을 보이게 설정
-            binding.btnDelete.visibility = View.GONE // 삭제를 해도 삭제된게 바로 보여지지 않아 삭제기능은 없는걸로..
+            binding.btnDelete.visibility = View.VISIBLE // 삭제를 해도 삭제된게 바로 보여지지 않아 삭제기능은 없는걸로..
         } else {
             // vaccineId가 없으면 삭제 버튼을 숨김
             binding.btnDelete.visibility = View.GONE

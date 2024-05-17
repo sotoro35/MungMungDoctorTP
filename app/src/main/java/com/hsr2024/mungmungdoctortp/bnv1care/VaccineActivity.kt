@@ -1,5 +1,6 @@
 package com.hsr2024.mungmungdoctortp.bnv1care
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -92,9 +93,9 @@ class VaccineActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_EDIT_VACCINE && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_EDIT_VACCINE && resultCode == Activity.RESULT_OK) {
             fetchDataFromServer()  // 데이터를 다시 불러와 리스트를 갱신
-            binding.rvAddVaccine.adapter?.notifyDataSetChanged()
+
             essentialDataFromServer()
         }
     }

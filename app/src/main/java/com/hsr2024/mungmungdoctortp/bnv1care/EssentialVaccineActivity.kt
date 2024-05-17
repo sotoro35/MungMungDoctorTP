@@ -9,6 +9,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -47,6 +48,16 @@ class EssentialVaccineActivity : AppCompatActivity() {
 
         binding.btnSave.setOnClickListener { setupSaveButton() }
         binding.dateTv.setOnClickListener { showDatePicker() }
+        binding.btnDelete.setOnClickListener { essentialVaccineDelete() }
+
+        vaccineId = intent.getStringExtra("id")
+        if (vaccineId != null) {
+            // vaccineId가 있으면 삭제 버튼을 보이게 설정
+            binding.btnDelete.visibility = View.VISIBLE // 삭제를 해도 삭제된게 바로 보여지지 않아 삭제기능은 없는걸로..
+        } else {
+            // vaccineId가 없으면 삭제 버튼을 숨김
+            binding.btnDelete.visibility = View.GONE
+        }
         setupSpinner()
         initializeFormData()
     }
@@ -319,7 +330,53 @@ class EssentialVaccineActivity : AppCompatActivity() {
             }).modifyEssentialVaccinationRequest()
         }
     }
-}
+    private fun essentialVaccineDelete() {
+        // AlertDialog.Builder 인스턴스를 생성하고, 메시지, 타이틀, 버튼을 설정합니다.
+        val dialog = AlertDialog.Builder(this)
+            .setTitle("기록 삭제")  // 다이얼로그의 타이틀 설정
+            .setMessage("삭제하시겠습니까?")  // 다이얼로그의 메시지 설정
+            .setPositiveButton("삭제") { dialogInterface, which ->
+                // 삭제 버튼 클릭 이벤트
+                deleteEssentialVaccine()
+            }
+            .setNegativeButton("취소", null)  // 취소 버튼 클릭 이벤트
+            .create()  // AlertDialog를 생성합니다.
+
+        dialog.show()  // 다이얼로그를 화면에 표시합니다.
+    }
+            private fun deleteEssentialVaccine() {
+                val params = AddorModifyorDeleteEssentialVaccination(
+                    email = G.user_email,
+                    provider_id = G.user_providerId,
+                    login_type = G.loginType,
+                    pet_id = G.pet_id,
+                    id = vaccineId!!  // 삭제할 기록의 식별자
+                )
+
+                RetrofitProcess(this, params = params, callback = object : RetrofitCallback {
+                    override fun onResponseListSuccess(response: List<Any>?) {}
+
+                    override fun onResponseSuccess(response: Any?) {
+                        val code = response as String
+                        Log.d("EssentialVaccination Delete code", code)
+                        when (code) {
+                            "9700" -> {
+                                Toast.makeText(this@EssentialVaccineActivity, "삭제 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                                setResult(Activity.RESULT_OK)   // 삭제 성공 후 결과 설정
+                                finish()
+                            }
+                            else -> Toast.makeText(this@EssentialVaccineActivity, "삭제 실패: $code", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onResponseFailure(errorMsg: String?) {
+                        Log.d("EssentialVaccination Delete fail", errorMsg ?: "Unknown error")
+                        Toast.makeText(this@EssentialVaccineActivity, "네트워크 오류: $errorMsg", Toast.LENGTH_SHORT).show()
+                    }
+                }).deleteEssentialVaccinationRequest()
+            }
+        }
+
 
 
 
