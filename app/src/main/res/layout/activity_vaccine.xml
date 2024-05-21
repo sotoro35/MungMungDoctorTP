@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".bnv1care.VaccineActivity">
+
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/baseline_arrow_back_24"/>
+    <TextView
+        android:id="@+id/tv_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/iv"
+        android:text="추가예방접종"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:layout_margin="12dp"/>
+
+
+    <TextView
+        android:id="@+id/btn_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="31dp"
+        android:text="+"
+        android:textSize="40sp" />
+
+
+    <ScrollView
+        android:id="@+id/sv"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@id/tv_add">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_add_vaccine"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+
+    </ScrollView>
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/sv"
+        android:background="#9C8F8F"
+        android:layout_margin="8dp"/>
+
+    <TextView
+        android:id="@+id/tv_mandatory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="필수예방접종"
+        android:textColor="@color/black"
+        android:layout_below="@id/sv"
+        android:textSize="25sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="24dp" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/essential_vaccine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_mandatory"
+        android:padding="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_above="@id/add_vc"/>
+
+    <TextView
+        android:id="@+id/add_vc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="필수예방접종 추가하기"
+        android:gravity="center"
+        android:drawableEnd="@drawable/baseline_mode_24"
+        android:background="@drawable/add_vaccine_textview"
+        android:padding="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"/>
+
+</RelativeLayout>

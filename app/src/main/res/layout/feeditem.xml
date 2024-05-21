@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_marginBottom="40dp">
+
+    <TextView
+        android:id="@+id/feed_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="feed_id"
+        android:visibility="gone"/>
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circle_iv2"
+        android:layout_width="28dp"
+        android:layout_height="40dp"
+        android:layout_margin="8dp"
+        app:civ_border_width="1dp"
+        app:civ_border_color="#FFA800"
+        android:src="@drawable/aa"/>
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="아멍뭉"
+        android:layout_toRightOf="@id/circle_iv2"
+        android:layout_marginTop="20dp"/>
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:titleCentered="true"
+        android:layout_margin="8dp"
+        app:menu="@menu/community_toolbar_menu"/>
+
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_below="@id/circle_iv2"
+        android:src="@drawable/bb"
+        android:scaleType="centerCrop"/>
+
+    <LinearLayout
+    android:id="@+id/linear"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="4dp"
+    android:layout_below="@id/iv"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/iv_favorite"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:padding="6dp"
+            android:src="@drawable/favorite"/>
+
+        <TextView
+            android:id="@+id/tv_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"/>
+
+        <ImageView
+            android:id="@+id/iv_comment"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:padding="6dp"
+            android:layout_marginLeft="8dp"
+            android:src="@drawable/comment"/>
+
+        <TextView
+            android:id="@+id/tv_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/linear">
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="개 뼈 뇸뇸뇸~~~~ 너무 신나보이는 우리 숑이ㅋㅋ 이제 나이도\n많이 먹어서 개나이로 따지면 나보다 으른이 되었지만... 그래도 마\n냥 애기 같아..."
+            android:maxLines="3"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:ellipsize="end"/>
+
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="2024.04.04"
+            android:textColor="#A9A8A8"
+            android:textSize="10sp"
+            android:gravity="left"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="8dp"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
+
+
+
+

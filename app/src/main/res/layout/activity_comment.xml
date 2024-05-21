@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".bnv3community.CommentActivity"
+    android:background="@color/white"
+    android:padding="8dp">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:navigationIcon="@drawable/baseline_arrow_back_ios_24"
+        app:title="댓글"
+        app:titleCentered="true"
+        android:layout_margin="8dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        android:layout_below="@id/toolbar"
+        android:layout_above="@id/linear_bottom"/>
+
+    <LinearLayout
+        android:id="@+id/linear_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="댓글은 1000자까지 작성 가능"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:backgroundTint="@color/white"
+        android:layout_weight="1"
+        android:background="@drawable/bg_layout">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textMultiLine"
+            android:maxLines="3"
+            android:gravity="center"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_register"
+        android:layout_width="50dp"
+        android:layout_height="35dp"
+        android:text="등록"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/bg_layout"/>
+    </LinearLayout>
+
+</RelativeLayout>

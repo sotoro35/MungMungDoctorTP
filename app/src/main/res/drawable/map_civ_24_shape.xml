@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+        <!-- 동그란 모양 -->
+        <item android:drawable="@drawable/map_civ_background" />
+        <!-- 이미지 -->
+        <item android:drawable="@drawable/icon_24" android:gravity="center" android:height="30dp" android:width="30dp"/>
+</layer-list>

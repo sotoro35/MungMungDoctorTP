@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".bnv1care.AddVaccineActivity">
+
+
+    <Toolbar
+        android:id="@+id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F8E6C4"
+        android:navigationIcon="@drawable/baseline_arrow_back_24"
+        android:title="필수예방접종 추가"
+        android:titleMarginStart="20dp"
+        android:titleTextColor="@color/black" />
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="접종종류"
+        android:textStyle="bold"
+        android:layout_below="@id/tool_bar"
+        android:layout_margin="16dp"
+        android:textSize="16sp"/>
+
+    <Spinner
+        android:id="@+id/shot_number"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/tool_bar"
+        android:layout_toRightOf="@id/tv1"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/spinner_background"
+        android:padding="12dp" />
+
+    <CheckBox
+        android:id="@+id/checkBox1Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv1"
+        android:text="종합백신"
+        android:textSize="16sp"
+        android:layout_marginLeft="12dp"/>
+
+    <CheckBox
+        android:id="@+id/checkBox2Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/checkBox1Text"
+        android:layout_alignBottom="@id/checkBox1Text"
+        android:text="코로나 장염"
+        android:textSize="16sp"
+        android:layout_marginLeft="8dp"/>
+
+    <CheckBox
+        android:id="@+id/checkBox3Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/checkBox2Text"
+        android:layout_alignBottom="@id/checkBox2Text"
+        android:text="항체가검사"
+        android:textSize="16sp"
+        android:layout_marginLeft="8dp"
+        android:visibility="gone"/>
+
+
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/checkBox1Text"
+        android:background="#D6D2D2"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="접종날짜"
+        android:textStyle="bold"
+        android:layout_below="@id/view"
+        android:layout_margin="16dp"
+        android:textSize="16sp"/>
+    <TextView
+        android:id="@+id/date_tv"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:text="날짜를 선택하세요"
+        android:textColor="#A7A6A8"
+        android:gravity="center"
+        android:layout_below="@id/tv2"
+        android:layout_alignParentRight="true"
+        android:textSize="20dp"
+        android:layout_marginEnd="20dp"
+        android:drawableEnd="@drawable/baseline_calendar_month_24"
+        android:background="@drawable/add_vaccine_textview"/>
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/date_tv"
+        android:background="#D6D2D2"
+        android:layout_marginTop="30dp"/>
+
+
+    <TextView
+        android:id="@+id/tv3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="접종병원"
+        android:textStyle="bold"
+        android:layout_below="@id/view2"
+        android:layout_margin="16dp"
+        android:textSize="16sp"/>
+
+    <EditText
+        android:id="@+id/et_hospital"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:hint="병원 이름을 입력하세요.."
+        android:textColor="@color/black"
+        android:layout_below="@id/tv3"
+        android:inputType="text"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:maxLength="15"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="20dp"
+        android:gravity="center"
+        android:textColorHint="#A8A7A9"
+        android:background="@drawable/add_vaccine_textview"/>
+
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/et_hospital"
+        android:background="#D6D2D2"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/tv4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="메모"
+        android:textStyle="bold"
+        android:layout_below="@id/view3"
+        android:layout_margin="16dp"
+        android:textSize="16sp"/>
+
+
+    <EditText
+        android:id="@+id/et_memo"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:hint="메모입력(최대 40자)"
+        android:inputType="text"
+        android:gravity="start"
+        android:layout_below="@id/tv4"
+        android:layout_above="@id/btn_save"
+        android:lines="4"
+        android:maxLines="4"
+        android:maxLength="40"
+        android:padding="16dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/add_vaccine_textview"/>
+
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="저장"
+        android:padding="12dp"
+        android:textStyle="bold"
+        android:fontFamily="@font/custom_font"
+        android:textColor="@color/black"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="12dp"
+        android:backgroundTint="#FF9800" />
+
+    <Button
+        android:id="@+id/btn_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="기록삭제"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:backgroundTint="#C1BDC1"
+        android:textSize="12sp"
+        android:visibility="visible"/>
+
+
+
+
+
+
+</RelativeLayout>
