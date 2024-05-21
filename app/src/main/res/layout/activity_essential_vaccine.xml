@@ -26,7 +26,7 @@
         android:textStyle="bold"
         android:layout_below="@id/tool_bar"
         android:layout_margin="16dp"
-        android:textSize="20sp"/>
+        android:textSize="16sp"/>
 
     <Spinner
         android:id="@+id/shot_number"
@@ -86,7 +86,7 @@
         android:textStyle="bold"
         android:layout_below="@id/view"
         android:layout_margin="16dp"
-        android:textSize="20sp"/>
+        android:textSize="16sp"/>
     <TextView
         android:id="@+id/date_tv"
         android:layout_width="300dp"
@@ -119,7 +119,7 @@
         android:textStyle="bold"
         android:layout_below="@id/view2"
         android:layout_margin="16dp"
-        android:textSize="20sp"/>
+        android:textSize="16sp"/>
 
     <EditText
         android:id="@+id/et_hospital"
@@ -155,7 +155,7 @@
         android:textStyle="bold"
         android:layout_below="@id/view3"
         android:layout_margin="16dp"
-        android:textSize="20sp"/>
+        android:textSize="16sp"/>
 
 
     <EditText
@@ -166,6 +166,7 @@
         android:inputType="text"
         android:gravity="start"
         android:layout_below="@id/tv4"
+        android:layout_above="@id/btn_save"
         android:lines="4"
         android:maxLines="4"
         android:maxLength="40"

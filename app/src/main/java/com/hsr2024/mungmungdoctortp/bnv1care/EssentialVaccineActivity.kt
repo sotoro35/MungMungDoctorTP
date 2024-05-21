@@ -263,33 +263,13 @@ class EssentialVaccineActivity : AppCompatActivity() {
         val hospital = binding.etHospital.text.toString()
         val memo = binding.etMemo.text.toString()
 
-        when (shot_number) {
-            "1" -> {
-                if (binding.checkBox1Text.isChecked) comprehensive = binding.checkBox1Text.text.toString()
-                if (binding.checkBox2Text.isChecked) corona_enteritis = binding.checkBox2Text.text.toString()
-            }
-            "2" -> {
-                if (binding.checkBox1Text.isChecked) comprehensive = binding.checkBox1Text.text.toString()
-                if (binding.checkBox2Text.isChecked) corona_enteritis = binding.checkBox2Text.text.toString()
-            }
-            "3" -> {
-                if (binding.checkBox1Text.isChecked) comprehensive = binding.checkBox1Text.text.toString()
-                if (binding.checkBox2Text.isChecked) kennel_cough = binding.checkBox2Text.text.toString()
-            }
-            "4" -> {
-                if (binding.checkBox1Text.isChecked) comprehensive = binding.checkBox1Text.text.toString()
-                if (binding.checkBox2Text.isChecked) kennel_cough = binding.checkBox2Text.text.toString()
-            }
-            "5" -> {
-                if (binding.checkBox1Text.isChecked) comprehensive = binding.checkBox1Text.text.toString()
-                if (binding.checkBox2Text.isChecked) influenza = binding.checkBox2Text.text.toString()
-            }
-            "6" -> {
-                if (binding.checkBox1Text.isChecked) rabies = binding.checkBox1Text.text.toString()
-                if (binding.checkBox2Text.isChecked) influenza = binding.checkBox2Text.text.toString()
-                if (binding.checkBox3Text.isChecked) antibody_titer = binding.checkBox3Text.text.toString()
-            }
-        }
+        // Reset values based on checkbox state
+        comprehensive = if (binding.checkBox1Text.isChecked) binding.checkBox1Text.text.toString() else ""
+        corona_enteritis = if (binding.checkBox2Text.isChecked) binding.checkBox2Text.text.toString() else ""
+        kennel_cough = if (binding.checkBox3Text.isChecked && shot_number in listOf("3", "4")) binding.checkBox2Text.text.toString() else ""
+        influenza = if (binding.checkBox3Text.isChecked && shot_number in listOf("5", "6")) binding.checkBox2Text.text.toString() else ""
+        antibody_titer = if (binding.checkBox3Text.isChecked && shot_number == "6") binding.checkBox3Text.text.toString() else ""
+        rabies = if (shot_number == "6" && binding.checkBox1Text.isChecked) binding.checkBox1Text.text.toString() else ""
 
         val params = vaccineId?.let {
             AddorModifyorDeleteEssentialVaccination(
@@ -311,7 +291,6 @@ class EssentialVaccineActivity : AppCompatActivity() {
             )
         }
 
-        // 매개변수 로그 출력
         Log.d("ModifyRequest", "Params: $params")
 
         if (params != null) {
